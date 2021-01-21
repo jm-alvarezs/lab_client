@@ -3,13 +3,12 @@ import firebase from "firebase";
 import "firebase/auth";
 
 var firebaseConfig = {
-  apiKey: "AIzaSyBsmILT5BcTVhhwYeu13xEPaZ3WprcUDXI",
-  authDomain: "darlo-dev.firebaseapp.com",
-  databaseURL: "https://darlo-dev.firebaseio.com",
-  projectId: "darlo-dev",
-  storageBucket: "darlo-dev.appspot.com",
-  messagingSenderId: "943118696270",
-  appId: "1:943118696270:web:97db1d364eb16aa1d8e81f",
+  apiKey: "AIzaSyAp5a5Arj_VjLgtxu2XSwOLOASwssNEsJ0",
+  authDomain: "laboratorio-cognicion.firebaseapp.com",
+  projectId: "laboratorio-cognicion",
+  storageBucket: "laboratorio-cognicion.appspot.com",
+  messagingSenderId: "123125382179",
+  appId: "1:123125382179:web:5c481706e6773a38c08596",
 };
 
 // Initialize Firebase
