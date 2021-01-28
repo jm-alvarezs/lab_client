@@ -1,12 +1,16 @@
+import { Router } from "@reach/router";
 import React from "react";
 import Navbar from "../components/Navbar";
+import Cuenta from "./Cuenta";
 
 const Home = () => {
   return (
     <div className="container-fluid">
       <Navbar />
       <div className="container">
-        <h1>Home</h1>
+        <Router>
+          <Cuenta path="/cuenta" default />
+        </Router>
       </div>
     </div>
   );

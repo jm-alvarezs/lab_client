@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import AuthService from "../services/AuthService";
+import AuthService, { setToken } from "../services/AuthService";
 import UsuarioService from "../services/UsuarioService";
 import AdjuntosService from "../services/AdjuntosService";
 import UserReducer from "../reducers/UserReducer";
@@ -32,11 +32,16 @@ export const UserProvider = ({ children }) => {
   function signIn(email, password) {
     AuthService.signIn(email, password)
       .then((res) => {
-        const { token } = res.data;
+        const { token } = res.data.data;
         if (token && token !== null) {
-          dispatch({
-            type: LOGIN,
-            payload: { token },
+          setToken(token);
+          AuthService.getUser().then((res) => {
+            const user = { ...res.data.data, token };
+            console.log(user);
+            dispatch({
+              type: LOGIN,
+              payload: user,
+            });
           });
         }
       })
@@ -101,17 +106,7 @@ export const UserProvider = ({ children }) => {
   }
 
   function setPropiedadUser(key, value) {
-    if (key === "idAdjunto") {
-      dispatch({ type: SET_PROPIEDAD_USER, payload: { key: "file", value } });
-      if (!value)
-        dispatch({ type: SET_PROPIEDAD_USER, payload: { key, value } });
-    } else {
-      if (key === "telefono") {
-        value = String(value).replace(/\D/g, "");
-        value = String(value).substring(0, 10);
-      }
-      dispatch({ type: SET_PROPIEDAD_USER, payload: { key, value } });
-    }
+    dispatch({ type: SET_PROPIEDAD_USER, payload: { key, value } });
   }
 
   function recoverPassword(email) {
@@ -131,52 +126,14 @@ export const UserProvider = ({ children }) => {
   }
 
   function updateUsuario(usuario) {
-    let valid = true;
-    ["nombre", "correo", "telefono"].forEach((key) => {
-      if (usuario[key] === "" || usuario[key] === null || !usuario[key]) {
-        valid = false;
-      }
-    });
-    if (!valid) return alert("Debes llenar todos tus datos.");
-    const promises = [];
-    if (usuario.file && usuario.file !== null) {
-      if (usuario.file.name) {
-        const promiseAdjunto = new Promise((resolve, reject) => {
-          const formData = new FormData();
-          formData.append("adjunto", usuario.file);
-          AdjuntosService.postAdjunto(formData).then((res) => {
-            const { idAdjunto } = res.data;
-            usuario.idAdjunto = idAdjunto;
-            resolve();
-          });
-        });
-        promises.push(promiseAdjunto);
-      }
-    }
-    Promise.all(promises).then(() => {
-      const data = { ...usuario };
-      delete data.file;
-      delete data.uid;
-      delete data.activo;
-      AuthService.updateEmail(data.correo)
-        .then(() => {
-          UsuarioService.putUsuario(data)
-            .then((res) => {
-              dispatch({ type: GUARDAR_USUARIO });
-              displaySuccess(dispatch, "Perfil actualizado con éxito.");
-            })
-            .catch((error) => {
-              displayError(dispatch, error);
-            });
-        })
-        .catch((error) => {
-          if (error.code) {
-            if (error.code === "auth/email-already-in-use") {
-              displayError(dispatch, "Ya existe una cuenta con ese correo.");
-            }
-          }
-        });
-    });
+    UsuarioService.putUsuario(usuario)
+      .then(() => {
+        dispatch({ type: GUARDAR_USUARIO });
+        displaySuccess(dispatch, "Perfil actualizado con éxito.");
+      })
+      .catch((error) => {
+        displayError(dispatch, error);
+      });
   }
 
   return (
