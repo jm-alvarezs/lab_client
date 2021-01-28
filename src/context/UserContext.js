@@ -8,11 +8,10 @@ import {
   HIDE_SPINNER,
   LOGIN,
   LOGOUT,
-  SET_PROPIEDAD_LOGIN,
   SET_PROPIEDAD_USER,
-  USER_CREATED,
   GUARDAR_USUARIO,
   EDITAR_USUARIO,
+  USER_CREATED,
 } from "../types";
 import { displayError, displaySuccess } from "../utils";
 
@@ -31,22 +30,15 @@ export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
   function signIn(email, password) {
-    dispatch({ type: SHOW_SPINNER });
     AuthService.signIn(email, password)
-      .then(() => {
-        UsuarioService.getUsuario()
-          .then((res) => {
-            let { usuario } = res.data;
-            dispatch({
-              type: LOGIN,
-              payload: usuario,
-            });
-            dispatch({ type: HIDE_SPINNER });
-          })
-          .catch((error) => {
-            displayError(dispatch, error);
-            AuthService.signOut();
+      .then((res) => {
+        const { token } = res.data;
+        if (token && token !== null) {
+          dispatch({
+            type: LOGIN,
+            payload: { token },
           });
+        }
       })
       .catch((error) => {
         displayError(dispatch, error);
@@ -56,28 +48,10 @@ export const UserProvider = ({ children }) => {
 
   function userLoggedIn() {
     dispatch({ type: SHOW_SPINNER });
-    AuthService.userLoggedIn(
-      () => {
-        UsuarioService.getUsuario()
-          .then((res) => {
-            let { usuario } = res.data;
-            dispatch({
-              type: LOGIN,
-              payload: usuario,
-            });
-            dispatch({ type: HIDE_SPINNER });
-          })
-          .catch((error) => {
-            displayError(dispatch, error);
-            AuthService.signOut();
-          });
-      },
-      (error) => {
-        displayError(dispatch, error);
-        AuthService.signOut();
-        dispatch({ type: HIDE_SPINNER });
-      }
-    );
+    AuthService.userLoggedIn().then((res) => {
+      const usuario = res.data;
+      dispatch({ type: LOGIN, payload: usuario });
+    });
   }
 
   function signOut() {
@@ -88,59 +62,33 @@ export const UserProvider = ({ children }) => {
       });
   }
 
-  function signUp(nombre, correo, password, telefono) {
-    dispatch({ type: SHOW_SPINNER });
-    if (String(telefono).length !== 10) {
-      return displayError(dispatch, "El teléfono debe tener 10 dígitos");
-    }
-    AuthService.signUp(correo, password)
-      .then((user) => {
-        const { uid } = user.user;
-        dispatch({
-          type: SET_PROPIEDAD_LOGIN,
-          payload: { key: "correo", value: correo },
-        });
-        dispatch({
-          type: SET_PROPIEDAD_LOGIN,
-          payload: { key: "password", value: password },
-        });
-        dispatch({ type: HIDE_SPINNER });
+  function signUp(
+    name,
+    profession,
+    email,
+    institution,
+    birthDate,
+    country,
+    scholarship,
+    password
+  ) {
+    AuthService.signUp({
+      name,
+      profession,
+      email,
+      institution,
+      birthDate,
+      country,
+      scholarship,
+      password,
+    })
+      .then(() => {
         dispatch({ type: USER_CREATED });
-        UsuarioService.postUsuario(nombre, correo, telefono, uid)
-          .then((res) => {
-            dispatch({
-              type: SET_PROPIEDAD_LOGIN,
-              payload: { key: "correo", value: correo },
-            });
-            dispatch({
-              type: SET_PROPIEDAD_LOGIN,
-              payload: { key: "password", value: password },
-            });
-            dispatch({ type: HIDE_SPINNER });
-            dispatch({ type: USER_CREATED });
-            displaySuccess(dispatch, "¡Registrado con éxito!");
-          })
-          .catch((error) => {
-            displayError(dispatch, error);
-          });
+        displaySuccess(dispatch, "Registrado con éxito.");
       })
       .catch((error) => {
         dispatch({ type: HIDE_SPINNER });
-        if (error.code) {
-          if (error.code === "auth/email-already-in-use") {
-            displayError(dispatch, "Ya existe una cuenta con ese correo.");
-          }
-        } else if (error.response) {
-          if (error.response.status === 409)
-            displayError(
-              dispatch,
-              "Ya existe un usuario con este correo electrónico."
-            );
-          if (error.response.status === 400)
-            displayError(dispatch, "El correo electrónico no es válido.");
-        } else {
-          displayError(dispatch, error);
-        }
+        displayError(dispatch, error);
       });
   }
 

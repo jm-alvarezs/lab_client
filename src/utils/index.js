@@ -20,9 +20,7 @@ export const displayError = (dispatch, error) => {
   setTimeout(() => dispatch({ type: CLEAR_ALERT }), 3000);
 };
 
-export const BASE_URL =
-  (process.env.NODE_ENV === "development" ? "http://localhost:4000" : "") +
-  "/api";
+export const BASE_URL = "https://lab-cognicion-api.herokuapp.com";
 
 export const searchRows = (query, rows) => {
   if (!rows) return;
