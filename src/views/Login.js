@@ -17,7 +17,7 @@ const Login = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col col-md-6 h-100 bg-black">
-          <img src="" className="login-img" />
+          <img src="" className="login-img" alt="login" />
         </div>
         <div className="col col-md-6 h-100">
           <div className="row align-items-center h-100">

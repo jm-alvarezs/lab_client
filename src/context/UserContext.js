@@ -1,7 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import AuthService, { setToken } from "../services/AuthService";
 import UsuarioService from "../services/UsuarioService";
-import AdjuntosService from "../services/AdjuntosService";
 import UserReducer from "../reducers/UserReducer";
 import {
   SHOW_SPINNER,
