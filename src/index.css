@@ -6,3 +6,7 @@
   max-width: 500px;
   margin: auto;
 }
+
+.narrow {
+  max-width: 800px;
+}

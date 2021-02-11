@@ -31,6 +31,11 @@ const Navbar = () => {
                 Cuenta
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/config">
+                Config
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
