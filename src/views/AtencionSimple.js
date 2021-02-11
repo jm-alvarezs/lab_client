@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
+import { PruebasContext } from "../context/PruebasContext";
 
 const characters =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -33,6 +34,8 @@ const AtencionSimple = () => {
   const [config, setConfig] = useState({});
   const [styleObject, setStyleObject] = useState({});
   const [thankyou, setThankyou] = useState(false);
+
+  const { postResultados } = useContext(PruebasContext);
 
   let targets = [];
   let estimulos = 0;
@@ -81,7 +84,7 @@ const AtencionSimple = () => {
       targets,
       finished: true,
     };
-    console.log(result);
+    postResultados(result);
     setThankyou(true);
   };
 
@@ -145,7 +148,9 @@ const AtencionSimple = () => {
                     Es importante que responda tan rápido como pueda, ya que los
                     estímulos aparecen y desaparecen rápidamente.
                   </p>
-                  <button className="btn btn-primary">Comenzar</button>
+                  <button className="btn btn-primary" onClick={start}>
+                    Comenzar
+                  </button>
                 </div>
               ) : (
                 <div className="p-5">

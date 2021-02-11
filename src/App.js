@@ -1,10 +1,13 @@
+import { PruebasProvider } from "./context/PruebasContext";
 import { UserProvider } from "./context/UserContext";
 import Main from "./views/Main";
 
 function App() {
   return (
     <UserProvider>
-      <Main />
+      <PruebasProvider>
+        <Main />
+      </PruebasProvider>
     </UserProvider>
   );
 }
