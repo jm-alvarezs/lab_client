@@ -5,16 +5,22 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import ConfigPrueba from "./ConfigPrueba";
 import Resultados from "./Resultados";
+import Navbar from "../components/Navbar";
+import Usuarios from "./Usuarios";
 
 const Main = () => {
   return (
-    <Router>
-      <Login path="/entrar" />
-      <SignUp path="/registro" />
-      <ConfigPrueba path="/config/:idPrueba" />
-      <AtencionSimple path="/atencion/*" />
-      <Resultados path="/resultados/:idPrueba" />
-    </Router>
+    <div>
+      <Navbar />
+      <Router>
+        <Login path="/entrar" />
+        <SignUp path="/registro" />
+        <ConfigPrueba path="/config" />
+        <AtencionSimple path="/atencion/*" />
+        <Resultados path="/resultados/:idPrueba" />
+        <Usuarios path="/usuarios" />
+      </Router>
+    </div>
   );
 };
 

@@ -3,10 +3,10 @@ import { Link } from "@reach/router";
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-3">
       <div className="container">
         <a className="navbar-brand" href="#">
-          Mi Laboratorio
+          Laboratorio
         </a>
         <button
           className="navbar-toggler"
@@ -20,20 +20,25 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
-                Pacientes
+          <ul className="navbar-nav ml-auto align-items-center">
+            <li className="nav-item ml-2">
+              <Link className="nav-link" to="/usuarios">
+                Usuarios
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/cuenta">
-                Cuenta
-              </Link>
-            </li>
-            <li className="nav-item">
+            <li className="nav-item ml-2">
               <Link className="nav-link" to="/config">
-                Config
+                Pruebas
+              </Link>
+            </li>
+            <li className="nav-item ml-2">
+              <Link className="nav-link" to="/atencion">
+                Atencion
+              </Link>
+            </li>
+            <li className="nav-item ml-2">
+              <Link className="nav-link" to="/cuenta">
+                <i className="fa fa-user-circle text-secondary fa-2x"></i>
               </Link>
             </li>
           </ul>

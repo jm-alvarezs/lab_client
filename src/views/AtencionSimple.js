@@ -84,6 +84,7 @@ const AtencionSimple = () => {
       targets,
       finished: true,
     };
+    console.log(result);
     postResultados(result);
     setThankyou(true);
   };

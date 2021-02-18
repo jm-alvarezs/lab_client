@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import UsuarioRow from "../components/usuarios/UsuarioRow";
+import { UsuariosContext } from "../context/UsuariosContext";
 
 const Usuarios = () => {
+  const { usuarios } = useContext(UsuariosContext);
+
   const renderUsuarios = () => {
     if (usuarios && usuarios !== null) {
       return usuarios.map((usuario) => (
