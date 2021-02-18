@@ -27,3 +27,11 @@ export const SHOW_SUCCESS = "SHOW_SUCCESS";
  */
 export const HIDE_SPINNER = "HIDE_SPINNER";
 export const SHOW_SPINNER = "SHOW_SPINNER";
+/**
+ * Pruebas
+ */
+export const PRUEBA_RECIBIDA = "PRUEBA_RECIBIDA";
+/**
+ * Resultados
+ */
+export const RESULTADOS_RECIBIDOS = "RESULTADOS_RECIBIDOS";

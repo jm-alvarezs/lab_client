@@ -1,15 +1,53 @@
 import React, { useContext, useState } from "react";
 import { PruebasContext } from "../context/PruebasContext";
 
-const ConfigPrueba = () => {
-  const [config, setConfig] = useState({});
+const ConfigPrueba = ({ idPrueba }) => {
+  const [config, setConfig] = useState({
+    tiempoExposicion: "",
+    tiempoInterestimular: "",
+    target: "",
+    fontFamily: "",
+    fontStyle: "",
+    fontSize: "",
+    color: "",
+    backgroundColor: "",
+    numeroEstimulos: "",
+    aparicion: "",
+    keyCode: "",
+    duracion: "",
+    nombre: "",
+    sujeto: "",
+  });
 
   const { postPrueba } = useContext(PruebasContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(config);
     postPrueba(config);
   };
+
+  const handleChange = (key, e) => {
+    const { value } = e.target;
+    setConfig({ ...config, [key]: value });
+  };
+
+  const {
+    tiempoExposicion,
+    tiempoInterestimular,
+    target,
+    fontFamily,
+    fontStyle,
+    fontSize,
+    color,
+    backgroundColor,
+    numeroEstimulos,
+    aparicion,
+    keyCode,
+    duracion,
+    nombre,
+    sujeto,
+  } = config;
 
   return (
     <div className="container-fluid">
@@ -23,7 +61,12 @@ const ConfigPrueba = () => {
                   <label>Nombre de la Prueba</label>
                 </div>
                 <div className="col-6">
-                  <input type="text" className="form-control mb-3" />
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    value={nombre}
+                    onChange={(e) => handleChange("nombre", e)}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -35,6 +78,8 @@ const ConfigPrueba = () => {
                     type="text"
                     className="form-control mb-3"
                     placeholder="Escribe para buscar..."
+                    value={sujeto}
+                    onChange={(e) => handleChange("sujeto", e)}
                   />
                 </div>
               </div>
@@ -48,6 +93,8 @@ const ConfigPrueba = () => {
                     type="text"
                     className="form-control mb-3"
                     placeholder="milisegundos (ms)"
+                    value={tiempoExposicion}
+                    onChange={(e) => handleChange("tiempoExposicion", e)}
                   />
                 </div>
               </div>
@@ -60,6 +107,8 @@ const ConfigPrueba = () => {
                     type="text"
                     className="form-control mb-3"
                     placeholder="milisegundos (ms)"
+                    value={tiempoInterestimular}
+                    onChange={(e) => handleChange("tiempoInterestimular", e)}
                   />
                 </div>
               </div>
@@ -72,6 +121,8 @@ const ConfigPrueba = () => {
                     type="text"
                     className="form-control mb-3"
                     placeholder="[A-Z]"
+                    value={target}
+                    onChange={(e) => handleChange("target", e)}
                   />
                 </div>
               </div>
@@ -80,7 +131,11 @@ const ConfigPrueba = () => {
                   <label>Tipo de Letra</label>
                 </div>
                 <div className="col-6">
-                  <select className="form-control mb-3">
+                  <select
+                    className="form-control mb-3"
+                    value={fontFamily}
+                    onChange={(e) => handleChange("fontFamily", e)}
+                  >
                     <option>Courier</option>
                     <option>Montserrat</option>
                   </select>
@@ -91,7 +146,11 @@ const ConfigPrueba = () => {
                   <label>Estilo de Fuente</label>
                 </div>
                 <div className="col-6">
-                  <select className="form-control mb-3">
+                  <select
+                    className="form-control mb-3"
+                    value={fontStyle}
+                    onChange={(e) => handleChange("fontStyle", e)}
+                  >
                     <option>Normal</option>
                     <option>Negrita</option>
                     <option>Cursiva</option>
@@ -103,7 +162,12 @@ const ConfigPrueba = () => {
                   <label>Color de la Fuente</label>
                 </div>
                 <div className="col-6">
-                  <input type="color" className="form-control mb-3" />
+                  <input
+                    type="color"
+                    className="form-control mb-3"
+                    value={color}
+                    onChange={(e) => handleChange("color", e)}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -115,6 +179,8 @@ const ConfigPrueba = () => {
                     type="number"
                     className="form-control mb-3"
                     placeholder="pixeles (px)"
+                    value={fontSize}
+                    onChange={(e) => handleChange("fontSize", e)}
                   />
                 </div>
               </div>
@@ -123,7 +189,12 @@ const ConfigPrueba = () => {
                   <label>Color del fondo</label>
                 </div>
                 <div className="col-6">
-                  <input type="color" className="form-control mb-3" />
+                  <input
+                    type="color"
+                    className="form-control mb-3"
+                    value={backgroundColor}
+                    onChange={(e) => handleChange("backgroundColor", e)}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -131,7 +202,12 @@ const ConfigPrueba = () => {
                   <label>Número de Estímulos</label>
                 </div>
                 <div className="col-6">
-                  <input type="number" className="form-control mb-3" />
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={numeroEstimulos}
+                    onChange={(e) => handleChange("numeroEstimulos", e)}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -143,6 +219,8 @@ const ConfigPrueba = () => {
                     type="number"
                     className="form-control mb-3"
                     placeholder="%"
+                    value={aparicion}
+                    onChange={(e) => handleChange("aparicion", e)}
                   />
                 </div>
               </div>
@@ -151,7 +229,11 @@ const ConfigPrueba = () => {
                   <label>Botón o tecla de respuesta</label>
                 </div>
                 <div className="col-6">
-                  <select className="form-control mb-3">
+                  <select
+                    className="form-control mb-3"
+                    value={keyCode}
+                    onChange={(e) => handleChange("keyCode", e)}
+                  >
                     <option>Espacio</option>
                     <option>Intro</option>
                     <option>Cualquiera</option>
@@ -167,6 +249,8 @@ const ConfigPrueba = () => {
                     type="number"
                     className="form-control mb-3"
                     placeholder="segundos (s)"
+                    value={duracion}
+                    onChange={(e) => handleChange("duracion", e)}
                   />
                 </div>
               </div>
