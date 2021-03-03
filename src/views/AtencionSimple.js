@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
 import { PruebasContext } from "../context/PruebasContext";
 
-const characters =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const defaultConfig = {
   tiempoExposicion: 500,
@@ -68,6 +67,23 @@ const AtencionSimple = () => {
     }
   }, [thankyou]);
 
+  function shuffle(array) {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
   const handleKey = (e) => {
     targets[targets.length - 1].clicked = moment();
     targets[targets.length - 1].character = String.fromCharCode(e.keyCode);
@@ -94,18 +110,23 @@ const AtencionSimple = () => {
     getStyle();
     document.body.addEventListener("keydown", handleKey);
     startTime = moment();
-    let currentTarget = "";
+    let charTargets = [];
+    const porcAparicion = defaultConfig.aparicion / 100;
+    const numberTargets = Math.ceil(defaultConfig.estimulos * porcAparicion);
+    for (let i = 0; i < numberTargets; i++) {
+      charTargets.push(defaultConfig.target);
+    }
+    for (let i = numberTargets; i < defaultConfig.estimulos; i++) {
+      let current = Math.floor(Math.random() * characters.length) + 1;
+      let currentTarget = characters[current];
+      charTargets.push(currentTarget);
+    }
+    charTargets = shuffle(charTargets);
     interval = setInterval(() => {
       if (estimulos >= config["estimulos"]) {
         endTest();
       } else {
-        let current = Math.random().toFixed(2);
-        if (config["aparicion"] && current <= 1 / config["aparicion"]) {
-          currentTarget = config["target"];
-        } else {
-          current = Math.floor(Math.random() * characters.length) + 1;
-          currentTarget = characters[current];
-        }
+        const currentTarget = charTargets[estimulos];
         setDisplay(currentTarget);
         targets.push({
           timestamp: moment(),

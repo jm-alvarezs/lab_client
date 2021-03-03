@@ -7,6 +7,7 @@ import ConfigPrueba from "./ConfigPrueba";
 import Resultados from "./Resultados";
 import Navbar from "../components/Navbar";
 import Usuarios from "./Usuarios";
+import Pruebas from "./Pruebas";
 
 const Main = () => {
   return (
@@ -14,6 +15,7 @@ const Main = () => {
       <Navbar />
       <Router>
         <Login path="/entrar" />
+        <Pruebas path="/pruebas" />
         <SignUp path="/registro" />
         <ConfigPrueba path="/config" />
         <AtencionSimple path="/atencion/*" />

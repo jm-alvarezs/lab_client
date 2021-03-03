@@ -16,18 +16,21 @@ const Usuarios = () => {
   return (
     <div className="container-fluid">
       <div className="container">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Apellidos</th>
-              <th>Correo</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>{renderUsuarios()}</tbody>
-        </table>
+        <h2>Usuarios</h2>
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>{renderUsuarios()}</tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
