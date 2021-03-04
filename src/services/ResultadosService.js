@@ -3,5 +3,5 @@ import api from "./api";
 const route = "/results";
 
 export default {
-  getResultados: (idPrueba) => api.get(`${route}/${idPrueba}`),
+  getResultados: () => api.get(`${route}?paciente=1&idPrueba=1`),
 };

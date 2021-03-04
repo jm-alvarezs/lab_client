@@ -14,8 +14,6 @@ const PruebaConfig = ({ prueba }) => {
     aparicion,
     keyCode,
     duracion,
-    nombre,
-    sujeto,
   } = prueba;
   return (
     <div className="container-fluid px-0">

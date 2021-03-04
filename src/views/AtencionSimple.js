@@ -95,12 +95,19 @@ const AtencionSimple = () => {
     setStarted(false);
     estimulos = 0;
     const result = {
-      startTime,
-      endTime,
+      idPrueba: 1,
+      paciente: 1,
+      profesional: 1,
+      config: 1,
+      start: startTime,
+      end: endTime,
       targets,
+      target: defaultConfig.target,
       finished: true,
+      settings: {
+        ...defaultConfig,
+      },
     };
-    console.log(result);
     postResultados(result);
     setThankyou(true);
   };

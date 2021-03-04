@@ -3,14 +3,22 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import ConfigPrueba from "./ConfigPrueba";
 import Cuenta from "./Cuenta";
+import Pruebas from "./Pruebas";
+import Results from "./Results";
+import SingleResults from "./SingleResults";
+import Usuarios from "./Usuarios";
 
 const Home = () => {
   return (
     <div className="container-fluid">
       <Navbar />
-      <div className="container">
+      <div className="container-fluid">
         <Router>
-          <Cuenta path="/cuenta" default />
+          <Pruebas path="/pruebas" default />
+          <Results path="/resultados/:idPrueba" />
+          <SingleResults path="/resultados/:idPrueba/:id" />
+          <Usuarios path="/usuarios" />
+          <Cuenta path="/cuenta" />
           <ConfigPrueba path="/config" />
         </Router>
       </div>

@@ -1,26 +1,29 @@
-import React from "react";
-import AtencionSimple from "./AtencionSimple";
+import React, { useContext, useEffect } from "react";
 import { Router } from "@reach/router";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import ConfigPrueba from "./ConfigPrueba";
-import Resultados from "./Resultados";
-import Navbar from "../components/Navbar";
-import Usuarios from "./Usuarios";
-import Pruebas from "./Pruebas";
+import { UserContext } from "../context/UserContext";
+import Home from "./Home";
+import AtencionSimple from "./AtencionSimple";
 
 const Main = () => {
+  const { user, userLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    userLoggedIn();
+  }, []);
+
   return (
     <div>
-      <Navbar />
       <Router>
-        <Login path="/entrar" />
-        <Pruebas path="/pruebas" />
+        <Login path="/entrar" default />
         <SignUp path="/registro" />
-        <ConfigPrueba path="/config" />
-        <AtencionSimple path="/atencion/*" />
-        <Resultados path="/resultados/:idPrueba" />
-        <Usuarios path="/usuarios" />
+        {user !== null && (
+          <>
+            <Home path="/*" />
+            <AtencionSimple path="/atencion/*" />
+          </>
+        )}
       </Router>
     </div>
   );

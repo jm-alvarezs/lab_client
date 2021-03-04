@@ -4,32 +4,36 @@ import { PruebasContext } from "../context/PruebasContext";
 import { ResultadosContext } from "../context/ResultadosContext";
 import moment from "moment";
 
-const Resultados = ({ idPrueba }) => {
-  const { resultados, getResultados } = useContext(ResultadosContext);
+const SingleResults = ({ idPrueba, id }) => {
+  const { resultado, getResultados } = useContext(ResultadosContext);
 
   const { prueba, getPrueba } = useContext(PruebasContext);
 
   useEffect(() => {
     getPrueba(idPrueba);
-    getResultados(idPrueba);
+    getResultados(id);
   }, []);
 
   const renderConfig = () => {
-    if (prueba && prueba !== null) {
-      return <PruebaConfig prueba={prueba} />;
+    if (resultado && resultado !== null) {
+      return <PruebaConfig prueba={resultado.settings} />;
     }
   };
 
   const renderResults = () => {
-    if (resultados && resultados !== null) {
+    if (resultado && resultado !== null) {
+      console.log(resultado);
       return (
         <div className="container-fluid">
           <div className="row">
             <div className="col col-md-6"></div>
             <div className="col col-md-6">
               <h3>Estímulos</h3>
-              {resultados.map((resultado) => (
-                <div className="border-top border-bottom my-3 py-3">
+              {resultado.targets.map((resultado) => (
+                <div
+                  key={resultado.timestamp}
+                  className="border-top border-bottom my-3 py-3"
+                >
                   <div className="row">
                     <div className="col col-md-3">
                       {moment(resultado.timestamp).format("HH:mm:ss")}
@@ -85,4 +89,4 @@ const Resultados = ({ idPrueba }) => {
   );
 };
 
-export default Resultados;
+export default SingleResults;

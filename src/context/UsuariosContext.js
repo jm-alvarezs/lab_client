@@ -1,6 +1,5 @@
 import React, { createContext, useReducer } from "react";
 import UsuariosReducer from "../reducers/UsuariosReducer";
-import UsuarioService from "../services/UsuarioService";
 
 const initialState = {
   usuarios: null,

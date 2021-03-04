@@ -36,7 +36,6 @@ export const UserProvider = ({ children }) => {
           setToken(token);
           AuthService.getUser().then((res) => {
             const user = { ...res.data.data, token };
-            console.log(user);
             dispatch({
               type: LOGIN,
               payload: user,
