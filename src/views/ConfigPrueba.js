@@ -23,8 +23,16 @@ const ConfigPrueba = ({ idPrueba }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(config);
+    const args = Object.keys(config)
+      .map((key) =>
+        config[key] !== "" && config[key] !== null && config[key]
+          ? `${key}=${config[key]}`
+          : null
+      )
+      .filter((obj) => obj !== null)
+      .join("&");
     postPrueba(config);
+    window.open("/atencion?" + args, "_blank");
   };
 
   const handleChange = (key, e) => {

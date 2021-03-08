@@ -15,7 +15,7 @@ const Home = () => {
       <div className="container-fluid">
         <Router>
           <Pruebas path="/pruebas" default />
-          <Results path="/resultados/:idPrueba" />
+          <Results path="/resultados" />
           <SingleResults path="/resultados/:idPrueba/:id" />
           <Usuarios path="/usuarios" />
           <Cuenta path="/cuenta" />

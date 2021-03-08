@@ -25,6 +25,10 @@ body {
   padding-top: 20%;
 }
 
+.hidden {
+  display: none;
+}
+
 .vh-100 {
   height: 100vh;
 }

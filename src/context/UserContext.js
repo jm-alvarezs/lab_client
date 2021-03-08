@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import AuthService, { setToken } from "../services/AuthService";
 import UsuarioService from "../services/UsuarioService";
 import UserReducer from "../reducers/UserReducer";
@@ -13,6 +13,7 @@ import {
   USER_CREATED,
 } from "../types";
 import { displayError, displaySuccess } from "../utils";
+import { ModalContext } from "./ModalContext";
 
 const initialState = {
   user: null,
@@ -28,7 +29,10 @@ export const UserContext = createContext(initialState);
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
+  const { alert } = useContext(ModalContext);
+
   function signIn(email, password) {
+    dispatch({ type: SHOW_SPINNER });
     AuthService.signIn(email, password)
       .then((res) => {
         const { token } = res.data.data;
@@ -44,17 +48,21 @@ export const UserProvider = ({ children }) => {
         }
       })
       .catch((error) => {
-        displayError(dispatch, error);
+        alert(error);
         dispatch({ type: HIDE_SPINNER });
       });
   }
 
   function userLoggedIn() {
     dispatch({ type: SHOW_SPINNER });
-    AuthService.userLoggedIn().then((res) => {
-      const usuario = res.data;
-      dispatch({ type: LOGIN, payload: usuario });
-    });
+    AuthService.userLoggedIn()
+      .then((res) => {
+        const usuario = res.data;
+        dispatch({ type: LOGIN, payload: usuario });
+      })
+      .catch((error) => {
+        dispatch({ type: HIDE_SPINNER });
+      });
   }
 
   function signOut() {

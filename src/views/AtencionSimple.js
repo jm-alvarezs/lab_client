@@ -46,7 +46,7 @@ const AtencionSimple = () => {
 
   useEffect(() => {
     let params = window.location.href.split("?")[1];
-    let currentConfig = {};
+    let currentConfig = { ...defaultConfig };
     if (params) {
       params = params.split("&");
       params.forEach((elem) => {
@@ -85,8 +85,11 @@ const AtencionSimple = () => {
   }
 
   const handleKey = (e) => {
-    targets[targets.length - 1].clicked = moment();
-    targets[targets.length - 1].character = String.fromCharCode(e.keyCode);
+    let currentTarget = targets[targets.length - 1];
+    if (currentTarget) {
+      currentTarget.clicked = moment();
+      currentTarget.character = String.fromCharCode(e.keyCode);
+    }
   };
 
   const endTest = () => {
@@ -129,6 +132,9 @@ const AtencionSimple = () => {
       charTargets.push(currentTarget);
     }
     charTargets = shuffle(charTargets);
+    let intervalo =
+      parseInt(config["tiempoInterestimular"]) +
+      parseInt(config["tiempoExposicion"]);
     interval = setInterval(() => {
       if (estimulos >= config["estimulos"]) {
         endTest();
@@ -142,9 +148,9 @@ const AtencionSimple = () => {
         estimulos++;
         setTimeout(() => {
           setDisplay("");
-        }, config["tiempoExposicion"]);
+        }, parseInt(config["tiempoExposicion"]));
       }
-    }, config["tiempoInterestimular"] + config["tiempoExposicion"]);
+    }, intervalo);
   };
 
   const getStyle = () => {

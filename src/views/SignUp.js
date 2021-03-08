@@ -37,7 +37,13 @@ const SignUp = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col col-md-6 h-100"></div>
+        <div className="col col-md-6 h-100 pl-0">
+          <img
+            src="https://images.unsplash.com/photo-1612967302509-244bef8964c2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1300&q=80"
+            className="login-img mw-100 w-100 h-100"
+            alt="login"
+          />
+        </div>
         <div className="col col-md-6 h-100">
           <div className="row align-items-center h-100">
             <div className="container-fluid">

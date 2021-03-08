@@ -4,11 +4,14 @@ import moment from "moment";
 
 const Cuenta = () => {
   const [editMode, setEditMode] = useState(false);
-  const { user, updateUsuario, setPropiedadUser } = useContext(UserContext);
+  const { user, signOut, updateUsuario, setPropiedadUser } = useContext(
+    UserContext
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUsuario(user);
+    setEditMode(true);
   };
 
   const renderUser = () => {
@@ -82,11 +85,9 @@ const Cuenta = () => {
                 <option value="Maestria">Maestría</option>
                 <option value="Doctorado">Doctorado</option>
               </select>
-              <input
-                type="submit"
-                className="btn btn-primary btn-block"
-                value="Guardar"
-              />
+              <button type="submit" className="btn btn-primary btn-block">
+                Guardar
+              </button>
             </form>
           </div>
         );
@@ -100,12 +101,21 @@ const Cuenta = () => {
           <p>{moment(birthDate).add(1, "day").format("DD MMM YYYY")}</p>
           <p>{country}</p>
           <p>{scholarship}</p>
-          <button
-            className="btn btn-outline-secondary"
-            onClick={() => setEditMode(true)}
-          >
-            Editar
-          </button>
+          <div className="row">
+            <div className="col col-md-6">
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => setEditMode(true)}
+              >
+                Editar
+              </button>
+            </div>
+            <div className="col col-md-6 text-right">
+              <button className="btn btn-outline-danger" onClick={signOut}>
+                <i className="fa fa-sign-out-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
       );
     }

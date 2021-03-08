@@ -77,3 +77,28 @@ export function formatMonto(monto) {
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+export const hideModal = () => {
+  const button = document.getElementById("main-button");
+  if (button && button !== null) {
+    button.click();
+  }
+};
+
+export const showModal = () => {
+  const button = document.getElementById("main-button");
+  if (button && button !== null) {
+    button.click();
+  } else {
+    const newButton = document.createElement("button");
+    newButton.attributes.href = "#modal";
+    newButton.id = "main-button";
+    newButton.setAttribute("data-toggle", "modal");
+    newButton.setAttribute("data-target", "#modal");
+    newButton.setAttribute("data-bs-toggle", "modal");
+    newButton.setAttribute("data-bs-target", "#modal");
+    newButton.style.visibility = "hidden";
+    document.body.appendChild(newButton);
+    newButton.click();
+  }
+};

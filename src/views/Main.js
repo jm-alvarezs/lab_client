@@ -5,6 +5,9 @@ import SignUp from "./SignUp";
 import { UserContext } from "../context/UserContext";
 import Home from "./Home";
 import AtencionSimple from "./AtencionSimple";
+import ErrorAlert from "../components/global/ErrorAlert";
+import SuccessAlert from "../components/global/SuccessAlert";
+import Modal from "../components/global/Modal";
 
 const Main = () => {
   const { user, userLoggedIn } = useContext(UserContext);
@@ -25,6 +28,9 @@ const Main = () => {
           </>
         )}
       </Router>
+      <Modal />
+      <ErrorAlert />
+      <SuccessAlert />
     </div>
   );
 };

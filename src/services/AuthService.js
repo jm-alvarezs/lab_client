@@ -10,10 +10,8 @@ const AuthService = {
   getUser: () => api.get(route),
   userLoggedIn: () => api.get(route),
   signIn: (email, password) => api.post(`${route}/login`, { email, password }),
-  signUp: (user) => {
-    console.log(user);
-    return api.post(route, { ...user });
-  },
+  signUp: (user) => api.post(route, { ...user }),
+  signOut: () => setToken(""),
 };
 
 export default AuthService;
