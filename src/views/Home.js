@@ -1,7 +1,8 @@
 import { Router } from "@reach/router";
 import React from "react";
 import Navbar from "../components/Navbar";
-import ConfigPrueba from "./ConfigPrueba";
+import ConfigAtencion from "./ConfigAtencion";
+import ConfigCondicional from "./ConfigCondicional";
 import Cuenta from "./Cuenta";
 import Pacientes from "./Pacientes";
 import Pruebas from "./Pruebas";
@@ -16,14 +17,15 @@ const Home = () => {
       <div className="container-fluid">
         <Router>
           {/*Pruebas */}
-          <Pruebas path="/pruebas" default />
-          <ConfigPrueba path="/config" />
+          <Pruebas path="/pruebas" />
+          <ConfigAtencion path="/config/atencion/:idPaciente" />
+          <ConfigCondicional path="/config/condicional/:idPaciente" />
           {/* Resultados */}
           <Results path="/resultados" />
           <SingleResults path="/resultados/:id" />
           {/* Pacientes */}
-          <Pacientes path="/usuarios" />
-          <SinglePaciente path="/usuarios/:id" />
+          <Pacientes path="/pacientes" default />
+          <SinglePaciente path="/pacientes/:id" />
           {/* Cuenta */}
           <Cuenta path="/cuenta" />
         </Router>

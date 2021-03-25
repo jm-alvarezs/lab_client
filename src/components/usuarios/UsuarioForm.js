@@ -97,7 +97,7 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
       />
       <div className="row">
         <div className="col-12 col-md-6">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-dark">
             Guardar
           </button>
         </div>

@@ -13,7 +13,7 @@ const Pruebas = () => {
                 <h3>Atención Simple</h3>
               </div>
               <div to="/config" className="col col-md-4 text-right">
-                <Link to="/atencion" className="btn btn-primary mx-2">
+                <Link to="/atencion" className="btn btn-dark mx-2">
                   Realizar
                 </Link>
                 <Link to="/config" className="btn btn-outline-dark mx-2">

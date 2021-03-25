@@ -111,7 +111,7 @@ const SignUp = () => {
                   </select>
                   <input
                     type="submit"
-                    className="btn btn-primary btn-block"
+                    className="btn btn-dark btn-block"
                     value="Registrarme"
                   />
                 </form>

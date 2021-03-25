@@ -43,7 +43,7 @@ export default function () {
               </button>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-dark"
                 onClick={onSuccess}
               >
                 OK

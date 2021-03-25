@@ -179,7 +179,7 @@ const AtencionSimple = () => {
                     Es importante que responda tan rápido como pueda, ya que los
                     estímulos aparecen y desaparecen rápidamente.
                   </p>
-                  <button className="btn btn-primary" onClick={start}>
+                  <button className="btn btn-dark" onClick={start}>
                     Comenzar
                   </button>
                 </div>

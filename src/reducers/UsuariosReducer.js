@@ -1,8 +1,24 @@
 import {
+  CREATE_USUARIO,
   SET_PROPIEDAD_USER,
   SINGLE_USER_RECIBIDO,
   USUARIOS_RECIBIDOS,
 } from "../types";
+
+const schema = {
+  id: "nuevo",
+  name: "",
+  email: "",
+  birthDate: "",
+  gender: "",
+  dominantHand: "",
+  damageLocation: "",
+  antecedent: "",
+  drugsConsumption: "",
+  drugsTreatment: "",
+  whichDrugs: "",
+  dose: "",
+};
 
 export default (state, { type, payload }) => {
   switch (type) {
@@ -15,6 +31,8 @@ export default (state, { type, payload }) => {
       const usuario = { ...state.usuario };
       usuario[key] = value;
       return { ...state, usuario };
+    case CREATE_USUARIO:
+      return { ...state, usuario: schema };
     default:
       return { ...state };
   }

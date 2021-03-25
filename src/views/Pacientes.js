@@ -1,3 +1,4 @@
+import { Link } from "@reach/router";
 import React, { useContext, useEffect } from "react";
 import UsuarioRow from "../components/usuarios/UsuarioRow";
 import { UsuariosContext } from "../context/UsuariosContext";
@@ -17,9 +18,14 @@ const Pacientes = () => {
 
   return (
     <div className="container">
-      <div className="row mx-0 border-bottom pb-3 mb-3">
-        <div className="container px-0">
+      <div className="row mx-0 border-bottom pb-3 mb-3 mt-4">
+        <div className="col-12 col-md-6 px-0">
           <h1>Pacientes</h1>
+        </div>
+        <div className="col-12 col-md-6 text-right px-0">
+          <Link to="/usuarios/nuevo" className="btn btn-dark">
+            + Agregar
+          </Link>
         </div>
       </div>
       <div className="row mx-0">

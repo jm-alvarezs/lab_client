@@ -5,9 +5,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-3">
       <div className="container">
-        <a className="navbar-brand" href="#">
+        <Link to="/" className="navbar-brand">
           Laboratorio
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,8 +22,8 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto align-items-center">
             <li className="nav-item ml-2">
-              <Link className="nav-link" to="/pruebas">
-                Pruebas
+              <Link className="nav-link" to="/pacientes">
+                Pacientes
               </Link>
             </li>
             <li className="nav-item ml-2">

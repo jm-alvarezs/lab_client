@@ -1,25 +1,34 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PruebasContext } from "../context/PruebasContext";
 
-const ConfigPrueba = ({ idPrueba }) => {
+const ConfigCondicional = ({ idPaciente }) => {
   const [config, setConfig] = useState({
-    tiempoExposicion: "",
-    tiempoInterestimular: "",
-    target: "",
-    fontFamily: "",
-    fontStyle: "",
-    fontSize: "",
-    color: "",
-    backgroundColor: "",
-    numeroEstimulos: "",
-    aparicion: "",
-    keyCode: "",
-    duracion: "",
+    idTestType: 2,
+    tiempoExposicion: "500",
+    tiempoInterestimular: "500",
+    target: "O",
+    fontFamily: "Courier",
+    fontStyle: "Normal",
+    fontSize: "24",
+    color: "#fff",
+    backgroundColor: "#000",
+    clave: "X",
+    claveTarget: "37",
+    noClaveTarget: "19",
+    claveNoTarget: "19",
+    noClaveNoTarget: "75",
+    paresTotales: "150",
+    keyCode: "13",
+    duracion: "10",
     nombre: "",
-    sujeto: "",
+    idPatient: "",
   });
 
   const { postPrueba } = useContext(PruebasContext);
+
+  useEffect(() => {
+    setConfig({ ...config, idPatient: idPaciente });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,19 +58,22 @@ const ConfigPrueba = ({ idPrueba }) => {
     fontSize,
     color,
     backgroundColor,
-    numeroEstimulos,
-    aparicion,
+    paresTotales,
+    clave,
+    claveTarget,
+    claveNoTarget,
+    noClaveTarget,
+    noClaveNoTarget,
     keyCode,
     duracion,
     nombre,
-    sujeto,
   } = config;
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="container px-0 mt-2 narrow">
-          <h1>Configuración - Atención Simple</h1>
+      <div className="row mx-0">
+        <div className="container mt-2">
+          <h1 className="mb-4 h3">Configuración - Atención Condicional</h1>
           <div className="card p-3 mb-4 shadow-sm">
             <form onSubmit={handleSubmit}>
               <div className="row">
@@ -77,61 +89,53 @@ const ConfigPrueba = ({ idPrueba }) => {
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-6">
-                  <label>Sujeto</label>
-                </div>
-                <div className="col-6">
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    placeholder="Escribe para buscar..."
-                    value={sujeto}
-                    onChange={(e) => handleChange("sujeto", e)}
-                  />
-                </div>
-              </div>
-              <h2>Parámetros</h2>
+              <h2 className="h4 mb-3 border-bottom pb-3">Parámetros</h2>
               <div className="row">
                 <div className="col-6">
                   <label>Tiempo de Exposición</label>
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                   <input
                     type="text"
                     className="form-control mb-3"
-                    placeholder="milisegundos (ms)"
                     value={tiempoExposicion}
                     onChange={(e) => handleChange("tiempoExposicion", e)}
                   />
+                </div>
+                <div className="col-3">
+                  <p>milisegundos (s)</p>
                 </div>
               </div>
               <div className="row">
                 <div className="col-6">
                   <label>Tiempo Interestimular</label>
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                   <input
                     type="text"
                     className="form-control mb-3"
-                    placeholder="milisegundos (ms)"
                     value={tiempoInterestimular}
                     onChange={(e) => handleChange("tiempoInterestimular", e)}
                   />
+                </div>
+                <div className="col-3">
+                  <p>milisegundos (s)</p>
                 </div>
               </div>
               <div className="row">
                 <div className="col-6">
                   <label>Target</label>
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                   <input
                     type="text"
                     className="form-control mb-3"
-                    placeholder="[A-Z]"
                     value={target}
                     onChange={(e) => handleChange("target", e)}
                   />
+                </div>
+                <div className="col-3">
+                  <p>[A-Z]</p>
                 </div>
               </div>
               <div className="row">
@@ -182,14 +186,16 @@ const ConfigPrueba = ({ idPrueba }) => {
                 <div className="col-6">
                   <label>Tamaño de la Fuente</label>
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                   <input
                     type="number"
                     className="form-control mb-3"
-                    placeholder="pixeles (px)"
                     value={fontSize}
                     onChange={(e) => handleChange("fontSize", e)}
                   />
+                </div>
+                <div className="col-3">
+                  <p>pixeles (px)</p>
                 </div>
               </div>
               <div className="row">
@@ -207,29 +213,95 @@ const ConfigPrueba = ({ idPrueba }) => {
               </div>
               <div className="row">
                 <div className="col-6">
-                  <label>Número de Estímulos</label>
+                  <label>Clave</label>
                 </div>
                 <div className="col-6">
                   <input
-                    type="number"
+                    type="text"
                     className="form-control mb-3"
-                    value={numeroEstimulos}
-                    onChange={(e) => handleChange("numeroEstimulos", e)}
+                    value={clave}
+                    onChange={(e) => handleChange("clave", e)}
                   />
                 </div>
               </div>
               <div className="row">
                 <div className="col-6">
-                  <label>Aparición del Target</label>
+                  <label>Pares Clave - Target</label>
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                   <input
                     type="number"
                     className="form-control mb-3"
-                    placeholder="%"
-                    value={aparicion}
-                    onChange={(e) => handleChange("aparicion", e)}
+                    value={claveTarget}
+                    onChange={(e) => handleChange("claveTarget", e)}
                   />
+                </div>
+                <div className="col-3">
+                  <p>número</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Pares No Clave - Target</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={noClaveTarget}
+                    onChange={(e) => handleChange("noClaveTarget", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>número</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Pares Clave - No Target</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={claveNoTarget}
+                    onChange={(e) => handleChange("claveNoTarget", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>número</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Pares No Clave - No Target</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={noClaveNoTarget}
+                    onChange={(e) => handleChange("noClavenoTarget", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>número</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Pares Totales</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={paresTotales}
+                    onChange={(e) => handleChange("paresTotales", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>número</p>
                 </div>
               </div>
               <div className="row">
@@ -252,17 +324,19 @@ const ConfigPrueba = ({ idPrueba }) => {
                 <div className="col-6">
                   <label>Duración</label>
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                   <input
                     type="number"
                     className="form-control mb-3"
-                    placeholder="segundos (s)"
                     value={duracion}
                     onChange={(e) => handleChange("duracion", e)}
                   />
                 </div>
+                <div className="col-3">
+                  <p>segundos (s)</p>
+                </div>
               </div>
-              <button type="submit" className="btn btn-primary btn-block mt-3">
+              <button type="submit" className="btn btn-dark btn-block mt-3">
                 Terminado
               </button>
             </form>
@@ -273,4 +347,4 @@ const ConfigPrueba = ({ idPrueba }) => {
   );
 };
 
-export default ConfigPrueba;
+export default ConfigCondicional;

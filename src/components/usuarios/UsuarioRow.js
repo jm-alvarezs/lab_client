@@ -5,7 +5,7 @@ const UsuarioRow = ({ usuario, deleteUsuario }) => {
   const { id, name, email } = usuario;
 
   return (
-    <tr className="usuario-row" onClick={() => navigate(`/usuarios/${id}`)}>
+    <tr className="usuario-row" onClick={() => navigate(`/pacientes/${id}`)}>
       <td>{id}</td>
       <td>{name}</td>
       <td>{email}</td>

@@ -45,7 +45,7 @@ const Login = () => {
                   />
                   <button
                     type="submit"
-                    className="btn btn-primary btn-block"
+                    className="btn btn-dark btn-block"
                     value="Ingresar"
                   >
                     {spinner ? (
