@@ -69,7 +69,7 @@ const SinglePaciente = ({ id }) => {
           Atención Simple
         </Link>
         <Link
-          to={`/config/condicional${id}`}
+          to={`/config/condicional/${id}`}
           className="btn btn-outline-dark my-2"
         >
           Atención Condicional
