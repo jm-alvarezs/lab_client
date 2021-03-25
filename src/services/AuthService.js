@@ -8,7 +8,12 @@ export const setToken = (token) => {
 
 const AuthService = {
   getUser: () => api.get(route),
-  userLoggedIn: () => api.get(route),
+  userLoggedIn: () => {
+    const token = window.localStorage.getItem("token");
+    if (token !== null) {
+      return token;
+    }
+  },
   signIn: (email, password) => api.post(`${route}/login`, { email, password }),
   signUp: (user) => api.post(route, { ...user }),
   signOut: () => setToken(""),

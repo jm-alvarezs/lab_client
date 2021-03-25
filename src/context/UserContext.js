@@ -36,6 +36,7 @@ export const UserProvider = ({ children }) => {
     AuthService.signIn(email, password)
       .then((res) => {
         const { token } = res.data.data;
+        window.localStorage.setItem("token", token);
         if (token && token !== null) {
           setToken(token);
           AuthService.getUser().then((res) => {
@@ -48,29 +49,31 @@ export const UserProvider = ({ children }) => {
         }
       })
       .catch((error) => {
-        alert(error);
         dispatch({ type: HIDE_SPINNER });
       });
   }
 
   function userLoggedIn() {
     dispatch({ type: SHOW_SPINNER });
-    AuthService.userLoggedIn()
-      .then((res) => {
-        const usuario = res.data;
-        dispatch({ type: LOGIN, payload: usuario });
-      })
-      .catch((error) => {
-        dispatch({ type: HIDE_SPINNER });
+    let token = AuthService.userLoggedIn();
+    if (!token) token = window.location.pathname.split("token=")[1];
+    if (token) {
+      setToken(token);
+      AuthService.getUser().then((res) => {
+        const user = { ...res.data.data, token };
+        dispatch({
+          type: LOGIN,
+          payload: user,
+        });
       });
+    }
+    dispatch({ type: HIDE_SPINNER });
   }
 
   function signOut() {
-    AuthService.signOut()
-      .then(() => dispatch({ type: LOGOUT }))
-      .catch((error) => {
-        displayError(dispatch, error);
-      });
+    AuthService.signOut();
+    dispatch({ type: LOGOUT });
+    window.localStorage.setItem("token", null);
   }
 
   function signUp(

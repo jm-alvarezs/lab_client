@@ -8,19 +8,19 @@ const Results = () => {
 
   useEffect(() => {
     getResultados();
-  });
+  }, []);
 
   const renderResultados = () => {
     if (resultados && resultados !== null) {
       return resultados.map((resultado) => (
-        <div key={resultado._id} className="card my-2 p-3 shadow-sm">
+        <div key={resultado.id} className="card my-2 p-3 shadow-sm">
           <div className="row">
             <div className="col col-md-6">
               <h3>{moment(resultado.createdAt).format("DD MMM YYYY")}</h3>
             </div>
             <div className="col col-md-6 text-right">
               <Link
-                to={`./1/${resultado._id}`}
+                to={`./${resultado.id}`}
                 className="btn btn-outline-secondary"
               >
                 <i className="fa fa-eye"></i> Consultar

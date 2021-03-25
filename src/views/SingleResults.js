@@ -1,53 +1,56 @@
 import React, { useContext, useEffect } from "react";
 import PruebaConfig from "../components/PruebaConfig";
-import { PruebasContext } from "../context/PruebasContext";
 import { ResultadosContext } from "../context/ResultadosContext";
 import moment from "moment";
 
-const SingleResults = ({ idPrueba, id }) => {
-  const { resultado, getResultados } = useContext(ResultadosContext);
-
-  const { prueba, getPrueba } = useContext(PruebasContext);
+const SingleResults = ({ id }) => {
+  const { resultado, getSingleTest } = useContext(ResultadosContext);
 
   useEffect(() => {
-    getPrueba(idPrueba);
-    getResultados(id);
+    getSingleTest(id);
   }, []);
 
   const renderConfig = () => {
     if (resultado && resultado !== null) {
-      return <PruebaConfig prueba={resultado.settings} />;
+      if (resultado.settings && resultado.settings !== null) {
+        return <PruebaConfig prueba={resultado.settings} />;
+      }
+    }
+  };
+
+  const renderEstimulos = () => {
+    if (resultado.targets && resultado.targets !== null) {
+      return resultado.targets.map((resultado) => (
+        <div
+          key={resultado.timestamp}
+          className="border-top border-bottom my-3 py-3"
+        >
+          <div className="row">
+            <div className="col col-md-3">
+              {moment(resultado.timestamp).format("HH:mm:ss")}
+            </div>
+            <div className="col col-md-3">{resultado.character}</div>
+            <div className="col col-md-3">
+              {resultado.clicked !== null
+                ? moment(resultado.clicked).format("HH:mm:ss")
+                : ""}
+            </div>
+            <div className="col col-md-3"></div>
+          </div>
+        </div>
+      ));
     }
   };
 
   const renderResults = () => {
     if (resultado && resultado !== null) {
-      console.log(resultado);
       return (
         <div className="container-fluid">
           <div className="row">
             <div className="col col-md-6"></div>
             <div className="col col-md-6">
               <h3>Estímulos</h3>
-              {resultado.targets.map((resultado) => (
-                <div
-                  key={resultado.timestamp}
-                  className="border-top border-bottom my-3 py-3"
-                >
-                  <div className="row">
-                    <div className="col col-md-3">
-                      {moment(resultado.timestamp).format("HH:mm:ss")}
-                    </div>
-                    <div className="col col-md-3">{resultado.character}</div>
-                    <div className="col col-md-3">
-                      {resultado.clicked !== null
-                        ? moment(resultado.clicked).format("HH:mm:ss")
-                        : ""}
-                    </div>
-                    <div className="col col-md-3"></div>
-                  </div>
-                </div>
-              ))}
+              {renderEstimulos()}
             </div>
           </div>
         </div>
@@ -56,13 +59,14 @@ const SingleResults = ({ idPrueba, id }) => {
   };
 
   const renderSujeto = () => {
-    if (prueba && prueba !== null) {
+    if (resultado && resultado !== null) {
+      const { patient } = resultado;
+      const { name, email, birthDate } = patient;
       return (
         <div>
-          <h4>{prueba.nombre_sujeto}</h4>
-          <p>Edad: {prueba.edad}</p>
-          <h5>Descripcion</h5>
-          <p>{prueba.descripcion}</p>
+          <h4>{name}</h4>
+          <p>{email}</p>
+          <p>Fecha de Nacimiento: {moment(birthDate).format("DD MMM YYYY")}</p>
         </div>
       );
     }

@@ -1,6 +1,7 @@
 import { PruebasProvider } from "./context/PruebasContext";
 import { ResultadosProvider } from "./context/ResultadosContext";
 import { UserProvider } from "./context/UserContext";
+import { UsuariosProvider } from "./context/UsuariosContext";
 import Main from "./views/Main";
 
 function App() {
@@ -8,7 +9,9 @@ function App() {
     <UserProvider>
       <PruebasProvider>
         <ResultadosProvider>
-          <Main />
+          <UsuariosProvider>
+            <Main />
+          </UsuariosProvider>
         </ResultadosProvider>
       </PruebasProvider>
     </UserProvider>

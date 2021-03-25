@@ -98,18 +98,14 @@ const AtencionSimple = () => {
     setStarted(false);
     estimulos = 0;
     const result = {
-      idPrueba: 1,
-      paciente: 1,
-      profesional: 1,
-      config: 1,
       start: startTime,
       end: endTime,
       targets,
       target: defaultConfig.target,
       finished: true,
-      settings: {
-        ...defaultConfig,
-      },
+      idTest: config.idTest,
+      idPatient: config.idPatient,
+      config: 1,
     };
     postResultados(result);
     setThankyou(true);

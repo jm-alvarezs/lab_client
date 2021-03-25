@@ -43,9 +43,16 @@ export const PruebasProvider = ({ children }) => {
   };
 
   const postPrueba = (config) => {
+    config.idTestType = 1;
+    config.idPatient = 1;
     PruebasService.postPrueba(config)
-      .then(() => {
+      .then((res) => {
         displaySuccess(dispatch, "Prueba agregada con éxito.");
+        const idTest = res.data.data.id;
+        const token = res.data.data.accessUrl.token;
+        window.open(
+          `https://localhost:3000/atencion?idTest=${idTest}idPatient=${config.idPatient}&token=${token}`
+        );
       })
       .catch((error) => {
         displayError(dispatch, error);

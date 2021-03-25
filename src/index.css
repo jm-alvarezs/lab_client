@@ -39,3 +39,12 @@ body {
   max-width: 100%;
   object-fit: cover;
 }
+
+.usuario-row:hover {
+  background-color: var(--light);
+  cursor: pointer;
+}
+
+.card {
+  border-radius: 15px;
+}

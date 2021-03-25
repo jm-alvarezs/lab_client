@@ -1,7 +1,8 @@
 import api from "./api";
 
-const route = "/results";
+const route = "/tests";
 
 export default {
-  getResultados: () => api.get(`${route}?paciente=1&idPrueba=1`),
+  getResultados: () => api.get(`${route}`),
+  getSingleTest: (id) => api.get(`${route}/${id}`),
 };

@@ -12,23 +12,23 @@ export const ResultadosContext = createContext(initialState);
 export const ResultadosProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ResultadosReducer, initialState);
 
-  const getResultados = (id) => {
+  const getResultados = () => {
     ResultadosService.getResultados().then((res) => {
       dispatch({ type: RESULTADOS_RECIBIDOS, payload: res.data.data });
-      if (id) {
-        const single_resultado = res.data.data.find(
-          (tupla) => tupla._id === id
-        );
-        dispatch({
-          type: SINGLE_RESULTADO_RECIBIDO,
-          payload: single_resultado,
-        });
-      }
+    });
+  };
+
+  const getSingleTest = (id) => {
+    ResultadosService.getSingleTest(id).then((res) => {
+      const test = res.data.data.test;
+      dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: test });
     });
   };
 
   return (
-    <ResultadosContext.Provider value={{ ...state, getResultados }}>
+    <ResultadosContext.Provider
+      value={{ ...state, getResultados, getSingleTest }}
+    >
       {children}
     </ResultadosContext.Provider>
   );

@@ -3,10 +3,11 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import ConfigPrueba from "./ConfigPrueba";
 import Cuenta from "./Cuenta";
+import Pacientes from "./Pacientes";
 import Pruebas from "./Pruebas";
 import Results from "./Results";
+import SinglePaciente from "./SinglePaciente";
 import SingleResults from "./SingleResults";
-import Usuarios from "./Usuarios";
 
 const Home = () => {
   return (
@@ -14,12 +15,17 @@ const Home = () => {
       <Navbar />
       <div className="container-fluid">
         <Router>
+          {/*Pruebas */}
           <Pruebas path="/pruebas" default />
-          <Results path="/resultados" />
-          <SingleResults path="/resultados/:idPrueba/:id" />
-          <Usuarios path="/usuarios" />
-          <Cuenta path="/cuenta" />
           <ConfigPrueba path="/config" />
+          {/* Resultados */}
+          <Results path="/resultados" />
+          <SingleResults path="/resultados/:id" />
+          {/* Pacientes */}
+          <Pacientes path="/usuarios" />
+          <SinglePaciente path="/usuarios/:id" />
+          {/* Cuenta */}
+          <Cuenta path="/cuenta" />
         </Router>
       </div>
     </div>
