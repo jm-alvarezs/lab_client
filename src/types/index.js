@@ -31,6 +31,7 @@ export const SHOW_SPINNER = "SHOW_SPINNER";
  * Pruebas
  */
 export const PRUEBA_RECIBIDA = "PRUEBA_RECIBIDA";
+export const TEST_READY = "TEST_READY";
 /**
  * Resultados
  */

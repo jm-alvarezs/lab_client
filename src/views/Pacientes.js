@@ -12,7 +12,9 @@ const Pacientes = () => {
 
   const renderUsuarios = () => {
     if (usuarios && usuarios !== null) {
-      return usuarios.map((usuario) => <UsuarioRow usuario={usuario} />);
+      return usuarios.map((usuario) => (
+        <UsuarioRow key={usuario.id} usuario={usuario} />
+      ));
     }
   };
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
 import { PruebasContext } from "../context/PruebasContext";
+import { navigate } from "@reach/router";
 
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -34,7 +35,7 @@ const AtencionSimple = () => {
   const [styleObject, setStyleObject] = useState({});
   const [thankyou, setThankyou] = useState(false);
 
-  const { postResultados } = useContext(PruebasContext);
+  const { ready, getPrueba, postResultados } = useContext(PruebasContext);
 
   let targets = [];
   let estimulos = 0;
@@ -45,6 +46,10 @@ const AtencionSimple = () => {
   let interval = null;
 
   useEffect(() => {
+    let idTest = window.location.href.split("idTest=")[1];
+    if (!idTest) return navigate("/");
+    idTest = parseInt(idTest.split("&")[0]);
+    getPrueba(idTest);
     let params = window.location.href.split("?")[1];
     let currentConfig = { ...defaultConfig };
     if (params) {
@@ -179,7 +184,11 @@ const AtencionSimple = () => {
                     Es importante que responda tan rápido como pueda, ya que los
                     estímulos aparecen y desaparecen rápidamente.
                   </p>
-                  <button className="btn btn-dark" onClick={start}>
+                  <button
+                    className="btn btn-dark"
+                    onClick={start}
+                    disabled={!ready}
+                  >
                     Comenzar
                   </button>
                 </div>

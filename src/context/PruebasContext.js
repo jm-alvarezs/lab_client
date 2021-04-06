@@ -1,12 +1,13 @@
 import React, { createContext, useReducer } from "react";
 import PruebasReducer from "../reducers/PruebasReducer";
 import PruebasService from "../services/PruebasService";
-import { PRUEBA_RECIBIDA } from "../types";
-import { displayError, displaySuccess } from "../utils";
+import UsuarioService from "../services/UsuarioService";
+import { TEST_READY } from "../types";
 
 const initialState = {
   pruebas: null,
   prueba: null,
+  ready: false,
 };
 
 const prueba = {
@@ -34,29 +35,32 @@ export const PruebasContext = createContext(initialState);
 export const PruebasProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PruebasReducer, initialState);
 
-  const getPrueba = (idPrueba) => {
-    dispatch({ type: PRUEBA_RECIBIDA, payload: prueba });
-    /*PruebasService.getPrueba(idPrueba).then((res) => {
-      const prueba = res.data.data;
-      dispatch({ type: PRUEBA_RECIBIDA, payload: prueba });
-    });*/
+  const getPrueba = (idTest) => {
+    PruebasService.getPrueba(idTest).then((res) => {
+      const prueba = res.data.data.test;
+      const token = prueba.accessUrl.token;
+      UsuarioService.setToken(token);
+      dispatch({ type: TEST_READY });
+    });
   };
 
   const postPrueba = (config) => {
     config.idTestType = 1;
     config.idPatient = 1;
-    PruebasService.postPrueba(config)
-      .then((res) => {
-        displaySuccess(dispatch, "Prueba agregada con éxito.");
-        const idTest = res.data.data.id;
-        const token = res.data.data.accessUrl.token;
-        window.open(
-          `https://localhost:3000/atencion?idTest=${idTest}idPatient=${config.idPatient}&token=${token}`
-        );
-      })
-      .catch((error) => {
-        displayError(dispatch, error);
-      });
+    PruebasService.postPrueba(config).then((res) => {
+      console.log(res);
+      const idTest = res.data.data.id;
+      const args = Object.keys(config)
+        .map((key) =>
+          config[key] !== "" && config[key] !== null && config[key]
+            ? `${key}=${config[key]}`
+            : null
+        )
+        .filter((obj) => obj !== null)
+        .join("&");
+      const url = `/atencion?idTest=${idTest}&` + args;
+      window.open(url, "_blank");
+    });
   };
 
   const postResultados = (resultados) => {

@@ -24,9 +24,9 @@ const Main = () => {
         {user !== null && (
           <>
             <Home path="/*" />
-            <AtencionSimple path="/atencion/*" />
           </>
         )}
+        <AtencionSimple path="/atencion/*" />
       </Router>
       <Modal />
       <ErrorAlert />

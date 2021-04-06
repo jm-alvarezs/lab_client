@@ -5,7 +5,7 @@ const route = "/tests";
 
 export default {
   getPruebas: () => api.get(route),
-  getPrueba: (args) => api.get(`${route}${getArgs(args)}`),
+  getPrueba: (idTest) => api.get(`${route}/${idTest}`),
   postPrueba: (args) => api.post(route, { ...args }),
   postResultados: (resultados) =>
     api.post(`${route}/results`, { ...resultados }),
