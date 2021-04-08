@@ -20,7 +20,7 @@ const Pacientes = () => {
 
   return (
     <div className="container">
-      <div className="row mx-0 border-bottom pb-3 mb-3 mt-4">
+      <div className="row mx-0 border-bottom pb-3 mb-3 mt-4 align-items-center">
         <div className="col-12 col-md-6 px-0">
           <h1>Pacientes</h1>
         </div>
@@ -30,6 +30,11 @@ const Pacientes = () => {
           </Link>
         </div>
       </div>
+      <input
+        type="text"
+        className="form-control mb-3"
+        placeholder="Buscar por nombre o correo electrónico.."
+      />
       <div className="row mx-0">
         <div className="container card">
           <table className="table mt-4">
