@@ -39,11 +39,16 @@ const SingleResults = ({ id }) => {
   };
 
   const getTiempoReaccion = () => {
-    let reacciones = resultado.results.targets.map((target) =>
-      target.reaction ? target.reaction : null
-    );
-    reacciones = reacciones.filter((item) => item !== null);
-    return calculateAverage(reacciones);
+    if (resultado && resultado !== null) {
+      if (resultado.results.targets && resultado.results.targets !== null) {
+        let reacciones = resultado.results.targets.map((target) =>
+          target.reaction ? target.reaction : null
+        );
+        reacciones = reacciones.filter((item) => item !== null);
+        return calculateAverage(reacciones);
+      }
+    }
+    return "N/D";
   };
 
   const renderResults = () => {
