@@ -17,7 +17,6 @@ const PruebaConfig = ({ prueba }) => {
   } = prueba;
   return (
     <div className="container-fluid px-0">
-      <h3 className="border-bottom pb-3 mb-3">Parámetros</h3>
       <div className="row">
         <div className="col-6">
           <label>Tiempo de Exposición</label>
