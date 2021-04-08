@@ -107,12 +107,12 @@ const Cuenta = () => {
                 className="btn btn-outline-secondary"
                 onClick={() => setEditMode(true)}
               >
-                Editar
+                <i className="fa fa-edit"></i> Editar
               </button>
             </div>
             <div className="col col-md-6 text-right">
               <button className="btn btn-outline-danger" onClick={signOut}>
-                <i className="fa fa-sign-out-alt"></i>
+                Salir <i className="fa fa-sign-out-alt ml-1"></i>
               </button>
             </div>
           </div>
