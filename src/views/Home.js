@@ -9,6 +9,7 @@ import Pruebas from "./Pruebas";
 import Results from "./Results";
 import SinglePaciente from "./SinglePaciente";
 import SingleResults from "./SingleResults";
+import SearchResults from "./SearchResults";
 
 const Home = () => {
   return (
@@ -23,6 +24,7 @@ const Home = () => {
           {/* Resultados */}
           <Results path="/resultados" />
           <SingleResults path="/resultados/:id" />
+          <SearchResults path="/buscador" />
           {/* Pacientes */}
           <Pacientes path="/pacientes" default />
           <SinglePaciente path="/pacientes/:id" />
