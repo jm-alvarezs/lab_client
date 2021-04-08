@@ -1,7 +1,8 @@
 import React from "react";
 import Chart from "react-apexcharts";
+import { getTargetResult } from "../utils";
 
-const ResultChart = () => {
+const ResultChart = ({ items, target }) => {
   var options = {
     colors: ["#fff500"],
     plotOptions: {
@@ -32,8 +33,17 @@ const ResultChart = () => {
     },
     labels: ["Aciertos"],
   };
+
+  let correctos = 0;
+  for (let i = 0; i < items.length; i++) {
+    let correcto = getTargetResult(items[i], target);
+    if (correcto) correctos++;
+  }
+
+  let result = (correctos / items.length) * 100;
+
   return (
-    <Chart type="radialBar" options={options} series={[67]} height={250} />
+    <Chart type="radialBar" options={options} series={[result]} height={250} />
   );
 };
 

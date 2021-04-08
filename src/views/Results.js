@@ -16,7 +16,7 @@ const Results = () => {
         <div key={resultado.id} className="card my-2 p-3 shadow-sm">
           <div className="row">
             <div className="col col-md-6">
-              <h3>{moment(resultado.createdAt).format("DD MMM YYYY")}</h3>
+              <p>{moment(resultado.createdAt).format("DD MMM YYYY HH:mm")}</p>
             </div>
             <div className="col col-md-6 text-right">
               <Link

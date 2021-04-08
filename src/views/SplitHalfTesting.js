@@ -59,7 +59,7 @@ const SplitHalfTesting = ({ items, column, result }) => {
           <label>1era Mitad</label>
         </div>
         <div className="col col-md-6">
-          <label>{first}</label>
+          <label>{isNaN(first) ? "N/D" : ""}</label>
         </div>
       </div>
       <div className="row align-items-center my-2">
@@ -67,7 +67,7 @@ const SplitHalfTesting = ({ items, column, result }) => {
           <label>2da Mitad</label>
         </div>
         <div className="col col-md-6">
-          <label>{second}</label>
+          <label>{isNaN(second) ? "N/D" : ""}</label>
         </div>
       </div>
       <div className="row align-items-center my-2">

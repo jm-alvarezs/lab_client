@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import PruebaConfig from "../components/PruebaConfig";
 import { ResultadosContext } from "../context/ResultadosContext";
 import moment from "moment";
-import { getTargetResult } from "../utils";
 import SplitHalfTesting from "./SplitHalfTesting";
 import ResultChart from "../components/ResultChart";
+import EstimuloRow from "../components/resultados/EstimuloRow";
+import { calculateAverage } from "../utils";
 
 const SingleResults = ({ id }) => {
   const { resultado, getSingleTest } = useContext(ResultadosContext);
@@ -24,62 +25,50 @@ const SingleResults = ({ id }) => {
 
   const renderEstimulos = () => {
     if (resultado && resultado !== null) {
-      if (resultado.results.config) {
+      if (resultado.results.targets) {
         return resultado.results.targets.map((target) => (
-          <div
+          <EstimuloRow
             key={target.timestamp}
-            className="border-top border-bottom my-3 py-3"
-          >
-            <div className="row">
-              <div className="col col-md-2">
-                {moment(target.timestamp).format("HH:mm:ss")}
-              </div>
-              <div className="col col-md-2">{target.target}</div>
-              <div className="col col-md-2">
-                {target.clicked && target.clicked !== null
-                  ? moment(target.clicked).format("HH:mm:ss")
-                  : ""}
-              </div>
-              <div className="col col-md-2">
-                {target.clicked && target.clicked !== null
-                  ? moment(target.clicked).diff(
-                      moment(target.timestamp),
-                      "milliseconds"
-                    )
-                  : "N/D"}
-              </div>
-              <div className="col col-md-2">
-                {getTargetResult(target, resultado.results.target) ? (
-                  <i className="fa fa-check text-success"></i>
-                ) : (
-                  <i className="fa fa-times text-danger"></i>
-                )}
-              </div>
-            </div>
-          </div>
+            target={target}
+            type={resultado.test.testType.name}
+            objective={resultado.results.target}
+          />
         ));
       }
     }
   };
 
+  const getTiempoReaccion = () => {
+    let reacciones = resultado.results.targets.map((target) =>
+      target.reaction ? target.reaction : null
+    );
+    reacciones = reacciones.filter((item) => item !== null);
+    return calculateAverage(reacciones);
+  };
+
   const renderResults = () => {
     if (resultado && resultado !== null) {
-      return (
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col col-md-6">
-              <ResultChart />
-            </div>
-            <div className="col col-md-6">
-              <SplitHalfTesting
-                items={resultado.results.targets}
-                column="click"
-                result=""
-              />
+      if (resultado.results.targets) {
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col col-md-6">
+                <ResultChart
+                  items={resultado.results.targets}
+                  target={resultado.results.target}
+                />
+              </div>
+              <div className="col col-md-6">
+                <SplitHalfTesting
+                  items={resultado.results.targets}
+                  column="reaction"
+                  result=""
+                />
+              </div>
             </div>
           </div>
-        </div>
-      );
+        );
+      }
     }
   };
 
@@ -155,11 +144,12 @@ const SingleResults = ({ id }) => {
         </div>
       </div>
       <div className="card shadow-sm p-3 my-2">
-        <div className="border-bottom pb-3 mb-3 row">
-          <div className="col col-md-8">
+        <div className="border-bottom pb-3 mb-3 row mx-0">
+          <div className="col col-md-8 px-0">
             <h3>Estímulos</h3>
+            <p className="mb-1">Reaccion Media: {getTiempoReaccion()}ms</p>
           </div>
-          <div className="col col-md-4 text-right">
+          <div className="col col-md-4 text-right px-0">
             <button
               className="btn btn-outline-secondary"
               onClick={() => setShowEstimulos(!showEstimulos)}

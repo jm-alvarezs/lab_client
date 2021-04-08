@@ -2,6 +2,7 @@ import React, { createContext, useReducer } from "react";
 import ResultadosReducer from "../reducers/ResultadosReducer";
 import ResultadosService from "../services/ResultadosService";
 import { RESULTADOS_RECIBIDOS, SINGLE_RESULTADO_RECIBIDO } from "../types";
+import moment from "moment";
 
 const initialState = {
   resultados: null,
@@ -21,6 +22,18 @@ export const ResultadosProvider = ({ children }) => {
   const getSingleTest = (id) => {
     ResultadosService.getSingleTest(id).then((res) => {
       const test = res.data.data;
+      if (test.results) {
+        if (test.results.targets) {
+          test.results.targets.forEach((singleTarget) => {
+            if (singleTarget.clicked) {
+              singleTarget.reaction = moment(singleTarget.clicked).diff(
+                singleTarget.timestamp,
+                "milliseconds"
+              );
+            }
+          });
+        }
+      }
       dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: test });
     });
   };
