@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import PruebaConfig from "../components/PruebaConfig";
 import { ResultadosContext } from "../context/ResultadosContext";
 import moment from "moment";
+import { getTargetResult } from "../utils";
+import SplitHalfTesting from "./SplitHalfTesting";
 
 const SingleResults = ({ id }) => {
   const { resultado, getSingleTest } = useContext(ResultadosContext);
@@ -12,33 +14,49 @@ const SingleResults = ({ id }) => {
 
   const renderConfig = () => {
     if (resultado && resultado !== null) {
-      if (resultado.settings && resultado.settings !== null) {
+      if (resultado.test.settings && resultado.test.settings !== null) {
         return <PruebaConfig prueba={resultado.settings} />;
       }
     }
   };
 
   const renderEstimulos = () => {
-    if (resultado.targets && resultado.targets !== null) {
-      return resultado.targets.map((resultado) => (
-        <div
-          key={resultado.timestamp}
-          className="border-top border-bottom my-3 py-3"
-        >
-          <div className="row">
-            <div className="col col-md-3">
-              {moment(resultado.timestamp).format("HH:mm:ss")}
+    if (resultado && resultado !== null) {
+      if (resultado.results.config) {
+        return resultado.results.targets.map((target) => (
+          <div
+            key={target.timestamp}
+            className="border-top border-bottom my-3 py-3"
+          >
+            <div className="row">
+              <div className="col col-md-2">
+                {moment(target.timestamp).format("HH:mm:ss")}
+              </div>
+              <div className="col col-md-2">{target.target}</div>
+              <div className="col col-md-2">
+                {target.clicked && target.clicked !== null
+                  ? moment(target.clicked).format("HH:mm:ss")
+                  : ""}
+              </div>
+              <div className="col col-md-2">
+                {target.clicked && target.clicked !== null
+                  ? moment(target.clicked).diff(
+                      moment(target.timestamp),
+                      "milliseconds"
+                    )
+                  : "N/D"}
+              </div>
+              <div className="col col-md-2">
+                {getTargetResult(target, resultado.results.target) ? (
+                  <i className="fa fa-check"></i>
+                ) : (
+                  <i className="fa fa-times"></i>
+                )}
+              </div>
             </div>
-            <div className="col col-md-3">{resultado.character}</div>
-            <div className="col col-md-3">
-              {resultado.clicked !== null
-                ? moment(resultado.clicked).format("HH:mm:ss")
-                : ""}
-            </div>
-            <div className="col col-md-3"></div>
           </div>
-        </div>
-      ));
+        ));
+      }
     }
   };
 
@@ -48,9 +66,12 @@ const SingleResults = ({ id }) => {
         <div className="container-fluid">
           <div className="row">
             <div className="col col-md-6"></div>
-            <div className="col col-md-6">
-              <h3>Estímulos</h3>
-              {renderEstimulos()}
+            <div className="col col-md-6 px-0">
+              <SplitHalfTesting
+                items={resultado.results.targets}
+                column="click"
+                result=""
+              />
             </div>
           </div>
         </div>
@@ -60,7 +81,7 @@ const SingleResults = ({ id }) => {
 
   const renderSujeto = () => {
     if (resultado && resultado !== null) {
-      const { patient } = resultado;
+      const { patient } = resultado.test;
       const { name, email, birthDate } = patient;
       return (
         <div>
@@ -77,6 +98,17 @@ const SingleResults = ({ id }) => {
       <div className="card shadow-sm p-3 my-2">
         <h1 className="border-bottom pb-3 mb-3">Resultados</h1>
         {renderResults()}
+      </div>
+      <div className="card shadow-sm p-3 my-2">
+        <h3>Estímulos</h3>
+        <div className="row">
+          <div className="col col-md-2">Emisión</div>
+          <div className="col col-md-2">Caracter</div>
+          <div className="col col-md-2">Click</div>
+          <div className="col col-md-2">TR</div>
+          <div className="col col-md-2">Resultado</div>
+        </div>
+        {renderEstimulos()}
       </div>
       <div className="row">
         <div className="col col-md-6">

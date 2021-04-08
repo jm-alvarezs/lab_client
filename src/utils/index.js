@@ -102,3 +102,31 @@ export const showModal = () => {
     newButton.click();
   }
 };
+
+export const shuffle = (array) => {
+  array.sort(() => Math.random() - 0.5);
+};
+
+export const randomize = (items, iterations) => {
+  for (let i = 0; i < iterations; i++) {
+    shuffle(items);
+  }
+  return items;
+};
+
+export const calculateAverage = (items) => {
+  let total = 0;
+  for (let i = 0; i < items.length; i++) {
+    total += items[i];
+  }
+  return total / items.length;
+};
+
+export const getTargetResult = (current, target) => {
+  if (current.target === target) {
+    if (current.clicked) return true;
+    return false;
+  }
+  if (current.clicked) return false;
+  return true;
+};

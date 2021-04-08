@@ -20,7 +20,7 @@ export const ResultadosProvider = ({ children }) => {
 
   const getSingleTest = (id) => {
     ResultadosService.getSingleTest(id).then((res) => {
-      const test = res.data.data.test;
+      const test = res.data.data;
       dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: test });
     });
   };

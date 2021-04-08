@@ -40,7 +40,7 @@ const AtencionSimple = () => {
 
   const { alert } = useContext(ModalContext);
 
-  const { postResultados } = useContext(PruebasContext);
+  const { prueba, getPrueba, postResultados } = useContext(PruebasContext);
 
   let targets = [];
   let estimulos = 0;
@@ -61,6 +61,7 @@ const AtencionSimple = () => {
     let idTest = window.location.href.split("idTest=")[1];
     if (!idTest) return navigate("/");
     idTest = parseInt(idTest.split("&")[0]);
+    getPrueba(idTest, token);
     let params = window.location.href.split("?")[1];
     let currentConfig = { ...defaultConfig };
     if (params) {
@@ -74,6 +75,15 @@ const AtencionSimple = () => {
     }
     setConfig(currentConfig);
   }, []);
+
+  useEffect(() => {
+    if (prueba !== null) {
+      if (prueba.results.config) {
+        setDisabled(true);
+        return alert("Lo sentimos, este ejercicio ya fue realizado.");
+      }
+    }
+  }, [prueba]);
 
   useEffect(() => {
     if (thankyou) {

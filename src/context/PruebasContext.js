@@ -2,7 +2,12 @@ import React, { createContext, useReducer } from "react";
 import PruebasReducer from "../reducers/PruebasReducer";
 import PruebasService from "../services/PruebasService";
 import UsuarioService from "../services/UsuarioService";
-import { HIDE_SPINNER, SHOW_SPINNER, TEST_READY } from "../types";
+import {
+  HIDE_SPINNER,
+  PRUEBA_RECIBIDA,
+  SHOW_SPINNER,
+  TEST_READY,
+} from "../types";
 
 const initialState = {
   pruebas: null,
@@ -35,13 +40,24 @@ export const PruebasContext = createContext(initialState);
 export const PruebasProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PruebasReducer, initialState);
 
-  const getPrueba = (idTest) => {
-    PruebasService.getPrueba(idTest).then((res) => {
-      const prueba = res.data.data.test;
-      const token = prueba.accessUrl.token;
-      UsuarioService.setToken(token);
-      dispatch({ type: TEST_READY });
-    });
+  const getPrueba = (idTest, token) => {
+    if (token) {
+      PruebasService.getPrueba(idTest, {
+        headers: {
+          Authorization: token,
+        },
+      }).then((res) => {
+        const prueba = res.data.data;
+        dispatch({ type: PRUEBA_RECIBIDA, payload: prueba });
+      });
+    } else {
+      PruebasService.getPrueba(idTest).then((res) => {
+        const prueba = res.data.data.test;
+        const token = prueba.accessUrl.token;
+        UsuarioService.setToken(token);
+        dispatch({ type: TEST_READY });
+      });
+    }
   };
 
   const postPrueba = (config, type) => {
@@ -71,6 +87,8 @@ export const PruebasProvider = ({ children }) => {
   };
 
   const postResultados = (resultados) => {
+    resultados.idTest = parseInt(resultados.idTest);
+    resultados.idPatient = parseInt(resultados.idPatient);
     PruebasService.postResultados(resultados);
   };
 
