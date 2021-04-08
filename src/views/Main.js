@@ -8,6 +8,7 @@ import AtencionSimple from "./AtencionSimple";
 import ErrorAlert from "../components/global/ErrorAlert";
 import SuccessAlert from "../components/global/SuccessAlert";
 import Modal from "../components/global/Modal";
+import AtencionCondicional from "./AtencionCondicional";
 
 const Main = () => {
   const { user, userLoggedIn } = useContext(UserContext);
@@ -27,6 +28,7 @@ const Main = () => {
           </>
         )}
         <AtencionSimple path="/atencion/*" />
+        <AtencionCondicional path="/atencion/condicional" />
       </Router>
       <Modal />
       <ErrorAlert />

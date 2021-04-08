@@ -30,7 +30,7 @@ const styleProperties = [
   "backgroundColor",
 ];
 
-const AtencionSimple = () => {
+const AtencionCondicional = () => {
   const [display, setDisplay] = useState("");
   const [started, setStarted] = useState(false);
   const [config, setConfig] = useState({});
@@ -151,11 +151,13 @@ const AtencionSimple = () => {
       if (estimulos >= config["estimulos"]) {
         endTest();
       } else {
+        const prevTarget = charTargets[estimulos - 1];
         const currentTarget = charTargets[estimulos];
         setDisplay(currentTarget);
         targets.push({
           timestamp: moment(),
           target: currentTarget,
+          prevTarget,
         });
         estimulos++;
         setTimeout(() => {
@@ -227,4 +229,4 @@ const AtencionSimple = () => {
   );
 };
 
-export default AtencionSimple;
+export default AtencionCondicional;

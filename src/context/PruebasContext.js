@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 import PruebasReducer from "../reducers/PruebasReducer";
 import PruebasService from "../services/PruebasService";
 import UsuarioService from "../services/UsuarioService";
-import { TEST_READY } from "../types";
+import { HIDE_SPINNER, SHOW_SPINNER, TEST_READY } from "../types";
 
 const initialState = {
   pruebas: null,
@@ -44,22 +44,29 @@ export const PruebasProvider = ({ children }) => {
     });
   };
 
-  const postPrueba = (config) => {
+  const postPrueba = (config, type) => {
+    dispatch({ type: SHOW_SPINNER });
     config.idTestType = 1;
     config.idPatient = 1;
     PruebasService.postPrueba(config).then((res) => {
-      console.log(res);
       const idTest = res.data.data.id;
-      const args = Object.keys(config)
-        .map((key) =>
-          config[key] !== "" && config[key] !== null && config[key]
-            ? `${key}=${config[key]}`
-            : null
-        )
-        .filter((obj) => obj !== null)
-        .join("&");
-      const url = `/atencion?idTest=${idTest}&` + args;
-      window.open(url, "_blank");
+      PruebasService.getPrueba(idTest).then((res) => {
+        const { accessUrl } = res.data.data.test;
+        const args = Object.keys(config)
+          .map((key) =>
+            config[key] !== "" && config[key] !== null && config[key]
+              ? `${key}=${config[key]}`
+              : null
+          )
+          .filter((obj) => obj !== null)
+          .join("&");
+        const url =
+          `/atencion${
+            type && type !== null ? `/${type}` : ""
+          }?idTest=${idTest}&token=${accessUrl.token}&` + args;
+        dispatch({ type: HIDE_SPINNER });
+        window.open(url, "_blank");
+      });
     });
   };
 

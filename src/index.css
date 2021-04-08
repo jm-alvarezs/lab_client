@@ -48,3 +48,9 @@ body {
 .card {
   border-radius: 15px;
 }
+
+.btn-close {
+  position: absolute;
+  top: 5px;
+  right: 0;
+}

@@ -24,7 +24,7 @@ const ConfigCondicional = ({ idPaciente }) => {
     idPatient: "",
   });
 
-  const { postPrueba } = useContext(PruebasContext);
+  const { spinner, postPrueba } = useContext(PruebasContext);
 
   useEffect(() => {
     setConfig({ ...config, idPatient: idPaciente });
@@ -40,8 +40,7 @@ const ConfigCondicional = ({ idPaciente }) => {
       )
       .filter((obj) => obj !== null)
       .join("&");
-    postPrueba(config);
-    window.open("/atencion?" + args, "_blank");
+    postPrueba(config, "condicional");
   };
 
   const handleChange = (key, e) => {
@@ -336,8 +335,12 @@ const ConfigCondicional = ({ idPaciente }) => {
                   <p>segundos (s)</p>
                 </div>
               </div>
-              <button type="submit" className="btn btn-dark btn-block mt-3">
-                Terminado
+              <button
+                type="submit"
+                className="btn btn-dark btn-block mt-3"
+                disabled={spinner}
+              >
+                {spinner ? <div className="spinner-border"></div> : "Terminado"}
               </button>
             </form>
           </div>

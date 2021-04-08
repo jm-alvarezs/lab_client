@@ -19,7 +19,7 @@ const ConfigAtencion = ({ idPaciente }) => {
     nombre: "",
   });
 
-  const { postPrueba } = useContext(PruebasContext);
+  const { spinner, postPrueba } = useContext(PruebasContext);
 
   useEffect(() => {
     setConfig({ ...config, idPatient: idPaciente });
@@ -255,8 +255,12 @@ const ConfigAtencion = ({ idPaciente }) => {
                   <p>segundos (s)</p>
                 </div>
               </div>
-              <button type="submit" className="btn btn-dark btn-block mt-3">
-                Terminado
+              <button
+                type="submit"
+                className="btn btn-dark btn-block mt-3"
+                disabled={spinner}
+              >
+                {spinner ? <div className="spinner-border"></div> : "Terminado"}
               </button>
             </form>
           </div>

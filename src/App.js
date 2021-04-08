@@ -1,3 +1,4 @@
+import { ModalProvider } from "./context/ModalContext";
 import { PruebasProvider } from "./context/PruebasContext";
 import { ResultadosProvider } from "./context/ResultadosContext";
 import { UserProvider } from "./context/UserContext";
@@ -7,13 +8,15 @@ import Main from "./views/Main";
 function App() {
   return (
     <UserProvider>
-      <PruebasProvider>
-        <ResultadosProvider>
-          <UsuariosProvider>
-            <Main />
-          </UsuariosProvider>
-        </ResultadosProvider>
-      </PruebasProvider>
+      <ModalProvider>
+        <PruebasProvider>
+          <ResultadosProvider>
+            <UsuariosProvider>
+              <Main />
+            </UsuariosProvider>
+          </ResultadosProvider>
+        </PruebasProvider>
+      </ModalProvider>
     </UserProvider>
   );
 }

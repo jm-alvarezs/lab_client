@@ -1,4 +1,9 @@
-import { PRUEBA_RECIBIDA, TEST_READY } from "../types";
+import {
+  HIDE_SPINNER,
+  PRUEBA_RECIBIDA,
+  SHOW_SPINNER,
+  TEST_READY,
+} from "../types";
 
 export default (state, { type, payload }) => {
   switch (type) {
@@ -6,6 +11,10 @@ export default (state, { type, payload }) => {
       return { ...state, prueba: payload };
     case TEST_READY:
       return { ...state, ready: true };
+    case SHOW_SPINNER:
+      return { ...state, spinner: true };
+    case HIDE_SPINNER:
+      return { ...state, spinner: false };
     default:
       return { ...state };
   }
