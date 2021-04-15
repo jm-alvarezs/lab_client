@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "react-apexcharts";
 import { getTargetResult } from "../utils";
 
-const ResultChart = ({ items, target }) => {
+const ResultChart = ({ items, target, type, prevTarget }) => {
   var options = {
     colors: ["#fff500"],
     plotOptions: {
@@ -36,7 +36,13 @@ const ResultChart = ({ items, target }) => {
 
   let correctos = 0;
   for (let i = 0; i < items.length; i++) {
-    let correcto = getTargetResult(items[i], target);
+    let correcto = getTargetResult(
+      items[i],
+      target,
+      type === "condicional",
+      prevTarget,
+      items[i - 1]
+    );
     if (correcto) correctos++;
   }
 

@@ -5,7 +5,11 @@ import moment from "moment";
 import SplitHalfTesting from "./SplitHalfTesting";
 import ResultChart from "../components/ResultChart";
 import EstimuloRow from "../components/resultados/EstimuloRow";
-import { calculateAverage } from "../utils";
+import {
+  calculateAverage,
+  getResultadoTargets,
+  getResultadoTargetsCondicional,
+} from "../utils";
 
 const SingleResults = ({ id }) => {
   const { resultado, getSingleTest } = useContext(ResultadosContext);
@@ -58,10 +62,122 @@ const SingleResults = ({ id }) => {
           <div className="container-fluid">
             <div className="row">
               <div className="col col-md-6">
-                <ResultChart
-                  items={resultado.results.targets}
-                  target={resultado.results.target}
-                />
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <ResultChart
+                      items={resultado.results.targets}
+                      target={resultado.results.target}
+                      type={
+                        window.location.href.includes("condicional")
+                          ? "condicional"
+                          : "simple"
+                      }
+                      prevTarget={resultado.results.prevTarget}
+                    />
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <h3>Resumen</h3>
+                    <p>
+                      Aciertos:{" "}
+                      {resultado.test.testType.name.includes("condicional")
+                        ? getResultadoTargetsCondicional(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            resultado.results.prevTarget,
+                            "aciertos"
+                          )
+                        : getResultadoTargets(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            "aciertos"
+                          )}
+                    </p>
+                    <p>
+                      Errores:{" "}
+                      {resultado.test.testType.name.includes("condicional")
+                        ? getResultadoTargetsCondicional(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            resultado.results.prevTarget,
+                            "errores"
+                          )
+                        : getResultadoTargets(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            "errores"
+                          )}
+                    </p>
+                    <h4>Detalle</h4>
+                    <p>
+                      Omisiones Correctas:{" "}
+                      {resultado.test.testType.name.includes("condicional")
+                        ? getResultadoTargetsCondicional(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            resultado.results.prevTarget,
+                            "omision",
+                            true
+                          )
+                        : getResultadoTargets(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            "omision",
+                            true
+                          )}
+                    </p>
+                    <p>
+                      Omisiones Incorrectas:{" "}
+                      {resultado.test.testType.name.includes("condicional")
+                        ? getResultadoTargetsCondicional(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            resultado.results.prevTarget,
+                            "omision",
+                            false
+                          )
+                        : getResultadoTargets(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            "omision",
+                            false
+                          )}
+                    </p>
+                    <p>
+                      Clicks Correctos:{" "}
+                      {resultado.test.testType.name.includes("condicional")
+                        ? getResultadoTargetsCondicional(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            resultado.results.prevTarget,
+                            "click",
+                            true
+                          )
+                        : getResultadoTargets(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            "click",
+                            true
+                          )}
+                    </p>
+                    <p>
+                      Clicks Incorrectos:{" "}
+                      {resultado.test.testType.name.includes("condicional")
+                        ? getResultadoTargetsCondicional(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            resultado.results.prevTarget,
+                            "click",
+                            false
+                          )
+                        : getResultadoTargets(
+                            resultado.results.targets,
+                            resultado.results.target,
+                            "click",
+                            false
+                          )}
+                    </p>
+                  </div>
+                </div>
               </div>
               <div className="col col-md-6">
                 <SplitHalfTesting

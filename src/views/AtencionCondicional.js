@@ -157,7 +157,7 @@ const AtencionCondicional = () => {
         targets.push({
           timestamp: moment(),
           target: currentTarget,
-          prevTarget,
+          prevTarget: prevTarget ? prevTarget : "",
         });
         estimulos++;
         setTimeout(() => {

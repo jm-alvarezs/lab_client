@@ -93,6 +93,10 @@ const AtencionSimple = () => {
     }
   }, [thankyou]);
 
+  useEffect(() => {
+    getStyle();
+  }, [config]);
+
   function shuffle(array) {
     var currentIndex = array.length,
       temporaryValue,
@@ -179,6 +183,9 @@ const AtencionSimple = () => {
     let current = {};
     styleProperties.forEach((key) => {
       current[key] = config[key];
+      if (key === "fontSize") {
+        current[key] = parseInt(config[key]);
+      }
     });
     setStyleObject(current);
   };
@@ -229,7 +236,7 @@ const AtencionSimple = () => {
           </div>
         </div>
       ) : (
-        <div id="test-container" style={styleObject}>
+        <div id="test-container" style={{ ...styleObject }}>
           {display}
         </div>
       )}

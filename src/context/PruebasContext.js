@@ -62,8 +62,6 @@ export const PruebasProvider = ({ children }) => {
 
   const postPrueba = (config, type) => {
     dispatch({ type: SHOW_SPINNER });
-    config.idTestType = 1;
-    config.idPatient = 1;
     PruebasService.postPrueba(config).then((res) => {
       const idTest = res.data.data.id;
       PruebasService.getPrueba(idTest).then((res) => {

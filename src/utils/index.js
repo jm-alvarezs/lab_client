@@ -122,11 +122,133 @@ export const calculateAverage = (items) => {
   return total / items.length;
 };
 
-export const getTargetResult = (current, target) => {
+export const getTargetResult = (
+  current,
+  target,
+  condicional,
+  prevTarget,
+  prevItem
+) => {
+  if (condicional) {
+    if (current.clicked) {
+      return current.character === target && prevItem.character === prevTarget;
+    }
+    return current.character !== target;
+  }
   if (current.target === target) {
     if (current.clicked) return true;
     return false;
   }
   if (current.clicked) return false;
   return true;
+};
+
+export const getResultadoTargetsCondicional = (
+  targets,
+  character,
+  prevCharacter,
+  type,
+  correct
+) => {
+  switch (type) {
+    case "aciertos":
+      return targets.filter((target, index) => {
+        if (index === 0) {
+          return !target.clicked;
+        } else {
+          if (target.character === character) {
+            if (targets[index - 1].character === prevCharacter) {
+              return target.clicked;
+            }
+          }
+          return !target.clicked;
+        }
+      }).length;
+    case "errores":
+      return targets.filter((target, index) => {
+        if (index === 0) {
+          return target.clicked;
+        } else {
+          if (target.character === character) {
+            if (targets[index - 1].character === prevCharacter) {
+              return !target.clicked;
+            }
+          }
+          return target.clicked;
+        }
+      }).length;
+    case "click":
+      return targets.filter((target, index) => {
+        if (target.clicked) {
+          if (correct) {
+            if (index === 0) return false;
+            return (
+              targets[index - 1].character === prevCharacter &&
+              target.character === character
+            );
+          } else {
+            if (index === 0) return true;
+            return (
+              targets[index - 1].character !== prevCharacter &&
+              target.character === character
+            );
+          }
+        }
+        return false;
+      }).length;
+    default:
+      return targets.filter((target, index) => {
+        if (!target.clicked) {
+          if (correct) {
+            if (index === 0) return true;
+            return (
+              targets[index - 1].character !== prevCharacter &&
+              target.character === character
+            );
+          } else {
+            if (index === 0) return false;
+            return (
+              targets[index - 1].character === prevCharacter &&
+              target.character === character
+            );
+          }
+        }
+        return false;
+      }).length;
+  }
+};
+
+export const getResultadoTargets = (targets, character, type, correct) => {
+  switch (type) {
+    case "aciertos":
+      return targets.filter(
+        (target) =>
+          (target.clicked && target.character === character) ||
+          (!target.clicked && target.character !== character)
+      ).length;
+    case "errores":
+      return targets.filter(
+        (target) =>
+          (target.clicked && target.character !== character) ||
+          (!target.clicked && target.character === character)
+      ).length;
+    case "click":
+      if (correct) {
+        return targets.filter(
+          (target) => target.clicked && target.character === character
+        ).length;
+      }
+      return targets.filter(
+        (target) => target.clicked && target.character !== character
+      ).length;
+    default:
+      if (correct) {
+        return targets.filter(
+          (target) => !target.clicked && target.character !== character
+        ).length;
+      }
+      return targets.filter(
+        (target) => !target.clicked && target.character === character
+      ).length;
+  }
 };

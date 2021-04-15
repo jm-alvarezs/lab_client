@@ -27,7 +27,7 @@ const ConfigCondicional = ({ idPaciente }) => {
   const { spinner, postPrueba } = useContext(PruebasContext);
 
   useEffect(() => {
-    setConfig({ ...config, idPatient: idPaciente });
+    setConfig({ ...config, idPatient: parseInt(idPaciente) });
   }, []);
 
   const handleSubmit = (e) => {
