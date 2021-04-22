@@ -8,6 +8,10 @@ body {
   height: 100vh !important;
 }
 
+.bold {
+  font-weight: 700;
+}
+
 .form-card {
   max-width: 500px;
   margin: auto;
