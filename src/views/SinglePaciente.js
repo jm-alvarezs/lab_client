@@ -74,6 +74,12 @@ const SinglePaciente = ({ id }) => {
         >
           Atención Condicional
         </Link>
+        <Link to="/cuestionario/CUPOM" className="btn btn-outline-dark my-2">
+          Cuestionario CUPOM
+        </Link>
+        <Link to="/cuestionario/nechapi" className="btn btn-outline-dark my-2">
+          Cuestionario Nechapi
+        </Link>
       </div>
     </div>
   );
