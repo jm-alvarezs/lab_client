@@ -19,6 +19,13 @@ export const ResultadosProvider = ({ children }) => {
     });
   };
 
+  const fetchResults = (idPatient, idTestType, date) => {
+    ResultadosService.fetchResults(idPatient, idTestType, date).then((res) => {
+      const results = res.data.data;
+      dispatch({ type: RESULTADOS_RECIBIDOS, payload: results });
+    });
+  };
+
   const getSingleTest = (id) => {
     ResultadosService.getSingleTest(id).then((res) => {
       const test = res.data.data;
@@ -40,7 +47,7 @@ export const ResultadosProvider = ({ children }) => {
 
   return (
     <ResultadosContext.Provider
-      value={{ ...state, getResultados, getSingleTest }}
+      value={{ ...state, getResultados, fetchResults, getSingleTest }}
     >
       {children}
     </ResultadosContext.Provider>
