@@ -30,7 +30,6 @@ const Main = () => {
         )}
         <AtencionSimple path="/atencion/*" />
         <AtencionCondicional path="/atencion/condicional" />
-        <Cuestionario path="/cuestionario/:tipo" />
       </Router>
       <Modal />
       <ErrorAlert />
