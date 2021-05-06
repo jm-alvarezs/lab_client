@@ -2,18 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { PacientesContext } from "../context/PacientesContext";
 import { ResultadosContext } from "../context/ResultadosContext";
 import { searchRows } from "../utils";
-import moment from "moment";
-import { Link } from "@reach/router";
 
-const SearchResults = () => {
+const Buscador = () => {
   const [query, setQuery] = useState("");
   const [patient, setPatient] = useState("");
-  const [email, setEmail] = useState("");
   const [type, setType] = useState(1);
   const [date, setDate] = useState("");
 
+  const { fetchResults } = useContext(ResultadosContext);
   const { pacientes, getPacientes } = useContext(PacientesContext);
-  const { resultados, fetchResults } = useContext(ResultadosContext);
 
   useEffect(() => {
     getPacientes();
@@ -62,42 +59,10 @@ const SearchResults = () => {
     }
   };
 
-  const renderResultados = () => {
-    if (resultados && resultados !== null) {
-      if (resultados.length === 0) {
-        return <p>No hay resultados para pruebas con esa búsqueda.</p>;
-      }
-      return (
-        <div className="mt-3 pb-4">
-          <h2 className="border-bottom pb-3 mb-3">Resultados</h2>
-          {resultados.map((resultado) => (
-            <div key={resultado.id} className="card my-2 p-3 shadow-sm">
-              <div className="row">
-                <div className="col col-md-6">
-                  <p>
-                    {moment(resultado.createdAt).format("DD MMM YYYY HH:mm")}
-                  </p>
-                </div>
-                <div className="col col-md-6 text-right">
-                  <Link
-                    to={`./${resultado.id}`}
-                    className="btn btn-outline-secondary"
-                  >
-                    <i className="fa fa-eye"></i> Consultar
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      );
-    }
-  };
-
   return (
     <div className="container">
-      <h1 className="border-bottom pb-3 mb-3">Buscador</h1>
       <div className="card p-3">
+        <h2 className="border-bottom pb-3 mb-3 h3">Buscador</h2>
         <form onSubmit={handleSubmit}>
           <label>Paciente</label>
           <input
@@ -131,9 +96,8 @@ const SearchResults = () => {
           </button>
         </form>
       </div>
-      {renderResultados()}
     </div>
   );
 };
 
-export default SearchResults;
+export default Buscador;

@@ -48,6 +48,7 @@ export const ResultadosProvider = ({ children }) => {
   };
 
   const fetchResults = (idPatient, idTestType, date) => {
+    dispatch({ type: RESULTADOS_RECIBIDOS, payload: null });
     ResultadosService.fetchResults(idPatient, idTestType, date).then((res) => {
       const results = res.data.data;
       dispatch({ type: RESULTADOS_RECIBIDOS, payload: results });

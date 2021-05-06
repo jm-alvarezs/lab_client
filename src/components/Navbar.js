@@ -32,11 +32,6 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item ml-2">
-              <Link className="nav-link" to="/buscador">
-                Buscador
-              </Link>
-            </li>
-            <li className="nav-item ml-2">
               <Link className="nav-link" to="/cuenta">
                 <i className="fa fa-user-circle user-icon fa-2x"></i>
               </Link>
