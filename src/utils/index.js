@@ -320,3 +320,59 @@ export const preguntasNechapi = [
   "Se enfada rápidamente",
   "Tiene muchas ganas de vivir",
 ];
+
+export const categoriasCUPOM = {
+  trabajo: [3, 12, 13, 14, 18, 21, 22, 23],
+  reconocimiento: [5, 6, 7],
+  fijacion: [1, 2, 4],
+  prospectiva: [8, 9, 10, 11],
+  procedimental: [15, 16, 17],
+};
+
+export const getPuntuacionCUPOM = (categoria, respuestas) => {
+  let total = 0;
+  let positivas = 0;
+  categoriasCUPOM[categoria].forEach((numero) => {
+    let respuesta = respuestas.find((resp) => resp.numero === numero);
+    total++;
+    if (respuesta.respuesta) {
+      positivas++;
+    }
+  });
+  return parseFloat((positivas / total).toFixed(2));
+};
+
+export const categoriasNechapi = {
+  anger: [5, 7, 8, 10, 13, 17, 18, 19, 25, 26, 31, 35],
+  sensation: [1, 2, 20, 27, 28, 36, 37, 38, 40],
+  emotional: [3, 4, 6, 11, 12, 24, 32, 33, 34],
+  sociability: [14, 15, 16, 27],
+  motivation: [21, 22, 23, 29, 30, 39],
+};
+
+export const getPuntuacionNechapi = (categoria, respuestas, tiempo) => {
+  let total = 0;
+  let puntuacion = 0;
+  categoriasNechapi[categoria].forEach((numero) => {
+    let respuesta = respuestas.find((resp) => resp.numero === numero);
+    total += 5;
+    if (respuesta) {
+      puntuacion += respuesta[tiempo];
+    }
+  });
+  return parseFloat((puntuacion / total).toFixed(2));
+};
+
+export const generateRandom = (type) => {
+  if (type === "nechapi") {
+    return new Array(24).fill(1).map((one, index) => ({
+      numero: index + 1,
+      antes: parseFloat(Math.floor(Math.random() * 5 + 1) * 100),
+      despues: parseFloat(Math.floor(Math.random() * 5 + 1) * 100),
+    }));
+  }
+  return new Array(24).fill(1).map((one, index) => ({
+    numero: index + 1,
+    respuesta: Math.floor(Math.random() * 2) > 1,
+  }));
+};

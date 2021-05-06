@@ -3,9 +3,33 @@ import ResultadosReducer from "../reducers/ResultadosReducer";
 import ResultadosService from "../services/ResultadosService";
 import { RESULTADOS_RECIBIDOS, SINGLE_RESULTADO_RECIBIDO } from "../types";
 import moment from "moment";
+import { generateRandom } from "../utils";
 
 const initialState = {
   resultados: null,
+};
+
+const cuestionarios = {
+  nechapi: {
+    idPatient: 1,
+    nombre: "Juan Manuel",
+    idCuestionario: 2,
+    nombre_cuestionario: "nechapi",
+    relacion: "Familiar directo",
+    observaciones: "ninguna",
+    fecha_hora: "2021-04-29",
+    respuestas: generateRandom("nechapi"),
+  },
+  cupom: {
+    idPatient: 1,
+    nombre: "Juan Manuel",
+    idCuestionario: 2,
+    nombre_cuestionario: "cupom",
+    relacion: "Familiar directo",
+    observaciones: "ninguna",
+    fecha_hora: "2021-04-29",
+    respuestas: generateRandom("cupom"),
+  },
 };
 
 export const ResultadosContext = createContext(initialState);
@@ -17,6 +41,10 @@ export const ResultadosProvider = ({ children }) => {
     ResultadosService.getResultados().then((res) => {
       dispatch({ type: RESULTADOS_RECIBIDOS, payload: res.data.data });
     });
+  };
+
+  const getCuestionarioResults = (type) => {
+    dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: cuestionarios[type] });
   };
 
   const fetchResults = (idPatient, idTestType, date) => {
@@ -47,7 +75,13 @@ export const ResultadosProvider = ({ children }) => {
 
   return (
     <ResultadosContext.Provider
-      value={{ ...state, getResultados, fetchResults, getSingleTest }}
+      value={{
+        ...state,
+        getResultados,
+        fetchResults,
+        getSingleTest,
+        getCuestionarioResults,
+      }}
     >
       {children}
     </ResultadosContext.Provider>

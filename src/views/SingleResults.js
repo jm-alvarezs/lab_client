@@ -190,6 +190,7 @@ const SingleResults = ({ id }) => {
           </div>
         );
       }
+      return <p>Prueba no completada.</p>;
     }
   };
 

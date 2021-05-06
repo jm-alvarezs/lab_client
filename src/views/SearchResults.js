@@ -41,7 +41,7 @@ const SearchResults = () => {
                 setQuery("");
               }}
             >
-              {paciente.name}
+              #{paciente.id} - {paciente.name} - {paciente.email}
             </button>
           </li>
         ));
