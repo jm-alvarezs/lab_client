@@ -47,3 +47,8 @@ export const CREATE_USUARIO = "CREATE_USUARIO";
  * Pacientes
  */
 export const PACIENTES_RECIBIDOS = "PACIENTES_RECIBIDOS";
+/**
+ * Surveys
+ */
+export const SURVEYS_RECIBIDAS = "SURVEYS_RECIBIDAS";
+export const SINGLE_SURVEY_RECIBIDA = "SINGLE_SURVEY_RECIBIDA";

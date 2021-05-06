@@ -10,6 +10,7 @@ import Results from "./Results";
 import SinglePaciente from "./SinglePaciente";
 import SingleResults from "./SingleResults";
 import ResultadosCuestionario from "./ResultadosCuestionario";
+import Cuestionario from "./Cuestionario";
 
 const Home = () => {
   return (
@@ -30,6 +31,7 @@ const Home = () => {
           {/* Cuenta */}
           <Cuenta path="/cuenta" />
           {/* Cuestionarios */}
+          <Cuestionario path="/cuestionario/:tipo/:idPaciente" />
           <ResultadosCuestionario path="/resultados/cuestionario/:type" />
         </Router>
       </div>

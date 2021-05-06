@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PreguntasCUPOM from "../components/cuestionario/PreguntasCUPOM";
 import PreguntasNechapi from "../components/cuestionario/PreguntasNechapi";
+import { SurveyContext } from "../context/SurveyContext";
+import { UserContext } from "../context/UserContext";
 
-const Cuestionario = ({ tipo }) => {
+const Cuestionario = ({ tipo, idPaciente }) => {
   const [step, setStep] = useState(1);
   const [nombre, setNombre] = useState("");
   const [relacion, setRelacion] = useState("familiar-directo");
   const [observacones, setObservacones] = useState("");
+
+  const { user } = useContext(UserContext);
+
+  const { postSurvey } = useContext(SurveyContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,14 +21,17 @@ const Cuestionario = ({ tipo }) => {
     }
   };
 
-  const postPreguntas = (preguntas) => {
-    const req = {
-      nombre,
-      relacion,
+  const postPreguntas = (questions) => {
+    const data = {
+      idPatient: idPaciente,
+      idUser: user.id,
+      name: nombre,
+      relationship: relacion,
+      idSurvey: tipo === "cupom" ? 1 : 2,
       observacones,
-      preguntas,
+      questions,
     };
-    console.log(req);
+    postSurvey(data);
   };
 
   const renderForm = () => {
