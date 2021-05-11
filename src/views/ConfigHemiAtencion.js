@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PruebasContext } from "../context/PruebasContext";
 
-const ConfigCondicional = ({ idPaciente }) => {
+const ConfigHemiAtencion = ({ idPaciente }) => {
   const [config, setConfig] = useState({
     idTestType: 2,
     tiempoExposicion: "500",
@@ -12,14 +12,18 @@ const ConfigCondicional = ({ idPaciente }) => {
     fontSize: "24",
     color: "#fff",
     backgroundColor: "#000",
-    clave: "X",
-    claveTarget: "37",
-    noClaveTarget: "19",
-    claveNoTarget: "19",
-    noClaveNoTarget: "75",
-    paresTotales: "150",
     keyCode: "13",
     duracion: "10",
+    radioFijacion: "20",
+    colorFijacion: "#fff",
+    estimulosQ1: "50",
+    estimulosQ2: "50",
+    estimulosQ3: "50",
+    estimulosQ4: "50",
+    aparicionQ1: "17",
+    aparicionQ2: "17",
+    aparicionQ3: "17",
+    aparicionQ4: "17",
     idPatient: "",
   });
 
@@ -39,12 +43,22 @@ const ConfigCondicional = ({ idPaciente }) => {
       )
       .filter((obj) => obj !== null)
       .join("&");
-    postPrueba(config, "condicional");
+    postPrueba(config, "hemi");
   };
 
   const handleChange = (key, e) => {
     const { value } = e.target;
     setConfig({ ...config, [key]: value });
+  };
+
+  const getNumeroDeEstimulos = () => {
+    const { estimulosQ1, estimulosQ2, estimulosQ3, estimulosQ4 } = config;
+    return (
+      parseInt(estimulosQ1) +
+      parseInt(estimulosQ2) +
+      parseInt(estimulosQ3) +
+      parseInt(estimulosQ4)
+    );
   };
 
   const {
@@ -56,21 +70,25 @@ const ConfigCondicional = ({ idPaciente }) => {
     fontSize,
     color,
     backgroundColor,
-    paresTotales,
-    clave,
-    claveTarget,
-    claveNoTarget,
-    noClaveTarget,
-    noClaveNoTarget,
     keyCode,
     duracion,
+    radioFijacion,
+    colorFijacion,
+    estimulosQ1,
+    estimulosQ2,
+    estimulosQ3,
+    estimulosQ4,
+    aparicionQ1,
+    aparicionQ2,
+    aparicionQ3,
+    aparicionQ4,
   } = config;
 
   return (
     <div className="container-fluid">
       <div className="row mx-0">
         <div className="container mt-2">
-          <h1 className="mb-4 h3">Configuración - Atención Condicional</h1>
+          <h1 className="mb-4 h3">Configuración - Hemi Atención</h1>
           <div className="card p-3 mb-4 shadow-sm">
             <form onSubmit={handleSubmit}>
               <h2 className="h4 mb-3 border-bottom pb-3">Parámetros</h2>
@@ -197,99 +215,6 @@ const ConfigCondicional = ({ idPaciente }) => {
               </div>
               <div className="row">
                 <div className="col-6">
-                  <label>Clave</label>
-                </div>
-                <div className="col-6">
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    value={clave}
-                    onChange={(e) => handleChange("clave", e)}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <label>Pares Clave - Target</label>
-                </div>
-                <div className="col-3">
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    value={claveTarget}
-                    onChange={(e) => handleChange("claveTarget", e)}
-                  />
-                </div>
-                <div className="col-3">
-                  <p>número</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <label>Pares No Clave - Target</label>
-                </div>
-                <div className="col-3">
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    value={noClaveTarget}
-                    onChange={(e) => handleChange("noClaveTarget", e)}
-                  />
-                </div>
-                <div className="col-3">
-                  <p>número</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <label>Pares Clave - No Target</label>
-                </div>
-                <div className="col-3">
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    value={claveNoTarget}
-                    onChange={(e) => handleChange("claveNoTarget", e)}
-                  />
-                </div>
-                <div className="col-3">
-                  <p>número</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <label>Pares No Clave - No Target</label>
-                </div>
-                <div className="col-3">
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    value={noClaveNoTarget}
-                    onChange={(e) => handleChange("noClavenoTarget", e)}
-                  />
-                </div>
-                <div className="col-3">
-                  <p>número</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <label>Pares Totales</label>
-                </div>
-                <div className="col-3">
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    value={paresTotales}
-                    onChange={(e) => handleChange("paresTotales", e)}
-                  />
-                </div>
-                <div className="col-3">
-                  <p>número</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
                   <label>Botón o tecla de respuesta</label>
                 </div>
                 <div className="col-6">
@@ -302,6 +227,164 @@ const ConfigCondicional = ({ idPaciente }) => {
                     <option>Intro</option>
                     <option>Cualquiera</option>
                   </select>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Radio de Punto de Fijación</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={radioFijacion}
+                    onChange={(e) => handleChange("radioFijacion", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>pixeles</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Color de Punto de Fijación</label>
+                </div>
+                <div className="col-6">
+                  <input
+                    type="color"
+                    className="form-control mb-3"
+                    value={colorFijacion}
+                    onChange={(e) => handleChange("colorFijacion", e)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Número de Estímulos de Cuadrante 1</label>
+                </div>
+                <div className="col-6">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={estimulosQ1}
+                    onChange={(e) => handleChange("estimulosQ1", e)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Número de Estímulos de Cuadrante 2</label>
+                </div>
+                <div className="col-6">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={estimulosQ2}
+                    onChange={(e) => handleChange("estimulosQ2", e)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Número de Estímulos de Cuadrante 3</label>
+                </div>
+                <div className="col-6">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={estimulosQ3}
+                    onChange={(e) => handleChange("estimulosQ3", e)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Número de Estímulos de Cuadrante 4</label>
+                </div>
+                <div className="col-6">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={estimulosQ4}
+                    onChange={(e) => handleChange("estimulosQ4", e)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Aparición del Target Cuadrante 1</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={aparicionQ1}
+                    onChange={(e) => handleChange("aparicionQ1", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>%</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Aparición del Target Cuadrante 2</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={aparicionQ2}
+                    onChange={(e) => handleChange("aparicionQ2", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>%</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Aparición del Target Cuadrante 3</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={aparicionQ3}
+                    onChange={(e) => handleChange("aparicionQ3", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>%</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Aparición del Target Cuadrante 4</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={aparicionQ4}
+                    onChange={(e) => handleChange("aparicionQ4", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>%</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Número de Estímulos</label>
+                </div>
+                <div className="col-6">
+                  <input
+                    type="number"
+                    className="form-control mb-3"
+                    value={getNumeroDeEstimulos()}
+                    disabled
+                  />
                 </div>
               </div>
               <div className="row">
@@ -335,4 +418,4 @@ const ConfigCondicional = ({ idPaciente }) => {
   );
 };
 
-export default ConfigCondicional;
+export default ConfigHemiAtencion;

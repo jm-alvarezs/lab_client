@@ -16,6 +16,13 @@ const Pacientes = () => {
         <UsuarioRow key={usuario.id} usuario={usuario} />
       ));
     }
+    return (
+      <tr>
+        <td>
+          <div className="spinner-border"></div>
+        </td>
+      </tr>
+    );
   };
 
   return (

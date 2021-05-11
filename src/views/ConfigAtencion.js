@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import Breadcrumbs from "../components/global/Breadcrumbs";
+import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 
 const ConfigAtencion = ({ idPaciente }) => {
@@ -16,13 +18,15 @@ const ConfigAtencion = ({ idPaciente }) => {
     aparicion: "17",
     keyCode: "13",
     duracion: "10",
-    nombre: "",
   });
 
   const { spinner, postPrueba } = useContext(PruebasContext);
 
+  const { paciente, getSinglePaciente } = useContext(PacientesContext);
+
   useEffect(() => {
     setConfig({ ...config, idPatient: idPaciente });
+    getSinglePaciente(idPaciente);
   }, []);
 
   const handleSubmit = (e) => {
@@ -48,30 +52,25 @@ const ConfigAtencion = ({ idPaciente }) => {
     aparicion,
     keyCode,
     duracion,
-    nombre,
-    sujeto,
   } = config;
 
   return (
     <div className="container-fluid">
       <div className="row mx-0">
         <div className="container mt-2">
+          <Breadcrumbs
+            elements={[
+              { name: "Pacientes", href: "/pacientes" },
+              {
+                name:
+                  paciente && paciente !== null ? paciente.name : "Paciente",
+                href: `/pacientes/${idPaciente}`,
+              },
+            ]}
+          />
           <h1 className="mb-4 h3">Configuración - Atención Simple</h1>
           <div className="card p-3 mb-4 shadow-sm">
             <form onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="col-6">
-                  <label>Nombre de la Prueba</label>
-                </div>
-                <div className="col-6">
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    value={nombre}
-                    onChange={(e) => handleChange("nombre", e)}
-                  />
-                </div>
-              </div>
               <h2 className="h4 mb-3 border-bottom pb-3">Parámetros</h2>
               <div className="row">
                 <div className="col-6">

@@ -11,6 +11,7 @@ import SinglePaciente from "./SinglePaciente";
 import SingleResults from "./SingleResults";
 import ResultadosCuestionario from "./ResultadosCuestionario";
 import Cuestionario from "./Cuestionario";
+import ConfigHemiAtencion from "./ConfigHemiAtencion";
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
           <Pruebas path="/pruebas" />
           <ConfigAtencion path="/config/atencion/:idPaciente" />
           <ConfigCondicional path="/config/condicional/:idPaciente" />
+          <ConfigHemiAtencion path="/config/hemi/:idPaciente" />
           {/* Resultados */}
           <Results path="/resultados" />
           <SingleResults path="/resultados/:id" />

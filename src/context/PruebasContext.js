@@ -79,6 +79,7 @@ export const PruebasProvider = ({ children }) => {
             type && type !== null ? `/${type}` : ""
           }?idTest=${idTest}&token=${accessUrl.token}&` + args;
         dispatch({ type: HIDE_SPINNER });
+        console.log(url);
         window.open(url, "_blank");
       });
     });
