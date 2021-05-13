@@ -1,9 +1,11 @@
-import { Link } from "@reach/router";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UsuarioRow from "../components/usuarios/UsuarioRow";
 import { UsuariosContext } from "../context/UsuariosContext";
+import { Link } from "@reach/router";
+import { searchRows } from "../utils";
 
 const Pacientes = () => {
+  const [query, setQuery] = useState("");
   const { usuarios, getUsuarios } = useContext(UsuariosContext);
 
   useEffect(() => {
@@ -12,7 +14,20 @@ const Pacientes = () => {
 
   const renderUsuarios = () => {
     if (usuarios && usuarios !== null) {
-      return usuarios.map((usuario) => (
+      let usuariosRender = [...usuarios];
+      if (query !== "") {
+        usuariosRender = searchRows(query, usuariosRender);
+      }
+      if (usuariosRender.length === 0) {
+        return (
+          <tr>
+            <td>
+              <p>No hay usuarios</p>
+            </td>
+          </tr>
+        );
+      }
+      return usuariosRender.map((usuario) => (
         <UsuarioRow key={usuario.id} usuario={usuario} />
       ));
     }
@@ -32,7 +47,7 @@ const Pacientes = () => {
           <h1>Pacientes</h1>
         </div>
         <div className="col-12 col-md-6 text-right px-0">
-          <Link to="/usuarios/nuevo" className="btn btn-dark">
+          <Link to="/pacientes/nuevo" className="btn btn-dark">
             + Agregar
           </Link>
         </div>
@@ -41,6 +56,8 @@ const Pacientes = () => {
         type="text"
         className="form-control mb-3"
         placeholder="Buscar por nombre o correo electrónico.."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
       <div className="row mx-0">
         <div className="container card">

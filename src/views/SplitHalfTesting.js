@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { calculateAverage, randomize } from "../utils";
 
-const SplitHalfTesting = ({ items, column, result }) => {
+const SplitHalfTesting = ({
+  items,
+  average_one,
+  average_two,
+  column,
+  result,
+}) => {
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
   const [iterations, setIterations] = useState(100);
@@ -18,7 +24,9 @@ const SplitHalfTesting = ({ items, column, result }) => {
   };
 
   const cleanArray = (items) => {
-    return items.map((item) => item[column]);
+    return items
+      .map((item) => item[column])
+      .filter((item) => item !== undefined && item !== null);
   };
 
   const calculateMedians = (items) => {
@@ -29,37 +37,16 @@ const SplitHalfTesting = ({ items, column, result }) => {
     let secondAvg = calculateAverage(secondHalf);
     return { firstAvg, secondAvg };
   };
+
   return (
     <div className="container px-0">
       <h2>Prueba de Fiabilidad</h2>
-      <div className="row my-2 align-items-center">
-        <div className="col col-md-6">
-          <label>Iteraciones</label>
-        </div>
-        <div className="col col-md-6">
-          <input
-            type="number"
-            min={0}
-            className="form-control"
-            value={iterations}
-            onChange={(e) => setIterations(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="row align-items-center my-2">
-        <div className="col col-md-6">
-          <label>Parametro</label>
-        </div>
-        <div className="col col-md-6">
-          <label>{column}</label>
-        </div>
-      </div>
       <div className="row align-items-center my-2">
         <div className="col col-md-6">
           <label>1era Mitad</label>
         </div>
         <div className="col col-md-6">
-          <label>{isNaN(first) ? "N/D" : ""}</label>
+          <label>{average_one} ms</label>
         </div>
       </div>
       <div className="row align-items-center my-2">
@@ -67,7 +54,7 @@ const SplitHalfTesting = ({ items, column, result }) => {
           <label>2da Mitad</label>
         </div>
         <div className="col col-md-6">
-          <label>{isNaN(second) ? "N/D" : ""}</label>
+          <label>{average_two} ms</label>
         </div>
       </div>
       <div className="row align-items-center my-2">
@@ -75,7 +62,7 @@ const SplitHalfTesting = ({ items, column, result }) => {
           <label>Resultado</label>
         </div>
         <div className="col col-md-6">
-          <label>{result}</label>
+          <label>{calculateAverage(cleanArray(items))} ms</label>
         </div>
       </div>
     </div>

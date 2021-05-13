@@ -1,4 +1,8 @@
-import { RESULTADOS_RECIBIDOS, SINGLE_RESULTADO_RECIBIDO } from "../types";
+import {
+  FIABILITY_RECIBIDA,
+  RESULTADOS_RECIBIDOS,
+  SINGLE_RESULTADO_RECIBIDO,
+} from "../types";
 
 export default (state, { type, payload }) => {
   switch (type) {
@@ -6,6 +10,8 @@ export default (state, { type, payload }) => {
       return { ...state, resultados: payload };
     case SINGLE_RESULTADO_RECIBIDO:
       return { ...state, resultado: payload };
+    case FIABILITY_RECIBIDA:
+      return { ...state, fiability: payload };
     default:
       return { ...state };
   }

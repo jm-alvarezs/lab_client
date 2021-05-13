@@ -1,7 +1,11 @@
 import React, { createContext, useReducer } from "react";
 import ResultadosReducer from "../reducers/ResultadosReducer";
 import ResultadosService from "../services/ResultadosService";
-import { RESULTADOS_RECIBIDOS, SINGLE_RESULTADO_RECIBIDO } from "../types";
+import {
+  RESULTADOS_RECIBIDOS,
+  SINGLE_RESULTADO_RECIBIDO,
+  FIABILITY_RECIBIDA,
+} from "../types";
 import moment from "moment";
 import { generateRandom } from "../utils";
 
@@ -74,13 +78,21 @@ export const ResultadosProvider = ({ children }) => {
     });
   };
 
+  const getFiablity = () => {
+    ResultadosService.getFiability().then((res) => {
+      const data = res.data.data;
+      dispatch({ type: FIABILITY_RECIBIDA, payload: data });
+    });
+  };
+
   return (
     <ResultadosContext.Provider
       value={{
         ...state,
-        getResultados,
+        getFiablity,
         fetchResults,
         getSingleTest,
+        getResultados,
         getCuestionarioResults,
       }}
     >

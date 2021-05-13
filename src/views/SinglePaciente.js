@@ -88,7 +88,7 @@ const SinglePaciente = ({ id }) => {
             <h1>Paciente</h1>
           </div>
           <div className="col-12 col-md-6 text-right">
-            <button
+            {/*<button
               className="btn btn-outline-dark"
               onClick={() => setEditMode(!editMode)}
             >
@@ -99,7 +99,7 @@ const SinglePaciente = ({ id }) => {
                   <i className="fa fa-edit"></i> Editar
                 </>
               )}
-            </button>
+            </button>*/}
           </div>
         </div>
         <div className="card p-3 shadow-sm my-3">

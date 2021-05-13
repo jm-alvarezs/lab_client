@@ -9,4 +9,5 @@ export default {
       `${route}/search?idPatient=${idPatient}&type=${idTestType}&date=${date}`
     ),
   getSingleTest: (id) => api.get(`${route}/${id}`),
+  getFiability: () => api.get(`${route}/fiability`),
 };
