@@ -37,6 +37,9 @@ body {
   border-radius: 10px 10px 0px 0px;
   background-color: var(--light);
 }
+.login-img {
+  object-fit: cover;
+}
 
 .vh-50 {
   height: 50vh;

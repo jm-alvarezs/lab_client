@@ -375,6 +375,6 @@ export const generateRandom = (type) => {
   }
   return new Array(24).fill(1).map((one, index) => ({
     numero: index + 1,
-    respuesta: Math.floor(Math.random() * 2) > 1,
+    respuesta: Math.floor(Math.random() * 1) > 1,
   }));
 };

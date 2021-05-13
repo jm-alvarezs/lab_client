@@ -290,7 +290,7 @@ const ResultadosCuestionario = ({ type, id }) => {
                   "Búsqueda de sensaciones",
                   "Vulnerabilidad",
                   "Sociabilidad",
-                  "Motviación",
+                  "Motivación",
                 ],
               },
               yaxis: {

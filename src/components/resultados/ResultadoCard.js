@@ -22,7 +22,16 @@ const ResultadoCard = ({ resultado }) => {
           </p>
         </div>
         <div className="col col-md-6 text-right">
-          <Link to={`./${resultado.id}`} className="btn btn-outline-secondary">
+          <Link
+            to={`./${
+              resultado.surveyType
+                ? `cuestionario/${String(
+                    resultado.surveyType.name
+                  ).toLowerCase()}`
+                : resultado.id
+            }`}
+            className="btn btn-outline-secondary"
+          >
             <i className="fa fa-eye"></i> Consultar
           </Link>
         </div>

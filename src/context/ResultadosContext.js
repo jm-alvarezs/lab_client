@@ -48,6 +48,7 @@ export const ResultadosProvider = ({ children }) => {
   };
 
   const getCuestionarioResults = (type) => {
+    console.log(cuestionarios[type]);
     dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: cuestionarios[type] });
   };
 
