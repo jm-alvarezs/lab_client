@@ -1,4 +1,5 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
+import PostPrueba from "../components/pruebas/PostPrueba";
 import PruebasReducer from "../reducers/PruebasReducer";
 import PruebasService from "../services/PruebasService";
 import UsuarioService from "../services/UsuarioService";
@@ -8,6 +9,7 @@ import {
   SHOW_SPINNER,
   TEST_READY,
 } from "../types";
+import { ModalContext } from "./ModalContext";
 
 const initialState = {
   pruebas: null,
@@ -39,6 +41,8 @@ export const PruebasContext = createContext(initialState);
 
 export const PruebasProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PruebasReducer, initialState);
+
+  const { modalComponent } = useContext(ModalContext);
 
   const getPrueba = (idTest, token) => {
     if (token) {
@@ -79,8 +83,8 @@ export const PruebasProvider = ({ children }) => {
             type && type !== null ? `/${type}` : ""
           }?idTest=${idTest}&token=${accessUrl.token}&` + args;
         dispatch({ type: HIDE_SPINNER });
-        console.log(url);
-        window.open(url, "_blank");
+        modalComponent("Prueba Agregada", <PostPrueba url={url} type={type} />);
+        //window.open(url, "_blank");
       });
     });
   };

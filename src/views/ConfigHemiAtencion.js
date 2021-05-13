@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { ModalContext } from "../context/ModalContext";
 import { PruebasContext } from "../context/PruebasContext";
 
 const ConfigHemiAtencion = ({ idPaciente }) => {
@@ -28,6 +29,8 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
   });
 
   const { spinner, postPrueba } = useContext(PruebasContext);
+
+  const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
     setConfig({ ...config, idPatient: parseInt(idPaciente) });

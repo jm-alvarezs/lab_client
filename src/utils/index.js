@@ -99,6 +99,7 @@ export const showModal = () => {
     newButton.setAttribute("data-bs-target", "#modal");
     newButton.style.visibility = "hidden";
     document.body.appendChild(newButton);
+    console.log(newButton);
     newButton.click();
   }
 };

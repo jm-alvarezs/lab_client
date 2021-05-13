@@ -2,14 +2,8 @@ import React, { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
 
 export default function () {
-  const {
-    title,
-    content,
-    component,
-    children,
-    onCancel,
-    onSuccess,
-  } = useContext(ModalContext);
+  const { title, content, component, children, onCancel, onSuccess } =
+    useContext(ModalContext);
   return (
     <div
       className="modal fade"

@@ -8,18 +8,28 @@ import { ModalContext } from "../context/ModalContext";
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const defaultConfig = {
+  idTestType: 2,
   tiempoExposicion: 500,
   tiempoInterestimular: 500,
   target: "O",
   fontFamily: "Courier",
-  fontStyle: "bold",
+  fontStyle: "Normal",
+  fontSize: 24,
   color: "#fff",
-  fontSize: 85,
   backgroundColor: "#000",
-  estimulos: 10,
-  aparicion: 17,
-  keyCode: 32,
-  duration: 5 * 60,
+  keyCode: "13",
+  duracion: 10,
+  radioFijacion: 20,
+  colorFijacion: "#fff",
+  estimulosQ1: 50,
+  estimulosQ2: 50,
+  estimulosQ3: 50,
+  estimulosQ4: 50,
+  aparicionQ1: 17,
+  aparicionQ2: 17,
+  aparicionQ3: 17,
+  aparicionQ4: 17,
+  idPatient: "",
 };
 
 const styleProperties = [
@@ -30,8 +40,11 @@ const styleProperties = [
   "backgroundColor",
 ];
 
-const AtencionSimple = () => {
-  const [display, setDisplay] = useState("");
+const AtencionHemi = () => {
+  const [displayQ1, setDisplayQ1] = useState("");
+  const [displayQ2, setDisplayQ2] = useState("");
+  const [displayQ3, setDisplayQ3] = useState("");
+  const [displayQ4, setDisplayQ4] = useState("");
   const [started, setStarted] = useState(false);
   const [config, setConfig] = useState({});
   const [styleObject, setStyleObject] = useState({});
@@ -131,7 +144,7 @@ const AtencionSimple = () => {
       start: startTime,
       end: endTime,
       targets,
-      target: defaultConfig.target,
+      target: config.target,
       finished: true,
       idTest: config.idTest,
       idPatient: config.idPatient,
@@ -141,39 +154,102 @@ const AtencionSimple = () => {
     setThankyou(true);
   };
 
-  const start = () => {
-    setStarted(true);
-    getStyle();
-    document.body.addEventListener("keydown", handleKey);
-    startTime = moment();
+  const getCharacterArray = (target, aparicion, total) => {
+    let max = aparicion * total;
     let charTargets = [];
-    const porcAparicion = defaultConfig.aparicion / 100;
-    const numberTargets = Math.ceil(defaultConfig.estimulos * porcAparicion);
-    for (let i = 0; i < numberTargets; i++) {
-      charTargets.push(defaultConfig.target);
+    for (let i = 0; i < max; i++) {
+      charTargets.push(target);
     }
-    for (let i = numberTargets; i < defaultConfig.estimulos; i++) {
+    for (let i = max; i < total; i++) {
       let current = Math.floor(Math.random() * characters.length) + 1;
       let currentTarget = characters[current];
       charTargets.push(currentTarget);
     }
     charTargets = shuffle(charTargets);
+    return charTargets;
+  };
+
+  const start = () => {
+    setStarted(true);
+    getStyle();
+    document.body.addEventListener("keydown", handleKey);
+    startTime = moment();
+    const porcAparicionQ1 = config.aparicionQ1 / 100;
+    const porcAparicionQ2 = config.aparicionQ2 / 100;
+    const porcAparicionQ3 = config.aparicionQ3 / 100;
+    const porcAparicionQ4 = config.aparicionQ4 / 100;
+    let charTargetsQ1 = getCharacterArray(
+      config.target,
+      porcAparicionQ1,
+      config.estimulosQ1
+    );
+    let charTargetsQ2 = getCharacterArray(
+      config.target,
+      porcAparicionQ2,
+      config.estimulosQ2
+    );
+    let charTargetsQ3 = getCharacterArray(
+      config.target,
+      porcAparicionQ3,
+      config.estimulosQ3
+    );
+    let charTargetsQ4 = getCharacterArray(
+      config.target,
+      porcAparicionQ4,
+      config.estimulosQ4
+    );
+    const total =
+      config.estimulosQ1 +
+      config.estimulosQ2 +
+      config.estimulosQ3 +
+      config.estimulosQ4;
+    console.log(total);
     let intervalo =
       parseInt(config["tiempoInterestimular"]) +
       parseInt(config["tiempoExposicion"]);
     interval = setInterval(() => {
-      if (estimulos >= config["estimulos"]) {
+      if (estimulos >= total) {
         endTest();
       } else {
-        const currentTarget = charTargets[estimulos];
-        setDisplay(currentTarget);
+        let cuadrante = Math.floor(Math.random() * 4 + 1);
+        let currentTarget = "";
+        switch (cuadrante) {
+          case 1:
+            if (charTargetsQ1.length > 0) {
+              currentTarget = charTargetsQ1.shift();
+              setDisplayQ1(currentTarget);
+              break;
+            }
+          case 2:
+            if (charTargetsQ2.length > 0) {
+              currentTarget = charTargetsQ2.shift();
+              setDisplayQ2(currentTarget);
+              break;
+            }
+          case 3:
+            if (charTargetsQ3.length > 0) {
+              currentTarget = charTargetsQ3.shift();
+              setDisplayQ3(currentTarget);
+              break;
+            }
+          default:
+            if (charTargetsQ4.length > 0) {
+              currentTarget = charTargetsQ4.shift();
+              setDisplayQ4(currentTarget);
+            }
+            cuadrante = 4;
+        }
         targets.push({
           timestamp: moment(),
           target: currentTarget,
+          cuadrante,
         });
         estimulos++;
         setTimeout(() => {
-          setDisplay("");
+          setDisplayQ1("");
+          setDisplayQ2("");
+          setDisplayQ3("");
+          setDisplayQ4("");
         }, parseInt(config["tiempoExposicion"]));
       }
     }, intervalo);
@@ -236,12 +312,46 @@ const AtencionSimple = () => {
           </div>
         </div>
       ) : (
-        <div id="test-container" style={{ ...styleObject }}>
-          {display}
+        <div id="test-container" style={{ ...styleObject, paddingTop: 0 }}>
+          <div
+            style={{
+              position: "absolute",
+              top: window.innerHeight / 2 - config.radioFijacion / 2,
+              left: window.innerWidth / 2 - config.radioFijacion / 2,
+              width: `${config.radioFijacion}px`,
+              height: `${config.radioFijacion}px`,
+              backgroundColor: config.colorFijacion,
+              borderRadius: `${config.radioFijacion * 2}px`,
+            }}
+          />
+          <div className="row vh-50 align-items-center">
+            <div className="col-6 h-100">
+              <div className="row h-100 align-items-center">
+                <div className="container-fluid text-center">{displayQ1}</div>
+              </div>
+            </div>
+            <div className="col-6 h-100">
+              <div className="row h-100 align-items-center">
+                <div className="container-fluid text-center">{displayQ2}</div>
+              </div>
+            </div>
+          </div>
+          <div className="row vh-50 align-items-center">
+            <div className="col-6 h-100">
+              <div className="row h-100 align-items-center">
+                <div className="container-fluid text-center">{displayQ3}</div>
+              </div>
+            </div>
+            <div className="col-6 h-100">
+              <div className="row h-100 align-items-center">
+                <div className="container-fluid text-center">{displayQ4}</div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default AtencionSimple;
+export default AtencionHemi;

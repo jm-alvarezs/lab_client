@@ -9,8 +9,8 @@ import Main from "./views/Main";
 
 function App() {
   return (
-    <UserProvider>
-      <ModalProvider>
+    <ModalProvider>
+      <UserProvider>
         <PruebasProvider>
           <ResultadosProvider>
             <UsuariosProvider>
@@ -22,8 +22,8 @@ function App() {
             </UsuariosProvider>
           </ResultadosProvider>
         </PruebasProvider>
-      </ModalProvider>
-    </UserProvider>
+      </UserProvider>
+    </ModalProvider>
   );
 }
 

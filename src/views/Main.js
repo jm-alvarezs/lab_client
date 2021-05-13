@@ -9,7 +9,7 @@ import ErrorAlert from "../components/global/ErrorAlert";
 import SuccessAlert from "../components/global/SuccessAlert";
 import Modal from "../components/global/Modal";
 import AtencionCondicional from "./AtencionCondicional";
-import Breadcrumbs from "../components/global/Breadcrumbs";
+import AtencionHemi from "./AtencionHemi";
 
 const Main = () => {
   const { user, userLoggedIn } = useContext(UserContext);
@@ -29,7 +29,8 @@ const Main = () => {
           </>
         )}
         <AtencionSimple path="/atencion/*" />
-        <AtencionCondicional path="/atencion/condicional" />
+        <AtencionCondicional path="/atencion/condicional/*" />
+        <AtencionHemi path="/atencion/hemi/*" />
       </Router>
       <Modal />
       <ErrorAlert />
