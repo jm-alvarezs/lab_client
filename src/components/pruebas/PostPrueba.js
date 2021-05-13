@@ -31,6 +31,12 @@ const PostPrueba = ({ type, url }) => {
           <button className="btn btn-dark w-100">Enviar</button>
         </div>
       </div>
+      <button
+        className="btn btn-warning w-100 mt-3 mb-2"
+        onClick={() => window.open(url, "_blank")}
+      >
+        Abrir Ahora
+      </button>
       <button className="btn btn-light w-100 mt-3 mb-2" onClick={copyURL}>
         <i className="fa fa-copy"></i> Copiar Enlace
       </button>

@@ -10,6 +10,7 @@ import SuccessAlert from "../components/global/SuccessAlert";
 import Modal from "../components/global/Modal";
 import AtencionCondicional from "./AtencionCondicional";
 import AtencionHemi from "./AtencionHemi";
+import AnswerCuestionario from "./AnswerCuestionario";
 
 const Main = () => {
   const { user, userLoggedIn } = useContext(UserContext);
@@ -31,6 +32,7 @@ const Main = () => {
         <AtencionSimple path="/atencion/*" />
         <AtencionCondicional path="/atencion/condicional/*" />
         <AtencionHemi path="/atencion/hemi/*" />
+        <AnswerCuestionario path="/cuestionario/answer/*" />
       </Router>
       <Modal />
       <ErrorAlert />

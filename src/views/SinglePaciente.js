@@ -60,13 +60,13 @@ const SinglePaciente = ({ id }) => {
               Hemi Atención
             </Link>
             <Link
-              to="/cuestionario/CUPOM"
+              to={`/cuestionario/CUPOM/${id}`}
               className="btn btn-outline-dark my-2"
             >
               Cuestionario CUPOM
             </Link>
             <Link
-              to="/cuestionario/nechapi"
+              to={`/cuestionario/nechapi/${id}`}
               className="btn btn-outline-dark my-2"
             >
               Cuestionario Nechapi
@@ -87,20 +87,7 @@ const SinglePaciente = ({ id }) => {
           <div className="col-12 col-md-6">
             <h1>Paciente</h1>
           </div>
-          <div className="col-12 col-md-6 text-right">
-            {/*<button
-              className="btn btn-outline-dark"
-              onClick={() => setEditMode(!editMode)}
-            >
-              {editMode ? (
-                "Cancelar"
-              ) : (
-                <>
-                  <i className="fa fa-edit"></i> Editar
-                </>
-              )}
-            </button>*/}
-          </div>
+          <div className="col-12 col-md-6 text-right"></div>
         </div>
         <div className="card p-3 shadow-sm my-3">
           <h2 className="border-bottom pb-3 mb-3">Expediente</h2>

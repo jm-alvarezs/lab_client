@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PreguntasCUPOM from "../components/cuestionario/PreguntasCUPOM";
 import PreguntasNechapi from "../components/cuestionario/PreguntasNechapi";
+import { PacientesContext } from "../context/PacientesContext";
 import { SurveyContext } from "../context/SurveyContext";
 import { UserContext } from "../context/UserContext";
 
@@ -12,98 +13,28 @@ const Cuestionario = ({ tipo, idPaciente }) => {
 
   const { user } = useContext(UserContext);
 
+  const { paciente, getSinglePaciente } = useContext(PacientesContext);
+
   const { postSurvey } = useContext(SurveyContext);
+
+  useEffect(() => {
+    getSinglePaciente(idPaciente);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (step === 1) {
-      setStep(2);
-    }
-  };
-
-  const postPreguntas = (questions) => {
-    const data = {
+    postSurvey({
       idPatient: idPaciente,
-      idUser: user.id,
-      name: nombre,
-      relationship: relacion,
-      idSurvey: tipo === "cupom" ? 1 : 2,
-      observacones,
-      questions,
-    };
-    postSurvey(data);
-  };
-
-  const renderForm = () => {
-    return (
-      <form onSubmit={handleSubmit} className="mb-4">
-        <div className="row my-2 mx-0">
-          <div className="col-12 col-md-6">
-            <label>Nombre</label>
-          </div>
-          <div className="col-12 col-md-6">
-            <input
-              type="text"
-              className="form-control"
-              onChange={(e) => setNombre(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="row my-2 mx-0">
-          <div className="col-12 col-md-6">
-            <label>Relación con el Paciente</label>
-          </div>
-          <div className="col-12 col-md-6">
-            <select
-              className="form-control"
-              onChange={(e) => setRelacion(e.target.value)}
-            >
-              <option value="familiar-directo">
-                Familiar directo que convive con el paciente.
-              </option>
-              <option value="pareja-estable">Novio(a) / Pareja Estable</option>
-              <option value="amigo">Amigo(a)</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-        </div>
-        <div className="row my-2 mx-0">
-          <div className="col-12 col-md-6">
-            <label>Observaciones</label>
-          </div>
-          <div className="col-12 col-md-6">
-            <textarea
-              rows="4"
-              className="form-control mw-100"
-              onChange={(e) => setObservacones(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="container text-right mt-3">
-          {step === 1 && (
-            <button type="submit" className="btn btn-dark">
-              Continuar
-            </button>
-          )}
-        </div>
-      </form>
-    );
-  };
-
-  const renderPreguntas = () => {
-    if (step > 1) {
-      if (tipo === "CUPOM")
-        return <PreguntasCUPOM postResultados={postPreguntas} />;
-      return <PreguntasNechapi postResultados={postPreguntas} />;
-    }
+      idSurveyType: tipo === "nechapi" ? 1 : 2,
+    });
   };
 
   const renderPaciente = () => {
-    return "Paco";
+    if (paciente && paciente !== null) return paciente.name;
   };
 
   const renderEvaluador = () => {
-    return "Umberto León";
+    return user.name;
   };
 
   return (
@@ -113,25 +44,26 @@ const Cuestionario = ({ tipo, idPaciente }) => {
         {String(tipo)[0].toUpperCase() + String(tipo).substring(1)}
       </h1>
       <div className="card p-3">
-        <div className="row mx-0 mb-3">
-          <div className="col-12 col-md-6">
-            <p className="mb-0 bold">Evaluador</p>
+        <form onSubmit={handleSubmit}>
+          <div className="row mx-0 mb-3">
+            <div className="col-12 col-md-6">
+              <p className="mb-0 bold">Evaluador</p>
+            </div>
+            <div className="col-12 col-md-6">
+              <p className="mb-0">{renderEvaluador()}</p>
+            </div>
           </div>
-          <div className="col-12 col-md-6">
-            <p className="mb-0">{renderEvaluador()}</p>
+          <div className="row mx-0 mb-3">
+            <div className="col-12 col-md-6">
+              <p className="mb-0 bold">Paciente</p>
+            </div>
+            <div className="col-12 col-md-6">
+              <p className="mb-0">{renderPaciente()}</p>
+            </div>
           </div>
-        </div>
-        <div className="row mx-0 mb-3">
-          <div className="col-12 col-md-6">
-            <p className="mb-0 bold">Paciente</p>
-          </div>
-          <div className="col-12 col-md-6">
-            <p className="mb-0">{renderPaciente()}</p>
-          </div>
-        </div>
-        <hr />
-        {renderForm()}
-        {renderPreguntas()}
+          <hr />
+          <button className="btn btn-dark">Crear Cuestionario</button>
+        </form>
       </div>
     </div>
   );
