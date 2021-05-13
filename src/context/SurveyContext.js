@@ -36,7 +36,9 @@ export const SurveyProvider = ({ children }) => {
     });
   };
   return (
-    <SurveyContext.Provider value={{ ...state, getSurvey, postSurvey }}>
+    <SurveyContext.Provider
+      value={{ ...state, getSurveys, getSurvey, postSurvey }}
+    >
       {children}
     </SurveyContext.Provider>
   );

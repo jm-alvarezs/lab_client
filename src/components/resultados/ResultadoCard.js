@@ -3,12 +3,16 @@ import React from "react";
 import { Link } from "@reach/router";
 
 const ResultadoCard = ({ resultado }) => {
+  console.log(resultado);
   return (
     <div key={resultado.id} className="card my-2 p-3 shadow-sm">
       <div className="row">
         <div className="col col-md-6">
           <h4 className="h5">
-            Prueba #{resultado.id} - {resultado.testType.name}
+            {resultado.testType ? "Prueba" : "Cuestionario"} #{resultado.id} -{" "}
+            {resultado.testType
+              ? resultado.testType.name
+              : resultado.surveyType.name}
           </h4>
           <p className="bold mb-0">
             Paciente #{resultado.patient.id} - {resultado.patient.name} -{" "}
