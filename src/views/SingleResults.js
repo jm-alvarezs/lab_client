@@ -150,7 +150,7 @@ const SingleResults = ({ id }) => {
               <div className="col col-md-10">
                 <h1 className="h3">
                   {resultado && resultado !== null ? (
-                    <b>Prueba #{resultado.test.id}</b>
+                    <b>Prueba #{resultado !== null && resultado.test.id}</b>
                   ) : (
                     ""
                   )}

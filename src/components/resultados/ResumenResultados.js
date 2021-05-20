@@ -23,7 +23,7 @@ const ResumenResultados = ({ resultado }) => {
             )
           : getResultadoTargets(
               resultado.results.targets,
-              resultado.results.target,
+              resultado.results.settings.target,
               "aciertos"
             )}
       </p>

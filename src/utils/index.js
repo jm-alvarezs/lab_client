@@ -227,36 +227,35 @@ export const getResultadoTargetsCondicional = (
 };
 
 export const getResultadoTargets = (targets, character, type, correct) => {
+  console.log(character, type, correct);
   switch (type) {
     case "aciertos":
-      return targets.filter(
-        (target) =>
-          (target.clicked && target.character === character) ||
-          (!target.clicked && target.character !== character)
+      return targets.filter((target) =>
+        getTargetResult(target, character, false)
       ).length;
     case "errores":
       return targets.filter(
-        (target) =>
-          (target.clicked && target.character !== character) ||
-          (!target.clicked && target.character === character)
+        (target) => !getTargetResult(target, character, false)
       ).length;
     case "click":
+      targets = targets.filter((target) => target.clicked);
       if (correct) {
-        return targets.filter(
-          (target) => target.clicked && target.character === character
+        return targets.filter((target) =>
+          getTargetResult(target, character, false)
         ).length;
       }
       return targets.filter(
-        (target) => target.clicked && target.character !== character
+        (target) => !getTargetResult(target, character, false)
       ).length;
     default:
+      targets = targets.filter((target) => !target.clicked);
       if (correct) {
-        return targets.filter(
-          (target) => !target.clicked && target.character !== character
+        return targets.filter((target) =>
+          getTargetResult(target, character, false)
         ).length;
       }
       return targets.filter(
-        (target) => !target.clicked && target.character === character
+        (target) => !getTargetResult(target, character, false)
       ).length;
   }
 };
