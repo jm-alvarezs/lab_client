@@ -4,18 +4,27 @@ import ResultadoCard from "../components/resultados/ResultadoCard";
 import Buscador from "../components/resultados/Buscador";
 import { SurveyContext } from "../context/SurveyContext";
 
-const Results = () => {
+const Results = ({ admin }) => {
   const [tab, setTab] = useState("pruebas");
   const [showFilters, setShowFilters] = useState(false);
-  const { resultados, getResultados } = useContext(ResultadosContext);
+  const { resultados, getResultados, getResultadosAdmin } =
+    useContext(ResultadosContext);
 
-  const { surveys, getSurveys } = useContext(SurveyContext);
+  const { surveys, getSurveys, getSurveysAdmin } = useContext(SurveyContext);
 
   useEffect(() => {
     if (tab === "pruebas") {
-      getResultados();
+      if (admin) {
+        getResultadosAdmin();
+      } else {
+        getResultados();
+      }
     } else {
-      getSurveys();
+      if (admin) {
+        getSurveysAdmin();
+      } else {
+        getSurveys();
+      }
     }
   }, [tab]);
 

@@ -24,6 +24,13 @@ export const SurveyProvider = ({ children }) => {
     });
   };
 
+  const getSurveysAdmin = () => {
+    SurveyService.getSurveysAdmin().then((res) => {
+      const surveys = res.data.data;
+      dispatch({ type: SURVEYS_RECIBIDAS, payload: surveys });
+    });
+  };
+
   const getSurvey = (id) => {
     SurveyService.getSuvrey(id).then((res) => {
       const survey = res.data.data;
@@ -59,7 +66,14 @@ export const SurveyProvider = ({ children }) => {
 
   return (
     <SurveyContext.Provider
-      value={{ ...state, getSurveys, getSurvey, postSurvey, postAnswer }}
+      value={{
+        ...state,
+        getSurveys,
+        getSurvey,
+        getSurveysAdmin,
+        postSurvey,
+        postAnswer,
+      }}
     >
       {children}
     </SurveyContext.Provider>

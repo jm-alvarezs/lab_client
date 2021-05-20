@@ -13,6 +13,7 @@ import ResultadosCuestionario from "./ResultadosCuestionario";
 import Cuestionario from "./Cuestionario";
 import ConfigHemiAtencion from "./ConfigHemiAtencion";
 import AnswerCuestionario from "./AnswerCuestionario";
+import Usuarios from "./Usuarios";
 
 const Home = ({ user }) => {
   return (
@@ -37,6 +38,10 @@ const Home = ({ user }) => {
           <Cuestionario path="/cuestionario/:tipo/:idPaciente" />
           <AnswerCuestionario path="/cuestionario/:tipo" />
           <ResultadosCuestionario path="/resultados/cuestionario/:id" />
+          {/* Admin */}
+          {user.isAdmin && <Pacientes path="/admin/pacientes" admin={true} />}
+          {user.isAdmin && <Results path="/admin/resultados" admin={true} />}
+          {user.isAdmin && <Usuarios path="/admin/usuarios" admin={true} />}
         </Router>
       </div>
     </div>

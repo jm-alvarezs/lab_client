@@ -48,6 +48,12 @@ export const ResultadosProvider = ({ children }) => {
     });
   };
 
+  const getResultadosAdmin = () => {
+    ResultadosService.getResultadosAdmin().then((res) => {
+      dispatch({ type: RESULTADOS_RECIBIDOS, payload: res.data.data });
+    });
+  };
+
   const getCuestionarioResults = (id) => {
     console.log(id);
     SurveyService.getSingleSurvey(id).then((res) => {
@@ -98,6 +104,7 @@ export const ResultadosProvider = ({ children }) => {
         fetchResults,
         getSingleTest,
         getResultados,
+        getResultadosAdmin,
         getCuestionarioResults,
       }}
     >

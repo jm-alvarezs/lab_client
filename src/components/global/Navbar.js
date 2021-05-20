@@ -45,13 +45,18 @@ const Navbar = ({ user }) => {
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
-                    <Link className="dropdown-item" to="/admin/usuarios">
-                      Usuarios
+                    <Link className="dropdown-item" to="/admin/pacientes">
+                      Pacientes
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/admin/pruebas">
-                      Pruebas
+                    <Link className="dropdown-item" to="/admin/resultados">
+                      Resultados
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/admin/usuarios">
+                      Usuarios
                     </Link>
                   </li>
                 </ul>

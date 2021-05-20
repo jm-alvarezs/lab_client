@@ -2,13 +2,14 @@ import { navigate } from "@reach/router";
 import React from "react";
 
 const UsuarioRow = ({ usuario, deleteUsuario }) => {
-  const { id, name, email } = usuario;
+  const { id, name, profession, email } = usuario;
 
   return (
     <tr className="usuario-row" onClick={() => navigate(`/pacientes/${id}`)}>
       <td>{id}</td>
       <td>{name}</td>
       <td>{email}</td>
+      <td>{profession}</td>
       <td>
         <button
           className="btn btn-outline-danger"

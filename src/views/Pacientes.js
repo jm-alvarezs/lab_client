@@ -1,18 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import UsuarioRow from "../components/usuarios/UsuarioRow";
-import { UsuariosContext } from "../context/UsuariosContext";
 import { Link } from "@reach/router";
 import { searchRows } from "../utils";
 import { PacientesContext } from "../context/PacientesContext";
 
-const Pacientes = () => {
+const Pacientes = ({ admin }) => {
   const [query, setQuery] = useState("");
 
   const { pacientes, getPacientes, getPacientesAdmin } =
     useContext(PacientesContext);
 
   useEffect(() => {
-    getPacientesAdmin();
+    if (admin) {
+      getPacientesAdmin();
+    } else {
+      getPacientes();
+    }
   }, []);
 
   const renderUsuarios = () => {
