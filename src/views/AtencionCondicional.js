@@ -93,16 +93,13 @@ const AtencionCondicional = () => {
     var currentIndex = array.length,
       temporaryValue,
       randomIndex;
-
     while (0 !== currentIndex) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
-
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-
     return array;
   }
 
@@ -123,7 +120,7 @@ const AtencionCondicional = () => {
       start: startTime,
       end: endTime,
       targets,
-      target: defaultConfig.target,
+      target: config.target,
       finished: true,
       idTest: config.idTest,
       idPatient: config.idPatient,
@@ -138,18 +135,34 @@ const AtencionCondicional = () => {
     getStyle();
     document.body.addEventListener("keydown", handleKey);
     startTime = moment();
-    let charTargets = [];
-    const porcAparicion = defaultConfig.aparicion / 100;
-    const numberTargets = Math.ceil(defaultConfig.estimulos * porcAparicion);
-    for (let i = 0; i < numberTargets; i++) {
-      charTargets.push(defaultConfig.target);
+    let claveTarget = [];
+    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+      claveTarget.push(config.clave);
+      claveTarget.push(config.target);
     }
-    for (let i = numberTargets; i < defaultConfig.estimulos; i++) {
+    let claveNoTarget = [];
+    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+      claveNoTarget.push(config.clave);
       let current = Math.floor(Math.random() * characters.length) + 1;
       let currentTarget = characters[current];
-      charTargets.push(currentTarget);
+      claveNoTarget.push(currentTarget);
     }
-    charTargets = shuffle(charTargets);
+    let noClaveTarget = [];
+    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+      let current = Math.floor(Math.random() * characters.length) + 1;
+      let currentTarget = characters[current];
+      noClaveTarget.push(currentTarget);
+      noClaveTarget.push(config.target);
+    }
+    let noClaveNoTarget = [];
+    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+      let current = Math.floor(Math.random() * characters.length) + 1;
+      let currentTarget = characters[current];
+      noClaveNoTarget.push(currentTarget);
+      current = Math.floor(Math.random() * characters.length) + 1;
+      currentTarget = characters[current];
+      noClaveNoTarget.push(currentTarget);
+    }
     let intervalo =
       parseInt(config["tiempoInterestimular"]) +
       parseInt(config["tiempoExposicion"]);
@@ -157,20 +170,44 @@ const AtencionCondicional = () => {
       if (estimulos >= config["estimulos"]) {
         endTest();
       } else {
-        const prevTarget = charTargets[estimulos - 1];
-        const currentTarget = charTargets[estimulos];
-        setDisplay(currentTarget);
-        targets.push({
-          timestamp: moment(),
-          target: currentTarget,
-          prevTarget: prevTarget ? prevTarget : "",
-        });
-        estimulos++;
+        let cuadrante = Math.floor(Math.random() * 4 + 1);
+        let currentTarget = "";
+        let nextTarget = "";
+        switch (cuadrante) {
+          case 1:
+            if (claveTarget.length > 0) {
+              currentTarget = claveTarget.shift();
+              nextTarget = claveTarget.shift();
+              break;
+            }
+          case 2:
+            if (claveNoTarget.length > 0) {
+              currentTarget = claveNoTarget.shift();
+              nextTarget = claveNoTarget.shift();
+              break;
+            }
+          case 3:
+            if (noClaveTarget.length > 0) {
+              currentTarget = noClaveTarget.shift();
+              nextTarget = noClaveTarget.shift();
+              break;
+            }
+          default:
+            if (noClaveNoTarget.length > 0) {
+              currentTarget = noClaveNoTarget.shift();
+              nextTarget = noClaveNoTarget.shift();
+            }
+        }
         setTimeout(() => {
           setDisplay("");
         }, parseInt(config["tiempoExposicion"]));
+        setTimeout(() => {
+          setDisplay(nextTarget);
+          estimulos++;
+        }, intervalo);
+        estimulos++;
       }
-    }, intervalo);
+    }, intervalo * 2);
   };
 
   const getStyle = () => {
