@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Breadcrumbs from "../components/global/Breadcrumbs";
 import { PacientesContext } from "../context/PacientesContext";
 import { SurveyContext } from "../context/SurveyContext";
 import { UserContext } from "../context/UserContext";
@@ -41,7 +42,16 @@ const Cuestionario = ({ tipo, idPaciente }) => {
   };
 
   return (
-    <div className="container py-4">
+    <div className="container pb-4">
+      <Breadcrumbs
+        elements={[
+          { name: "Pacientes", href: "/pacientes" },
+          {
+            name: paciente && paciente !== null ? paciente.name : "Paciente",
+            href: `/pacientes/${idPaciente}`,
+          },
+        ]}
+      />
       <h1 className="h2 mb-3">
         Cuestionario -{" "}
         {String(tipo)[0].toUpperCase() + String(tipo).substring(1)}
