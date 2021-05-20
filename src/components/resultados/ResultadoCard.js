@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "@reach/router";
 
 const ResultadoCard = ({ resultado }) => {
-  console.log(resultado);
   return (
     <div key={resultado.id} className="card my-2 p-3 shadow-sm">
       <div className="row">
@@ -26,9 +25,7 @@ const ResultadoCard = ({ resultado }) => {
           <Link
             to={`./${
               resultado.surveyType
-                ? `cuestionario/${String(
-                    resultado.surveyType.name
-                  ).toLowerCase()}`
+                ? `cuestionario/${resultado.id}`
                 : resultado.id
             }`}
             className="btn btn-outline-secondary"

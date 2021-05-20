@@ -20,13 +20,16 @@ const Cuestionario = ({ tipo, idPaciente }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postSurvey({
-      idPatient: idPaciente,
-      idSurveyType: tipo === "nechapi" ? 1 : 2,
-      name: nombre,
-      lastName: apellidos,
-      relationship: relacion,
-    });
+    postSurvey(
+      {
+        idPatient: idPaciente,
+        idSurveyType: tipo === "nechapi" ? 1 : 2,
+        name: nombre,
+        lastName: apellidos,
+        relationship: relacion,
+      },
+      paciente
+    );
   };
 
   const renderPaciente = () => {

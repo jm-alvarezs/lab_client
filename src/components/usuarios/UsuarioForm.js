@@ -39,6 +39,7 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
     gender,
     dominantHand,
     antecedent,
+    whichDrugs,
     drugsConsumption,
   } = usuario;
   return (
@@ -146,9 +147,16 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
       <textarea
         rows="4"
         className="form-control mb-3"
-        value={drugsConsumption}
+        value={
+          typeof drugsConsumption === "boolean" ? whichDrugs : drugsConsumption
+        }
         onChange={(e) =>
-          setPropiedadUsuario("drugsConsumption", e.target.value)
+          setPropiedadUsuario(
+            typeof drugsConsumption === "boolean"
+              ? "whichDrugs"
+              : "drugsConsumption",
+            e.target.value
+          )
         }
       />
       <label>Antecedentes</label>

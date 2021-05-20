@@ -36,7 +36,7 @@ const Home = ({ user }) => {
           {/* Cuestionarios */}
           <Cuestionario path="/cuestionario/:tipo/:idPaciente" />
           <AnswerCuestionario path="/cuestionario/:tipo" />
-          <ResultadosCuestionario path="/resultados/cuestionario/:type" />
+          <ResultadosCuestionario path="/resultados/cuestionario/:id" />
         </Router>
       </div>
     </div>

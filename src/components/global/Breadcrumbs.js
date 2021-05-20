@@ -6,7 +6,11 @@ const Breadcrumbs = ({ elements }) => {
     if (elements && elements !== null) {
       if (Array.isArray(elements)) {
         return elements.map((element, index) => (
-          <Link to={element.href} className="text-muted text-underline">
+          <Link
+            key={element.href}
+            to={element.href}
+            className="text-muted text-underline"
+          >
             {element.name.toLowerCase().includes("regresar") ? "< " : ""}
             {element.name}
             {index < elements.length - 1 ? " > " : ""}

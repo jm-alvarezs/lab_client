@@ -2,119 +2,51 @@ import React, { useContext, useEffect, useState } from "react";
 import PreguntasCUPOM from "../components/cuestionario/PreguntasCUPOM";
 import PreguntasNechapi from "../components/cuestionario/PreguntasNechapi";
 import { SurveyContext } from "../context/SurveyContext";
-import { UserContext } from "../context/UserContext";
-import UsuarioService from "../services/UsuarioService";
 
 const AnswerCuestionario = () => {
   const [tipo, setTipo] = useState("");
-  const [step, setStep] = useState(1);
-  const [nombre, setNombre] = useState("");
   const [idPatient, setIdPatient] = useState("");
-  const [relacion, setRelacion] = useState("familiar-directo");
-  const [observacones, setObservacones] = useState("");
-
-  const { user } = useContext(UserContext);
+  const [observaciones, setObservaciones] = useState("");
+  const [questions, setQuestions] = useState([]);
+  const [token, setToken] = useState("");
+  const [idSurvey, setIdSurvey] = useState("");
+  const [idSurveyType, setidSurveyType] = useState("");
 
   const { postAnswer } = useContext(SurveyContext);
 
   useEffect(() => {
-    let token = window.location.href.split("token=")[1];
-    if (!token) {
+    let currentToken = window.location.href.split("token=")[1];
+    if (!currentToken) {
       return alert("No se puede iniciar la prueba");
     }
-    token = token.split("&")[0];
-    UsuarioService.setToken(token);
+    currentToken = currentToken.split("&")[0];
+    setToken(currentToken);
     let idSurveyType = window.location.href
       .split("idSurveyType=")[1]
       .split("&")[0];
     let idPatient = window.location.href.split("idPatient=")[1].split("&")[0];
+    let idSurvey = window.location.href.split("idSurvey=")[1].split("&")[0];
+    setidSurveyType(parseInt(idSurveyType));
     setIdPatient(idPatient);
+    setIdSurvey(idSurvey);
     if (idSurveyType === 1) setTipo("nechapi");
     else setTipo("cupom");
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (step === 1) {
-      setStep(2);
-    }
-  };
-
-  const postPreguntas = (questions) => {
     const data = {
       idPatient,
-      idUser: user.id,
-      name: nombre,
-      relationship: relacion,
-      idSurvey: tipo === "cupom" ? 1 : 2,
-      observacones,
+      idSurvey,
+      observaciones,
       questions,
     };
-    postAnswer(data);
-  };
-
-  const renderForm = () => {
-    return (
-      <form onSubmit={handleSubmit} className="mb-4">
-        <div className="row my-2 mx-0">
-          <div className="col-12 col-md-6">
-            <label>Nombre</label>
-          </div>
-          <div className="col-12 col-md-6">
-            <input
-              type="text"
-              className="form-control"
-              onChange={(e) => setNombre(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="row my-2 mx-0">
-          <div className="col-12 col-md-6">
-            <label>Relación con el Paciente</label>
-          </div>
-          <div className="col-12 col-md-6">
-            <select
-              className="form-control"
-              onChange={(e) => setRelacion(e.target.value)}
-            >
-              <option value="familiar-directo">
-                Familiar directo que convive con el paciente.
-              </option>
-              <option value="pareja-estable">Novio(a) / Pareja Estable</option>
-              <option value="amigo">Amigo(a)</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-        </div>
-        <div className="row my-2 mx-0">
-          <div className="col-12 col-md-6">
-            <label>Observaciones</label>
-          </div>
-          <div className="col-12 col-md-6">
-            <textarea
-              rows="4"
-              className="form-control mw-100"
-              onChange={(e) => setObservacones(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="container text-right mt-3">
-          {step === 1 && (
-            <button type="submit" className="btn btn-dark">
-              Continuar
-            </button>
-          )}
-        </div>
-      </form>
-    );
+    postAnswer(data, token);
   };
 
   const renderPreguntas = () => {
-    if (step > 1) {
-      if (tipo === "CUPOM")
-        return <PreguntasCUPOM postResultados={postPreguntas} />;
-      return <PreguntasNechapi postResultados={postPreguntas} />;
-    }
+    if (idSurveyType === 2) return <PreguntasCUPOM modifier={setQuestions} />;
+    return <PreguntasNechapi modifier={setQuestions} />;
   };
 
   const renderPaciente = () => {
@@ -151,8 +83,25 @@ const AnswerCuestionario = () => {
           </div>
         </div>
         <hr />
-        {renderForm()}
-        {renderPreguntas()}
+        <form onSubmit={handleSubmit}>
+          <div className="row my-2 mx-0">
+            <div className="col-12 col-md-6">
+              <label>Observaciones</label>
+            </div>
+            <div className="col-12 col-md-6">
+              <textarea
+                rows="4"
+                className="form-control mw-100"
+                value={observaciones}
+                onChange={(e) => setObservaciones(e.target.value)}
+              />
+            </div>
+          </div>
+          {renderPreguntas()}
+          <button type="submit" className="btn btn-dark">
+            Terminado
+          </button>
+        </form>
       </div>
     </div>
   );

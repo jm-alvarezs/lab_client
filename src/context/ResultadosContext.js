@@ -8,6 +8,7 @@ import {
 } from "../types";
 import moment from "moment";
 import { generateRandom } from "../utils";
+import SurveyService from "../services/SurveyService";
 
 const initialState = {
   resultados: null,
@@ -47,8 +48,12 @@ export const ResultadosProvider = ({ children }) => {
     });
   };
 
-  const getCuestionarioResults = (type) => {
-    dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: cuestionarios[type] });
+  const getCuestionarioResults = (id) => {
+    console.log(id);
+    SurveyService.getSingleSurvey(id).then((res) => {
+      const survey = res.data.data;
+      dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: survey });
+    });
   };
 
   const fetchResults = (idPatient, idTestType, date) => {

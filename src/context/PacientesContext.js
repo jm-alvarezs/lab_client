@@ -40,6 +40,14 @@ export const PacientesProvider = ({ children }) => {
 
   const postPaciente = (paciente) => {
     delete paciente.id;
+    if (paciente.drugsConsumption !== "") {
+      paciente.dose = paciente.drugsConsumption;
+      paciente.drugsConsumption = true;
+      paciente.drugsTreatment = true;
+    } else {
+      paciente.drugsConsumption = false;
+      paciente.drugsTreatment = false;
+    }
     PacientesService.postPaciente(paciente).then((res) => {
       const id = res.data.data.id;
       navigate(`/pacientes/${id}`);
@@ -47,13 +55,16 @@ export const PacientesProvider = ({ children }) => {
     });
   };
 
-  const updatePaciente = (usuario) => {
-    console.log(usuario);
-    PacientesService.updatePaciente(usuario).then(() => {
+  const updatePaciente = (paciente) => {
+    if (typeof paciente.drugsConsumption !== "boolean") {
+      paciente.whichDrugs = paciente.drugsConsumption;
+      paciente.drugsConsumption = true;
+      paciente.drugsTreatment = true;
+    }
+    PacientesService.updatePaciente(paciente).then(() => {
       success("Paciente actualizado!");
     });
   };
-
   return (
     <PacientesContext.Provider
       value={{

@@ -341,13 +341,13 @@ export const getPuntuacionCUPOM = (categoria, respuestas) => {
   let total = 0;
   let positivas = 0;
   categoriasCUPOM[categoria].forEach((numero) => {
-    let respuesta = respuestas.find((resp) => resp.numero === numero);
+    let respuesta = respuestas[numero - 1];
     total++;
-    if (respuesta.respuesta) {
+    if (respuesta === "si") {
       positivas++;
     }
   });
-  return parseFloat((positivas / total).toFixed(2));
+  return parseFloat(((positivas / total) * 100).toFixed(2));
 };
 
 export const categoriasNechapi = {
@@ -456,4 +456,15 @@ export const secciones = {
       },
     ],
   },
+};
+
+export const getChartSeries = (type, respuestas, tiempo) => {
+  if (type === "nechapi") {
+    return Object.keys(categoriasNechapi).map((key) =>
+      getPuntuacionNechapi(key, respuestas, tiempo)
+    );
+  }
+  return Object.keys(categoriasCUPOM).map((key) =>
+    getPuntuacionCUPOM(key, respuestas)
+  );
 };

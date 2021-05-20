@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { preguntasNechapi } from "../../utils";
 
-const PreguntasNechapi = ({ postResultados }) => {
+const PreguntasNechapi = ({ modifier }) => {
   const [resultados, setResultados] = useState([]);
 
   useEffect(() => {
@@ -14,10 +14,11 @@ const PreguntasNechapi = ({ postResultados }) => {
     );
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    postResultados(resultados);
-  };
+  useEffect(() => {
+    if (modifier) {
+      modifier(resultados);
+    }
+  }, [resultados]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,45 +41,38 @@ const PreguntasNechapi = ({ postResultados }) => {
         <div className="col col-md-3 text-center">
           <p className="mb-0 bold">Despues</p>
         </div>
-      </div>
-      <form onSubmit={handleSubmit}>
-        {preguntasNechapi.map((pregunta, index) => (
-          <div
-            key={index}
-            className="row mt-2 mb-4 border-top border-bottom py-2 mx-0"
-          >
-            <div className="col col-md-6">
-              <p>{pregunta}</p>
-            </div>
-            <div className="col col-md-3 text-center">
-              {new Array(5).fill(1).map((one, idx) => (
-                <div key={idx} className="d-inline-block mx-2">
-                  <label className="d-block">{idx + 1}</label>
-                  <input
-                    type="radio"
-                    name={`before-${index}`}
-                    value={idx + 1}
-                    onChange={handleChange}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="col col-md-3 text-center">
-              {new Array(5).fill(1).map((one, idx) => (
-                <div key={idx} className="d-inline-block mx-2">
-                  <label className="d-block">{idx + 1}</label>
-                  <input type="radio" name={`after-${index}`} />
-                </div>
-              ))}
-            </div>
+      </div>{" "}
+      {preguntasNechapi.map((pregunta, index) => (
+        <div
+          key={index}
+          className="row mt-2 mb-4 border-top border-bottom py-2 mx-0"
+        >
+          <div className="col col-md-6">
+            <p>{pregunta}</p>
           </div>
-        ))}
-        <div className="container px-0 text-right">
-          <button type="submit" className="btn btn-dark">
-            Completar
-          </button>
+          <div className="col col-md-3 text-center">
+            {new Array(5).fill(1).map((one, idx) => (
+              <div key={idx} className="d-inline-block mx-2">
+                <label className="d-block">{idx + 1}</label>
+                <input
+                  type="radio"
+                  name={`before-${index}`}
+                  value={idx + 1}
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="col col-md-3 text-center">
+            {new Array(5).fill(1).map((one, idx) => (
+              <div key={idx} className="d-inline-block mx-2">
+                <label className="d-block">{idx + 1}</label>
+                <input type="radio" name={`after-${index}`} />
+              </div>
+            ))}
+          </div>
         </div>
-      </form>
+      ))}
     </div>
   );
 };

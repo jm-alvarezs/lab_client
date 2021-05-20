@@ -32,7 +32,7 @@ const Navbar = ({ user }) => {
               </Link>
             </li>
             {user.isAdmin && (
-              <li class="nav-item dropdown">
+              <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
                   id="navbarDropdown"

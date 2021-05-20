@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
+import PostCuestionario from "../components/cuestionario/PostCuestionario";
 import SurveyReducer from "../reducers/SurveyReducer";
 import SurveyService from "../services/SurveyService";
 import { SINGLE_SURVEY_RECIBIDA, SURVEYS_RECIBIDAS } from "../types";
@@ -30,17 +31,28 @@ export const SurveyProvider = ({ children }) => {
     });
   };
 
-  const postSurvey = (survey) => {
+  const postSurvey = (survey, patient) => {
     SurveyService.postSurvey(survey).then((res) => {
       const idSurvey = res.data.data.id;
       SurveyService.getSingleSurvey(idSurvey).then((res) => {
-        console.log(res.data.data);
+        const { accessUrl } = res.data.data.survey;
+        const url = `/cuestionario/answer?idSurvey=${idSurvey}&token=${accessUrl.token}&idSurveyType=${survey.idSurveyType}&idPatient=${patient.id}`;
+        modalComponent(
+          "Prueba Agregada",
+          <PostCuestionario
+            id={idSurvey}
+            url={url}
+            type={survey.idSurveyType === 1 ? "nechapi" : "cupom"}
+            defaultEmail={patient.email}
+          />
+        );
       });
     });
   };
 
-  const postAnswer = (survey) => {
-    SurveyService.postAnswer(survey).then(() => {
+  const postAnswer = (survey, token) => {
+    survey.idPatient = parseInt(survey.idPatient);
+    SurveyService.postAnswer(survey, token).then(() => {
       success("¡Respuestas cargadas con éxito!");
     });
   };

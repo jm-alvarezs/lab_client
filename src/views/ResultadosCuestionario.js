@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ResultadosContext } from "../context/ResultadosContext";
-import {
-  categoriasCUPOM,
-  categoriasNechapi,
-  getPuntuacionCUPOM,
-  getPuntuacionNechapi,
-} from "../utils";
-import Chart from "react-apexcharts";
+import { getPuntuacionCUPOM, getPuntuacionNechapi } from "../utils";
 import ReactToPdf from "react-to-pdf";
 import moment from "moment";
+import RespuestasCUPOM from "../components/cuestionario/RespuestasCUPOM";
+import RespuestasNechapi from "../components/cuestionario/RespuestasNechapi";
+import ChartNechapi from "../components/cuestionario/ChartNechapi";
+import ChartCUPOM from "../components/cuestionario/ChartCUPOM";
 
-const ResultadosCuestionario = ({ type, id }) => {
+const ResultadosCuestionario = ({ id }) => {
   const { resultado, getCuestionarioResults } = useContext(ResultadosContext);
 
+  const [showPreguntas, setShowPreguntas] = useState(true);
+
   useEffect(() => {
-    getCuestionarioResults(type);
+    getCuestionarioResults(id);
   }, []);
 
   const renderDatos = () => {
@@ -24,20 +24,32 @@ const ResultadosCuestionario = ({ type, id }) => {
           <h5 className="bold border-bottom pb-2">Datos</h5>
           <div className="row my-2">
             <div className="col-12 col-md-6">Nombre:</div>
-            <div className="col-12 col-md-6">{resultado.nombre}</div>
+            <div className="col-12 col-md-6">
+              {resultado.survey.name} {resultado.survey.lastName}
+            </div>
           </div>
           <div className="row my-2">
             <div className="col-12 col-md-6">Relación:</div>
-            <div className="col-12 col-md-6">{resultado.relacion}</div>
+            <div className="col-12 col-md-6">
+              {resultado.survey.relationship}
+            </div>
           </div>
           <div className="row my-2">
             <div className="col-12 col-md-6">Fecha:</div>
-            <div className="col-12 col-md-6">{resultado.fecha_hora}</div>
+            <div className="col-12 col-md-6">
+              {moment(resultado.survey.createdAt)
+                .utc()
+                .format("DD MMM YYYY HH:mm")}
+            </div>
           </div>
-          <div className="row my-2">
-            <div className="col-12 col-md-6">Observaciones:</div>
-            <div className="col-12 col-md-6">{resultado.observaciones}</div>
-          </div>
+          {resultado.results && (
+            <div className="row my-2">
+              <div className="col-12 col-md-6">Observaciones:</div>
+              <div className="col-12 col-md-6">
+                {resultado.results.observaciones}
+              </div>
+            </div>
+          )}
         </div>
       );
     }
@@ -45,175 +57,188 @@ const ResultadosCuestionario = ({ type, id }) => {
 
   const renderResults = () => {
     if (resultado && resultado !== null) {
-      if (resultado.nombre_cuestionario === "nechapi") {
-        return (
-          <div className="container-fluid mx-0">
-            <div className="row my-2">
-              <div className="col-6 col-md-6 bold">Categoría</div>
-              <div className="col-6 col-md-2 bold">Antes</div>
-              <div className="col-6 col-md-2 bold">Después</div>
-              <div className="col-6 col-md-2 bold">ICX</div>
-            </div>
-            <div className="row my-2">
-              <div className="col-6 col-md-6">Anger</div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi("anger", resultado.respuestas, "antes")}
-                {"%"}
+      if (resultado.results) {
+        if (resultado.survey.idSurveyType === 1)
+          return (
+            <div className="container-fluid mx-0">
+              <div className="row my-2">
+                <div className="col-6 col-md-6 bold">Categoría</div>
+                <div className="col-6 col-md-2 bold">Antes</div>
+                <div className="col-6 col-md-2 bold">Después</div>
+                <div className="col-6 col-md-2 bold">ICX</div>
               </div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi("anger", resultado.respuestas, "despues")}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {(
-                  getPuntuacionNechapi(
+              <div className="row my-2">
+                <div className="col-6 col-md-6">Anger</div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
                     "anger",
-                    resultado.respuestas,
+                    resultado.results.questions,
+                    "antes"
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
+                    "anger",
+                    resultado.results.questions,
                     "despues"
-                  ) -
-                  getPuntuacionNechapi("anger", resultado.respuestas, "antes")
-                ).toFixed(2)}
-                {"%"}
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {(
+                    getPuntuacionNechapi(
+                      "anger",
+                      resultado.results.questions,
+                      "despues"
+                    ) -
+                    getPuntuacionNechapi(
+                      "anger",
+                      resultado.results.questions,
+                      "antes"
+                    )
+                  ).toFixed(2)}
+                  {"%"}
+                </div>
               </div>
-            </div>
-            <div className="row my-2">
-              <div className="col-6 col-md-6">Sensation Seeking</div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi(
-                  "sensation",
-                  resultado.respuestas,
-                  "antes"
-                )}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi(
-                  "sensation",
-                  resultado.respuestas,
-                  "despues"
-                )}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {(
-                  getPuntuacionNechapi(
+              <div className="row my-2">
+                <div className="col-6 col-md-6">Sensation Seeking</div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
                     "sensation",
-                    resultado.respuestas,
-                    "despues"
-                  ) -
-                  getPuntuacionNechapi(
+                    resultado.results.questions,
+                    "antes"
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
                     "sensation",
-                    resultado.respuestas,
-                    "antes"
-                  )
-                ).toFixed(2)}
-                {"%"}
+                    resultado.results.questions,
+                    "despues"
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {(
+                    getPuntuacionNechapi(
+                      "sensation",
+                      resultado.results.questions,
+                      "despues"
+                    ) -
+                    getPuntuacionNechapi(
+                      "sensation",
+                      resultado.results.questions,
+                      "antes"
+                    )
+                  ).toFixed(2)}
+                  {"%"}
+                </div>
               </div>
-            </div>
-            <div className="row my-2">
-              <div className="col-6 col-md-6">Emotional Vulnerabilty</div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi(
-                  "emotional",
-                  resultado.respuestas,
-                  "antes"
-                )}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi(
-                  "emotional",
-                  resultado.respuestas,
-                  "despues"
-                )}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {(
-                  getPuntuacionNechapi(
+              <div className="row my-2">
+                <div className="col-6 col-md-6">Emotional Vulnerabilty</div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
                     "emotional",
-                    resultado.respuestas,
-                    "despues"
-                  ) -
-                  getPuntuacionNechapi(
+                    resultado.results.questions,
+                    "antes"
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
                     "emotional",
-                    resultado.respuestas,
-                    "antes"
-                  )
-                ).toFixed(2)}
-                {"%"}
-              </div>
-            </div>
-            <div className="row my-2">
-              <div className="col-6 col-md-6">Sociability</div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi(
-                  "sociability",
-                  resultado.respuestas,
-                  "antes"
-                )}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi(
-                  "sociability",
-                  resultado.respuestas,
-                  "despues"
-                )}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {(
-                  getPuntuacionNechapi(
-                    "sociability",
-                    resultado.respuestas,
+                    resultado.results.questions,
                     "despues"
-                  ) -
-                  getPuntuacionNechapi(
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {(
+                    getPuntuacionNechapi(
+                      "emotional",
+                      resultado.results.questions,
+                      "despues"
+                    ) -
+                    getPuntuacionNechapi(
+                      "emotional",
+                      resultado.results.questions,
+                      "antes"
+                    )
+                  ).toFixed(2)}
+                  {"%"}
+                </div>
+              </div>
+              <div className="row my-2">
+                <div className="col-6 col-md-6">Sociability</div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
                     "sociability",
-                    resultado.respuestas,
+                    resultado.results.questions,
                     "antes"
-                  )
-                ).toFixed(2)}
-                {"%"}
-              </div>
-            </div>
-            <div className="row my-2">
-              <div className="col-6 col-md-6">Motivation</div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi(
-                  "motivation",
-                  resultado.respuestas,
-                  "antes"
-                )}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {getPuntuacionNechapi(
-                  "motivation",
-                  resultado.respuestas,
-                  "despues"
-                )}
-                {"%"}
-              </div>
-              <div className="col-6 col-md-2">
-                {(
-                  getPuntuacionNechapi(
-                    "motivation",
-                    resultado.respuestas,
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
+                    "sociability",
+                    resultado.results.questions,
                     "despues"
-                  ) -
-                  getPuntuacionNechapi(
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {(
+                    getPuntuacionNechapi(
+                      "sociability",
+                      resultado.results.questions,
+                      "despues"
+                    ) -
+                    getPuntuacionNechapi(
+                      "sociability",
+                      resultado.results.questions,
+                      "antes"
+                    )
+                  ).toFixed(2)}
+                  {"%"}
+                </div>
+              </div>
+              <div className="row my-2">
+                <div className="col-6 col-md-6">Motivation</div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
                     "motivation",
-                    resultado.respuestas,
+                    resultado.results.questions,
                     "antes"
-                  )
-                ).toFixed(2)}
-                {"%"}
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {getPuntuacionNechapi(
+                    "motivation",
+                    resultado.results.questions,
+                    "despues"
+                  )}
+                  {"%"}
+                </div>
+                <div className="col-6 col-md-2">
+                  {(
+                    getPuntuacionNechapi(
+                      "motivation",
+                      resultado.results.questions,
+                      "despues"
+                    ) -
+                    getPuntuacionNechapi(
+                      "motivation",
+                      resultado.results.questions,
+                      "antes"
+                    )
+                  ).toFixed(2)}
+                  {"%"}
+                </div>
               </div>
             </div>
-          </div>
-        );
+          );
       }
       return (
         <div className="container-fluid mx-0">
@@ -224,35 +249,38 @@ const ResultadosCuestionario = ({ type, id }) => {
           <div className="row my-2">
             <div className="col-6 col-md-6">Memoria del Trabajo</div>
             <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("trabajo", resultado.respuestas)}
+              {getPuntuacionCUPOM("trabajo", resultado.results.questions)}
               {"%"}
             </div>
           </div>
           <div className="row my-2">
             <div className="col-6 col-md-6">Memoria de Reconocimiento</div>
             <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("reconocimiento", resultado.respuestas)}
+              {getPuntuacionCUPOM(
+                "reconocimiento",
+                resultado.results.questions
+              )}
               {"%"}
             </div>
           </div>
           <div className="row my-2">
             <div className="col-6 col-md-6">Memoria de Fijación</div>
             <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("fijacion", resultado.respuestas)}
+              {getPuntuacionCUPOM("fijacion", resultado.results.questions)}
               {"%"}
             </div>
           </div>
           <div className="row my-2">
             <div className="col-6 col-md-6">Memoria de Prospectiva</div>
             <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("prospectiva", resultado.respuestas)}
+              {getPuntuacionCUPOM("prospectiva", resultado.results.questions)}
               {"%"}
             </div>
           </div>
           <div className="row my-2">
             <div className="col-6 col-md-6">Memoria Procedimental</div>
             <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("procedimental", resultado.respuestas)}
+              {getPuntuacionCUPOM("procedimental", resultado.results.questions)}
               {"%"}
             </div>
           </div>
@@ -261,89 +289,27 @@ const ResultadosCuestionario = ({ type, id }) => {
     }
   };
 
-  const getChartSeries = (type, respuestas, tiempo) => {
-    if (type === "nechapi") {
-      return Object.keys(categoriasNechapi).map((key) =>
-        getPuntuacionNechapi(key, respuestas, tiempo)
-      );
-    }
-    return Object.keys(categoriasCUPOM).map((key) =>
-      getPuntuacionCUPOM(key, respuestas)
-    );
-  };
-
   const renderChart = () => {
     if (resultado && resultado !== null) {
-      if (resultado.nombre_cuestionario === "nechapi") {
-        return (
-          <Chart
-            type="bar"
-            options={{
-              type: "bar",
-              chart: {
-                type: "bar",
-              },
-              colors: ["#ff0000", "#0000ff"],
-              xaxis: {
-                categories: [
-                  "Irritabilidad",
-                  "Búsqueda de sensaciones",
-                  "Vulnerabilidad",
-                  "Sociabilidad",
-                  "Motivación",
-                ],
-              },
-              yaxis: {
-                min: 0,
-                max: 100,
-              },
-            }}
-            series={[
-              {
-                name: "Antes",
-                data: getChartSeries(type, resultado.respuestas, "antes"),
-              },
-              {
-                name: "Después",
-                data: getChartSeries(type, resultado.respuestas, "despues"),
-              },
-            ]}
-          />
-        );
+      if (resultado.survey.idSurveyType === 2) {
+        return <ChartNechapi questions={resultado.results.questions} />;
       }
-      return (
-        <Chart
-          type="bar"
-          options={{
-            type: "bar",
-            chart: {
-              type: "bar",
-            },
-            colors: ["#ff0000", "#0000fff"],
-            xaxis: {
-              categories: [
-                "Trabajo",
-                "Reconocimiento",
-                "Fijación",
-                "Prospectiva",
-                "Procedimental",
-              ],
-            },
-          }}
-          series={[
-            {
-              name: "Antes",
-              data: getChartSeries(type, resultado.respuestas),
-            },
-          ]}
-        />
-      );
+      return <ChartCUPOM questions={resultado.results.questions} />;
+    }
+  };
+
+  const renderRespuestas = () => {
+    if (resultado && resultado !== null && showPreguntas) {
+      if (resultado.survey.idSurveyType === 1) {
+        return <RespuestasNechapi respuestas={resultado.results.questions} />;
+      }
+      return <RespuestasCUPOM respuestas={resultado.results.questions} />;
     }
   };
 
   return (
     <ReactToPdf
-      filename={`resultados_cuestionario_${type}_${id}_${moment().format(
+      filename={`resultados_cuestionario_${id}_${moment().format(
         "YYYY-MM-DD-HH:mm:ss"
       )}.pdf`}
       scale={0.65}
@@ -356,7 +322,7 @@ const ResultadosCuestionario = ({ type, id }) => {
                 <h1 className="h3">
                   <b>Resultados:</b>{" "}
                   {resultado && resultado !== null ? (
-                    resultado.nombre_cuestionario
+                    resultado.survey.surveyType.name
                   ) : (
                     <div className="spinner-border"></div>
                   )}
@@ -371,6 +337,24 @@ const ResultadosCuestionario = ({ type, id }) => {
             {renderDatos()}
             {renderResults()}
             <div className="container-fluid px-0 mt-4">{renderChart()}</div>
+          </div>
+          <div className="card shadow-sm p-3 mb-2 mt-4">
+            <div className="row border-bottom pb-3 my-2 ">
+              <div className="col-6">
+                <h4 className="bold">Preguntas</h4>
+              </div>
+              <div className="col-6 text-right">
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={() => setShowPreguntas(!showPreguntas)}
+                >
+                  <i
+                    className={`fa fa-eye${showPreguntas ? "-slash" : ""}`}
+                  ></i>
+                </button>
+              </div>
+            </div>
+            <div className="container-fluid px-0">{renderRespuestas()}</div>
           </div>
         </div>
       )}
