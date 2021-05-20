@@ -32,7 +32,10 @@ export const SurveyProvider = ({ children }) => {
 
   const postSurvey = (survey) => {
     SurveyService.postSurvey(survey).then((res) => {
-      console.log(res.data.data);
+      const idSurvey = res.data.data.id;
+      SurveyService.getSingleSurvey(idSurvey).then((res) => {
+        console.log(res.data.data);
+      });
     });
   };
 

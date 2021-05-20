@@ -12,6 +12,7 @@ import SingleResults from "./SingleResults";
 import ResultadosCuestionario from "./ResultadosCuestionario";
 import Cuestionario from "./Cuestionario";
 import ConfigHemiAtencion from "./ConfigHemiAtencion";
+import AnswerCuestionario from "./AnswerCuestionario";
 
 const Home = () => {
   return (
@@ -34,6 +35,7 @@ const Home = () => {
           <Cuenta path="/cuenta" />
           {/* Cuestionarios */}
           <Cuestionario path="/cuestionario/:tipo/:idPaciente" />
+          <AnswerCuestionario path="/cuestionario/:tipo" />
           <ResultadosCuestionario path="/resultados/cuestionario/:type" />
         </Router>
       </div>

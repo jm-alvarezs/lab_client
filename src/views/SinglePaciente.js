@@ -1,4 +1,4 @@
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import React, { useContext, useEffect, useState } from "react";
 import Breadcrumbs from "../components/global/Breadcrumbs";
 import UsuarioData from "../components/usuarios/UsuarioData";
@@ -26,7 +26,12 @@ const SinglePaciente = ({ id }) => {
         return (
           <UsuarioForm
             usuario={usuario}
-            cancel={() => setEditMode(false)}
+            cancel={() => {
+              setEditMode(false);
+              if (isNaN(usuario.id)) {
+                navigate("/pacientes");
+              }
+            }}
             setPropiedadUsuario={setPropiedadUsuario}
           />
         );

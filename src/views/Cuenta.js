@@ -4,9 +4,8 @@ import moment from "moment";
 
 const Cuenta = () => {
   const [editMode, setEditMode] = useState(false);
-  const { user, signOut, updateUsuario, setPropiedadUser } = useContext(
-    UserContext
-  );
+  const { user, signOut, updateUsuario, setPropiedadUser } =
+    useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +23,7 @@ const Cuenta = () => {
         birthDate,
         country,
         scholarship,
+        last_name,
       } = user;
       if (editMode) {
         return (
@@ -43,7 +43,7 @@ const Cuenta = () => {
                 value={email}
                 onChange={(e) => setPropiedadUser("email", e.target.value)}
               />
-              <label>Profession</label>
+              <label>Profesión</label>
               <input
                 type="text"
                 className="form-control mb-3"
@@ -63,7 +63,7 @@ const Cuenta = () => {
               <input
                 type="date"
                 className="form-control mb-3"
-                value={birthDate}
+                value={moment(birthDate).format("YYYY-MM-DD")}
                 onChange={(e) => setPropiedadUser("birthDate", e.target.value)}
               />
               <label>País</label>
@@ -76,6 +76,7 @@ const Cuenta = () => {
               <label>Nivel Educativo</label>
               <select
                 className="form-control mb-3"
+                value={scholarship}
                 onChange={(e) =>
                   setPropiedadUser("scholarship", e.target.value)
                 }
@@ -94,13 +95,18 @@ const Cuenta = () => {
       }
       return (
         <div className="container-fluid">
-          <h2>{name}</h2>
-          <p>{email}</p>
-          <p>{profession}</p>
-          <p>{institution}</p>
-          <p>{moment(birthDate).add(1, "day").format("DD MMM YYYY")}</p>
-          <p>{country}</p>
-          <p>{scholarship}</p>
+          <h2>
+            Nombre: {name} {last_name}
+          </h2>
+          <p>Correo: {email}</p>
+          <p>Profesión: {profession}</p>
+          <p>Institución: {institution}</p>
+          <p>
+            Fecha de Nacimiento:{" "}
+            {moment(birthDate).add(1, "day").format("DD MMM YYYY")}
+          </p>
+          <p>País: {country}</p>
+          <p>Escolaridad: {scholarship}</p>
           <div className="row">
             <div className="col col-md-6">
               <button
