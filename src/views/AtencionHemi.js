@@ -203,7 +203,6 @@ const AtencionHemi = () => {
       config.estimulosQ2 +
       config.estimulosQ3 +
       config.estimulosQ4;
-    console.log(total);
     let intervalo =
       parseInt(config["tiempoInterestimular"]) +
       parseInt(config["tiempoExposicion"]);
@@ -282,7 +281,8 @@ const AtencionHemi = () => {
                     secuencial distintas letras del abecedario. La tarea
                     consiste que usted pulse la tecla{" "}
                     {String.fromCharCode(config.keyCode)} cuando vea aparecer la
-                    letra {config.target}.
+                    letra {config.target} sin retirar la mirada del punto del
+                    centro.
                   </p>
                   <p>
                     Es importante que responda tan rápido como pueda, ya que los

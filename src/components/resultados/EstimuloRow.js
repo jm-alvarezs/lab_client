@@ -2,10 +2,11 @@ import moment from "moment";
 import React from "react";
 import { getTargetResult } from "../../utils";
 
-const EstimuloRow = ({ target, objective, type }) => {
+const EstimuloRow = ({ target, objective, type, index, clave, prevItem }) => {
   return (
     <div key={target.timestamp} className="border-top border-bottom my-3 py-3">
       <div className="row">
+        <div className="col col-md-2">#{index + 1}</div>
         <div className="col col-md-2">
           {moment(target.timestamp).format("HH:mm:ss:SSS")}
         </div>
@@ -32,7 +33,7 @@ const EstimuloRow = ({ target, objective, type }) => {
             : "N/D"}
         </div>
         <div className="col col-md-2">
-          {getTargetResult(target, objective) ? (
+          {getTargetResult(target, objective, type === 2, clave, prevItem) ? (
             <i className="fa fa-check text-success"></i>
           ) : (
             <i className="fa fa-times text-danger"></i>

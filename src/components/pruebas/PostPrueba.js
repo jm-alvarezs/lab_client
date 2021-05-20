@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import EmailsService from "../../services/EmailsService";
 
-const PostPrueba = ({ type, url }) => {
+const PostPrueba = ({ id, type, url, defaultEmail }) => {
+  const [email, setEmail] = useState("");
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (defaultEmail) {
+      setEmail(defaultEmail);
+    }
+  }, []);
 
   const copyURL = () => {
     var copyText = document.getElementById("url-input");
@@ -25,10 +33,20 @@ const PostPrueba = ({ type, url }) => {
       <div className="row my-3">
         <label className="px-3">Enviar por Correo Electrónico</label>
         <div className="col-8">
-          <input type="email" className="form-control" />
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.result)}
+          />
         </div>
         <div className="col-4">
-          <button className="btn btn-dark w-100">Enviar</button>
+          <button
+            className="btn btn-dark w-100"
+            onClick={() => EmailsService.postEmail(id, "test", email)}
+          >
+            Enviar
+          </button>
         </div>
       </div>
       <button

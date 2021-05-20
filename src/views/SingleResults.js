@@ -31,14 +31,17 @@ const SingleResults = ({ id }) => {
   };
 
   const renderEstimulos = () => {
-    if (resultado && resultado !== null) {
+    if (resultado && resultado !== null && showEstimulos) {
       if (resultado.results.targets) {
-        return resultado.results.targets.map((target) => (
+        return resultado.results.targets.map((target, index) => (
           <EstimuloRow
             key={target.timestamp}
             target={target}
-            type={resultado.test.testType.name}
+            type={resultado.test.testType.id}
             objective={resultado.results.target}
+            index={index}
+            prevItem={index > 0 ? resultado.results.targets[index - 1] : {}}
+            clave={resultado.results.settings.clave}
           />
         ));
       }
@@ -52,10 +55,14 @@ const SingleResults = ({ id }) => {
           target.reaction ? target.reaction : null
         );
         reacciones = reacciones.filter((item) => item !== null);
-        return calculateAverage(reacciones);
+        return calculateAverage(reacciones).toFixed(4);
       }
     }
     return "N/D";
+  };
+
+  const isCondicional = () => {
+    return resultado.test.testType.id === 2;
   };
 
   const renderResults = () => {
@@ -70,11 +77,7 @@ const SingleResults = ({ id }) => {
                     <ResultChart
                       items={resultado.results.targets}
                       target={resultado.results.target}
-                      type={
-                        window.location.href.includes("condicional")
-                          ? "condicional"
-                          : "simple"
-                      }
+                      type={resultado.test.testType.id}
                       prevTarget={resultado.results.prevTarget}
                     />
                   </div>
@@ -82,11 +85,11 @@ const SingleResults = ({ id }) => {
                     <h3>Resumen</h3>
                     <p>
                       Aciertos:{" "}
-                      {resultado.test.testType.name.includes("condicional")
+                      {isCondicional()
                         ? getResultadoTargetsCondicional(
                             resultado.results.targets,
                             resultado.results.target,
-                            resultado.results.prevTarget,
+                            resultado.results.settings.clave,
                             "aciertos"
                           )
                         : getResultadoTargets(
@@ -97,11 +100,11 @@ const SingleResults = ({ id }) => {
                     </p>
                     <p>
                       Errores:{" "}
-                      {resultado.test.testType.name.includes("condicional")
+                      {isCondicional()
                         ? getResultadoTargetsCondicional(
                             resultado.results.targets,
                             resultado.results.target,
-                            resultado.results.prevTarget,
+                            resultado.results.settings.clave,
                             "errores"
                           )
                         : getResultadoTargets(
@@ -113,11 +116,11 @@ const SingleResults = ({ id }) => {
                     <h4>Detalle</h4>
                     <p>
                       Omisiones Correctas:{" "}
-                      {resultado.test.testType.name.includes("condicional")
+                      {isCondicional()
                         ? getResultadoTargetsCondicional(
                             resultado.results.targets,
                             resultado.results.target,
-                            resultado.results.prevTarget,
+                            resultado.results.settings.clave,
                             "omision",
                             true
                           )
@@ -130,7 +133,7 @@ const SingleResults = ({ id }) => {
                     </p>
                     <p>
                       Omisiones Incorrectas:{" "}
-                      {resultado.test.testType.name.includes("condicional")
+                      {isCondicional()
                         ? getResultadoTargetsCondicional(
                             resultado.results.targets,
                             resultado.results.target,
@@ -147,7 +150,7 @@ const SingleResults = ({ id }) => {
                     </p>
                     <p>
                       Clicks Correctos:{" "}
-                      {resultado.test.testType.name.includes("condicional")
+                      {isCondicional()
                         ? getResultadoTargetsCondicional(
                             resultado.results.targets,
                             resultado.results.target,
@@ -164,7 +167,7 @@ const SingleResults = ({ id }) => {
                     </p>
                     <p>
                       Clicks Incorrectos:{" "}
-                      {resultado.test.testType.name.includes("condicional")
+                      {isCondicional()
                         ? getResultadoTargetsCondicional(
                             resultado.results.targets,
                             resultado.results.target,
@@ -189,7 +192,7 @@ const SingleResults = ({ id }) => {
                     average_one={fiability.average_one}
                     average_two={fiability.average_two}
                     column="reaction"
-                    result=""
+                    result={getTiempoReaccion()}
                   />
                 )}
               </div>
@@ -236,6 +239,36 @@ const SingleResults = ({ id }) => {
     }
   };
 
+  const renderHeaders = () => {
+    if (resultado && resultado !== null && showEstimulos) {
+      switch (resultado.test.testType.id) {
+        case 3:
+          return (
+            <div className="row">
+              <div className="col col-md-1">#</div>
+              <div className="col col-md-2">Emisión</div>
+              <div className="col col-md-2">Caracter</div>
+              <div className="col col-md-1">Cuadrante</div>
+              <div className="col col-md-2">Click</div>
+              <div className="col col-md-2">TR</div>
+              <div className="col col-md-2">Resultado</div>
+            </div>
+          );
+        default:
+          return (
+            <div className="row bold">
+              <div className="col col-md-2">#</div>
+              <div className="col col-md-2">Emisión</div>
+              <div className="col col-md-2">Caracter</div>
+              <div className="col col-md-2">Click</div>
+              <div className="col col-md-2">TR</div>
+              <div className="col col-md-2">Resultado</div>
+            </div>
+          );
+      }
+    }
+  };
+
   return (
     <ReactToPdf
       filename={`resultados_${id}_${moment().format(
@@ -249,7 +282,12 @@ const SingleResults = ({ id }) => {
             <div className="row border-bottom pb-3 mb-3 align-items-center">
               <div className="col col-md-10">
                 <h1 className="h3">
-                  <b>Resultados:</b>{" "}
+                  {resultado && resultado !== null ? (
+                    <b>Prueba #{resultado.test.id}</b>
+                  ) : (
+                    ""
+                  )}
+                  :{" "}
                   {resultado && resultado !== null ? (
                     resultado.test.testType.name
                   ) : (
@@ -296,19 +334,8 @@ const SingleResults = ({ id }) => {
                 </button>
               </div>
             </div>
-
-            {showEstimulos && (
-              <>
-                <div className="row">
-                  <div className="col col-md-2">Emisión</div>
-                  <div className="col col-md-2">Caracter</div>
-                  <div className="col col-md-2">Click</div>
-                  <div className="col col-md-2">TR</div>
-                  <div className="col col-md-2">Resultado</div>
-                </div>
-                {renderEstimulos()}
-              </>
-            )}
+            {renderHeaders()}
+            {renderEstimulos()}
           </div>
         </div>
       )}

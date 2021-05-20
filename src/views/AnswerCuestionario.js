@@ -29,9 +29,6 @@ const AnswerCuestionario = () => {
       .split("&")[0];
     let idPatient = window.location.href.split("idPatient=")[1].split("&")[0];
     setIdPatient(idPatient);
-    console.log(token);
-    console.log(idSurveyType);
-    console.log(idPatient);
     if (idSurveyType === 1) setTipo("nechapi");
     else setTipo("cupom");
   }, []);

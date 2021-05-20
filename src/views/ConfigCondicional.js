@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 
 const ConfigCondicional = ({ idPaciente }) => {
@@ -25,8 +26,11 @@ const ConfigCondicional = ({ idPaciente }) => {
 
   const { spinner, postPrueba } = useContext(PruebasContext);
 
+  const { paciente, getSinglePaciente } = useContext(PacientesContext);
+
   useEffect(() => {
     setConfig({ ...config, idPatient: parseInt(idPaciente) });
+    getSinglePaciente(idPaciente);
   }, []);
 
   const handleSubmit = (e) => {
@@ -39,7 +43,7 @@ const ConfigCondicional = ({ idPaciente }) => {
       )
       .filter((obj) => obj !== null)
       .join("&");
-    postPrueba(config, "condicional");
+    postPrueba(config, "condicional", paciente);
   };
 
   const handleChange = (key, e) => {

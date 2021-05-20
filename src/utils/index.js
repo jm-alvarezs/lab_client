@@ -99,7 +99,6 @@ export const showModal = () => {
     newButton.setAttribute("data-bs-target", "#modal");
     newButton.style.visibility = "hidden";
     document.body.appendChild(newButton);
-    console.log(newButton);
     newButton.click();
   }
 };
@@ -116,7 +115,6 @@ export const randomize = (items, iterations) => {
 };
 
 export const calculateAverage = (items) => {
-  console.log(items);
   let total = 0;
   for (let i = 0; i < items.length; i++) {
     total += items[i];
@@ -128,12 +126,12 @@ export const getTargetResult = (
   current,
   target,
   condicional,
-  prevTarget,
+  clave,
   prevItem
 ) => {
   if (condicional) {
     if (current.clicked) {
-      return current.character === target && prevItem.character === prevTarget;
+      return current.character === target && prevItem.character === clave;
     }
     return current.character !== target;
   }
@@ -159,7 +157,7 @@ export const getResultadoTargetsCondicional = (
           return !target.clicked;
         } else {
           if (target.character === character) {
-            if (targets[index - 1].character === prevCharacter) {
+            if (targets[index - 1].target === prevCharacter) {
               return target.clicked;
             }
           }
@@ -172,7 +170,7 @@ export const getResultadoTargetsCondicional = (
           return target.clicked;
         } else {
           if (target.character === character) {
-            if (targets[index - 1].character === prevCharacter) {
+            if (targets[index - 1].target === prevCharacter) {
               return !target.clicked;
             }
           }
@@ -183,16 +181,20 @@ export const getResultadoTargetsCondicional = (
       return targets.filter((target, index) => {
         if (target.clicked) {
           if (correct) {
-            if (index === 0) return false;
-            return (
-              targets[index - 1].character === prevCharacter &&
-              target.character === character
+            return getTargetResult(
+              target,
+              character,
+              true,
+              prevCharacter,
+              index > 0 ? targets[index - 1] : {}
             );
           } else {
-            if (index === 0) return true;
-            return (
-              targets[index - 1].character !== prevCharacter &&
-              target.character === character
+            return !getTargetResult(
+              target,
+              character,
+              true,
+              prevCharacter,
+              index > 0 ? targets[index - 1] : {}
             );
           }
         }
@@ -202,16 +204,20 @@ export const getResultadoTargetsCondicional = (
       return targets.filter((target, index) => {
         if (!target.clicked) {
           if (correct) {
-            if (index === 0) return true;
-            return (
-              targets[index - 1].character !== prevCharacter &&
-              target.character === character
+            return getTargetResult(
+              target,
+              character,
+              true,
+              prevCharacter,
+              index > 0 ? targets[index - 1] : {}
             );
           } else {
-            if (index === 0) return false;
-            return (
-              targets[index - 1].character === prevCharacter &&
-              target.character === character
+            return !getTargetResult(
+              target,
+              character,
+              true,
+              prevCharacter,
+              index > 0 ? targets[index - 1] : {}
             );
           }
         }

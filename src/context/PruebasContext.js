@@ -64,7 +64,7 @@ export const PruebasProvider = ({ children }) => {
     }
   };
 
-  const postPrueba = (config, type) => {
+  const postPrueba = (config, type, patient) => {
     dispatch({ type: SHOW_SPINNER });
     PruebasService.postPrueba(config).then((res) => {
       const idTest = res.data.data.id;
@@ -83,8 +83,15 @@ export const PruebasProvider = ({ children }) => {
             type && type !== null ? `/${type}` : ""
           }?idTest=${idTest}&token=${accessUrl.token}&` + args;
         dispatch({ type: HIDE_SPINNER });
-        modalComponent("Prueba Agregada", <PostPrueba url={url} type={type} />);
-        //window.open(url, "_blank");
+        modalComponent(
+          "Prueba Agregada",
+          <PostPrueba
+            id={idTest}
+            url={url}
+            type={type}
+            defaultEmail={patient.email}
+          />
+        );
       });
     });
   };

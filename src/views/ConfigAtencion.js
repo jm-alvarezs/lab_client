@@ -31,7 +31,7 @@ const ConfigAtencion = ({ idPaciente }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postPrueba(config);
+    postPrueba(config, "simple", paciente);
   };
 
   const handleChange = (key, e) => {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ModalContext } from "../context/ModalContext";
+import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 
 const ConfigHemiAtencion = ({ idPaciente }) => {
@@ -30,10 +30,11 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
 
   const { spinner, postPrueba } = useContext(PruebasContext);
 
-  const { modalComponent } = useContext(ModalContext);
+  const { paciente, getSinglePaciente } = useContext(PacientesContext);
 
   useEffect(() => {
     setConfig({ ...config, idPatient: parseInt(idPaciente) });
+    getSinglePaciente(idPaciente);
   }, []);
 
   const handleSubmit = (e) => {
@@ -46,7 +47,7 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
       )
       .filter((obj) => obj !== null)
       .join("&");
-    postPrueba(config, "hemi");
+    postPrueba(config, "hemi", paciente);
   };
 
   const handleChange = (key, e) => {

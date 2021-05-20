@@ -8,18 +8,24 @@ import { ModalContext } from "../context/ModalContext";
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const defaultConfig = {
-  tiempoExposicion: 500,
-  tiempoInterestimular: 500,
+  idTestType: 2,
+  tiempoExposicion: "500",
+  tiempoInterestimular: "500",
   target: "O",
   fontFamily: "Courier",
-  fontStyle: "bold",
+  fontStyle: "Normal",
+  fontSize: "24",
   color: "#fff",
-  fontSize: 85,
   backgroundColor: "#000",
-  estimulos: 10,
-  aparicion: 17,
-  keyCode: 32,
-  duration: 5 * 60,
+  clave: "X",
+  claveTarget: "37",
+  noClaveTarget: "19",
+  claveNoTarget: "19",
+  noClaveNoTarget: "75",
+  paresTotales: "150",
+  keyCode: "13",
+  duracion: "10",
+  idPatient: "",
 };
 
 const styleProperties = [
@@ -191,7 +197,8 @@ const AtencionCondicional = () => {
                     secuencial distintas letras del abecedario. La tarea
                     consiste que usted pulse la tecla{" "}
                     {String.fromCharCode(config.keyCode)} cuando vea aparecer la
-                    letra {config.target}.
+                    letra {config.target}, siempre y cuando el caracter esté
+                    precedido por el caracter {config.clave}.
                   </p>
                   <p>
                     Es importante que responda tan rápido como pueda, ya que los

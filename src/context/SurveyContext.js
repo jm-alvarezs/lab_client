@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useReducer } from "react";
-import PostPrueba from "../components/pruebas/PostPrueba";
 import SurveyReducer from "../reducers/SurveyReducer";
 import SurveyService from "../services/SurveyService";
 import { SINGLE_SURVEY_RECIBIDA, SURVEYS_RECIBIDAS } from "../types";
-import { BASE_URL } from "../utils";
 import { ModalContext } from "./ModalContext";
 
 const initialState = {
@@ -34,19 +32,7 @@ export const SurveyProvider = ({ children }) => {
 
   const postSurvey = (survey) => {
     SurveyService.postSurvey(survey).then((res) => {
-      const url = `http://localhost:3000/cuestionario/answer?idSurveyType=${survey.idSurveyType}&token=""&idPatient=${survey.idPatient}`;
-      modalComponent(
-        "Cuestionario creado",
-        <PostPrueba
-          url={url}
-          type={
-            survey.idSurveyType === 1
-              ? "Cuestionario Nechapi"
-              : "Cuestionario CUPOM"
-          }
-        />
-      );
-      success("¡Resultados capturados con éxito!");
+      console.log(res.data.data);
     });
   };
 
