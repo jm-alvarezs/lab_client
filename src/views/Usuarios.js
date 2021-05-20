@@ -1,15 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
 import UsuarioRow from "../components/usuarios/UsuarioRow";
+import { ModalContext } from "../context/ModalContext";
 import { UsuariosContext } from "../context/UsuariosContext";
 import { searchRows } from "../utils";
 
 const Usuarios = () => {
   const [query, setQuery] = useState("");
-  const { usuarios, getUsuariosAdmin } = useContext(UsuariosContext);
+  const { usuarios, getUsuariosAdmin, deleteUsuario } =
+    useContext(UsuariosContext);
+
+  const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
     getUsuariosAdmin();
   }, []);
+
+  const confirmDelete = (usuario) => {
+    modalComponent(
+      "Precaución",
+      <div>
+        <p>
+          ¿Estás seguro que deseas eliminar al usuario {usuario.name}? Esto le
+          removerá el acceso a la plataforma.
+        </p>
+        <button
+          className="btn btn-danger"
+          onClick={() => deleteUsuario(usuario.id)}
+        >
+          <i className="fa fa-trash"></i> Eliminar
+        </button>
+      </div>
+    );
+  };
 
   const renderUsuarios = () => {
     if (usuarios && usuarios !== null) {
@@ -24,7 +46,11 @@ const Usuarios = () => {
         usuariosRender = searchRows(query, usuariosRender);
       }
       return usuariosRender.map((usuario) => (
-        <UsuarioRow key={usuario.id} usuario={usuario} />
+        <UsuarioRow
+          key={usuario.id}
+          usuario={usuario}
+          confirmDelete={confirmDelete}
+        />
       ));
     }
   };

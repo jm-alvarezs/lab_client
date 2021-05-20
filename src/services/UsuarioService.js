@@ -9,6 +9,7 @@ const UsuarioService = {
   setToken: (token) => (api.defaults.headers.common["Authorization"] = token),
   postUsuario: (nombre, correo, telefono, uid) =>
     api.post("/signup", { nombre, correo, telefono, uid }),
+  deleteUsuario: (id) => api.delete(`/users/${id}`),
 };
 
 export default UsuarioService;

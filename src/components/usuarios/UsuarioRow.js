@@ -1,7 +1,7 @@
 import { navigate } from "@reach/router";
 import React from "react";
 
-const UsuarioRow = ({ usuario, deleteUsuario }) => {
+const UsuarioRow = ({ usuario, confirmDelete }) => {
   const { id, name, profession, email } = usuario;
 
   return (
@@ -15,7 +15,7 @@ const UsuarioRow = ({ usuario, deleteUsuario }) => {
           className="btn btn-outline-danger"
           onClick={(e) => {
             e.stopPropagation();
-            deleteUsuario(id);
+            confirmDelete(usuario);
           }}
         >
           <i className="fa fa-trash"></i>
