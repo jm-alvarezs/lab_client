@@ -49,6 +49,11 @@ export const UserProvider = ({ children }) => {
         }
       })
       .catch((error) => {
+        if (error.response) {
+          if (error.response.data) {
+            alert(error.response.data.error);
+          }
+        }
         dispatch({ type: HIDE_SPINNER });
       });
   }
