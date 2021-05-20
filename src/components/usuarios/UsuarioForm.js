@@ -1,14 +1,17 @@
 import moment from "moment";
-import React, { useContext, useState } from "react";
-import { PacientesContext } from "../../context/PacientesContext";
+import React, { useState } from "react";
 import { secciones } from "../../utils";
 
-const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
+const UsuarioForm = ({
+  usuario,
+  setPropiedadUsuario,
+  cancel,
+  updatePaciente,
+  postPaciente,
+}) => {
   const [location, setLocation] = useState("corteza");
   const [section, setSection] = useState("");
   const [side, setSide] = useState("derecho");
-
-  const { updatePaciente, postPaciente } = useContext(PacientesContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +36,6 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
 
   const {
     name,
-    lastName,
     email,
     birthDate,
     gender,
@@ -45,22 +47,13 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="row">
-        <div className="col-6">
-          <label>Nombre</label>
+        <div className="container-fluid">
+          <label>Nombre Completo</label>
           <input
             type="text"
             className="form-control mb-3"
             value={name}
             onChange={(e) => setPropiedadUsuario("name", e.target.value)}
-          />
-        </div>
-        <div className="col-6">
-          <label>Apellidos</label>
-          <input
-            type="text"
-            className="form-control mb-3"
-            value={lastName}
-            onChange={(e) => setPropiedadUsuario("lastName", e.target.value)}
           />
         </div>
       </div>

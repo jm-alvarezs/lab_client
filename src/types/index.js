@@ -48,6 +48,8 @@ export const CREATE_USUARIO = "CREATE_USUARIO";
  * Pacientes
  */
 export const PACIENTES_RECIBIDOS = "PACIENTES_RECIBIDOS";
+export const CREATE_PACIENTE = "CREATE_PACIENTE";
+export const SET_PROPIEDAD_PACIENTE = "SET_PROPIEDAD_PACIENTE";
 /**
  * Surveys
  */

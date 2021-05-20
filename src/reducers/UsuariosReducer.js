@@ -9,15 +9,6 @@ const schema = {
   id: "nuevo",
   name: "",
   email: "",
-  birthDate: "",
-  gender: "",
-  dominantHand: "",
-  damageLocation: "",
-  antecedent: "",
-  drugsConsumption: "",
-  drugsTreatment: "",
-  whichDrugs: "",
-  dose: "",
 };
 
 export default (state, { type, payload }) => {

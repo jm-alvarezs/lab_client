@@ -1,7 +1,12 @@
 import React, { createContext, useContext, useReducer } from "react";
 import PacientesReducer from "../reducers/PacientesReducer";
 import PacientesService from "../services/PacientesService";
-import { PACIENTES_RECIBIDOS, SINGLE_USER_RECIBIDO } from "../types";
+import {
+  PACIENTES_RECIBIDOS,
+  SINGLE_USER_RECIBIDO,
+  CREATE_PACIENTE,
+  SET_PROPIEDAD_PACIENTE,
+} from "../types";
 import { ModalContext } from "./ModalContext";
 import { navigate } from "@reach/router";
 
@@ -65,6 +70,15 @@ export const PacientesProvider = ({ children }) => {
       success("Paciente actualizado!");
     });
   };
+
+  const createPaciente = () => {
+    dispatch({ type: CREATE_PACIENTE });
+  };
+
+  const setPropiedadPaciente = (key, value) => {
+    dispatch({ type: SET_PROPIEDAD_PACIENTE, payload: { key, value } });
+  };
+
   return (
     <PacientesContext.Provider
       value={{
@@ -73,7 +87,9 @@ export const PacientesProvider = ({ children }) => {
         getSinglePaciente,
         getPacientesAdmin,
         postPaciente,
+        createPaciente,
         updatePaciente,
+        setPropiedadPaciente,
       }}
     >
       {children}

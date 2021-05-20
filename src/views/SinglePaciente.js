@@ -3,51 +3,54 @@ import React, { useContext, useEffect, useState } from "react";
 import Breadcrumbs from "../components/global/Breadcrumbs";
 import UsuarioData from "../components/usuarios/UsuarioData";
 import UsuarioForm from "../components/usuarios/UsuarioForm";
-import { UsuariosContext } from "../context/UsuariosContext";
+import { PacientesContext } from "../context/PacientesContext";
 
 const SinglePaciente = ({ id }) => {
   const [editMode, setEditMode] = useState(false);
 
   const {
-    usuario,
-    getUsuario,
-    createUsuario,
-    setPropiedadUsuario,
-    updateUsuario,
-  } = useContext(UsuariosContext);
+    paciente,
+    createPaciente,
+    getSinglePaciente,
+    setPropiedadPaciente,
+    updatePaciente,
+    postPaciente,
+  } = useContext(PacientesContext);
 
   useEffect(() => {
     if (isNaN(id)) {
-      createUsuario();
+      createPaciente();
       setEditMode(true);
     } else {
-      getUsuario(id);
+      getSinglePaciente(id);
     }
   }, []);
 
   const renderUsuario = () => {
-    if (usuario && usuario !== null) {
+    if (paciente && paciente !== null) {
       if (editMode) {
         return (
           <UsuarioForm
-            usuario={usuario}
+            usuario={paciente}
             cancel={() => {
               setEditMode(false);
-              if (isNaN(usuario.id)) {
+              if (isNaN(paciente.id)) {
                 navigate("/pacientes");
               }
             }}
-            setPropiedadUsuario={setPropiedadUsuario}
+            setPropiedadUsuario={setPropiedadPaciente}
+            updatePaciente={updatePaciente}
+            postPaciente={postPaciente}
           />
         );
       }
-      return <UsuarioData usuario={usuario} />;
+      return <UsuarioData usuario={paciente} />;
     }
   };
 
   const renderPruebas = () => {
     if (!isNaN(id)) {
-      if (usuario && usuario !== null && !editMode) {
+      if (paciente && paciente !== null && !editMode) {
         return (
           <div className="card p-3 shadow-sm my-3">
             <h3 className="border-bottom pb-2 mb-4">Pruebas</h3>
