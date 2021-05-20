@@ -48,15 +48,6 @@ const AnswerCuestionario = () => {
     if (idSurveyType === 2) return <PreguntasCUPOM modifier={setQuestions} />;
     return <PreguntasNechapi modifier={setQuestions} />;
   };
-
-  const renderPaciente = () => {
-    return "Paco";
-  };
-
-  const renderEvaluador = () => {
-    return "Umberto León";
-  };
-
   return (
     <div className="container py-4">
       <h1 className="h2 mb-3">
@@ -66,23 +57,6 @@ const AnswerCuestionario = () => {
           : ""}
       </h1>
       <div className="card p-3">
-        <div className="row mx-0 mb-3">
-          <div className="col-12 col-md-6">
-            <p className="mb-0 bold">Evaluador</p>
-          </div>
-          <div className="col-12 col-md-6">
-            <p className="mb-0">{renderEvaluador()}</p>
-          </div>
-        </div>
-        <div className="row mx-0 mb-3">
-          <div className="col-12 col-md-6">
-            <p className="mb-0 bold">Paciente</p>
-          </div>
-          <div className="col-12 col-md-6">
-            <p className="mb-0">{renderPaciente()}</p>
-          </div>
-        </div>
-        <hr />
         <form onSubmit={handleSubmit}>
           <div className="row my-2 mx-0">
             <div className="col-12 col-md-6">
