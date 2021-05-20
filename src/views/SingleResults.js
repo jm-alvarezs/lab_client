@@ -5,12 +5,10 @@ import moment from "moment";
 import SplitHalfTesting from "./SplitHalfTesting";
 import ResultChart from "../components/ResultChart";
 import EstimuloRow from "../components/resultados/EstimuloRow";
-import {
-  calculateAverage,
-  getResultadoTargets,
-  getResultadoTargetsCondicional,
-} from "../utils";
+import { calculateAverage } from "../utils";
 import ReactToPdf from "react-to-pdf";
+import ResumenResultados from "../components/resultados/ResumenResultados";
+import SujetoPrueba from "../components/resultados/SujetoPrueba";
 
 const SingleResults = ({ id }) => {
   const { resultado, fiability, getSingleTest, getFiablity } =
@@ -61,10 +59,6 @@ const SingleResults = ({ id }) => {
     return "N/D";
   };
 
-  const isCondicional = () => {
-    return resultado.test.testType.id === 2;
-  };
-
   const renderResults = () => {
     if (resultado && resultado !== null) {
       if (resultado.results.targets) {
@@ -82,106 +76,7 @@ const SingleResults = ({ id }) => {
                     />
                   </div>
                   <div className="col-12 col-md-6">
-                    <h3>Resumen</h3>
-                    <p>
-                      Aciertos:{" "}
-                      {isCondicional()
-                        ? getResultadoTargetsCondicional(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            resultado.results.settings.clave,
-                            "aciertos"
-                          )
-                        : getResultadoTargets(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            "aciertos"
-                          )}
-                    </p>
-                    <p>
-                      Errores:{" "}
-                      {isCondicional()
-                        ? getResultadoTargetsCondicional(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            resultado.results.settings.clave,
-                            "errores"
-                          )
-                        : getResultadoTargets(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            "errores"
-                          )}
-                    </p>
-                    <h4>Detalle</h4>
-                    <p>
-                      Omisiones Correctas:{" "}
-                      {isCondicional()
-                        ? getResultadoTargetsCondicional(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            resultado.results.settings.clave,
-                            "omision",
-                            true
-                          )
-                        : getResultadoTargets(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            "omision",
-                            true
-                          )}
-                    </p>
-                    <p>
-                      Omisiones Incorrectas:{" "}
-                      {isCondicional()
-                        ? getResultadoTargetsCondicional(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            resultado.results.prevTarget,
-                            "omision",
-                            false
-                          )
-                        : getResultadoTargets(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            "omision",
-                            false
-                          )}
-                    </p>
-                    <p>
-                      Clicks Correctos:{" "}
-                      {isCondicional()
-                        ? getResultadoTargetsCondicional(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            resultado.results.prevTarget,
-                            "click",
-                            true
-                          )
-                        : getResultadoTargets(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            "click",
-                            true
-                          )}
-                    </p>
-                    <p>
-                      Clicks Incorrectos:{" "}
-                      {isCondicional()
-                        ? getResultadoTargetsCondicional(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            resultado.results.prevTarget,
-                            "click",
-                            false
-                          )
-                        : getResultadoTargets(
-                            resultado.results.targets,
-                            resultado.results.target,
-                            "click",
-                            false
-                          )}
-                    </p>
+                    <ResumenResultados resultado={resultado} />
                   </div>
                 </div>
               </div>
@@ -207,35 +102,7 @@ const SingleResults = ({ id }) => {
   const renderSujeto = () => {
     if (resultado && resultado !== null) {
       const { patient } = resultado.test;
-      const {
-        name,
-        email,
-        birthDate,
-        gender,
-        antecedent,
-        dominantHand,
-        drugsConsumption,
-        whichDrugs,
-        durgsTreatment,
-        dose,
-        damageLocation,
-      } = patient;
-      return (
-        <div>
-          <h4>{name}</h4>
-          <p>{email}</p>
-          <p>Género: {gender}</p>
-          <p>Fecha de Nacimiento: {moment(birthDate).format("DD MMM YYYY")}</p>
-          <label>Antecedentes:</label>
-          <p>{antecedent}</p>
-          <p>Mano Dominante: {dominantHand}</p>
-          <p>Consumo de Drogas: {drugsConsumption}</p>
-          <p>Drogas: {whichDrugs}</p>
-          <p>Tratamiento: {durgsTreatment}</p>
-          <p>Dosis: {dose}</p>
-          <p>Ubicación del Daño: {damageLocation}</p>
-        </div>
-      );
+      return <SujetoPrueba patient={patient} />;
     }
   };
 
