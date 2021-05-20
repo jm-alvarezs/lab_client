@@ -3,12 +3,15 @@ import UsuarioRow from "../components/usuarios/UsuarioRow";
 import { Link } from "@reach/router";
 import { searchRows } from "../utils";
 import { PacientesContext } from "../context/PacientesContext";
+import { ModalContext } from "../context/ModalContext";
 
 const Pacientes = ({ admin }) => {
   const [query, setQuery] = useState("");
 
-  const { pacientes, getPacientes, getPacientesAdmin } =
+  const { pacientes, getPacientes, getPacientesAdmin, deletePaciente } =
     useContext(PacientesContext);
+
+  const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
     if (admin) {
@@ -17,6 +20,24 @@ const Pacientes = ({ admin }) => {
       getPacientes();
     }
   }, []);
+
+  const confirmDelete = (paciente) => {
+    modalComponent(
+      "Precaución",
+      <div>
+        <p>
+          ¿Estás seguro que deseas eliminar al paciente {paciente.name}? Esta
+          acción NO puede deshacerse y se perderán todas sus pruebas realizadas.
+        </p>
+        <button
+          className="btn btn-danger"
+          onClick={() => deletePaciente(paciente.id)}
+        >
+          <i className="fa fa-trash"></i> Eliminar
+        </button>
+      </div>
+    );
+  };
 
   const renderUsuarios = () => {
     if (pacientes && pacientes !== null) {
@@ -34,7 +55,11 @@ const Pacientes = ({ admin }) => {
         );
       }
       return usuariosRender.map((usuario) => (
-        <UsuarioRow key={usuario.id} usuario={usuario} />
+        <UsuarioRow
+          key={usuario.id}
+          usuario={usuario}
+          confirmDelete={confirmDelete}
+        />
       ));
     }
     return (

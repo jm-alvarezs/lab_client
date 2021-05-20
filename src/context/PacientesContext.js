@@ -79,6 +79,13 @@ export const PacientesProvider = ({ children }) => {
     dispatch({ type: SET_PROPIEDAD_PACIENTE, payload: { key, value } });
   };
 
+  const deletePaciente = (id) => {
+    PacientesService.deletePaciente(id).then(() => {
+      success("¡Paciente eliminado con éxito!");
+      getPacientes();
+    });
+  };
+
   return (
     <PacientesContext.Provider
       value={{
@@ -89,6 +96,7 @@ export const PacientesProvider = ({ children }) => {
         postPaciente,
         createPaciente,
         updatePaciente,
+        deletePaciente,
         setPropiedadPaciente,
       }}
     >
