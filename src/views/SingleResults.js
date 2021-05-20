@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import PruebaConfig from "../components/PruebaConfig";
+import PruebaConfig from "../components/pruebas/PruebaConfig";
 import { ResultadosContext } from "../context/ResultadosContext";
 import moment from "moment";
 import SplitHalfTesting from "./SplitHalfTesting";
-import ResultChart from "../components/ResultChart";
+import ResultChart from "../components/resultados/ResultChart";
 import EstimuloRow from "../components/resultados/EstimuloRow";
 import { calculateAverage } from "../utils";
 import ReactToPdf from "react-to-pdf";

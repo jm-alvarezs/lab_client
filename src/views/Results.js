@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ResultadosContext } from "../context/ResultadosContext";
 import ResultadoCard from "../components/resultados/ResultadoCard";
-import Buscador from "./Buscador";
+import Buscador from "../components/resultados/Buscador";
 import { SurveyContext } from "../context/SurveyContext";
 
 const Results = () => {
@@ -40,7 +40,7 @@ const Results = () => {
     if (showFilters) {
       return (
         <div className="row my-4">
-          <Buscador />
+          <Buscador survey={tab === "cuestionarios"} />
         </div>
       );
     }

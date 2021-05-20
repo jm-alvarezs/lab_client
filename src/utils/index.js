@@ -384,3 +384,76 @@ export const generateRandom = (type) => {
     respuesta: Math.floor(Math.random() * 1) > 1,
   }));
 };
+
+export const secciones = {
+  corteza: {
+    has_side: true,
+    options: [
+      {
+        name: "Lóbulo frontal",
+        value: "frontal",
+      },
+      {
+        name: "Lóbulo temporal",
+        value: "temporal",
+      },
+      {
+        name: "Lóbulo parietal",
+        value: "parietal",
+      },
+      {
+        name: "Lóbulo occipital",
+        value: "occipital",
+      },
+    ],
+  },
+  subcorteza: {
+    has_side: true,
+    options: [
+      {
+        name: "Tálamo",
+        value: "talamo",
+      },
+      {
+        name: "Ganglios de la base",
+        value: "ganglios",
+      },
+      {
+        name: "Hipotálamo",
+        value: "hipotalamo",
+      },
+      {
+        name: "Glándula pineal",
+        value: "glandula",
+      },
+    ],
+  },
+  tronco: {
+    options: [
+      {
+        name: "Bulbo raquídeo",
+        value: "bulbo",
+      },
+      {
+        name: "Protuberancia",
+        value: "protuberancia",
+      },
+      {
+        name: "Mesencéfalo",
+        value: "mesencefalo",
+      },
+    ],
+  },
+  cerebelo: {
+    options: [
+      {
+        name: "Izquierdo",
+        value: "izquierdo",
+      },
+      {
+        name: "Derecho",
+        value: "derecho",
+      },
+    ],
+  },
+};

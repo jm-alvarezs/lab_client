@@ -1,6 +1,6 @@
 import React from "react";
 import Chart from "react-apexcharts";
-import { getTargetResult } from "../utils";
+import { getTargetResult } from "../../utils";
 
 const ResultChart = ({ items, target, type, prevTarget }) => {
   var options = {

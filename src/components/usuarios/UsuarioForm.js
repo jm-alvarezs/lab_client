@@ -1,5 +1,7 @@
+import moment from "moment";
 import React, { useContext, useState } from "react";
 import { PacientesContext } from "../../context/PacientesContext";
+import { secciones } from "../../utils";
 
 const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
   const [location, setLocation] = useState("corteza");
@@ -7,79 +9,6 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
   const [side, setSide] = useState("derecho");
 
   const { updatePaciente, postPaciente } = useContext(PacientesContext);
-
-  const secciones = {
-    corteza: {
-      has_side: true,
-      options: [
-        {
-          name: "Lóbulo frontal",
-          value: "frontal",
-        },
-        {
-          name: "Lóbulo temporal",
-          value: "temporal",
-        },
-        {
-          name: "Lóbulo parietal",
-          value: "parietal",
-        },
-        {
-          name: "Lóbulo occipital",
-          value: "occipital",
-        },
-      ],
-    },
-    subcorteza: {
-      has_side: true,
-      options: [
-        {
-          name: "Tálamo",
-          value: "talamo",
-        },
-        {
-          name: "Ganglios de la base",
-          value: "ganglios",
-        },
-        {
-          name: "Hipotálamo",
-          value: "hipotalamo",
-        },
-        {
-          name: "Glándula pineal",
-          value: "glandula",
-        },
-      ],
-    },
-    tronco: {
-      options: [
-        {
-          name: "Bulbo raquídeo",
-          value: "bulbo",
-        },
-        {
-          name: "Protuberancia",
-          value: "protuberancia",
-        },
-        {
-          name: "Mesencéfalo",
-          value: "mesencefalo",
-        },
-      ],
-    },
-    cerebelo: {
-      options: [
-        {
-          name: "Izquierdo",
-          value: "izquierdo",
-        },
-        {
-          name: "Derecho",
-          value: "derecho",
-        },
-      ],
-    },
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -104,6 +33,7 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
 
   const {
     name,
+    lastName,
     email,
     birthDate,
     gender,
@@ -113,13 +43,27 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
   } = usuario;
   return (
     <form onSubmit={handleSubmit}>
-      <label>Nombre</label>
-      <input
-        type="text"
-        className="form-control mb-3"
-        value={name}
-        onChange={(e) => setPropiedadUsuario("name", e.target.value)}
-      />
+      <div className="row">
+        <div className="col-6">
+          <label>Nombre</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            value={name}
+            onChange={(e) => setPropiedadUsuario("name", e.target.value)}
+          />
+        </div>
+        <div className="col-6">
+          <label>Apellidos</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            value={lastName}
+            onChange={(e) => setPropiedadUsuario("lastName", e.target.value)}
+          />
+        </div>
+      </div>
+
       <label>Correo</label>
       <input
         type="text"
@@ -131,7 +75,7 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
       <input
         type="date"
         className="form-control mb-3"
-        value={birthDate}
+        value={moment(birthDate).utc().format("YYYY-MM-DD")}
         onChange={(e) => setPropiedadUsuario("birthDate", e.target.value)}
       />
       <label>Género</label>

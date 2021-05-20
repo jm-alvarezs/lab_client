@@ -39,7 +39,8 @@ export const PacientesProvider = ({ children }) => {
   };
 
   const postPaciente = (paciente) => {
-    PacientesService.postPaiente(paciente).then((res) => {
+    delete paciente.id;
+    PacientesService.postPaciente(paciente).then((res) => {
       const id = res.data.data.id;
       navigate(`/pacientes/${id}`);
       success("¡Paciente guardado!");
@@ -47,6 +48,7 @@ export const PacientesProvider = ({ children }) => {
   };
 
   const updatePaciente = (usuario) => {
+    console.log(usuario);
     PacientesService.updatePaciente(usuario).then(() => {
       success("Paciente actualizado!");
     });

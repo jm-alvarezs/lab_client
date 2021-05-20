@@ -1,6 +1,6 @@
 import { Router } from "@reach/router";
 import React from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/global/Navbar";
 import ConfigAtencion from "./ConfigAtencion";
 import ConfigCondicional from "./ConfigCondicional";
 import Cuenta from "./Cuenta";
