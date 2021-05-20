@@ -30,7 +30,9 @@ const UsuarioForm = ({
     const seccion = secciones[location];
     if (seccion)
       return seccion.options.map(({ name, value }) => (
-        <option value={value}>{name}</option>
+        <option key={value} value={value}>
+          {name}
+        </option>
       ));
   };
 

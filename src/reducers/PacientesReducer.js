@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
   CREATE_PACIENTE,
   PACIENTES_RECIBIDOS,
@@ -8,13 +9,13 @@ const schema = {
   id: "nuevo",
   name: "",
   email: "",
-  birthDate: "",
-  gender: "",
-  dominantHand: "",
+  birthDate: moment().utc().format("YYYY-MM-DD"),
+  gender: "Hombre",
+  dominantHand: "Diestro",
   damageLocation: "",
   antecedent: "",
-  drugsConsumption: "",
-  drugsTreatment: "",
+  drugsConsumption: false,
+  drugsTreatment: false,
   whichDrugs: "",
   dose: "",
 };
