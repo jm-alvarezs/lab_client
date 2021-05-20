@@ -8,8 +8,13 @@ import { UsuariosContext } from "../context/UsuariosContext";
 const SinglePaciente = ({ id }) => {
   const [editMode, setEditMode] = useState(false);
 
-  const { usuario, getUsuario, createUsuario, setPropiedadUsuario } =
-    useContext(UsuariosContext);
+  const {
+    usuario,
+    getUsuario,
+    createUsuario,
+    setPropiedadUsuario,
+    updateUsuario,
+  } = useContext(UsuariosContext);
 
   useEffect(() => {
     if (isNaN(id)) {
@@ -42,7 +47,7 @@ const SinglePaciente = ({ id }) => {
 
   const renderPruebas = () => {
     if (!isNaN(id)) {
-      if (usuario && usuario !== null) {
+      if (usuario && usuario !== null && !editMode) {
         return (
           <div className="card p-3 shadow-sm my-3">
             <h3 className="border-bottom pb-2 mb-4">Pruebas</h3>
@@ -92,7 +97,16 @@ const SinglePaciente = ({ id }) => {
           <div className="col-12 col-md-6">
             <h1>Paciente</h1>
           </div>
-          <div className="col-12 col-md-6 text-right"></div>
+          <div className="col-12 col-md-6 text-right">
+            {!editMode && (
+              <button
+                className="btn btn-dark"
+                onClick={() => setEditMode(true)}
+              >
+                <i className="fa fa-edit"></i> Editar
+              </button>
+            )}
+          </div>
         </div>
         <div className="card p-3 shadow-sm my-3">
           <h2 className="border-bottom pb-3 mb-3">Expediente</h2>

@@ -6,7 +6,7 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
   const [section, setSection] = useState("");
   const [side, setSide] = useState("derecho");
 
-  const { postPaciente } = useContext(PacientesContext);
+  const { updatePaciente, postPaciente } = useContext(PacientesContext);
 
   const secciones = {
     corteza: {
@@ -87,7 +87,11 @@ const UsuarioForm = ({ usuario, setPropiedadUsuario, cancel }) => {
       ...usuario,
       damageLocation: `${location}_${section}_${side}`,
     };
-    postPaciente(data);
+    if (usuario.id === "nuevo") {
+      postPaciente(data);
+    } else {
+      updatePaciente(data);
+    }
   };
 
   const renderSecciones = () => {

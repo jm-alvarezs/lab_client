@@ -8,5 +8,13 @@ export default {
   getPrueba: (idTest) => api.get(`${route}/${idTest}`),
   postPrueba: (args) => api.post(route, { ...args }),
   postResultados: (resultados) =>
-    api.post(`${route}/results`, { ...resultados }),
+    api.post(
+      `${route}/results`,
+      { ...resultados },
+      {
+        headers: {
+          Authorization: resultados.token,
+        },
+      }
+    ),
 };

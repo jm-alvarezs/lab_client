@@ -4,13 +4,14 @@ import moment from "moment";
 
 const Cuenta = () => {
   const [editMode, setEditMode] = useState(false);
-  const { user, signOut, updateUsuario, setPropiedadUser } =
+  const { user, getUser, signOut, updateUsuario, setPropiedadUser } =
     useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUsuario(user);
-    setEditMode(true);
+    setEditMode(false);
+    getUser();
   };
 
   const renderUser = () => {

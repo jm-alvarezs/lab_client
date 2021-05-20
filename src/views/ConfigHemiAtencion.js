@@ -4,7 +4,7 @@ import { PruebasContext } from "../context/PruebasContext";
 
 const ConfigHemiAtencion = ({ idPaciente }) => {
   const [config, setConfig] = useState({
-    idTestType: 2,
+    idTestType: 3,
     tiempoExposicion: "500",
     tiempoInterestimular: "500",
     target: "O",

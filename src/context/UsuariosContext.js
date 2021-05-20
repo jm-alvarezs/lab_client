@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import UsuariosReducer from "../reducers/UsuariosReducer";
 import PacientesService from "../services/PacientesService";
 import {
@@ -7,6 +7,7 @@ import {
   SINGLE_USER_RECIBIDO,
   USUARIOS_RECIBIDOS,
 } from "../types";
+import { ModalContext } from "./ModalContext";
 
 const initialState = {
   usuarios: null,
@@ -17,6 +18,8 @@ export const UsuariosContext = createContext(initialState);
 
 export const UsuariosProvider = ({ children }) => {
   const [state, dispatch] = useReducer(UsuariosReducer, initialState);
+
+  const { success } = useContext(ModalContext);
 
   const getUsuarios = () => {
     PacientesService.getPacientes().then((res) => {
@@ -40,8 +43,6 @@ export const UsuariosProvider = ({ children }) => {
     dispatch({ type: SET_PROPIEDAD_USER, payload: { key, value } });
   };
 
-  const updateUsuario = (usuario) => {};
-
   return (
     <UsuariosContext.Provider
       value={{
@@ -49,7 +50,6 @@ export const UsuariosProvider = ({ children }) => {
         getUsuario,
         getUsuarios,
         createUsuario,
-        updateUsuario,
         setPropiedadUsuario,
       }}
     >

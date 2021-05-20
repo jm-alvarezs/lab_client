@@ -115,7 +115,7 @@ const SingleResults = ({ id }) => {
               <div className="col col-md-1">#</div>
               <div className="col col-md-2">Emisión</div>
               <div className="col col-md-2">Caracter</div>
-              <div className="col col-md-1">Cuadrante</div>
+              <div className="col col-md-1">QN</div>
               <div className="col col-md-2">Click</div>
               <div className="col col-md-2">TR</div>
               <div className="col col-md-2">Resultado</div>

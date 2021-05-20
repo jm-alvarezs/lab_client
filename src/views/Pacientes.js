@@ -3,18 +3,21 @@ import UsuarioRow from "../components/usuarios/UsuarioRow";
 import { UsuariosContext } from "../context/UsuariosContext";
 import { Link } from "@reach/router";
 import { searchRows } from "../utils";
+import { PacientesContext } from "../context/PacientesContext";
 
 const Pacientes = () => {
   const [query, setQuery] = useState("");
-  const { usuarios, getUsuarios } = useContext(UsuariosContext);
+
+  const { pacientes, getPacientes, getPacientesAdmin } =
+    useContext(PacientesContext);
 
   useEffect(() => {
-    getUsuarios();
+    getPacientesAdmin();
   }, []);
 
   const renderUsuarios = () => {
-    if (usuarios && usuarios !== null) {
-      let usuariosRender = [...usuarios];
+    if (pacientes && pacientes !== null) {
+      let usuariosRender = [...pacientes];
       if (query !== "") {
         usuariosRender = searchRows(query, usuariosRender);
       }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@reach/router";
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark-udem shadow-sm mb-3 row">
       <div className="container">
@@ -31,6 +31,32 @@ const Navbar = () => {
                 Resultados
               </Link>
             </li>
+            {user.isAdmin && (
+              <li class="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Admin
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <Link className="dropdown-item" to="/admin/usuarios">
+                      Usuarios
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/admin/pruebas">
+                      Pruebas
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+            )}
             <li className="nav-item ml-2">
               <Link className="nav-link" to="/cuenta">
                 <i className="fa fa-user-circle user-icon fa-2x"></i>

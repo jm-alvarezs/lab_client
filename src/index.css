@@ -41,6 +41,12 @@ body {
   object-fit: cover;
 }
 
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #fff500;
+  color: #000;
+}
+
 .vh-50 {
   height: 50vh;
 }

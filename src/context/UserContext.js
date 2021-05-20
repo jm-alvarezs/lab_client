@@ -14,6 +14,7 @@ import {
 } from "../types";
 import { displayError, displaySuccess } from "../utils";
 import { ModalContext } from "./ModalContext";
+import { navigate } from "@reach/router";
 
 const initialState = {
   user: null,
@@ -29,7 +30,17 @@ export const UserContext = createContext(initialState);
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
-  const { alert } = useContext(ModalContext);
+  const { success, alert } = useContext(ModalContext);
+
+  function getUser() {
+    AuthService.getUser().then((res) => {
+      const user = res.data.data;
+      dispatch({
+        type: LOGIN,
+        payload: user,
+      });
+    });
+  }
 
   function signIn(email, password) {
     dispatch({ type: SHOW_SPINNER });
@@ -79,6 +90,7 @@ export const UserProvider = ({ children }) => {
     AuthService.signOut();
     dispatch({ type: LOGOUT });
     window.localStorage.setItem("token", null);
+    navigate("/");
   }
 
   function signUp(
@@ -142,11 +154,10 @@ export const UserProvider = ({ children }) => {
   function updateUsuario(usuario) {
     UsuarioService.putUsuario(usuario)
       .then(() => {
-        dispatch({ type: GUARDAR_USUARIO });
-        displaySuccess(dispatch, "Perfil actualizado con éxito.");
+        success("Perfil actualizado con éxito.");
       })
       .catch((error) => {
-        displayError(dispatch, error);
+        alert(error.toString());
       });
   }
 
@@ -157,6 +168,7 @@ export const UserProvider = ({ children }) => {
         signIn,
         signUp,
         signOut,
+        getUser,
         cancelEdit,
         userLoggedIn,
         updateUsuario,

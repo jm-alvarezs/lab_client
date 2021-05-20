@@ -26,7 +26,7 @@ const Main = () => {
         <SignUp path="/registro" />
         {user !== null && (
           <>
-            <Home path="/*" />
+            <Home user={user} path="/*" />
           </>
         )}
         <AtencionSimple path="/atencion/*" />

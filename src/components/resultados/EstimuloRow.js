@@ -6,11 +6,15 @@ const EstimuloRow = ({ target, objective, type, index, clave, prevItem }) => {
   return (
     <div key={target.timestamp} className="border-top border-bottom my-3 py-3">
       <div className="row">
-        <div className="col col-md-2">#{index + 1}</div>
+        {type === 3 ? (
+          <div className="col col-md-1">#{index + 1}</div>
+        ) : (
+          <div className="col col-md-2">#{index + 1}</div>
+        )}
         <div className="col col-md-2">
           {moment(target.timestamp).format("HH:mm:ss:SSS")}
         </div>
-        {String(type).includes("condicional") ? (
+        {type === 2 ? (
           <>
             <div className="col col-md-1">{target.prevTarget}</div>
             <div className="col col-md-1">{target.target}</div>
@@ -18,7 +22,7 @@ const EstimuloRow = ({ target, objective, type, index, clave, prevItem }) => {
         ) : (
           <div className="col col-md-2">{target.target}</div>
         )}
-
+        {type === 3 && <div className="col col-md-1">{target.cuadrante}</div>}
         <div className="col col-md-2">
           {target.clicked && target.clicked !== null
             ? moment(target.clicked).format("HH:mm:ss:SSS")

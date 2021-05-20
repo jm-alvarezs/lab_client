@@ -50,6 +50,7 @@ const AtencionHemi = () => {
   const [styleObject, setStyleObject] = useState({});
   const [thankyou, setThankyou] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [token, setToken] = useState("");
 
   const { alert } = useContext(ModalContext);
 
@@ -64,17 +65,18 @@ const AtencionHemi = () => {
   let interval = null;
 
   useEffect(() => {
-    let token = window.location.href.split("token=")[1];
-    if (!token) {
+    let currentToken = window.location.href.split("token=")[1];
+    if (!currentToken) {
       setDisabled(true);
       return alert("No se puede iniciar la prueba");
     }
-    token = token.split("&")[0];
-    UsuarioService.setToken(token);
+    currentToken = currentToken.split("&")[0];
+    setToken(currentToken);
+    UsuarioService.setToken(currentToken);
     let idTest = window.location.href.split("idTest=")[1];
     if (!idTest) return navigate("/");
     idTest = parseInt(idTest.split("&")[0]);
-    getPrueba(idTest, token);
+    getPrueba(idTest, currentToken);
     let params = window.location.href.split("?")[1];
     let currentConfig = { ...defaultConfig };
     if (params) {
@@ -149,6 +151,7 @@ const AtencionHemi = () => {
       idTest: config.idTest,
       idPatient: config.idPatient,
       config: 1,
+      token,
     };
     postResultados(result);
     setThankyou(true);
@@ -199,14 +202,15 @@ const AtencionHemi = () => {
       config.estimulosQ4
     );
     const total =
-      config.estimulosQ1 +
-      config.estimulosQ2 +
-      config.estimulosQ3 +
-      config.estimulosQ4;
+      parseInt(config.estimulosQ1) +
+      parseInt(config.estimulosQ2) +
+      parseInt(config.estimulosQ3) +
+      parseInt(config.estimulosQ4);
     let intervalo =
       parseInt(config["tiempoInterestimular"]) +
       parseInt(config["tiempoExposicion"]);
     interval = setInterval(() => {
+      console.log(estimulos, total);
       if (estimulos >= total) {
         endTest();
       } else {

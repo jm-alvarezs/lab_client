@@ -14,10 +14,10 @@ import Cuestionario from "./Cuestionario";
 import ConfigHemiAtencion from "./ConfigHemiAtencion";
 import AnswerCuestionario from "./AnswerCuestionario";
 
-const Home = () => {
+const Home = ({ user }) => {
   return (
     <div className="container-fluid">
-      <Navbar />
+      <Navbar user={user} />
       <div className="container-fluid">
         <Router>
           {/*Pruebas */}
