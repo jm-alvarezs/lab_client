@@ -1,14 +1,10 @@
 import { Link } from "@reach/router";
 import moment from "moment";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import DamageForm from "../components/damages/DamageForm";
 import { PacientesContext } from "../context/PacientesContext";
-import { secciones } from "../utils";
 
 const UsuarioForm = ({ id }) => {
-  const [location, setLocation] = useState("corteza");
-  const [section, setSection] = useState("");
-  const [side, setSide] = useState("derecho");
-
   const {
     paciente,
     getSinglePaciente,
@@ -28,25 +24,18 @@ const UsuarioForm = ({ id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      ...paciente,
-      damageLocation: `${location}_${section}_${side}`,
-    };
     if (paciente.id === "nuevo") {
-      postPaciente(data);
+      postPaciente(paciente);
     } else {
-      updatePaciente(data);
+      updatePaciente(paciente);
     }
   };
 
-  const renderSecciones = () => {
-    const seccion = secciones[location];
-    if (seccion)
-      return seccion.options.map(({ name, value }) => (
-        <option key={value} value={value}>
-          {name}
-        </option>
-      ));
+  const renderDamages = () => {
+    return console.log(paciente);
+    return paciente.damages.map((damage) => (
+      <DamageForm key={damage.id} damage={damage} />
+    ));
   };
 
   const renderForm = () => {
@@ -111,52 +100,8 @@ const UsuarioForm = ({ id }) => {
             <option>Zurdo</option>
             <option>Ambidiestro</option>
           </select>
-          <label>Ubicación del Daño</label>
-          <select
-            className="form-control mb-3"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          >
-            <option value="corteza">Corteza</option>
-            <option value="subcorteza">Subcorteza</option>
-            <option value="tronco">Tronco del Encéfalo</option>
-            <option value="cerebelo">Cerebelo</option>
-            <option value="lobulos">Lóbulos</option>
-          </select>
-          <div className="row">
-            <div
-              className={
-                secciones[location].has_side &&
-                section !== "hipotalamo" &&
-                section !== "glandula"
-                  ? "col-6"
-                  : "col-12"
-              }
-            >
-              <select
-                className="form-control mb-3"
-                value={section}
-                onChange={(e) => setSection(e.target.value)}
-              >
-                {renderSecciones()}
-              </select>
-            </div>
-            {secciones[location].has_side &&
-              section !== "hipotalamo" &&
-              section !== "glandula" && (
-                <div className="col-6">
-                  <select
-                    className="form-control mb-3"
-                    value={side}
-                    onChange={(e) => setSide(e.target.value)}
-                  >
-                    <option>Derecho</option>
-                    <option>Izquierdo</option>
-                    <option>Bihemisférico</option>
-                  </select>
-                </div>
-              )}
-          </div>
+          {renderDamages()}
+          <button className="btn btn-outline-dark">+ Daño</button>
           <label>Tratamiento Médico / Consumo de Drogas</label>
           <textarea
             rows="4"
