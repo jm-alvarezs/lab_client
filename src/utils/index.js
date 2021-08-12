@@ -453,6 +453,26 @@ export const secciones = {
         name: "Derecho",
         value: "derecho",
       },
+      {
+        name: "Bihemisférico",
+        value: "Bihemisférico",
+      },
+    ],
+  },
+  lobulos: {
+    options: [
+      {
+        name: "Izquierdo",
+        value: "izquierdo",
+      },
+      {
+        name: "Derecho",
+        value: "derecho",
+      },
+      {
+        name: "Bihemisférico",
+        value: "Bihemisférico",
+      },
     ],
   },
 };

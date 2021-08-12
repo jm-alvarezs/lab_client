@@ -11,12 +11,12 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
     fontFamily: "Courier",
     fontStyle: "Normal",
     fontSize: "24",
-    color: "#fff",
-    backgroundColor: "#000",
+    color: "#ffffff",
+    backgroundColor: "#000000",
     keyCode: "13",
     duracion: "10",
     radioFijacion: "20",
-    colorFijacion: "#fff",
+    colorFijacion: "#ffffff",
     estimulosQ1: "50",
     estimulosQ2: "50",
     estimulosQ3: "50",
@@ -75,7 +75,6 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
     color,
     backgroundColor,
     keyCode,
-    duracion,
     radioFijacion,
     colorFijacion,
     estimulosQ1,
@@ -87,6 +86,12 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
     aparicionQ3,
     aparicionQ4,
   } = config;
+
+  const estimulosTotales =
+    parseInt(estimulosQ1) +
+    parseInt(estimulosQ2) +
+    parseInt(estimulosQ3) +
+    parseInt(estimulosQ4);
 
   return (
     <div className="container-fluid">
@@ -386,7 +391,7 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
                   <input
                     type="number"
                     className="form-control mb-3"
-                    value={getNumeroDeEstimulos()}
+                    value={estimulosTotales}
                     disabled
                   />
                 </div>
@@ -399,8 +404,13 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
                   <input
                     type="number"
                     className="form-control mb-3"
-                    value={duracion}
-                    onChange={(e) => handleChange("duracion", e)}
+                    value={
+                      ((parseInt(tiempoExposicion) +
+                        parseInt(tiempoInterestimular)) *
+                        estimulosTotales) /
+                      1000
+                    }
+                    disabled
                   />
                 </div>
                 <div className="col-3">

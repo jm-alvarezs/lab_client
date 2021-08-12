@@ -27,7 +27,7 @@ const UsuarioData = ({ usuario }) => {
       <div className="col-12 col-md-6">
         <p>Ubicación del Daño: {damageLocation}</p>
         <p>Antecedentes: {antecedent}</p>
-        <p>Consumo de Drogas: {drugsConsumption}</p>
+        <p>Tratamiento Médico / Consumo de Drogas: {drugsConsumption}</p>
         <p>Tratamiento de Drogas: {drugsTreatment}</p>
         <p>Drogas o Medicamentos: {whichDrugs}</p>
         <p>Dosis: {dose}</p>

@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import PreguntasCUPOM from "../components/cuestionario/PreguntasCUPOM";
 import PreguntasNechapi from "../components/cuestionario/PreguntasNechapi";
+import { ModalContext } from "../context/ModalContext";
 import { SurveyContext } from "../context/SurveyContext";
+import { preguntasCUPOM, preguntasNechapi } from "../utils";
 
 const AnswerCuestionario = () => {
   const [tipo, setTipo] = useState("");
@@ -13,6 +15,8 @@ const AnswerCuestionario = () => {
   const [idSurveyType, setidSurveyType] = useState("");
 
   const { postAnswer } = useContext(SurveyContext);
+
+  const { alert } = useContext(ModalContext);
 
   useEffect(() => {
     let currentToken = window.location.href.split("token=")[1];
@@ -35,6 +39,20 @@ const AnswerCuestionario = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let answered = true;
+    let targetAnswers;
+    if (idSurveyType === 2) {
+      answered = questions.filter((question) => question !== "").length;
+      targetAnswers = preguntasCUPOM.length;
+    } else {
+      answered = questions.filter(
+        (question) => question.before !== "" && question.after !== ""
+      ).length;
+      targetAnswers = preguntasNechapi.length;
+    }
+    if (answered < targetAnswers) {
+      return alert("Aun no has terminado de contestar el cuestionario");
+    }
     const data = {
       idPatient,
       idSurvey,

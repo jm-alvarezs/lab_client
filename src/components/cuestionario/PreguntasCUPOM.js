@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { preguntasCUPOM } from "../../utils";
 
-const PreguntasCUPOM = ({ modifier, valores }) => {
+const PreguntasCUPOM = ({ modifier }) => {
   const [resultados, setResultados] = useState([]);
 
   useEffect(() => {
-    setResultados(new Array(preguntasCUPOM.length).fill("no"));
+    setResultados(new Array(preguntasCUPOM.length).fill(""));
   }, []);
 
   useEffect(() => {

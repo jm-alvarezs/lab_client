@@ -210,7 +210,6 @@ const AtencionHemi = () => {
       parseInt(config["tiempoInterestimular"]) +
       parseInt(config["tiempoExposicion"]);
     interval = setInterval(() => {
-      console.log(estimulos, total);
       if (estimulos >= total) {
         endTest();
       } else {

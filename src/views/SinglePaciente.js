@@ -1,56 +1,25 @@
-import { Link, navigate } from "@reach/router";
-import React, { useContext, useEffect, useState } from "react";
+import { Link } from "@reach/router";
+import React, { useContext, useEffect } from "react";
 import Breadcrumbs from "../components/global/Breadcrumbs";
 import UsuarioData from "../components/usuarios/UsuarioData";
-import UsuarioForm from "../components/usuarios/UsuarioForm";
 import { PacientesContext } from "../context/PacientesContext";
 
 const SinglePaciente = ({ id }) => {
-  const [editMode, setEditMode] = useState(false);
-
-  const {
-    paciente,
-    createPaciente,
-    getSinglePaciente,
-    setPropiedadPaciente,
-    updatePaciente,
-    postPaciente,
-  } = useContext(PacientesContext);
+  const { paciente, getSinglePaciente } = useContext(PacientesContext);
 
   useEffect(() => {
-    if (isNaN(id)) {
-      createPaciente();
-      setEditMode(true);
-    } else {
-      getSinglePaciente(id);
-    }
+    getSinglePaciente(id);
   }, []);
 
   const renderUsuario = () => {
     if (paciente && paciente !== null) {
-      if (editMode) {
-        return (
-          <UsuarioForm
-            usuario={paciente}
-            cancel={() => {
-              setEditMode(false);
-              if (isNaN(paciente.id)) {
-                navigate("/pacientes");
-              }
-            }}
-            setPropiedadUsuario={setPropiedadPaciente}
-            updatePaciente={updatePaciente}
-            postPaciente={postPaciente}
-          />
-        );
-      }
       return <UsuarioData usuario={paciente} />;
     }
   };
 
   const renderPruebas = () => {
     if (!isNaN(id)) {
-      if (paciente && paciente !== null && !editMode) {
+      if (paciente && paciente !== null) {
         return (
           <div className="card p-3 shadow-sm my-3">
             <h3 className="border-bottom pb-2 mb-4">Pruebas</h3>
@@ -101,14 +70,9 @@ const SinglePaciente = ({ id }) => {
             <h1>Paciente</h1>
           </div>
           <div className="col-12 col-md-6 text-right">
-            {!editMode && (
-              <button
-                className="btn btn-dark"
-                onClick={() => setEditMode(true)}
-              >
-                <i className="fa fa-edit"></i> Editar
-              </button>
-            )}
+            <Link to="./edit" className="btn btn-outline-secondary">
+              <i className="fa fa-edit"></i> Editar
+            </Link>
           </div>
         </div>
         <div className="card p-3 shadow-sm my-3">

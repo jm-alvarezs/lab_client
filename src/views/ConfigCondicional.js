@@ -11,16 +11,16 @@ const ConfigCondicional = ({ idPaciente }) => {
     fontFamily: "Courier",
     fontStyle: "Normal",
     fontSize: "24",
-    color: "#fff",
-    backgroundColor: "#000",
+    color: "#ffffff",
+    backgroundColor: "#000000",
     clave: "X",
-    claveTarget: "37",
-    noClaveTarget: "19",
-    claveNoTarget: "19",
-    noClaveNoTarget: "75",
-    paresTotales: "150",
+    claveTarget: "15",
+    noClaveTarget: "15",
+    claveNoTarget: "15",
+    noClaveNoTarget: "15",
+    paresTotales: "",
     keyCode: "13",
-    duracion: "10",
+    duracion: "",
     idPatient: "",
   });
 
@@ -60,15 +60,19 @@ const ConfigCondicional = ({ idPaciente }) => {
     fontSize,
     color,
     backgroundColor,
-    paresTotales,
     clave,
     claveTarget,
     claveNoTarget,
     noClaveTarget,
     noClaveNoTarget,
     keyCode,
-    duracion,
   } = config;
+
+  const paresTotales =
+    parseInt(claveTarget) +
+    parseInt(claveNoTarget) +
+    parseInt(noClaveNoTarget) +
+    parseInt(noClaveTarget);
 
   return (
     <div className="container-fluid">
@@ -110,22 +114,7 @@ const ConfigCondicional = ({ idPaciente }) => {
                   <p>milisegundos (s)</p>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-6">
-                  <label>Target</label>
-                </div>
-                <div className="col-3">
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    value={target}
-                    onChange={(e) => handleChange("target", e)}
-                  />
-                </div>
-                <div className="col-3">
-                  <p>[A-Z]</p>
-                </div>
-              </div>
+
               <div className="row">
                 <div className="col-6">
                   <label>Tipo de Letra</label>
@@ -197,6 +186,22 @@ const ConfigCondicional = ({ idPaciente }) => {
                     value={backgroundColor}
                     onChange={(e) => handleChange("backgroundColor", e)}
                   />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <label>Target</label>
+                </div>
+                <div className="col-3">
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    value={target}
+                    onChange={(e) => handleChange("target", e)}
+                  />
+                </div>
+                <div className="col-3">
+                  <p>[A-Z]</p>
                 </div>
               </div>
               <div className="row">
@@ -285,7 +290,7 @@ const ConfigCondicional = ({ idPaciente }) => {
                     type="number"
                     className="form-control mb-3"
                     value={paresTotales}
-                    onChange={(e) => handleChange("paresTotales", e)}
+                    disabled
                   />
                 </div>
                 <div className="col-3">
@@ -316,8 +321,13 @@ const ConfigCondicional = ({ idPaciente }) => {
                   <input
                     type="number"
                     className="form-control mb-3"
-                    value={duracion}
-                    onChange={(e) => handleChange("duracion", e)}
+                    value={
+                      ((parseInt(tiempoInterestimular) +
+                        parseInt(tiempoExposicion)) *
+                        parseInt(paresTotales)) /
+                      1000
+                    }
+                    disabled
                   />
                 </div>
                 <div className="col-3">

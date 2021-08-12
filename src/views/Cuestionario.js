@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Breadcrumbs from "../components/global/Breadcrumbs";
+import { ModalContext } from "../context/ModalContext";
 import { PacientesContext } from "../context/PacientesContext";
 import { SurveyContext } from "../context/SurveyContext";
 import { UserContext } from "../context/UserContext";
@@ -15,12 +16,17 @@ const Cuestionario = ({ tipo, idPaciente }) => {
 
   const { postSurvey } = useContext(SurveyContext);
 
+  const { alert } = useContext(ModalContext);
+
   useEffect(() => {
     getSinglePaciente(idPaciente);
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (nombre === "" || apellidos === "") {
+      return alert("Por favor, completa los datos del cuestionado.");
+    }
     postSurvey(
       {
         idPatient: idPaciente,

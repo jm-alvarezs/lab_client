@@ -12,8 +12,8 @@ const ConfigAtencion = ({ idPaciente }) => {
     fontFamily: "Courier",
     fontStyle: "Normal",
     fontSize: "24",
-    color: "#fff",
-    backgroundColor: "#000",
+    color: "#ffffff",
+    backgroundColor: "#000000",
     numeroEstimulos: "10",
     aparicion: "17",
     keyCode: "13",
@@ -238,7 +238,7 @@ const ConfigAtencion = ({ idPaciente }) => {
                   </select>
                 </div>
               </div>
-              <div className="row">
+              <div className="row align-items-center">
                 <div className="col-6">
                   <label>Duración</label>
                 </div>
@@ -246,8 +246,13 @@ const ConfigAtencion = ({ idPaciente }) => {
                   <input
                     type="number"
                     className="form-control mb-3"
-                    value={duracion}
-                    onChange={(e) => handleChange("duracion", e)}
+                    value={
+                      ((parseInt(tiempoExposicion) +
+                        parseInt(tiempoInterestimular)) *
+                        parseInt(numeroEstimulos)) /
+                      1000
+                    }
+                    disabled
                   />
                 </div>
                 <div className="col-3">

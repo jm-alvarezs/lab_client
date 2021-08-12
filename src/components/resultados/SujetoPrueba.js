@@ -24,7 +24,7 @@ const SujetoPrueba = ({ patient }) => {
       <label>Antecedentes:</label>
       <p>{antecedent}</p>
       <p>Mano Dominante: {dominantHand}</p>
-      <p>Consumo de Drogas: {drugsConsumption}</p>
+      <p>Tratamiento Médico/Consumo de Drogas: {drugsConsumption}</p>
       <p>Drogas: {whichDrugs}</p>
       <p>Tratamiento: {durgsTreatment}</p>
       <p>Dosis: {dose}</p>
