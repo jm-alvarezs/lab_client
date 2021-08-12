@@ -167,7 +167,7 @@ const UsuarioForm = ({ id }) => {
   };
 
   return (
-    <form className="card p-4 shadow-sm my-4" onSubmit={handleSubmit}>
+    <form className="container card p-4 shadow-sm my-4" onSubmit={handleSubmit}>
       <h1 className="h3 bold border-bottom mb-3 pb-3">
         {isNaN(id) ? "Agregar" : "Editar"} Paciente
       </h1>
