@@ -6,6 +6,9 @@ import {
   SINGLE_USER_RECIBIDO,
   CREATE_PACIENTE,
   SET_PROPIEDAD_PACIENTE,
+  SET_DAMAGE_LOCATION,
+  CREATE_DAMAGE,
+  DELETE_DAMAGE,
 } from "../types";
 import { ModalContext } from "./ModalContext";
 import { navigate } from "@reach/router";
@@ -75,8 +78,16 @@ export const PacientesProvider = ({ children }) => {
     dispatch({ type: CREATE_PACIENTE });
   };
 
+  const createDamage = () => {
+    dispatch({ type: CREATE_DAMAGE });
+  };
+
   const setPropiedadPaciente = (key, value) => {
     dispatch({ type: SET_PROPIEDAD_PACIENTE, payload: { key, value } });
+  };
+
+  const setDamageLocation = (id, damageLocation) => {
+    dispatch({ type: SET_DAMAGE_LOCATION, payload: { id, damageLocation } });
   };
 
   const deletePaciente = (id) => {
@@ -84,6 +95,10 @@ export const PacientesProvider = ({ children }) => {
       success("¡Paciente eliminado con éxito!");
       getPacientes();
     });
+  };
+
+  const deleteDamage = (id) => {
+    dispatch({ type: DELETE_DAMAGE, payload: id });
   };
 
   return (
@@ -97,6 +112,9 @@ export const PacientesProvider = ({ children }) => {
         createPaciente,
         updatePaciente,
         deletePaciente,
+        createDamage,
+        deleteDamage,
+        setDamageLocation,
         setPropiedadPaciente,
       }}
     >

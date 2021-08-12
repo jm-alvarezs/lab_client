@@ -12,6 +12,9 @@ const UsuarioForm = ({ id }) => {
     setPropiedadUsuario,
     updatePaciente,
     postPaciente,
+    createDamage,
+    deleteDamage,
+    setDamageLocation,
   } = useContext(PacientesContext);
 
   useEffect(() => {
@@ -32,10 +35,19 @@ const UsuarioForm = ({ id }) => {
   };
 
   const renderDamages = () => {
-    return console.log(paciente);
-    return paciente.damages.map((damage) => (
-      <DamageForm key={damage.id} damage={damage} />
-    ));
+    if (paciente && paciente !== null) {
+      let damages = paciente.damages;
+      damages = damages.filter((damage) => !String(damage.id).includes("d"));
+      return damages.map(({ id, damageLocation }) => (
+        <DamageForm
+          key={id}
+          id={id}
+          damageLocation={damageLocation}
+          deleteDamage={deleteDamage}
+          modifier={(damageLocation) => setDamageLocation(id, damageLocation)}
+        />
+      ));
+    }
   };
 
   const renderForm = () => {
@@ -101,7 +113,16 @@ const UsuarioForm = ({ id }) => {
             <option>Ambidiestro</option>
           </select>
           {renderDamages()}
-          <button className="btn btn-outline-dark">+ Daño</button>
+          <button
+            className="btn btn-outline-dark mb-4"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              createDamage();
+            }}
+          >
+            + Daño
+          </button>
           <label>Tratamiento Médico / Consumo de Drogas</label>
           <textarea
             rows="4"

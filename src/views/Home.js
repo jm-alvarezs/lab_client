@@ -14,7 +14,7 @@ import Cuestionario from "./Cuestionario";
 import ConfigHemiAtencion from "./ConfigHemiAtencion";
 import AnswerCuestionario from "./AnswerCuestionario";
 import Usuarios from "./Usuarios";
-import UsuarioForm from "./UsuarioForm";
+import PacienteForm from "./PacienteForm";
 
 const Home = ({ user }) => {
   return (
@@ -33,7 +33,7 @@ const Home = ({ user }) => {
           {/* Pacientes */}
           <Pacientes path="/pacientes" default />
           <SinglePaciente path="/pacientes/:id" />
-          <UsuarioForm path="/pacientes/:id/edit" />
+          <PacienteForm path="/pacientes/:id/edit" />
           {/* Cuenta */}
           <Cuenta path="/cuenta" />
           {/* Cuestionarios */}
