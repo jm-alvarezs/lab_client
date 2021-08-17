@@ -16,7 +16,6 @@ import AnswerCuestionario from "./AnswerCuestionario";
 import Usuarios from "./Usuarios";
 import PacienteForm from "./PacienteForm";
 import ConfigHanoi from "./ConfigHanoi";
-import TorreHanoi from "./TorreHanoi";
 
 const Home = ({ user }) => {
   return (
@@ -30,7 +29,6 @@ const Home = ({ user }) => {
           <ConfigCondicional path="/config/condicional/:idPaciente" />
           <ConfigHemiAtencion path="/config/hemi/:idPaciente" />
           <ConfigHanoi path="/config/hanoi/:idPaciente" />
-          <TorreHanoi path="/hanoi" />
           {/* Resultados */}
           <Results path="/resultados" />
           <SingleResults path="/resultados/:id" />
