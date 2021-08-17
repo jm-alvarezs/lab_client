@@ -55,7 +55,6 @@ export const ResultadosProvider = ({ children }) => {
   };
 
   const getCuestionarioResults = (id) => {
-    console.log(id);
     SurveyService.getSingleSurvey(id).then((res) => {
       const survey = res.data.data;
       dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: survey });

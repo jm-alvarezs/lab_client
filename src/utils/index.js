@@ -230,7 +230,6 @@ export const getResultadoTargetsCondicional = (
 };
 
 export const getResultadoTargets = (targets, character, type, correct) => {
-  console.log(character, type, correct);
   switch (type) {
     case "aciertos":
       return targets.filter((target) =>
@@ -490,3 +489,26 @@ export const getChartSeries = (type, respuestas, tiempo) => {
     getPuntuacionCUPOM(key, respuestas)
   );
 };
+
+export const discs = [
+  {
+    color: "naranja",
+    size: 1,
+  },
+  {
+    color: "negro",
+    size: 2,
+  },
+  {
+    color: "amarillo",
+    size: 3,
+  },
+  {
+    color: "verde",
+    size: 4,
+  },
+  {
+    color: "rojo",
+    size: 5,
+  },
+];

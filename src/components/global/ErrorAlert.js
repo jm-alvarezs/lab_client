@@ -5,7 +5,7 @@ export default function () {
   const { showAlert, clearAlert, alertContent } = useContext(ModalContext);
   return (
     <div
-      className={`alert alert-danger alert-dismissible fixed-top ms-auto me-2 mt-1 fade-show ${
+      className={`alert alert-danger alert-dismissible fixed-top ms-auto me-2 mt-4 fade-show ${
         !showAlert ? "hidden" : ""
       }`}
       role="alert"

@@ -4,10 +4,13 @@ import PruebasReducer from "../reducers/PruebasReducer";
 import PruebasService from "../services/PruebasService";
 import UsuarioService from "../services/UsuarioService";
 import {
-  HIDE_SPINNER,
-  PRUEBA_RECIBIDA,
-  SHOW_SPINNER,
   TEST_READY,
+  HIDE_SPINNER,
+  SHOW_SPINNER,
+  PRUEBA_RECIBIDA,
+  POP_MOVIMIENTO,
+  RESET_ALL_MOVIMIENTOS,
+  SET_PROPIEDAD_MOVIMIENTO,
 } from "../types";
 import { ModalContext } from "./ModalContext";
 
@@ -15,6 +18,8 @@ const initialState = {
   pruebas: null,
   prueba: null,
   ready: false,
+  currentMove: false,
+  movimientos: [],
 };
 
 const prueba = {
@@ -102,9 +107,29 @@ export const PruebasProvider = ({ children }) => {
     PruebasService.postResultados(resultados);
   };
 
+  const setPropiedadMovimiento = (key, value) => {
+    dispatch({ type: SET_PROPIEDAD_MOVIMIENTO, payload: { key, value } });
+  };
+
+  const popMovimiento = () => {
+    dispatch({ type: POP_MOVIMIENTO });
+  };
+
+  const resetAllMovimientos = () => {
+    dispatch({ type: RESET_ALL_MOVIMIENTOS });
+  };
+
   return (
     <PruebasContext.Provider
-      value={{ ...state, getPrueba, postPrueba, postResultados }}
+      value={{
+        ...state,
+        getPrueba,
+        postPrueba,
+        popMovimiento,
+        postResultados,
+        resetAllMovimientos,
+        setPropiedadMovimiento,
+      }}
     >
       {children}
     </PruebasContext.Provider>

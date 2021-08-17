@@ -106,9 +106,14 @@ body {
   text-decoration: underline;
 }
 
+.torre-row {
+  height: 400px;
+  margin-top: 100px;
+}
+
 .stick {
   width: 20px;
-  height: 150px;
+  height: 250px;
   margin: auto;
   display: block;
   background: linear-gradient(to right, #d7b889, #b27315, #966f33);
@@ -156,6 +161,6 @@ body {
 }
 
 .disco {
-  height: 20px;
+  height: 40px;
   border-radius: 5px;
 }

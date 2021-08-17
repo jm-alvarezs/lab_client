@@ -30,8 +30,12 @@ export const SHOW_SPINNER = "SHOW_SPINNER";
 /**
  * Pruebas
  */
-export const PRUEBA_RECIBIDA = "PRUEBA_RECIBIDA";
 export const TEST_READY = "TEST_READY";
+export const PRUEBA_RECIBIDA = "PRUEBA_RECIBIDA";
+export const RESET_MOVIMIENTO = "RESET_MOVIMIENTO";
+export const POP_MOVIMIENTO = "POP_MOVIMIENTO";
+export const RESET_ALL_MOVIMIENTOS = "RESET_ALL_MOVIMIENTOS";
+export const SET_PROPIEDAD_MOVIMIENTO = "SET_PROPIEDAD_MOVIMIENTO";
 /**
  * Resultados
  */
