@@ -17,6 +17,30 @@ const SinglePaciente = ({ id }) => {
     }
   };
 
+  const renderCuestionarios = () => {
+    if (!isNaN(id)) {
+      if (paciente && paciente !== null) {
+        return (
+          <div className="card p-3 shadow-sm my-3">
+            <h3 className="border-bottom pb-2 mb-4">Cuestionarios</h3>
+            <Link
+              to={`/cuestionario/CUPOM/${id}`}
+              className="btn btn-outline-dark my-2"
+            >
+              Cuestionario CUPOM
+            </Link>
+            <Link
+              to={`/cuestionario/nechapi/${id}`}
+              className="btn btn-outline-dark my-2"
+            >
+              Cuestionario Nechapi
+            </Link>
+          </div>
+        );
+      }
+    }
+  };
+
   const renderPruebas = () => {
     if (!isNaN(id)) {
       if (paciente && paciente !== null) {
@@ -42,16 +66,10 @@ const SinglePaciente = ({ id }) => {
               Hemi Atención
             </Link>
             <Link
-              to={`/cuestionario/CUPOM/${id}`}
+              to={`/config/hanoi/${id}`}
               className="btn btn-outline-dark my-2"
             >
-              Cuestionario CUPOM
-            </Link>
-            <Link
-              to={`/cuestionario/nechapi/${id}`}
-              className="btn btn-outline-dark my-2"
-            >
-              Cuestionario Nechapi
+              Torre de Hanoi
             </Link>
           </div>
         );
@@ -80,6 +98,7 @@ const SinglePaciente = ({ id }) => {
           {renderUsuario()}
         </div>
         {renderPruebas()}
+        {renderCuestionarios()}
       </div>
     </>
   );
