@@ -111,7 +111,7 @@ const TorreHanoi = () => {
       setPropiedadMovimiento("sizeOrigen", disc.size);
       setPropiedadMovimiento("sizeDestino", last_disc.size);
       if (last_disc.size > disc.size) {
-        return handleError("percepcion");
+        return handleError("aprendizaje");
       }
     } else {
       setPropiedadMovimiento("sizeOrigen", disc.size);
