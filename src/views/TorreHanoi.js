@@ -9,11 +9,14 @@ import { ModalContext } from "../context/ModalContext";
 const TorreHanoi = () => {
   const [origen, setOrigen] = useState(null);
   const [destino, setDestino] = useState(null);
-  const [one, setOne] = useState(discs);
+  const [one, setOne] = useState([]);
   const [two, setTwo] = useState([]);
   const [three, setThree] = useState([]);
+  const [start, setStart] = useState(false);
+  const [finish, setFinish] = useState(false);
 
-  const { popMovimiento, setPropiedadMovimiento } = useContext(PruebasContext);
+  const { movimientos, popMovimiento, setPropiedadMovimiento } =
+    useContext(PruebasContext);
 
   const { success, alert } = useContext(ModalContext);
 
@@ -27,7 +30,6 @@ const TorreHanoi = () => {
   const errorSound = new Audio(error_sound);
 
   useEffect(() => {
-    setOne(discs.slice(0, initialConfig.discos));
     return () => {
       setThree([]);
     };
@@ -42,6 +44,8 @@ const TorreHanoi = () => {
         }
       });
       if (valid) {
+        setFinish(true);
+        setStart(false);
         setTimeout(() => {
           success("Ganaste");
         }, 500);
@@ -51,10 +55,10 @@ const TorreHanoi = () => {
 
   useEffect(() => {
     if (destino !== null && origen !== null) {
-      setPropiedadMovimiento("destino", origen);
+      setPropiedadMovimiento("destino", destino);
       setPropiedadMovimiento(
         "timestamp_destino",
-        moment().format("YYYY-MM-DD HH:mm:ss:mss")
+        moment().format("YYYY-MM-DD HH:mm:ss:SSS")
       );
       move(origen, destino);
       setOrigen(null);
@@ -63,7 +67,7 @@ const TorreHanoi = () => {
       setPropiedadMovimiento("origen", origen);
       setPropiedadMovimiento(
         "timestamp_origen",
-        moment().format("YYYY-MM-DD HH:mm:ss:mss")
+        moment().format("YYYY-MM-DD HH:mm:ss:SSS")
       );
     }
   }, [origen, destino]);
@@ -82,6 +86,17 @@ const TorreHanoi = () => {
         break;
     }
     return discosRender;
+  };
+
+  const handleStart = () => {
+    setStart(true);
+    setOne(discs.slice(0, initialConfig.discos));
+  };
+
+  const handleEnd = () => {
+    popMovimiento();
+    setFinish(true);
+    setStart(false);
   };
 
   const handleError = (error) => {
@@ -147,6 +162,70 @@ const TorreHanoi = () => {
     popMovimiento();
   };
 
+  const getMoveStatus = (move, index) => {
+    console.log(move);
+    if (move.sizeOrigen < move.sizeDestino) {
+      return <span className="text-danger">Error 3: Aprendizaje</span>;
+    }
+    if (move.origen === move.destino) {
+      return <span className="text-danger">Error 2: Arrepentimiento</span>;
+    }
+    if (move.sizeOrigen === null && move.sizeDestino === null) {
+      return <span className="text-danger">Error 1: Percepción</span>;
+    }
+    return <span className="text-success">Válido</span>;
+  };
+
+  const renderMovimientos = () => {
+    if (finish && movimientos !== null) {
+      console.log(movimientos);
+      return movimientos.map((movimiento, index) => (
+        <div key={index} className="row py-2 my-2">
+          <div className="col-2">
+            P{movimiento.origen}-D{movimiento.sizeOrigen}
+          </div>
+          <div className="col-2">
+            P{movimiento.destino}
+            {"-"}
+            {movimiento.sizeDestino !== null
+              ? `D${movimiento.sizeDestino}`
+              : "Vacío"}
+          </div>
+          <div className="col-2">
+            {Math.abs(
+              moment(
+                movimiento.timestamp_destino,
+                "YYYY-MM-DD HH:mm:ss:SSS"
+              ).diff(
+                moment(movimiento.timestamp_origen, "YYYY-MM-DD HH:mm:ss:SSS"),
+                "milliseconds"
+              )
+            )}
+          </div>
+          <div className="col-2">
+            {index > 0 && (
+              <span>
+                {Math.abs(
+                  moment(
+                    movimiento.timestamp_origen,
+                    "YYYY-MM-DD HH:mm:ss:SSS"
+                  ).diff(
+                    moment(
+                      movimientos[index - 1].timestamp_destino,
+                      "YYYY-MM-DD HH:mm:ss:SSS"
+                    ),
+                    "milliseconds"
+                  )
+                )}
+              </span>
+            )}
+          </div>
+          <div className="col-2">{getMoveStatus(movimiento, index)}</div>
+        </div>
+      ));
+    }
+  };
+
   const renderDiscos = (disc) => {
     const discosRender = getArray(disc);
     return discosRender.map((disco, index) => (
@@ -185,35 +264,59 @@ const TorreHanoi = () => {
           <div className="base mw-100 w-100"></div>
         </div>
       </div>
-      <div className="row my-3 py-3">
-        <div className="col-4">
-          <button
-            className={`btn w-100 ${origen === 1 ? "btn-light" : "btn-dark"}`}
-            onClick={() => (origen === null ? setOrigen(1) : setDestino(1))}
-          >
-            1
-          </button>
+      {start && !finish && (
+        <div className="row my-3 py-3">
+          <div className="col-4">
+            <button
+              className={`btn w-100 ${origen === 1 ? "btn-light" : "btn-dark"}`}
+              onClick={() => (origen === null ? setOrigen(1) : setDestino(1))}
+            >
+              1
+            </button>
+          </div>
+          <div className="col-4">
+            <button
+              className={`btn w-100 ${origen === 2 ? "btn-light" : "btn-dark"}`}
+              onClick={() => (origen === null ? setOrigen(2) : setDestino(2))}
+            >
+              2
+            </button>
+          </div>
+          <div className="col-4">
+            <button
+              className={`btn w-100 ${origen === 3 ? "btn-light" : "btn-dark"}`}
+              onClick={() => (origen === null ? setOrigen(3) : setDestino(3))}
+            >
+              3
+            </button>
+          </div>
         </div>
-        <div className="col-4">
-          <button
-            className={`btn w-100 ${origen === 2 ? "btn-light" : "btn-dark"}`}
-            onClick={() => (origen === null ? setOrigen(2) : setDestino(2))}
-          >
-            2
-          </button>
-        </div>
-        <div className="col-4">
-          <button
-            className={`btn w-100 ${origen === 3 ? "btn-light" : "btn-dark"}`}
-            onClick={() => (origen === null ? setOrigen(3) : setDestino(3))}
-          >
-            3
-          </button>
-        </div>
-      </div>
+      )}
       <div className="container-fluid text-center py-3 my-3">
-        <button className="btn btn-dark">Iniciar</button>
+        {!start && (
+          <button className="btn btn-outline-dark" onClick={handleStart}>
+            Iniciar
+          </button>
+        )}
+        {start && !finish && (
+          <div className="btn btn-outline-dark" onClick={handleEnd}>
+            Terminar
+          </div>
+        )}
       </div>
+      {finish && (
+        <div className="card container shadow-sm p-3 mb-4">
+          <h3>Movimientos</h3>
+          <div className="row bold bg-light border py-2 my-2">
+            <div className="col-2">Origen</div>
+            <div className="col-2">Destino</div>
+            <div className="col-2">Tiempo (ms)</div>
+            <div className="col-2">Intervalo (ms)</div>
+            <div className="col-2">Estado</div>
+          </div>
+          {renderMovimientos()}
+        </div>
+      )}
     </div>
   );
 };

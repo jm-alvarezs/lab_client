@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
 
 export default function () {
-  const { showSuccess, successContent } = useContext(ModalContext);
+  const { showSuccess, clearSuccess, successContent } =
+    useContext(ModalContext);
 
   return (
     <div
@@ -15,10 +16,13 @@ export default function () {
       {successContent}
       <button
         type="button"
-        className="btn-close"
+        className="btn btn-close"
         data-bs-dismiss="alert"
         aria-label="Close"
-      ></button>
+        onClick={clearSuccess}
+      >
+        <i className="fa fa-times"></i>
+      </button>
     </div>
   );
 }
