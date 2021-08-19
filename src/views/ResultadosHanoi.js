@@ -3,6 +3,8 @@ import MovimientosHanoi from "../components/hanoi/MovimientosHanoi";
 import ResumenHanoi from "../components/hanoi/ResumenHanoi";
 import SujetoPrueba from "../components/resultados/SujetoPrueba";
 import { ResultadosContext } from "../context/ResultadosContext";
+import ReactToPdf from "react-to-pdf";
+import moment from "moment";
 
 const ResultadosHanoi = ({ idTest }) => {
   const [showSujeto, setShowSujeto] = useState(true);
@@ -36,7 +38,7 @@ const ResultadosHanoi = ({ idTest }) => {
     }
   };
 
-  const renderConfig = () => {
+  const renderConfig = (toPdf) => {
     if (resultado && resultado !== null) {
       if (resultado.results.settings && resultado.results.settings !== null) {
         return (
@@ -45,6 +47,7 @@ const ResultadosHanoi = ({ idTest }) => {
             movimientos={resultado.results.movements}
             finishTime={resultado.results.finishTime}
             startTime={resultado.results.startTime}
+            toPdf={toPdf}
           />
         );
       }
@@ -61,11 +64,18 @@ const ResultadosHanoi = ({ idTest }) => {
   };
 
   return (
-    <div className="container">
-      {renderConfig()}
-      {renderSujeto()}
-      {renderEstimulos()}
-    </div>
+    <ReactToPdf
+      filename={`Test_${idTest}_${moment().format("YYYY-MM-DD_HH:mm")}.pdf`}
+      scale={0.65}
+    >
+      {({ toPdf, targetRef }) => (
+        <div className="container" ref={targetRef}>
+          {renderConfig(toPdf)}
+          {renderSujeto()}
+          {renderEstimulos()}
+        </div>
+      )}
+    </ReactToPdf>
   );
 };
 

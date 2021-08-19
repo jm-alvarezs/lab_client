@@ -1,17 +1,41 @@
 import moment from "moment";
 import React from "react";
 import {
+  BASE_URL,
   getConteoErrores,
   getConteoRepetidos,
   getTiempoPromedio,
 } from "../../utils";
 
-const ResumenHanoi = ({ resultado, movimientos, startTime, finishTime }) => {
+const ResumenHanoi = ({
+  toPdf,
+  resultado,
+  movimientos,
+  startTime,
+  finishTime,
+}) => {
   return (
     <div className="card container shadow-sm p-3 mb-4">
-      <h3 className="border-bottom pb-3 mb-2 bold">
-        Prueba #{resultado !== null && resultado.test.id} - Torre de Hanoi
-      </h3>
+      <div className="row border-bottom pb-3 mb-2">
+        <div className="col-6">
+          <h3 className="bold">
+            Prueba #{resultado !== null && resultado.test.id} - Torre de Hanoi
+          </h3>
+        </div>
+        <div className="col-6 text-right">
+          <button className="btn btn-outline-dark mx-2" onClick={toPdf}>
+            <i className="fa fa-print"></i>
+          </button>
+          <button
+            className="btn btn-outline-dark"
+            onClick={() =>
+              window.open(`${BASE_URL}/reports/${resultado.test.id}`, "_blank")
+            }
+          >
+            <i className="far fa-file-excel"></i>
+          </button>
+        </div>
+      </div>
       <div className="row py-2">
         <div className="col-6">Número de movimientos</div>
         <div className="col-6">{movimientos.length}</div>
