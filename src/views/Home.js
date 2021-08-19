@@ -16,6 +16,7 @@ import AnswerCuestionario from "./AnswerCuestionario";
 import Usuarios from "./Usuarios";
 import PacienteForm from "./PacienteForm";
 import ConfigHanoi from "./ConfigHanoi";
+import ResultadosHanoi from "./ResultadosHanoi";
 
 const Home = ({ user }) => {
   return (
@@ -32,6 +33,7 @@ const Home = ({ user }) => {
           {/* Resultados */}
           <Results path="/resultados" />
           <SingleResults path="/resultados/:id" />
+          <ResultadosHanoi path="/resultados/hanoi/:idTest" />
           {/* Pacientes */}
           <Pacientes path="/pacientes" default />
           <SinglePaciente path="/pacientes/:id" />

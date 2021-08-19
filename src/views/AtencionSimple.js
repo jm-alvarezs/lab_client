@@ -4,6 +4,7 @@ import { PruebasContext } from "../context/PruebasContext";
 import { navigate } from "@reach/router";
 import UsuarioService from "../services/UsuarioService";
 import { ModalContext } from "../context/ModalContext";
+import InterScreen from "../components/pruebas/InterScreen";
 
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -190,51 +191,32 @@ const AtencionSimple = () => {
     setStyleObject(current);
   };
 
+  const renderInstrucciones = () => {
+    return (
+      <div>
+        <p>
+          En el centro de la pantalla irán apareciendo de manera secuencial
+          distintas letras del abecedario. La tarea consiste que usted pulse la
+          tecla {String.fromCharCode(config.keyCode)} cuando vea aparecer la
+          letra {config.target}.
+        </p>
+        <p>
+          Es importante que responda tan rápido como pueda, ya que los estímulos
+          aparecen y desaparecen rápidamente.
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="container-fluid">
       {!started ? (
-        <div className="row">
-          <div className="col col-md-6 border-right shadow bg-light">
-            <div className="row align-items-center vh-100">
-              {!thankyou ? (
-                <div className="p-5">
-                  <h1>Bienvenido</h1>
-                  <p>A continuación realizarás un ejercicio.</p>
-                  <h3>Instrucciones</h3>
-                  <p>
-                    En el centro de la pantalla irán apareciendo de manera
-                    secuencial distintas letras del abecedario. La tarea
-                    consiste que usted pulse la tecla{" "}
-                    {String.fromCharCode(config.keyCode)} cuando vea aparecer la
-                    letra {config.target}.
-                  </p>
-                  <p>
-                    Es importante que responda tan rápido como pueda, ya que los
-                    estímulos aparecen y desaparecen rápidamente.
-                  </p>
-                  <button
-                    className="btn btn-dark"
-                    onClick={start}
-                    disabled={disabled}
-                  >
-                    Comenzar
-                  </button>
-                </div>
-              ) : (
-                <div className="p-5">
-                  <h1>¡Gracias!</h1>
-                  <p>Haz completado el ejercicio.</p>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="col col-md-6 px-0">
-            <img
-              src="https://www.udem.edu.mx/sites/default/files/inline-images/Entropia-UDEM.jpg"
-              className="half-image"
-            />
-          </div>
-        </div>
+        <InterScreen
+          instrucciones={renderInstrucciones()}
+          disabled={disabled}
+          thankyou={thankyou}
+          start={start}
+        />
       ) : (
         <div id="test-container" style={{ ...styleObject }}>
           {display}

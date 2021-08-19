@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { discs } from "../utils";
+import React, { useState, useEffect, useContext } from "react";
+import { discs, getConfig } from "../utils";
 import moment from "moment";
-import { useContext } from "react/cjs/react.development";
 import { PruebasContext } from "../context/PruebasContext";
 import error_sound from "../assets/sound/error_sound.mp3";
 import { ModalContext } from "../context/ModalContext";
+import InterScreen from "../components/pruebas/InterScreen";
 
 const TorreHanoi = () => {
   const [origen, setOrigen] = useState(null);
@@ -12,15 +12,24 @@ const TorreHanoi = () => {
   const [one, setOne] = useState([]);
   const [two, setTwo] = useState([]);
   const [three, setThree] = useState([]);
+  const [config, setConfig] = useState({});
   const [start, setStart] = useState(false);
   const [finish, setFinish] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [startTime, setStartTime] = useState(null);
+  const [finishTime, setFinishTime] = useState(null);
 
-  const { movimientos, popMovimiento, setPropiedadMovimiento } =
-    useContext(PruebasContext);
+  const {
+    getPrueba,
+    movimientos,
+    popMovimiento,
+    postResultados,
+    setPropiedadMovimiento,
+  } = useContext(PruebasContext);
 
   const { success, alert } = useContext(ModalContext);
 
-  const initialConfig = {
+  const defaultConfig = {
     administracion: "A",
     discos: 3,
     mensajeError: true,
@@ -30,13 +39,23 @@ const TorreHanoi = () => {
   const errorSound = new Audio(error_sound);
 
   useEffect(() => {
+    let currentConfig = getConfig(defaultConfig);
+    if (currentConfig.idTest && currentConfig.token) {
+      getPrueba(currentConfig.idTest, currentConfig.token);
+      setConfig(currentConfig);
+      setDisabled(false);
+    } else {
+      alert(
+        "El enlace del ejercicio es incorrecto. Contacta al profesional que te lo envió."
+      );
+    }
     return () => {
       setThree([]);
     };
   }, []);
 
   useEffect(() => {
-    if (three.length === initialConfig.discos) {
+    if (parseInt(three.length) === parseInt(config.discos)) {
       let valid;
       three.forEach((disco, index) => {
         if (index < three.length - 1) {
@@ -44,11 +63,7 @@ const TorreHanoi = () => {
         }
       });
       if (valid) {
-        setFinish(true);
-        setStart(false);
-        setTimeout(() => {
-          success("Ganaste");
-        }, 500);
+        handleEnd(true);
       }
     }
   }, [three]);
@@ -90,22 +105,42 @@ const TorreHanoi = () => {
 
   const handleStart = () => {
     setStart(true);
-    setOne(discs.slice(0, initialConfig.discos));
+    setStartTime(moment().format("YYYY-MM-DD HH:mm:ss:SSS"));
+    setOne(discs.slice(0, config.discos));
   };
 
-  const handleEnd = () => {
-    popMovimiento();
+  const handleEnd = (finished) => {
+    if (!finished) {
+      popMovimiento();
+    } else {
+      setTimeout(() => {
+        success("Ganaste");
+      }, 500);
+    }
     setFinish(true);
     setStart(false);
+    const endTime = moment().format("YYYY-MM-DD HH:mm:ss:SSS");
+    setFinishTime(endTime);
+    const result = {
+      start: startTime,
+      end: endTime,
+      movements: movimientos,
+      finished,
+      idTest: config.idTest,
+      idPatient: config.idPatient,
+      config: config.id,
+      token: config.token,
+    };
+    postResultados(result);
   };
 
   const handleError = (error) => {
     setPropiedadMovimiento("error", error);
     popMovimiento();
-    if (initialConfig.sonidoError) {
+    if (config.sonidoError) {
       errorSound.play();
     }
-    if (initialConfig.mensajeError) {
+    if (config.mensajeError) {
       setTimeout(() => {
         alert("Error: Movimiento inválido");
       }, 100);
@@ -162,70 +197,6 @@ const TorreHanoi = () => {
     popMovimiento();
   };
 
-  const getMoveStatus = (move, index) => {
-    console.log(move);
-    if (move.sizeOrigen < move.sizeDestino) {
-      return <span className="text-danger">Error 3: Aprendizaje</span>;
-    }
-    if (move.origen === move.destino) {
-      return <span className="text-danger">Error 2: Arrepentimiento</span>;
-    }
-    if (move.sizeOrigen === null && move.sizeDestino === null) {
-      return <span className="text-danger">Error 1: Percepción</span>;
-    }
-    return <span className="text-success">Válido</span>;
-  };
-
-  const renderMovimientos = () => {
-    if (finish && movimientos !== null) {
-      console.log(movimientos);
-      return movimientos.map((movimiento, index) => (
-        <div key={index} className="row py-2 my-2">
-          <div className="col-2">
-            P{movimiento.origen}-D{movimiento.sizeOrigen}
-          </div>
-          <div className="col-2">
-            P{movimiento.destino}
-            {"-"}
-            {movimiento.sizeDestino !== null
-              ? `D${movimiento.sizeDestino}`
-              : "Vacío"}
-          </div>
-          <div className="col-2">
-            {Math.abs(
-              moment(
-                movimiento.timestamp_destino,
-                "YYYY-MM-DD HH:mm:ss:SSS"
-              ).diff(
-                moment(movimiento.timestamp_origen, "YYYY-MM-DD HH:mm:ss:SSS"),
-                "milliseconds"
-              )
-            )}
-          </div>
-          <div className="col-2">
-            {index > 0 && (
-              <span>
-                {Math.abs(
-                  moment(
-                    movimiento.timestamp_origen,
-                    "YYYY-MM-DD HH:mm:ss:SSS"
-                  ).diff(
-                    moment(
-                      movimientos[index - 1].timestamp_destino,
-                      "YYYY-MM-DD HH:mm:ss:SSS"
-                    ),
-                    "milliseconds"
-                  )
-                )}
-              </span>
-            )}
-          </div>
-          <div className="col-2">{getMoveStatus(movimiento, index)}</div>
-        </div>
-      ));
-    }
-  };
-
   const renderDiscos = (disc) => {
     const discosRender = getArray(disc);
     return discosRender.map((disco, index) => (
@@ -243,79 +214,93 @@ const TorreHanoi = () => {
     ));
   };
 
-  return (
-    <div className="container">
-      <div className="row torre-row align-items-center">
-        <div className="container">
-          <div className="row">
-            <div className="col-4">
-              <div className="stick"></div>
-              {renderDiscos(1)}
+  const renderTorre = () => {
+    return (
+      <div className="container">
+        <div className="row torre-row align-items-center">
+          <div className="container">
+            <div className="row">
+              <div className="col-4">
+                <div className="stick"></div>
+                {renderDiscos(1)}
+              </div>
+              <div className="col-4">
+                <div className="stick"></div>
+                {renderDiscos(2)}
+              </div>
+              <div className="col-4">
+                <div className="stick"></div>
+                {renderDiscos(3)}
+              </div>
             </div>
-            <div className="col-4">
-              <div className="stick"></div>
-              {renderDiscos(2)}
-            </div>
-            <div className="col-4">
-              <div className="stick"></div>
-              {renderDiscos(3)}
-            </div>
-          </div>
-          <div className="base mw-100 w-100"></div>
-        </div>
-      </div>
-      {start && !finish && (
-        <div className="row my-3 py-3">
-          <div className="col-4">
-            <button
-              className={`btn w-100 ${origen === 1 ? "btn-light" : "btn-dark"}`}
-              onClick={() => (origen === null ? setOrigen(1) : setDestino(1))}
-            >
-              1
-            </button>
-          </div>
-          <div className="col-4">
-            <button
-              className={`btn w-100 ${origen === 2 ? "btn-light" : "btn-dark"}`}
-              onClick={() => (origen === null ? setOrigen(2) : setDestino(2))}
-            >
-              2
-            </button>
-          </div>
-          <div className="col-4">
-            <button
-              className={`btn w-100 ${origen === 3 ? "btn-light" : "btn-dark"}`}
-              onClick={() => (origen === null ? setOrigen(3) : setDestino(3))}
-            >
-              3
-            </button>
+            <div className="base mw-100 w-100"></div>
           </div>
         </div>
-      )}
-      <div className="container-fluid text-center py-3 my-3">
-        {!start && (
-          <button className="btn btn-outline-dark" onClick={handleStart}>
-            Iniciar
-          </button>
-        )}
         {start && !finish && (
-          <div className="btn btn-outline-dark" onClick={handleEnd}>
-            Terminar
+          <div className="row my-3 py-3">
+            <div className="col-4">
+              <button
+                className={`btn w-100 ${
+                  origen === 1 ? "btn-light" : "btn-dark"
+                }`}
+                onClick={() => (origen === null ? setOrigen(1) : setDestino(1))}
+              >
+                1
+              </button>
+            </div>
+            <div className="col-4">
+              <button
+                className={`btn w-100 ${
+                  origen === 2 ? "btn-light" : "btn-dark"
+                }`}
+                onClick={() => (origen === null ? setOrigen(2) : setDestino(2))}
+              >
+                2
+              </button>
+            </div>
+            <div className="col-4">
+              <button
+                className={`btn w-100 ${
+                  origen === 3 ? "btn-light" : "btn-dark"
+                }`}
+                onClick={() => (origen === null ? setOrigen(3) : setDestino(3))}
+              >
+                3
+              </button>
+            </div>
           </div>
         )}
-      </div>
-      {finish && (
-        <div className="card container shadow-sm p-3 mb-4">
-          <h3>Movimientos</h3>
-          <div className="row bold bg-light border py-2 my-2">
-            <div className="col-2">Origen</div>
-            <div className="col-2">Destino</div>
-            <div className="col-2">Tiempo (ms)</div>
-            <div className="col-2">Intervalo (ms)</div>
-            <div className="col-2">Estado</div>
-          </div>
-          {renderMovimientos()}
+        <div className="container-fluid text-center py-3 my-3">
+          {start && !finish && (
+            <div className="btn btn-outline-dark" onClick={handleEnd}>
+              Terminar
+            </div>
+          )}
         </div>
+      </div>
+    );
+  };
+
+  const renderInstrucciones = () => {
+    if (!disabled) {
+      if (config.administracion === "A") {
+        return <div></div>;
+      }
+      return <div></div>;
+    }
+  };
+
+  return (
+    <div>
+      {!startTime && finishTime !== null ? (
+        <InterScreen
+          start={handleStart}
+          thankyou={finishTime !== null}
+          instrucciones={renderInstrucciones()}
+          disabled={disabled}
+        />
+      ) : (
+        renderTorre()
       )}
     </div>
   );

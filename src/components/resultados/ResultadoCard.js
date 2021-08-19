@@ -26,7 +26,11 @@ const ResultadoCard = ({ resultado }) => {
             to={`./${
               resultado.surveyType
                 ? `cuestionario/${resultado.id}`
-                : resultado.id
+                : (String(resultado.testType.name)
+                    .toLowerCase()
+                    .includes("hanoi")
+                    ? "hanoi/"
+                    : "") + resultado.id
             }`}
             className="btn btn-outline-secondary"
           >

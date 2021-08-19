@@ -512,3 +512,53 @@ export const discs = [
     size: 5,
   },
 ];
+
+export const getTiempoPromedio = (movimientos) => {
+  let suma = 0;
+  movimientos.forEach((movimiento) => {
+    suma += moment(movimiento.timestamp_destino).diff(
+      movimiento.timestamp_origen,
+      "miliseconds"
+    );
+  });
+  return parseFloat(suma / movimientos.length).toFixed(2);
+};
+
+export const getConteoErrores = (movimientos, error) => {
+  return movimientos.filter((movimiento) => movimiento.error === error).length;
+};
+
+export const getConteoRepetidos = (movimientos) => {
+  let repetidos = 0;
+  let prevMovimiento = null;
+  movimientos.forEach((movimiento) => {
+    if (prevMovimiento === null) {
+      prevMovimiento = movimiento;
+    } else {
+      if (
+        prevMovimiento.destino === movimiento.origen &&
+        prevMovimiento.origen === movimiento.destino
+      ) {
+        repetidos++;
+      }
+    }
+  });
+  return repetidos;
+};
+
+export const getConfig = (defaultConfig) => {
+  let currentConfig = { ...defaultConfig };
+  let token = window.location.href.split("token=")[1];
+  if (token) token = token.split("&")[0];
+  let idTest = window.location.href.split("idTest=")[1];
+  if (idTest) idTest = idTest.split("&")[0];
+  let params = window.location.href.split("?")[1];
+  params = params.split("&");
+  params.forEach((elem) => {
+    const single = elem.split("=");
+    currentConfig[single[0]] = single[1];
+  });
+  currentConfig.token = token;
+  currentConfig.idTest = idTest;
+  return currentConfig;
+};

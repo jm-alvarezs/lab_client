@@ -30,7 +30,7 @@ const Main = () => {
             <Home user={user} path="/*" />
           </>
         )}
-        <TorreHanoi path="/hanoi" />
+        <TorreHanoi path="/hanoi/*" />
         <AtencionSimple path="/atencion/*" />
         <AtencionCondicional path="/atencion/condicional/*" />
         <AtencionHemi path="/atencion/hemi/*" />

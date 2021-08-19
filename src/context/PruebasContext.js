@@ -12,6 +12,7 @@ import {
   RESET_ALL_MOVIMIENTOS,
   SET_PROPIEDAD_MOVIMIENTO,
 } from "../types";
+import { BASE_URL } from "../utils";
 import { ModalContext } from "./ModalContext";
 
 const initialState = {
@@ -83,10 +84,15 @@ export const PruebasProvider = ({ children }) => {
           )
           .filter((obj) => obj !== null)
           .join("&");
+        console.log(config);
         const url =
-          `/atencion${
-            type && type !== null ? `/${type}` : ""
-          }?idTest=${idTest}&token=${accessUrl.token}&` + args;
+          `/${
+            config.idTestType === 4
+              ? "hanoi"
+              : `atencion${type && type !== null ? `/${type}` : ""}`
+          }` +
+          `?idTest=${idTest}&token=${accessUrl.token}&` +
+          args;
         dispatch({ type: HIDE_SPINNER });
         modalComponent(
           "Prueba Agregada",
