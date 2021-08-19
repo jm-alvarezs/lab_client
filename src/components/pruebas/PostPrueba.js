@@ -24,7 +24,9 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
   return (
     <div className="container-fluid">
       <p>
-        {type === "hemi"
+        {type === "hanoi"
+          ? "hanoi"
+          : type === "hemi"
           ? "Hemi Atención"
           : type === "condicional"
           ? "Atención Condicional"

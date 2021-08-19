@@ -292,7 +292,7 @@ const TorreHanoi = () => {
 
   return (
     <div>
-      {!startTime && finishTime !== null ? (
+      {startTime === null || finishTime !== null ? (
         <InterScreen
           start={handleStart}
           thankyou={finishTime !== null}
