@@ -25,7 +25,7 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
     <div className="container-fluid">
       <p>
         {type === "hanoi"
-          ? "hanoi"
+          ? "Torre de Hanoi"
           : type === "hemi"
           ? "Hemi Atención"
           : type === "condicional"

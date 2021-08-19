@@ -272,7 +272,10 @@ const TorreHanoi = () => {
         )}
         <div className="container-fluid text-center py-3 my-3">
           {start && !finish && (
-            <div className="btn btn-outline-dark" onClick={handleEnd}>
+            <div
+              className="btn btn-outline-dark"
+              onClick={() => handleEnd(false)}
+            >
               Terminar
             </div>
           )}

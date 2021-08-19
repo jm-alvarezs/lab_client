@@ -37,6 +37,18 @@ const ResumenHanoi = ({
         </div>
       </div>
       <div className="row py-2">
+        <div className="col-6">Prueba Completada</div>
+        <div className="col-6">
+          <i
+            className={
+              resultado.results.finished
+                ? "fa fa-check text-success"
+                : "fa fa-times text-danger"
+            }
+          ></i>
+        </div>
+      </div>
+      <div className="row py-2">
         <div className="col-6">Número de movimientos</div>
         <div className="col-6">{movimientos.length}</div>
       </div>

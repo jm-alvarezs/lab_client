@@ -84,7 +84,6 @@ export const PruebasProvider = ({ children }) => {
           )
           .filter((obj) => obj !== null)
           .join("&");
-        console.log(config);
         const url =
           `/${
             config.idTestType === 4
