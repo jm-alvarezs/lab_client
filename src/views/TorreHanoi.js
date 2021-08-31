@@ -287,9 +287,48 @@ const TorreHanoi = () => {
   const renderInstrucciones = () => {
     if (!disabled) {
       if (config.administracion === "A") {
-        return <div></div>;
+        return (
+          <div>
+            <p>
+              “En la pantalla aparecerán tres barras, numeradas con los números
+              1, 2 y 3. En la barra número 1 hay una torre formada por varios
+              discos. Lo que tiene que hacer es formar la misma torre, con los
+              discos en el mismo orden, en la barra número 3. Para hacerlo,
+              tiene que mover los discos de uno en uno, tecleando primero el
+              número de la barra donde esté el disco que quiere mover, y después
+              el número de la barra hacia donde lo quiere mover. Puede mover los
+              discos hacia la derecha o hacia la izquierda, y puede usar las
+              tres barras.
+            </p>
+            <p>
+              Tiene que tener en cuenta que para mover el disco que está abajo
+              -el más grande-, primero tiene que quitar los que estén encima.
+            </p>
+          </div>
+        );
       }
-      return <div></div>;
+      return (
+        <div>
+          <p>
+            En la pantalla aparecerán tres barras, numeradas con los números 1,
+            2 y 3. En la barra número 1 hay una torre formada por varios discos.
+            Lo que tiene que hacer es formar la misma torre, con los discos en
+            el mismo orden, en la barra número 3. Para hacerlo, tiene que mover
+            los discos de uno en uno, tecleando primero el número de la barra
+            donde esté el disco que quiere mover, y después el número de la
+            barra hacia donde lo quiere mover. Puede mover los discos hacia la
+            derecha o hacia la izquierda, y puede usar las tres barras.
+          </p>
+          <p>
+            Tiene que tener en cuenta que para mover el disco que está abajo -el
+            más grande-, primero tiene que quitar los que estén encima. También
+            debe tener en cuenta que sólo podrá poner un disco o bien en una
+            barra que esté vacía, o bien en una barra sobre un disco que sea más
+            grande que el que esté moviendo. Es decir, no puede poner un disco
+            grande sobre uno más pequeño.
+          </p>
+        </div>
+      );
     }
   };
 

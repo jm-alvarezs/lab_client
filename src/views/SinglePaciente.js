@@ -71,6 +71,12 @@ const SinglePaciente = ({ id }) => {
             >
               Torre de Hanoi
             </Link>
+            <Link
+              to={`/config/flanker/${id}`}
+              className="btn btn-outline-dark my-2"
+            >
+              Flanker Task
+            </Link>
           </div>
         );
       }

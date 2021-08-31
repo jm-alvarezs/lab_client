@@ -17,6 +17,7 @@ import Usuarios from "./Usuarios";
 import PacienteForm from "./PacienteForm";
 import ConfigHanoi from "./ConfigHanoi";
 import ResultadosHanoi from "./ResultadosHanoi";
+import ConfigFlanker from "./ConfigFlanker";
 
 const Home = ({ user }) => {
   return (
@@ -30,6 +31,7 @@ const Home = ({ user }) => {
           <ConfigCondicional path="/config/condicional/:idPaciente" />
           <ConfigHemiAtencion path="/config/hemi/:idPaciente" />
           <ConfigHanoi path="/config/hanoi/:idPaciente" />
+          <ConfigFlanker path="/config/flanker/:idPaciente" />
           {/* Resultados */}
           <Results path="/resultados" />
           <SingleResults path="/resultados/:id" />

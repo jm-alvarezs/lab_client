@@ -63,7 +63,7 @@ const ConfigHanoi = ({ idPaciente }) => {
                     onChange={(e) => handleChange("administracion", e)}
                   >
                     <option value="A">A</option>
-                    <option value="B">A</option>
+                    <option value="B">B</option>
                   </select>
                 </div>
               </div>
