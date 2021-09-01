@@ -164,3 +164,9 @@ body {
   height: 40px;
   border-radius: 5px;
 }
+
+#cruz-flanker {
+  position: absolute;
+  top: calc(50vh - 12px);
+  left: calc(50vw - 12px);
+}

@@ -6,6 +6,8 @@ import {
   SET_PROPIEDAD_MOVIMIENTO,
   SHOW_SPINNER,
   TEST_READY,
+  SET_ESTIMULOS_FLANKER,
+  POP_ESTIMULO_FLANKER,
 } from "../types";
 
 export default (state, { type, payload }) => {
@@ -32,6 +34,17 @@ export default (state, { type, payload }) => {
       const { key, value } = payload;
       currentMove[key] = value;
       return { ...state, currentMove };
+    case SET_ESTIMULOS_FLANKER: {
+      const estimulos = payload;
+      const currentMove = estimulos.shift();
+      return { ...state, estimulos, currentMove };
+    }
+    case POP_ESTIMULO_FLANKER: {
+      const movimientos = [...state.movimientos, { ...state.currentMove }];
+      const estimulos = [...state.estimulos];
+      const currentMove = estimulos.shift();
+      return { ...state, movimientos, estimulos, currentMove };
+    }
     default:
       return { ...state };
   }

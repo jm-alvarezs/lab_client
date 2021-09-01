@@ -11,8 +11,9 @@ import {
   POP_MOVIMIENTO,
   RESET_ALL_MOVIMIENTOS,
   SET_PROPIEDAD_MOVIMIENTO,
+  SET_ESTIMULOS_FLANKER,
+  POP_ESTIMULO_FLANKER,
 } from "../types";
-import { BASE_URL } from "../utils";
 import { ModalContext } from "./ModalContext";
 
 const initialState = {
@@ -21,26 +22,7 @@ const initialState = {
   ready: false,
   currentMove: false,
   movimientos: [],
-};
-
-const prueba = {
-  tiempoExposicion: 500,
-  tiempoInterestimular: 500,
-  target: "A",
-  fontFamily: "Courier",
-  fontStyle: "bold",
-  color: "#000",
-  fontSize: 24,
-  backgroundColor: "#000",
-  numeroEstimulos: 5,
-  aparicion: "17",
-  keyCode: 13,
-  duracion: 35,
-  nombre: "Adultos",
-  nombre_sujeto: "Juan Manuel Alvarez Sanchez",
-  descripcion:
-    "Estudiante universitario presenta déficit de atención durante clases y empleo…",
-  edad: 22,
+  estimulos: [],
 };
 
 export const PruebasContext = createContext(initialState);
@@ -86,8 +68,10 @@ export const PruebasProvider = ({ children }) => {
           .join("&");
         const url =
           `/${
-            config.idTestType === 4
-              ? "hanoi"
+            config.idTestType > 3
+              ? type === "hanoi"
+                ? "hanoi"
+                : "flanker"
               : `atencion${type && type !== null ? `/${type}` : ""}`
           }` +
           `?idTest=${idTest}&token=${accessUrl.token}&` +
@@ -124,12 +108,22 @@ export const PruebasProvider = ({ children }) => {
     dispatch({ type: RESET_ALL_MOVIMIENTOS });
   };
 
+  const setEstimulos = (estimulos) => {
+    dispatch({ type: SET_ESTIMULOS_FLANKER, payload: estimulos });
+  };
+
+  const popEstimulo = () => {
+    dispatch({ type: POP_ESTIMULO_FLANKER });
+  };
+
   return (
     <PruebasContext.Provider
       value={{
         ...state,
         getPrueba,
         postPrueba,
+        popEstimulo,
+        setEstimulos,
         popMovimiento,
         postResultados,
         resetAllMovimientos,

@@ -107,7 +107,7 @@ export const showModal = () => {
 };
 
 export const shuffle = (array) => {
-  array.sort(() => Math.random() - 0.5);
+  return array.sort(() => Math.random() - 0.5);
 };
 
 export const randomize = (items, iterations) => {
@@ -556,9 +556,53 @@ export const getConfig = (defaultConfig) => {
   params = params.split("&");
   params.forEach((elem) => {
     const single = elem.split("=");
-    currentConfig[single[0]] = single[1];
+    if (!isNaN(single[1])) {
+      currentConfig[single[0]] = parseInt(single[1]);
+    } else {
+      currentConfig[single[0]] = single[1];
+    }
   });
   currentConfig.token = token;
   currentConfig.idTest = idTest;
   return currentConfig;
+};
+
+export const getEstimulosFlanker = (estimulos) => {
+  const division = estimulos / 2;
+  const seccion = division / 3;
+  const divisionSeccion = seccion / 2;
+  let estimulosObj = [];
+  let position = "top";
+  let direction = "left";
+  let type = "congruent";
+  for (let i = 0; i < estimulos; i++) {
+    if (i > 0 && i % division === 0) {
+      position = "bottom";
+    }
+    if (i % seccion === 0) {
+      switch (type) {
+        case "congruent":
+          type = "incongruent";
+          break;
+        case "incongruent":
+          type = "neutral";
+          break;
+        default:
+          type = "congruent";
+      }
+    }
+    if (i % divisionSeccion === 0) {
+      if (direction === "left") {
+        direction = "right";
+      } else {
+        direction = "left";
+      }
+    }
+    estimulosObj.push({
+      type,
+      direction,
+      position,
+    });
+  }
+  return estimulosObj;
 };

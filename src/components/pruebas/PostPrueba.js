@@ -21,17 +21,17 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
     });
   };
 
+  const types = {
+    flanker: "Flanker Task",
+    hanoi: "Torre de Hanoi",
+    hemi: "Hemi Atención",
+    condicional: "Atención Condicional",
+    simple: "Atención Simple",
+  };
+
   return (
     <div className="container-fluid">
-      <p>
-        {type === "hanoi"
-          ? "Torre de Hanoi"
-          : type === "hemi"
-          ? "Hemi Atención"
-          : type === "condicional"
-          ? "Atención Condicional"
-          : "Atención Simple"}
-      </p>
+      <p>{types[type]}</p>
       <div className="row my-3">
         <label className="px-3">Enviar por Correo Electrónico</label>
         <div className="col-8">

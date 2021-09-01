@@ -12,6 +12,7 @@ import AtencionCondicional from "./AtencionCondicional";
 import AtencionHemi from "./AtencionHemi";
 import AnswerCuestionario from "./AnswerCuestionario";
 import TorreHanoi from "./TorreHanoi";
+import FlankerTask from "./FlankerTask";
 
 const Main = () => {
   const { user, userLoggedIn } = useContext(UserContext);
@@ -30,6 +31,7 @@ const Main = () => {
             <Home user={user} path="/*" />
           </>
         )}
+        <FlankerTask path="/flanker/*" />
         <TorreHanoi path="/hanoi/*" />
         <AtencionSimple path="/atencion/*" />
         <AtencionCondicional path="/atencion/condicional/*" />

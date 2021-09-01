@@ -9,8 +9,8 @@ const ConfigFlanker = ({ idPaciente }) => {
     estimulosEntrenamiento: 8,
     estimulosPrueba: 48,
     fontSize: 24,
-    fontColor: "#000",
-    bgColor: "#fff",
+    color: "#000",
+    backgroundColor: "#fff",
     leftKey: "A",
     rightKey: "L",
   });
@@ -26,7 +26,7 @@ const ConfigFlanker = ({ idPaciente }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postPrueba(config, "hanoi", paciente);
+    postPrueba(config, "flanker", paciente);
   };
 
   const handleChange = (key, e) => {
@@ -58,7 +58,7 @@ const ConfigFlanker = ({ idPaciente }) => {
               },
             ]}
           />
-          <h1 className="mb-4 h3">Configuración - Torre de Hanoi</h1>
+          <h1 className="mb-4 h3">Configuración - Flanker Task</h1>
           <div className="card p-3 mb-4 shadow-sm">
             <form onSubmit={handleSubmit}>
               <h2 className="h4 mb-3 border-bottom pb-3">Parámetros</h2>
