@@ -17,6 +17,60 @@ const ResumenFlanker = ({
   left,
   right,
 }) => {
+  const renderCompletada = () => {
+    if (estimulos && estimulos !== null) {
+      return (
+        <>
+          <div className="row py-2">
+            <div className="col-6">Tiempo Total</div>
+            <div className="col-6">
+              {moment(finishTime).diff(startTime, "seconds")}.
+              {moment(finishTime).diff(startTime, "miliseconds") % 1000}{" "}
+              segundos
+            </div>
+          </div>
+          <div className="row py-2">
+            <div className="col-6">Tiempo medio de reacción</div>
+            <div className="col-6">{getTiempoReaccionFlanker(estimulos)}</div>
+          </div>
+          <div className="row py-2">
+            <div className="col-6">Errores Totales</div>
+            <div className="col-6">{getErroresFlanker(estimulos)}</div>
+          </div>
+          <div className="row py-2">
+            <div className="col-6">Errores de Dirección</div>
+            <div className="col-6">
+              {getErroresFlankerTipo(estimulos, "direction", left, right)}
+            </div>
+          </div>
+          <div className="row py-2">
+            <div className="col-6">Omisiones</div>
+            <div className="col-6">{getOmisionesFlanker(estimulos)}</div>
+          </div>
+          <div className="row py-2">
+            <div className="col-6">Errores en Congruentes</div>
+            <div className="col-6">
+              {getErroresFlankerTipo(estimulos, "congruent", left, right)}
+            </div>
+          </div>
+          <div className="row py-2">
+            <div className="col-6">Errores en Incongruentes</div>
+            <div className="col-6">
+              {getErroresFlankerTipo(estimulos, "incongruent", left, right)}
+            </div>
+          </div>
+          <div className="row py-2">
+            <div className="col-6">Errores en Neutrales</div>
+            <div className="col-6">
+              {getErroresFlankerTipo(estimulos, "neutral", left, right)}
+            </div>
+          </div>
+        </>
+      );
+    }
+    return <h4 className="text-danger mt-3">Prueba Sin Realizar</h4>;
+  };
+
   return (
     <div className="card container shadow-sm p-3 mb-4">
       <div className="row border-bottom pb-3 mb-2">
@@ -53,51 +107,11 @@ const ResumenFlanker = ({
       </div>
       <div className="row py-2">
         <div className="col-6">Número de Estímulos</div>
-        <div className="col-6">{estimulos.length}</div>
-      </div>
-      <div className="row py-2">
-        <div className="col-6">Tiempo Total</div>
         <div className="col-6">
-          {moment(finishTime).diff(startTime, "seconds")}.
-          {moment(finishTime).diff(startTime, "miliseconds") % 1000} segundos
+          {resultado.results.settings.estimulosPrueba}
         </div>
       </div>
-      <div className="row py-2">
-        <div className="col-6">Tiempo medio de reacción</div>
-        <div className="col-6">{getTiempoReaccionFlanker(estimulos)}</div>
-      </div>
-      <div className="row py-2">
-        <div className="col-6">Errores Totales</div>
-        <div className="col-6">{getErroresFlanker(estimulos)}</div>
-      </div>
-      <div className="row py-2">
-        <div className="col-6">Errores de Dirección</div>
-        <div className="col-6">
-          {getErroresFlankerTipo(estimulos, "direction", left, right)}
-        </div>
-      </div>
-      <div className="row py-2">
-        <div className="col-6">Omisiones</div>
-        <div className="col-6">{getOmisionesFlanker(estimulos)}</div>
-      </div>
-      <div className="row py-2">
-        <div className="col-6">Errores en Congruentes</div>
-        <div className="col-6">
-          {getErroresFlankerTipo(estimulos, "congruent", left, right)}
-        </div>
-      </div>
-      <div className="row py-2">
-        <div className="col-6">Errores en Incongruentes</div>
-        <div className="col-6">
-          {getErroresFlankerTipo(estimulos, "incongruent", left, right)}
-        </div>
-      </div>
-      <div className="row py-2">
-        <div className="col-6">Errores en Neutrales</div>
-        <div className="col-6">
-          {getErroresFlankerTipo(estimulos, "neutral", left, right)}
-        </div>
-      </div>
+      {renderCompletada()}
     </div>
   );
 };
