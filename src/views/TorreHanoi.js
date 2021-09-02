@@ -130,6 +130,7 @@ const TorreHanoi = () => {
       idPatient: config.idPatient,
       config: config.id,
       token: config.token,
+      device: navigator.userAgent,
     };
     postResultados(result);
   };

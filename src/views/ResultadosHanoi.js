@@ -5,10 +5,13 @@ import SujetoPrueba from "../components/resultados/SujetoPrueba";
 import { ResultadosContext } from "../context/ResultadosContext";
 import ReactToPdf from "react-to-pdf";
 import moment from "moment";
+import ParametrosHanoi from "../components/hanoi/ParametrosHanoi";
+import { PruebasContext } from "../context/PruebasContext";
 
 const ResultadosHanoi = ({ idTest }) => {
   const [showSujeto, setShowSujeto] = useState(true);
   const { resultado, getSingleTest } = useContext(ResultadosContext);
+  const { putResultados } = useContext(PruebasContext);
 
   useEffect(() => {
     getSingleTest(idTest);
@@ -38,21 +41,35 @@ const ResultadosHanoi = ({ idTest }) => {
     }
   };
 
-  const renderConfig = (toPdf) => {
+  const renderResumen = (toPdf) => {
     if (resultado && resultado !== null) {
       if (resultado.results.settings && resultado.results.settings !== null) {
         return (
           <ResumenHanoi
             resultado={resultado}
             movimientos={resultado.results.movements}
-            finishTime={resultado.results.finishTime}
-            startTime={resultado.results.startTime}
+            finishTime={resultado.results.end}
+            startTime={resultado.results.start}
             toPdf={toPdf}
           />
         );
       }
     }
     return <div className="spinner-border"></div>;
+  };
+
+  const renderParametros = () => {
+    if (resultado && resultado !== null) {
+      if (resultado.results.settings && resultado.results.settings !== null) {
+        return (
+          <ParametrosHanoi
+            idTest={resultado.test.id}
+            settings={resultado.results.settings}
+            putResultados={putResultados}
+          />
+        );
+      }
+    }
   };
 
   const renderEstimulos = () => {
@@ -70,7 +87,8 @@ const ResultadosHanoi = ({ idTest }) => {
     >
       {({ toPdf, targetRef }) => (
         <div className="container" ref={targetRef}>
-          {renderConfig(toPdf)}
+          {renderResumen(toPdf)}
+          {renderParametros()}
           {renderSujeto()}
           {renderEstimulos()}
         </div>

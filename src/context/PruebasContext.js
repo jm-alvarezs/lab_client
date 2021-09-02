@@ -30,7 +30,7 @@ export const PruebasContext = createContext(initialState);
 export const PruebasProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PruebasReducer, initialState);
 
-  const { modalComponent } = useContext(ModalContext);
+  const { success, modalComponent } = useContext(ModalContext);
 
   const getPrueba = (idTest, token) => {
     if (token) {
@@ -116,6 +116,12 @@ export const PruebasProvider = ({ children }) => {
     dispatch({ type: POP_ESTIMULO_FLANKER });
   };
 
+  const putResultados = (idTest, rule) => {
+    PruebasService.putResultados(idTest, rule).then(() => {
+      success("¡Resultados actualizados!");
+    });
+  };
+
   return (
     <PruebasContext.Provider
       value={{
@@ -125,6 +131,7 @@ export const PruebasProvider = ({ children }) => {
         popEstimulo,
         setEstimulos,
         popMovimiento,
+        putResultados,
         postResultados,
         resetAllMovimientos,
         setPropiedadMovimiento,

@@ -13,6 +13,7 @@ const MovimientosHanoi = ({ movimientos }) => {
             <div className="col-2">Destino</div>
             <div className="col-2">Tiempo (ms)</div>
             <div className="col-2">Intervalo (ms)</div>
+            <div className="col-2">Total (ms)</div>
             <div className="col-2">Estado</div>
           </div>
           {movimientos.map((movimiento, index) => (

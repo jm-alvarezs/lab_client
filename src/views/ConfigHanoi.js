@@ -72,12 +72,15 @@ const ConfigHanoi = ({ idPaciente }) => {
                   <label>Número de discos</label>
                 </div>
                 <div className="col-6">
-                  <input
-                    type="text"
-                    className="form-control mb-3"
+                  <select
+                    className="form-control"
                     value={discos}
                     onChange={(e) => handleChange("discos", e)}
-                  />
+                  >
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                  </select>
                 </div>
               </div>
               <div className="row mb-2">

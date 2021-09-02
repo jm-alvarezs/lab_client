@@ -5,6 +5,7 @@ import {
   getConteoErrores,
   getConteoRepetidos,
   getTiempoPromedio,
+  getTiempoPromedioReflexion,
 } from "../../utils";
 
 const ResumenHanoi = ({
@@ -61,7 +62,13 @@ const ResumenHanoi = ({
       </div>
       <div className="row py-2">
         <div className="col-6">Tiempo medio por movimiento</div>
-        <div className="col-6">{getTiempoPromedio(movimientos)}</div>
+        <div className="col-6">{getTiempoPromedio(movimientos)} ms</div>
+      </div>
+      <div className="row py-2">
+        <div className="col-6">Tiempo medio de reflexión</div>
+        <div className="col-6">
+          {getTiempoPromedioReflexion(movimientos)} ms
+        </div>
       </div>
       <div className="row py-2">
         <div className="col-6">Error Tipo 1 (Percepción)</div>

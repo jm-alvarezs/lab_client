@@ -1,4 +1,3 @@
-import { getArgs } from "../utils";
 import api from "./api";
 
 const route = "/tests";
@@ -17,4 +16,6 @@ export default {
         },
       }
     ),
+  putResultados: (idTest, rule) =>
+    api.put(`${route}/results`, { idTest, rule }),
 };

@@ -524,6 +524,19 @@ export const getTiempoPromedio = (movimientos) => {
   return parseFloat(suma / movimientos.length).toFixed(2);
 };
 
+export const getTiempoPromedioReflexion = (movimientos) => {
+  let suma = 0;
+  movimientos.forEach((movimiento, index) => {
+    if (index > 0) {
+      suma += moment(movimiento.timestamp_origen).diff(
+        movimientos[index - 1].timestamp_destino,
+        "miliseconds"
+      );
+    }
+  });
+  return parseFloat(suma / (movimientos.length - 1)).toFixed(2);
+};
+
 export const getConteoErrores = (movimientos, error) => {
   return movimientos.filter((movimiento) => movimiento.error === error).length;
 };

@@ -115,6 +115,7 @@ const FlankerTask = () => {
       config: config.id,
       token: config.token,
       estimulos: movimientos,
+      device: navigator.userAgent,
     };
     postResultados(result);
   };
