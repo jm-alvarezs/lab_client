@@ -2,7 +2,7 @@ import React from "react";
 
 export const EstimuloFlanker = ({ type, direction, style }) => {
   const getDirection = () => {
-    return type === "congruent"
+    return type === "Congruent"
       ? direction
       : direction === "left"
       ? "right"

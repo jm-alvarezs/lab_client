@@ -177,6 +177,12 @@ body {
   border-radius: 5px;
 }
 
+.flanker-input-container {
+  padding-top: 50px;
+  overflow: hidden;
+  height: 50px;
+}
+
 #cruz-flanker {
   position: absolute;
   top: calc(50vh - 12px);
@@ -184,7 +190,5 @@ body {
 }
 
 #input-hidden {
-  padding-top: 50px;
   height: 50px;
-  overflow: hidden;
 }

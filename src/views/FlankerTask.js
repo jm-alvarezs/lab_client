@@ -145,7 +145,7 @@ const FlankerTask = () => {
 
   const renderFlanker = () => {
     return (
-      <div className="container">
+      <div className="container vh-100 overflow-hidden">
         <div className="row vh-25 mt-25vh align-items-center">
           <div className="container-fluid text-center">{EstimuloSuperior}</div>
         </div>
@@ -161,6 +161,8 @@ const FlankerTask = () => {
       </div>
     );
   };
+
+  console.log(currentMove);
 
   return (
     <div>

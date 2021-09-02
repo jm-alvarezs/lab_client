@@ -50,21 +50,21 @@ export const getEstimulosFlanker = (estimulos) => {
   let estimulosObj = [];
   let position = "top";
   let direction = "left";
-  let type = "congruent";
+  let type = "Congruente";
   for (let i = 0; i < estimulos; i++) {
     if (i > 0 && i % division === 0) {
       position = "bottom";
     }
     if (i % seccion === 0) {
       switch (type) {
-        case "congruent":
-          type = "incongruent";
+        case "Congruente":
+          type = "Incongruente";
           break;
-        case "incongruent":
-          type = "neutral";
+        case "Incongruente":
+          type = "Neutral";
           break;
         default:
-          type = "congruent";
+          type = "Congruente";
       }
     }
     if (i % divisionSeccion === 0) {
