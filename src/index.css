@@ -160,6 +160,18 @@ body {
   background: linear-gradient(to right, #eea668, #ed7e1d, #e67e22);
 }
 
+.vh-25 {
+  height: 25vh;
+}
+
+.mt-25vh {
+  margin-top: 25vh;
+}
+
+.mb-25vh {
+  margin-bottom: 25vh;
+}
+
 .disco {
   height: 40px;
   border-radius: 5px;

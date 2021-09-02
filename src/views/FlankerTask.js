@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { getConfig, getEstimulosFlanker, shuffle } from "../utils";
+import { getConfig, shuffle } from "../utils";
+import { getEstimulosFlanker } from "../functions/flanker";
 import moment from "moment";
 import { PruebasContext } from "../context/PruebasContext";
 import { ModalContext } from "../context/ModalContext";
@@ -57,8 +58,8 @@ const FlankerTask = () => {
   }, []);
 
   useEffect(() => {
-    console.log(fijacion);
     if (fijacion) {
+      popEstimulo();
       setTimeout(() => {
         setFijacion(false);
         sigEstimulo();
@@ -105,7 +106,6 @@ const FlankerTask = () => {
   const handleEnd = (finished) => {
     const endTime = moment().format("YYYY-MM-DD HH:mm:ss:SSS");
     setFinishTime(endTime);
-    console.log(movimientos);
     const result = {
       start: startTime,
       end: endTime,
@@ -122,8 +122,10 @@ const FlankerTask = () => {
   const handleKeyPress = (e) => {
     const clicked = moment().format("YYYY-MM-DD HH:mm:ss:SSS");
     const pressed = String.fromCharCode(e.charCode);
-    setPropiedadMovimiento("char", pressed);
-    setPropiedadMovimiento("clicked", clicked);
+    if (!currentMove.clicked) {
+      setPropiedadMovimiento("clicked", clicked);
+      setPropiedadMovimiento("char", pressed);
+    }
   };
 
   const sigEstimulo = () => {
@@ -143,11 +145,17 @@ const FlankerTask = () => {
   const renderFlanker = () => {
     return (
       <div className="container">
-        <div className="row vh-50 align-items-center">
+        <div className="row vh-25 mt-25vh align-items-center">
           <div className="container-fluid text-center">{EstimuloSuperior}</div>
         </div>
-        <div className="row vh-50 align-items-center">{EstimuloInferior}</div>
-        {fijacion ? <i id="cruz-flanker" className="fas fa-plus"></i> : ""}
+        <div className="row vh-25 mb-25vh align-items-center">
+          {EstimuloInferior}
+        </div>
+        {fijacion && typeof currentMove === "object" ? (
+          <i id="cruz-flanker" className="fas fa-plus"></i>
+        ) : (
+          ""
+        )}
         <input id="input-hidden" type="text" onKeyPress={handleKeyPress} />
       </div>
     );

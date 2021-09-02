@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
   HIDE_SPINNER,
   PRUEBA_RECIBIDA,
@@ -36,13 +37,25 @@ export default (state, { type, payload }) => {
       return { ...state, currentMove };
     case SET_ESTIMULOS_FLANKER: {
       const estimulos = payload;
-      const currentMove = estimulos.shift();
-      return { ...state, estimulos, currentMove };
+      return {
+        ...state,
+        estimulos,
+        currentMove: {
+          ...estimulos[0],
+          emitted: moment().format("YYYY-MM-DD HH:mm:ss:SSS"),
+        },
+      };
     }
     case POP_ESTIMULO_FLANKER: {
-      const movimientos = [...state.movimientos, { ...state.currentMove }];
-      const estimulos = [...state.estimulos];
-      const currentMove = estimulos.shift();
+      let movimientos = [...state.movimientos];
+      if (state.currentMove) {
+        movimientos = [...movimientos, { ...state.currentMove }];
+      }
+      let estimulos = [...state.estimulos];
+      const currentMove = {
+        ...estimulos.shift(),
+        emitted: moment().format("YYYY-MM-DD HH:mm:ss:SSS"),
+      };
       return { ...state, movimientos, estimulos, currentMove };
     }
     default:

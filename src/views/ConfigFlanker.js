@@ -8,7 +8,7 @@ const ConfigFlanker = ({ idPaciente }) => {
     idTestType: 5,
     estimulosEntrenamiento: 8,
     estimulosPrueba: 48,
-    fontSize: 24,
+    fontSize: 100,
     color: "#000",
     backgroundColor: "#fff",
     leftKey: "A",

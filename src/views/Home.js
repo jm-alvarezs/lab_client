@@ -18,6 +18,7 @@ import PacienteForm from "./PacienteForm";
 import ConfigHanoi from "./ConfigHanoi";
 import ResultadosHanoi from "./ResultadosHanoi";
 import ConfigFlanker from "./ConfigFlanker";
+import ResultadosFlanker from "./ResultadosFlanker";
 
 const Home = ({ user }) => {
   return (
@@ -36,6 +37,7 @@ const Home = ({ user }) => {
           <Results path="/resultados" />
           <SingleResults path="/resultados/:id" />
           <ResultadosHanoi path="/resultados/hanoi/:idTest" />
+          <ResultadosFlanker path="/resultados/flanker/:idTest" />
           {/* Pacientes */}
           <Pacientes path="/pacientes" default />
           <SinglePaciente path="/pacientes/:id" />

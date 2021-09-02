@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "@reach/router";
 
 const ResultadoCard = ({ resultado }) => {
+  const type = String(resultado.testType.name).toLowerCase();
   return (
     <div key={resultado.id} className="card my-2 p-3 shadow-sm">
       <div className="row">
@@ -26,10 +27,10 @@ const ResultadoCard = ({ resultado }) => {
             to={`./${
               resultado.surveyType
                 ? `cuestionario/${resultado.id}`
-                : (String(resultado.testType.name)
-                    .toLowerCase()
-                    .includes("hanoi")
+                : (type.includes("hanoi")
                     ? "hanoi/"
+                    : type.includes("flanker")
+                    ? "flanker/"
                     : "") + resultado.id
             }`}
             className="btn btn-outline-secondary"
