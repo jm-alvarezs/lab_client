@@ -146,23 +146,46 @@ const FlankerTask = () => {
 
   const renderFlanker = () => {
     return (
-      <div className="container vh-100 overflow-hidden">
-        <div>
-          <div className="row vh-25 mt-25vh align-items-center">
-            <div className="container-fluid text-center">
-              {EstimuloSuperior}
-            </div>
-          </div>
-          <div className="row vh-25 mb-25vh align-items-center">
-            {EstimuloInferior}
-          </div>
-          {fijacion && typeof currentMove === "object" ? (
-            <i id="cruz-flanker" className="fas fa-plus"></i>
-          ) : (
-            ""
-          )}
+      <div className="container vh-100 overflow-hidden" style={{ ...config }}>
+        <div className="row vh-25 mt-25vh align-items-center">
+          <div className="container-fluid text-center">{EstimuloSuperior}</div>
         </div>
+        <div className="row vh-25 mb-25vh align-items-center">
+          {EstimuloInferior}
+        </div>
+        {fijacion && typeof currentMove === "object" ? (
+          <i
+            id="cruz-flanker"
+            className="fas fa-plus"
+            style={{ ...config }}
+          ></i>
+        ) : (
+          ""
+        )}
       </div>
+    );
+  };
+
+  const renderInstrucciones = () => {
+    return (
+      <>
+        <p>
+          A continuación, vas a realizar un juego. En la pantalla vas a ver 5
+          flechas, tu tarea es fijarte en la dirección en la que apunta la
+          flecha que se encuentra en medio. Si la flecha va hacia la derecha vas
+          a presionar la tecla “L” y si va hacia la izquierda vas a presionar la
+          tecla “A”. Presiona cualquier tecla para ver un ejemplo.
+        </p>
+        <p>
+          Primero vas a hacer un ejercicio de prueba para que aprendas cómo
+          funciona el juego. Pon tu dedo derecho sobre la tecla “L” y tu dedo
+          izquierdo sobre la tecla “A” y no lo levantes hasta que se termine el
+          juego. ¿Estás preparado? presiona cualquier tecla para empezar.
+          Posterior a la fase de prueba, se dirá lo siguiente: “ya se terminó la
+          fase de prueba, ya vamos a empezar el juego, ¿estás preparado?
+          presiona cualquier tecla para empezar.
+        </p>
+      </>
     );
   };
 
@@ -173,6 +196,7 @@ const FlankerTask = () => {
           start={handleStart}
           thankyou={finishTime !== null}
           disabled={disabled}
+          instrucciones={renderInstrucciones()}
         />
       ) : (
         renderFlanker()
