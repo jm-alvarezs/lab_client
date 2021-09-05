@@ -89,13 +89,14 @@ const FlankerTask = () => {
     }
   }, [EstimuloSuperior]);
 
+  const handleBlur = () => {
+    document.body.addEventListener("keypress", handleKeyPress);
+  };
+
   const handleStart = () => {
     setStartTime(moment().format("YYYY-MM-DD HH:mm:ss:SSS"));
     setTimeout(() => {
-      const input = document.getElementById("input-hidden");
-      if (input !== null) {
-        input.focus();
-      }
+      handleBlur();
       let estimulosPrueba = getEstimulosFlanker(config.estimulosPrueba);
       estimulosPrueba = shuffle(estimulosPrueba);
       setEstimulos(estimulosPrueba);
@@ -146,23 +147,24 @@ const FlankerTask = () => {
   const renderFlanker = () => {
     return (
       <div className="container vh-100 overflow-hidden">
-        <div className="row vh-25 mt-25vh align-items-center">
-          <div className="container-fluid text-center">{EstimuloSuperior}</div>
+        <div>
+          <div className="row vh-25 mt-25vh align-items-center">
+            <div className="container-fluid text-center">
+              {EstimuloSuperior}
+            </div>
+          </div>
+          <div className="row vh-25 mb-25vh align-items-center">
+            {EstimuloInferior}
+          </div>
+          {fijacion && typeof currentMove === "object" ? (
+            <i id="cruz-flanker" className="fas fa-plus"></i>
+          ) : (
+            ""
+          )}
         </div>
-        <div className="row vh-25 mb-25vh align-items-center">
-          {EstimuloInferior}
-        </div>
-        {fijacion && typeof currentMove === "object" ? (
-          <i id="cruz-flanker" className="fas fa-plus"></i>
-        ) : (
-          ""
-        )}
-        <input id="input-hidden" type="text" onKeyPress={handleKeyPress} />
       </div>
     );
   };
-
-  console.log(currentMove);
 
   return (
     <div>
