@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import Breadcrumbs from "../components/global/Breadcrumbs";
+import { ModalContext } from "../context/ModalContext";
 import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 
 const ConfigFlanker = ({ idPaciente }) => {
   const [config, setConfig] = useState({
     idTestType: 5,
-    estimulosEntrenamiento: 8,
+    estimulosEntrenamiento: 0,
     estimulosPrueba: 48,
     fontSize: 100,
     color: "#000",
@@ -19,6 +20,8 @@ const ConfigFlanker = ({ idPaciente }) => {
 
   const { paciente, getSinglePaciente } = useContext(PacientesContext);
 
+  const { alert } = useContext(ModalContext);
+
   useEffect(() => {
     setConfig({ ...config, idPatient: idPaciente });
     getSinglePaciente(idPaciente);
@@ -26,11 +29,23 @@ const ConfigFlanker = ({ idPaciente }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (config.leftKey === config.rightKey) {
+      return alert("Las teclas no pueden ser iguales");
+    }
+    if (config.fontSize === "") {
+      return alert("El tamaño de letra no puede estar vacío");
+    }
     postPrueba(config, "flanker", paciente);
   };
 
   const handleChange = (key, e) => {
-    const { value } = e.target;
+    let { value } = e.target;
+    if (key === "fontSize" && value > 200) {
+      value = 200;
+    }
+    if (String(key).includes("Key")) {
+      value = value[0];
+    }
     setConfig({ ...config, [key]: value });
   };
 
@@ -67,12 +82,15 @@ const ConfigFlanker = ({ idPaciente }) => {
                   <label>Estímulos de Entrenamiento</label>
                 </div>
                 <div className="col-6">
-                  <input
-                    type="number"
+                  <select
                     className="form-control mb-3"
                     value={estimulosEntrenamiento}
                     onChange={(e) => handleChange("estimulosEntrenamiento", e)}
-                  />
+                  >
+                    <option value="0">0</option>
+                    <option value="8">8</option>
+                    <option value="16">16</option>
+                  </select>
                 </div>
               </div>
               <div className="row mb-2">
@@ -80,12 +98,15 @@ const ConfigFlanker = ({ idPaciente }) => {
                   <label>Estímulos de Prueba</label>
                 </div>
                 <div className="col-6">
-                  <input
-                    type="number"
+                  <select
                     className="form-control mb-3"
                     value={estimulosPrueba}
                     onChange={(e) => handleChange("estimulosPrueba", e)}
-                  />
+                  >
+                    <option value="24">24</option>
+                    <option value="48">48</option>
+                    <option value="72">72</option>
+                  </select>
                 </div>
               </div>
               <div className="row">
