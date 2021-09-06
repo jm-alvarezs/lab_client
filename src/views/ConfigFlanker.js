@@ -143,7 +143,7 @@ const ConfigFlanker = ({ idPaciente }) => {
 
               <div className="row">
                 <div className="col-6">
-                  <label>Color de la Fuente</label>
+                  <label>Color de las Flechas</label>
                 </div>
                 <div className="col-6">
                   <input

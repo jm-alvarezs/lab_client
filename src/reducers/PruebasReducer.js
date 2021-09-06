@@ -1,14 +1,14 @@
 import moment from "moment";
 import {
   HIDE_SPINNER,
+  POP_ESTIMULO,
   PRUEBA_RECIBIDA,
-  RESET_ALL_MOVIMIENTOS,
-  POP_MOVIMIENTO,
-  SET_PROPIEDAD_MOVIMIENTO,
+  RESET_ALL_ESTIMULOS,
+  SET_PROPIEDAD_ESTIMULO,
   SHOW_SPINNER,
   TEST_READY,
-  SET_ESTIMULOS_FLANKER,
-  POP_ESTIMULO_FLANKER,
+  SET_FILA,
+  SET_CONFIG,
 } from "../types";
 
 export default (state, { type, payload }) => {
@@ -21,43 +21,38 @@ export default (state, { type, payload }) => {
       return { ...state, spinner: true };
     case HIDE_SPINNER:
       return { ...state, spinner: false };
-    case RESET_ALL_MOVIMIENTOS:
-      return { ...state, movimientos: [] };
-    case POP_MOVIMIENTO:
-      const actual = { ...state.currentMove };
-      return {
-        ...state,
-        movimientos: [...state.movimientos, actual],
-        currentMove: {},
-      };
-    case SET_PROPIEDAD_MOVIMIENTO:
-      const currentMove = { ...state.currentMove };
+    case RESET_ALL_ESTIMULOS:
+      return { ...state, estimulos: [] };
+    case SET_PROPIEDAD_ESTIMULO:
+      const current = { ...state.current };
       const { key, value } = payload;
-      currentMove[key] = value;
-      return { ...state, currentMove };
-    case SET_ESTIMULOS_FLANKER: {
-      const estimulos = payload;
+      current[key] = value;
+      return { ...state, current };
+    case SET_FILA: {
       return {
         ...state,
-        estimulos,
-        currentMove: {
-          ...estimulos[0],
-          emitted: moment().format("YYYY-MM-DD HH:mm:ss:SSS"),
-        },
+        fila: payload,
       };
     }
-    case POP_ESTIMULO_FLANKER: {
-      let movimientos = [...state.movimientos];
-      if (state.currentMove) {
-        movimientos = [...movimientos, { ...state.currentMove }];
-      }
+    case POP_ESTIMULO: {
       let estimulos = [...state.estimulos];
-      const currentMove = {
-        ...estimulos.shift(),
-        emitted: moment().format("YYYY-MM-DD HH:mm:ss:SSS"),
-      };
-      return { ...state, movimientos, estimulos, currentMove };
+      if (state.current) {
+        estimulos = [...estimulos, { ...state.current }];
+      }
+      let current = { emitted: moment().format("YYYY-MM-DD HH:mm:ss:SSS") };
+      let fila = state.fila;
+      if (fila) {
+        fila = [...fila];
+        current = {
+          ...current,
+          ...fila.shift(),
+        };
+        return { ...state, estimulos, current, fila };
+      }
+      return { ...state, estimulos, current };
     }
+    case SET_CONFIG:
+      return { ...state, config: payload };
     default:
       return { ...state };
   }

@@ -8,11 +8,11 @@ import {
   HIDE_SPINNER,
   SHOW_SPINNER,
   PRUEBA_RECIBIDA,
-  POP_MOVIMIENTO,
-  RESET_ALL_MOVIMIENTOS,
-  SET_PROPIEDAD_MOVIMIENTO,
-  SET_ESTIMULOS_FLANKER,
-  POP_ESTIMULO_FLANKER,
+  RESET_ALL_ESTIMULOS,
+  SET_PROPIEDAD_ESTIMULO,
+  POP_ESTIMULO,
+  SET_CONFIG,
+  SET_FILA,
 } from "../types";
 import { ModalContext } from "./ModalContext";
 
@@ -20,9 +20,9 @@ const initialState = {
   pruebas: null,
   prueba: null,
   ready: false,
-  currentMove: false,
-  movimientos: [],
+  current: false,
   estimulos: [],
+  config: {},
 };
 
 export const PruebasContext = createContext(initialState);
@@ -96,24 +96,20 @@ export const PruebasProvider = ({ children }) => {
     PruebasService.postResultados(resultados);
   };
 
-  const setPropiedadMovimiento = (key, value) => {
-    dispatch({ type: SET_PROPIEDAD_MOVIMIENTO, payload: { key, value } });
+  const setPropiedadEstimulo = (key, value) => {
+    dispatch({ type: SET_PROPIEDAD_ESTIMULO, payload: { key, value } });
   };
 
-  const popMovimiento = () => {
-    dispatch({ type: POP_MOVIMIENTO });
+  const resetAllEstimulos = () => {
+    dispatch({ type: RESET_ALL_ESTIMULOS });
   };
 
-  const resetAllMovimientos = () => {
-    dispatch({ type: RESET_ALL_MOVIMIENTOS });
-  };
-
-  const setEstimulos = (estimulos) => {
-    dispatch({ type: SET_ESTIMULOS_FLANKER, payload: estimulos });
+  const setFila = (estimulos) => {
+    dispatch({ type: SET_FILA, payload: estimulos });
   };
 
   const popEstimulo = () => {
-    dispatch({ type: POP_ESTIMULO_FLANKER });
+    dispatch({ type: POP_ESTIMULO });
   };
 
   const putResultados = (idTest, rule) => {
@@ -122,19 +118,23 @@ export const PruebasProvider = ({ children }) => {
     });
   };
 
+  const setConfig = (config) => {
+    dispatch({ type: SET_CONFIG, payload: config });
+  };
+
   return (
     <PruebasContext.Provider
       value={{
         ...state,
+        setFila,
+        setConfig,
         getPrueba,
         postPrueba,
         popEstimulo,
-        setEstimulos,
-        popMovimiento,
         putResultados,
         postResultados,
-        resetAllMovimientos,
-        setPropiedadMovimiento,
+        resetAllEstimulos,
+        setPropiedadEstimulo,
       }}
     >
       {children}
