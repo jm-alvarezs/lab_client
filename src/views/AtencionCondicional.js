@@ -166,6 +166,9 @@ const AtencionCondicional = () => {
     let intervalo =
       parseInt(config["tiempoInterestimular"]) +
       parseInt(config["tiempoExposicion"]);
+    window.onbeforeunload = (e) => {
+      endTest();
+    };
     interval = setInterval(() => {
       if (estimulos >= config["estimulos"]) {
         endTest();

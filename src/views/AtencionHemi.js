@@ -209,6 +209,9 @@ const AtencionHemi = () => {
     let intervalo =
       parseInt(config["tiempoInterestimular"]) +
       parseInt(config["tiempoExposicion"]);
+    window.onbeforeunload = (e) => {
+      endTest();
+    };
     interval = setInterval(() => {
       if (estimulos >= total) {
         endTest();

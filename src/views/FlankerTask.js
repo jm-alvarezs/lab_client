@@ -101,6 +101,9 @@ const FlankerTask = () => {
       estimulosPrueba = shuffle(estimulosPrueba);
       setEstimulos(estimulosPrueba);
       setFijacion(true);
+      window.onbeforeunload = (e) => {
+        handleEnd(false);
+      };
     }, 1000);
   };
 

@@ -107,6 +107,9 @@ const TorreHanoi = () => {
     setStart(true);
     setStartTime(moment().format("YYYY-MM-DD HH:mm:ss:SSS"));
     setOne(discs.slice(0, config.discos));
+    window.onbeforeunload = (e) => {
+      handleEnd(false);
+    };
   };
 
   const handleEnd = (finished) => {
@@ -117,22 +120,24 @@ const TorreHanoi = () => {
         success("Ganaste");
       }, 500);
     }
-    setFinish(true);
-    setStart(false);
-    const endTime = moment().format("YYYY-MM-DD HH:mm:ss:SSS");
-    setFinishTime(endTime);
-    const result = {
-      start: startTime,
-      end: endTime,
-      movements: movimientos,
-      finished,
-      idTest: config.idTest,
-      idPatient: config.idPatient,
-      config: config.id,
-      token: config.token,
-      device: navigator.userAgent,
-    };
-    postResultados(result);
+    if (startTime !== null) {
+      setFinish(true);
+      setStart(false);
+      const endTime = moment().format("YYYY-MM-DD HH:mm:ss:SSS");
+      setFinishTime(endTime);
+      const result = {
+        start: startTime,
+        end: endTime,
+        movements: movimientos,
+        finished,
+        idTest: config.idTest,
+        idPatient: config.idPatient,
+        config: config.id,
+        token: config.token,
+        device: navigator.userAgent,
+      };
+      postResultados(result);
+    }
   };
 
   const handleError = (error) => {
@@ -291,7 +296,7 @@ const TorreHanoi = () => {
         return (
           <div>
             <p>
-              “En la pantalla aparecerán tres barras, numeradas con los números
+              En la pantalla aparecerán tres barras, numeradas con los números
               1, 2 y 3. En la barra número 1 hay una torre formada por varios
               discos. Lo que tiene que hacer es formar la misma torre, con los
               discos en el mismo orden, en la barra número 3. Para hacerlo,
@@ -341,6 +346,7 @@ const TorreHanoi = () => {
           thankyou={finishTime !== null}
           instrucciones={renderInstrucciones()}
           disabled={disabled}
+          isHanoi
         />
       ) : (
         renderTorre()
