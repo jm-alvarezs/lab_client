@@ -118,7 +118,6 @@ const FlankerTask = () => {
   };
 
   const renderFlanker = () => {
-    console.log(config);
     return (
       <div
         className="container-fluid vh-100 overflow-hidden"
