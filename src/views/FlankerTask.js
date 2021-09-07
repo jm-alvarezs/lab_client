@@ -54,7 +54,6 @@ const FlankerTask = () => {
 
   useEffect(() => {
     if (fijacion) {
-      console.log(estimulos);
       popEstimulo();
       setTimeout(() => {
         setFijacion(false);
@@ -119,16 +118,34 @@ const FlankerTask = () => {
   };
 
   const renderFlanker = () => {
+    console.log(config);
     return (
-      <div className="container vh-100 overflow-hidden" style={{ ...config }}>
-        <div className="row vh-25 mt-25vh align-items-center">
-          <div className="container-fluid text-center">{EstimuloSuperior}</div>
-        </div>
-        <div className="row vh-25 mb-25vh align-items-center">
-          {EstimuloInferior}
+      <div
+        className="container-fluid vh-100 overflow-hidden"
+        style={{ backgroundColor: config.backgroundColor }}
+      >
+        <div className="container">
+          <div
+            className="row vh-25 mt-25vh align-items-center"
+            style={{ ...config }}
+          >
+            <div className="container-fluid text-center">
+              {EstimuloSuperior}
+            </div>
+          </div>
+          <div
+            className="row vh-25 mb-25vh align-items-center"
+            style={{ ...config }}
+          >
+            {EstimuloInferior}
+          </div>
         </div>
         {fijacion && typeof current === "object" ? (
-          <i id="cruz-flanker" className="fas fa-plus"></i>
+          <i
+            id="cruz-flanker"
+            className="fas fa-plus"
+            style={{ color: config.color }}
+          ></i>
         ) : (
           ""
         )}

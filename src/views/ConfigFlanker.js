@@ -50,12 +50,12 @@ const ConfigFlanker = ({ idPaciente }) => {
   };
 
   const {
-    bgColor,
     leftKey,
     rightKey,
     fontSize,
     fontColor,
     estimulosPrueba,
+    backgroundColor,
     estimulosEntrenamiento,
   } = config;
 
@@ -135,8 +135,8 @@ const ConfigFlanker = ({ idPaciente }) => {
                   <input
                     type="color"
                     className="form-control mb-3"
-                    value={bgColor}
-                    onChange={(e) => handleChange("bgColor", e)}
+                    value={backgroundColor}
+                    onChange={(e) => handleChange("backgroundColor", e)}
                   />
                 </div>
               </div>
