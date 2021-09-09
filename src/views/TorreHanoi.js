@@ -6,6 +6,37 @@ import error_sound from "../assets/sound/error_sound.mp3";
 import { ModalContext } from "../context/ModalContext";
 import InterScreen from "../components/pruebas/InterScreen";
 
+const instruccionesA = [
+  `En la pantalla aparecerán tres barras, numeradas con los números
+    1, 2 y 3. En la barra número 1 hay una torre formada por varios
+    discos. Lo que tiene que hacer es formar la misma torre, con los
+    discos en el mismo orden, en la barra número 3. Para hacerlo,
+    tiene que mover los discos de uno en uno, tecleando primero el
+    número de la barra donde esté el disco que quiere mover, y después
+    el número de la barra hacia donde lo quiere mover. Puede mover los
+    discos hacia la derecha o hacia la izquierda, y puede usar las
+    tres barras.`,
+  `Tiene que tener en cuenta que para mover el disco que está abajo
+   -el más grande-, primero tiene que quitar los que estén encima.`,
+];
+
+const instruccionesB = [
+  `En la pantalla aparecerán tres barras, numeradas con los números 1,
+    2 y 3. En la barra número 1 hay una torre formada por varios discos.
+    Lo que tiene que hacer es formar la misma torre, con los discos en
+    el mismo orden, en la barra número 3. Para hacerlo, tiene que mover
+    los discos de uno en uno, tecleando primero el número de la barra
+    donde esté el disco que quiere mover, y después el número de la
+    barra hacia donde lo quiere mover. Puede mover los discos hacia la
+    derecha o hacia la izquierda, y puede usar las tres barras.`,
+  `Tiene que tener en cuenta que para mover el disco que está abajo -el
+    más grande-, primero tiene que quitar los que estén encima. También
+    debe tener en cuenta que sólo podrá poner un disco o bien en una
+    barra que esté vacía, o bien en una barra sobre un disco que sea más
+    grande que el que esté moviendo. Es decir, no puede poner un disco
+    grande sobre uno más pequeño.`,
+];
+
 const TorreHanoi = () => {
   const [origen, setOrigen] = useState(null);
   const [destino, setDestino] = useState(null);
@@ -21,10 +52,11 @@ const TorreHanoi = () => {
 
   const {
     getPrueba,
-    movimientos,
-    popMovimiento,
+    current,
+    estimulos,
+    popEstimulo,
     postResultados,
-    setPropiedadMovimiento,
+    setPropiedadEstimulo,
   } = useContext(PruebasContext);
 
   const { success, alert } = useContext(ModalContext);
@@ -55,6 +87,12 @@ const TorreHanoi = () => {
   }, []);
 
   useEffect(() => {
+    if (current.origen && current.destino) {
+      move(current.origen, current.destino);
+    }
+  }, [current]);
+
+  useEffect(() => {
     if (parseInt(three.length) === parseInt(config.discos)) {
       let valid;
       three.forEach((disco, index) => {
@@ -67,25 +105,6 @@ const TorreHanoi = () => {
       }
     }
   }, [three]);
-
-  useEffect(() => {
-    if (destino !== null && origen !== null) {
-      setPropiedadMovimiento("destino", destino);
-      setPropiedadMovimiento(
-        "timestamp_destino",
-        moment().format("YYYY-MM-DD HH:mm:ss:SSS")
-      );
-      move(origen, destino);
-      setOrigen(null);
-      setDestino(null);
-    } else if (origen !== null) {
-      setPropiedadMovimiento("origen", origen);
-      setPropiedadMovimiento(
-        "timestamp_origen",
-        moment().format("YYYY-MM-DD HH:mm:ss:SSS")
-      );
-    }
-  }, [origen, destino]);
 
   const getArray = (index) => {
     let discosRender = [];
@@ -107,6 +126,14 @@ const TorreHanoi = () => {
     setStart(true);
     setStartTime(moment().format("YYYY-MM-DD HH:mm:ss:SSS"));
     setOne(discs.slice(0, config.discos));
+    popEstimulo();
+    document.body.addEventListener("keypress", (e) => {
+      let number = parseInt(e.key);
+      if (!isNaN(number) && [1, 2, 3].includes(number)) {
+        setPropiedadEstimulo("hanoi", number);
+      }
+    });
+
     window.onbeforeunload = (e) => {
       handleEnd(false);
     };
@@ -114,7 +141,7 @@ const TorreHanoi = () => {
 
   const handleEnd = (finished) => {
     if (!finished) {
-      popMovimiento();
+      popEstimulo();
     } else {
       setTimeout(() => {
         success("Ganaste");
@@ -128,7 +155,7 @@ const TorreHanoi = () => {
       const result = {
         start: startTime,
         end: endTime,
-        movements: movimientos,
+        movements: estimulos,
         finished,
         idTest: config.idTest,
         idPatient: config.idPatient,
@@ -141,8 +168,8 @@ const TorreHanoi = () => {
   };
 
   const handleError = (error) => {
-    setPropiedadMovimiento("error", error);
-    popMovimiento();
+    setPropiedadEstimulo("error", error);
+    popEstimulo();
     if (config.sonidoError) {
       errorSound.play();
     }
@@ -156,22 +183,22 @@ const TorreHanoi = () => {
   const move = (origen, destino) => {
     const originArray = getArray(origen);
     if (originArray.length === 0) {
-      setPropiedadMovimiento("sizeOrigen", null);
-      setPropiedadMovimiento("sizeDestino", null);
+      setPropiedadEstimulo("sizeOrigen", null);
+      setPropiedadEstimulo("sizeDestino", null);
       return handleError("percepcion");
     }
     const destArray = getArray(destino);
     const disc = { ...originArray[originArray.length - 1] };
     if (destArray.length > 0) {
       let last_disc = destArray[destArray.length - 1];
-      setPropiedadMovimiento("sizeOrigen", disc.size);
-      setPropiedadMovimiento("sizeDestino", last_disc.size);
+      setPropiedadEstimulo("sizeOrigen", disc.size);
+      setPropiedadEstimulo("sizeDestino", last_disc.size);
       if (last_disc.size > disc.size) {
         return handleError("aprendizaje");
       }
     } else {
-      setPropiedadMovimiento("sizeOrigen", disc.size);
-      setPropiedadMovimiento("sizeDestino", null);
+      setPropiedadEstimulo("sizeOrigen", disc.size);
+      setPropiedadEstimulo("sizeDestino", null);
     }
     if (origen === destino) {
       return handleError("arrepentimiento");
@@ -200,7 +227,7 @@ const TorreHanoi = () => {
         setThree(destArray);
         break;
     }
-    popMovimiento();
+    popEstimulo();
   };
 
   const renderDiscos = (disc) => {
@@ -240,42 +267,32 @@ const TorreHanoi = () => {
               </div>
             </div>
             <div className="base mw-100 w-100"></div>
-          </div>
-        </div>
-        {start && !finish && (
-          <div className="row my-3 py-3">
-            <div className="col-4">
-              <button
-                className={`btn w-100 ${
-                  origen === 1 ? "btn-light" : "btn-dark"
+            <div className="row mt-5">
+              <div
+                className={`col-4 text-center ${
+                  current.origen === 1 ? "text-success bold" : ""
                 }`}
-                onClick={() => (origen === null ? setOrigen(1) : setDestino(1))}
               >
                 1
-              </button>
-            </div>
-            <div className="col-4">
-              <button
-                className={`btn w-100 ${
-                  origen === 2 ? "btn-light" : "btn-dark"
+              </div>
+              <div
+                className={`col-4 text-center ${
+                  current.origen === 2 ? "text-success bold" : ""
                 }`}
-                onClick={() => (origen === null ? setOrigen(2) : setDestino(2))}
               >
                 2
-              </button>
-            </div>
-            <div className="col-4">
-              <button
-                className={`btn w-100 ${
-                  origen === 3 ? "btn-light" : "btn-dark"
+              </div>
+              <div
+                className={`col-4 text-center ${
+                  current.origen === 3 ? "text-success bold" : ""
                 }`}
-                onClick={() => (origen === null ? setOrigen(3) : setDestino(3))}
               >
                 3
-              </button>
+              </div>
             </div>
           </div>
-        )}
+        </div>
+
         <div className="container-fluid text-center py-3 my-3">
           {start && !finish && (
             <div
@@ -293,49 +310,11 @@ const TorreHanoi = () => {
   const renderInstrucciones = () => {
     if (!disabled) {
       if (config.administracion === "A") {
-        return (
-          <div>
-            <p>
-              En la pantalla aparecerán tres barras, numeradas con los números
-              1, 2 y 3. En la barra número 1 hay una torre formada por varios
-              discos. Lo que tiene que hacer es formar la misma torre, con los
-              discos en el mismo orden, en la barra número 3. Para hacerlo,
-              tiene que mover los discos de uno en uno, tecleando primero el
-              número de la barra donde esté el disco que quiere mover, y después
-              el número de la barra hacia donde lo quiere mover. Puede mover los
-              discos hacia la derecha o hacia la izquierda, y puede usar las
-              tres barras.
-            </p>
-            <p>
-              Tiene que tener en cuenta que para mover el disco que está abajo
-              -el más grande-, primero tiene que quitar los que estén encima.
-            </p>
-          </div>
-        );
+        return instruccionesA;
       }
-      return (
-        <div>
-          <p>
-            En la pantalla aparecerán tres barras, numeradas con los números 1,
-            2 y 3. En la barra número 1 hay una torre formada por varios discos.
-            Lo que tiene que hacer es formar la misma torre, con los discos en
-            el mismo orden, en la barra número 3. Para hacerlo, tiene que mover
-            los discos de uno en uno, tecleando primero el número de la barra
-            donde esté el disco que quiere mover, y después el número de la
-            barra hacia donde lo quiere mover. Puede mover los discos hacia la
-            derecha o hacia la izquierda, y puede usar las tres barras.
-          </p>
-          <p>
-            Tiene que tener en cuenta que para mover el disco que está abajo -el
-            más grande-, primero tiene que quitar los que estén encima. También
-            debe tener en cuenta que sólo podrá poner un disco o bien en una
-            barra que esté vacía, o bien en una barra sobre un disco que sea más
-            grande que el que esté moviendo. Es decir, no puede poner un disco
-            grande sobre uno más pequeño.
-          </p>
-        </div>
-      );
+      return instruccionesB;
     }
+    return [];
   };
 
   return (

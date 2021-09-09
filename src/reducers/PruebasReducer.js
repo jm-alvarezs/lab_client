@@ -26,7 +26,17 @@ export default (state, { type, payload }) => {
     case SET_PROPIEDAD_ESTIMULO:
       const current = { ...state.current };
       const { key, value } = payload;
-      current[key] = value;
+      if (key === "hanoi") {
+        if (!current.origen) {
+          current.origen = value;
+          current.timestamp_origen = moment().format("YYYY-MM-DD HH:mm:ss:SSS");
+        } else {
+          current.destino = value;
+          current.timestamp_destino = moment().format(
+            "YYYY-MM-DD HH:mm:ss:SSS"
+          );
+        }
+      } else current[key] = value;
       return { ...state, current };
     case SET_FILA: {
       return {
