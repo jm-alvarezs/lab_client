@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import EmailsService from "../../services/EmailsService";
-import { BASE_URL } from "../../utils";
 
 const PostPrueba = ({ id, type, url, defaultEmail }) => {
   const [email, setEmail] = useState("");
@@ -67,7 +66,7 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
       <input
         id="url-input"
         type="text"
-        value={`${BASE_URL}${url}`}
+        value={`${window.location.origin}${url}`}
         className="invisible"
       />
     </div>

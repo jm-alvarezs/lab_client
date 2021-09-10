@@ -18,12 +18,12 @@ export const getErroresFlanker = (estimulos, left, right) => {
     if (!estimulo.clicked) errores++;
     else if (
       estimulo.direction === "left" &&
-      String(estimulo.char) !== String(left).toLowerCase()
+      String(estimulo.char).toLowerCase() !== String(left).toLowerCase()
     )
       errores++;
     else if (
       estimulo.direction === "right" &&
-      String(estimulo.char) !== String(right).toLowerCase()
+      String(estimulo.char).toLowerCase() !== String(right).toLowerCase()
     )
       errores++;
   });

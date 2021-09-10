@@ -35,7 +35,9 @@ const ResumenFlanker = ({
           </div>
           <div className="row py-2">
             <div className="col-6">Errores Totales</div>
-            <div className="col-6">{getErroresFlanker(estimulos)}</div>
+            <div className="col-6">
+              {getErroresFlanker(estimulos, left, right)}
+            </div>
           </div>
           <div className="row py-2">
             <div className="col-6">Errores de Dirección</div>
@@ -50,19 +52,19 @@ const ResumenFlanker = ({
           <div className="row py-2">
             <div className="col-6">Errores en Congruentes</div>
             <div className="col-6">
-              {getErroresFlankerTipo(estimulos, "congruent", left, right)}
+              {getErroresFlankerTipo(estimulos, "Congruente", left, right)}
             </div>
           </div>
           <div className="row py-2">
             <div className="col-6">Errores en Incongruentes</div>
             <div className="col-6">
-              {getErroresFlankerTipo(estimulos, "incongruent", left, right)}
+              {getErroresFlankerTipo(estimulos, "Incongruente", left, right)}
             </div>
           </div>
           <div className="row py-2">
             <div className="col-6">Errores en Neutrales</div>
             <div className="col-6">
-              {getErroresFlankerTipo(estimulos, "neutral", left, right)}
+              {getErroresFlankerTipo(estimulos, "Neutral", left, right)}
             </div>
           </div>
         </>

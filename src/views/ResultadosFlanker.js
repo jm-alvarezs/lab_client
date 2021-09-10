@@ -5,6 +5,7 @@ import ReactToPdf from "react-to-pdf";
 import moment from "moment";
 import FlankerEstimulos from "../components/flanker/FlankerEstimulos";
 import ResumenFlanker from "../components/flanker/ResumenFlanker";
+import ParametrosFlanker from "../components/flanker/ParametrosFlanker";
 
 const ResultadosFlanker = ({ idTest }) => {
   const [showSujeto, setShowSujeto] = useState(true);
@@ -57,6 +58,14 @@ const ResultadosFlanker = ({ idTest }) => {
     return <div className="spinner-border"></div>;
   };
 
+  const renderParametros = () => {
+    if (resultado && resultado !== null) {
+      if (resultado.settings) {
+        return <ParametrosFlanker settings={resultado.settings} />;
+      }
+    }
+  };
+
   const renderEstimulos = () => {
     if (resultado && resultado !== null) {
       if (resultado.results.estimulos) {
@@ -77,8 +86,9 @@ const ResultadosFlanker = ({ idTest }) => {
       scale={0.65}
     >
       {({ toPdf, targetRef }) => (
-        <div className="container" ref={targetRef}>
+        <div className="container mt-4" ref={targetRef}>
           {renderConfig(toPdf)}
+          {renderParametros()}
           {renderSujeto()}
           {renderEstimulos()}
         </div>

@@ -38,10 +38,10 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
       e.preventDefault();
     }
     if (config.leftKey === config.rightKey) {
-      return alert("Las teclas no pueden ser iguales");
+      return alert("Las teclas no pueden ser iguales.");
     }
-    if (config.fontSize === "") {
-      return alert("El tamaño de letra no puede estar vacío");
+    if (config.fontSize === "" || config.fontSize === 0) {
+      return alert("El tamaño de letra no puede estar vacío o ser 0.");
     }
     postPrueba(config, "flanker", paciente, submitCallback);
   };
@@ -50,6 +50,11 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
     let { value } = e.target;
     if (key === "fontSize" && value > 200) {
       value = 200;
+    } else if (key === "fontSize" && value !== "") {
+      value = Math.abs(value);
+    }
+    if (key === "fontSize" && value === 0 && value !== "") {
+      value = 1;
     }
     if (String(key).includes("Key")) {
       value = value[0];
@@ -61,7 +66,7 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
     leftKey,
     rightKey,
     fontSize,
-    fontColor,
+    color,
     estimulosPrueba,
     backgroundColor,
     estimulosEntrenamiento,
@@ -157,8 +162,8 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
                   <input
                     type="color"
                     className="form-control mb-3"
-                    value={fontColor}
-                    onChange={(e) => handleChange("fontColor", e)}
+                    value={color}
+                    onChange={(e) => handleChange("color", e)}
                   />
                 </div>
               </div>
