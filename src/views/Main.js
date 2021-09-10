@@ -13,6 +13,7 @@ import AtencionHemi from "./AtencionHemi";
 import AnswerCuestionario from "./AnswerCuestionario";
 import TorreHanoi from "./TorreHanoi";
 import FlankerTask from "./FlankerTask";
+import MultiTest from "./MultiTest";
 
 const Main = () => {
   const { user, userLoggedIn } = useContext(UserContext);
@@ -37,6 +38,7 @@ const Main = () => {
         <AtencionCondicional path="/atencion/condicional/*" />
         <AtencionHemi path="/atencion/hemi/*" />
         <AnswerCuestionario path="/cuestionario/answer/*" />
+        <MultiTest path="/multi/*" />
       </Router>
       <Modal />
       <ErrorAlert />

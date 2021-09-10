@@ -4,7 +4,7 @@ import { ModalContext } from "../context/ModalContext";
 import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 
-const ConfigFlanker = ({ idPaciente }) => {
+const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
   const [config, setConfig] = useState({
     idTestType: 5,
     estimulosEntrenamiento: 0,
@@ -27,15 +27,23 @@ const ConfigFlanker = ({ idPaciente }) => {
     getSinglePaciente(idPaciente);
   }, []);
 
+  useEffect(() => {
+    if (submit) {
+      handleSubmit();
+    }
+  }, [submit]);
+
   const handleSubmit = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     if (config.leftKey === config.rightKey) {
       return alert("Las teclas no pueden ser iguales");
     }
     if (config.fontSize === "") {
       return alert("El tamaño de letra no puede estar vacío");
     }
-    postPrueba(config, "flanker", paciente);
+    postPrueba(config, "flanker", paciente, submitCallback);
   };
 
   const handleChange = (key, e) => {
@@ -180,13 +188,19 @@ const ConfigFlanker = ({ idPaciente }) => {
                   />
                 </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn-dark btn-block mt-3"
-                disabled={spinner}
-              >
-                {spinner ? <div className="spinner-border"></div> : "Terminado"}
-              </button>
+              {!hideButton && (
+                <button
+                  type="submit"
+                  className="btn btn-dark btn-block mt-3"
+                  disabled={spinner}
+                >
+                  {spinner ? (
+                    <div className="spinner-border"></div>
+                  ) : (
+                    "Terminado"
+                  )}
+                </button>
+              )}
             </form>
           </div>
         </div>

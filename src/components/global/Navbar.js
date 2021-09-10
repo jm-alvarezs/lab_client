@@ -3,8 +3,8 @@ import { Link } from "@reach/router";
 
 const Navbar = ({ user }) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark-udem shadow-sm mb-3 row">
-      <div className="container">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark-udem py-2 mw-100">
+      <div className="container-fluid navbar-container container">
         <Link to="/" className="navbar-brand">
           Laboratorio
         </Link>
@@ -20,13 +20,13 @@ const Navbar = ({ user }) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto align-items-center">
-            <li className="nav-item ml-2">
+          <ul className="navbar-nav text-right">
+            <li className="nav-item">
               <Link className="nav-link" to="/pacientes">
                 Pacientes
               </Link>
             </li>
-            <li className="nav-item ml-2">
+            <li className="nav-item">
               <Link className="nav-link" to="/resultados">
                 Resultados
               </Link>
@@ -62,7 +62,7 @@ const Navbar = ({ user }) => {
                 </ul>
               </li>
             )}
-            <li className="nav-item ml-2">
+            <li className="nav-item">
               <Link className="nav-link" to="/cuenta">
                 <i className="fa fa-user-circle user-icon fa-2x"></i>
               </Link>

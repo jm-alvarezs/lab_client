@@ -9,6 +9,7 @@ import {
   TEST_READY,
   SET_FILA,
   SET_CONFIG,
+  ADD_TEST,
 } from "../types";
 
 export default (state, { type, payload }) => {
@@ -63,6 +64,10 @@ export default (state, { type, payload }) => {
     }
     case SET_CONFIG:
       return { ...state, config: payload };
+    case ADD_TEST:
+      const tests = [...state.tests];
+      tests.push(payload);
+      return { ...state, tests };
     default:
       return { ...state };
   }

@@ -3,7 +3,7 @@ import Breadcrumbs from "../components/global/Breadcrumbs";
 import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 
-const ConfigAtencion = ({ idPaciente }) => {
+const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
   const [config, setConfig] = useState({
     idTestType: 1,
     tiempoExposicion: "500",
@@ -20,6 +20,12 @@ const ConfigAtencion = ({ idPaciente }) => {
     duracion: "10",
   });
 
+  useEffect(() => {
+    if (submit) {
+      handleSubmit();
+    }
+  }, [submit]);
+
   const { spinner, postPrueba } = useContext(PruebasContext);
 
   const { paciente, getSinglePaciente } = useContext(PacientesContext);
@@ -30,8 +36,10 @@ const ConfigAtencion = ({ idPaciente }) => {
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    postPrueba(config, "simple", paciente);
+    if (e) {
+      e.preventDefault();
+    }
+    postPrueba(config, "simple", paciente, submitCallback);
   };
 
   const handleChange = (key, e) => {
@@ -259,13 +267,19 @@ const ConfigAtencion = ({ idPaciente }) => {
                   <p>segundos (s)</p>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn-dark btn-block mt-3"
-                disabled={spinner}
-              >
-                {spinner ? <div className="spinner-border"></div> : "Terminado"}
-              </button>
+              {!hideButton && (
+                <button
+                  type="submit"
+                  className="btn btn-dark btn-block mt-3"
+                  disabled={spinner}
+                >
+                  {spinner ? (
+                    <div className="spinner-border"></div>
+                  ) : (
+                    "Terminado"
+                  )}
+                </button>
+              )}
             </form>
           </div>
         </div>

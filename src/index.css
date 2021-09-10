@@ -4,6 +4,15 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+}
+
 .nav-link {
   color: white !important;
 }
@@ -179,6 +188,12 @@ body {
   height: 50px;
 }
 
+.navbar-nav {
+  margin-right: 0px;
+  margin-left: auto;
+  align-items: center;
+}
+
 #cruz-flanker {
   position: absolute;
   top: calc(50vh - 12px);
@@ -189,4 +204,22 @@ body {
   position: absolute;
   bottom: -1000px;
   left: 0px;
+}
+
+#navbarNav {
+  margin-right: 0px;
+  margin-left: auto;
+  text-align: right;
+}
+
+@media (max-width: 567px) {
+  h1 {
+    font-size: 2em;
+  }
+  .navbar-nav {
+    text-align: left;
+    margin-left: 0px;
+    margin-right: auto;
+    align-items: flex-start;
+  }
 }

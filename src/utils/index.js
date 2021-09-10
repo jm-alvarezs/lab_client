@@ -579,3 +579,26 @@ export const getConfig = (defaultConfig) => {
   currentConfig.idTest = idTest;
   return currentConfig;
 };
+
+export const allTests = [
+  { id: 1, name: "Atencion Simple", key: "atencion" },
+  { id: 2, name: "Atencion Condicional", key: "condicional" },
+  { id: 3, name: "Hemi Atención", key: "hemi" },
+  { id: 4, name: "Torre de Hanoi", key: "hanoi" },
+  { id: 5, name: "Flanker Task", key: "flanker" },
+];
+
+export const processMultiTestUrl = (url) => {
+  let href = url;
+  href = href.split("?")[1];
+  let tests = href.split("&")[0];
+  let tokens = href.split("&")[1];
+  if (tokens) {
+    tokens = tokens.split("=")[1];
+    tokens = tokens.split(",");
+  }
+  tests = tests.split("=")[1];
+  tests = tests.split(",");
+  tests = tests.map((test) => parseInt(test));
+  return { tests, tokens };
+};

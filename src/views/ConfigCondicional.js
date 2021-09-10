@@ -2,7 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 
-const ConfigCondicional = ({ idPaciente }) => {
+const ConfigCondicional = ({
+  idPaciente,
+  hideButton,
+  submit,
+  submitCallback,
+}) => {
   const [config, setConfig] = useState({
     idTestType: 2,
     tiempoExposicion: "500",
@@ -33,17 +38,17 @@ const ConfigCondicional = ({ idPaciente }) => {
     getSinglePaciente(idPaciente);
   }, []);
 
+  useEffect(() => {
+    if (submit) {
+      handleSubmit();
+    }
+  }, [submit]);
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const args = Object.keys(config)
-      .map((key) =>
-        config[key] !== "" && config[key] !== null && config[key]
-          ? `${key}=${config[key]}`
-          : null
-      )
-      .filter((obj) => obj !== null)
-      .join("&");
-    postPrueba(config, "condicional", paciente);
+    if (e) {
+      e.preventDefault();
+    }
+    postPrueba(config, "condicional", paciente, submitCallback);
   };
 
   const handleChange = (key, e) => {
@@ -334,13 +339,19 @@ const ConfigCondicional = ({ idPaciente }) => {
                   <p>segundos (s)</p>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn-dark btn-block mt-3"
-                disabled={spinner}
-              >
-                {spinner ? <div className="spinner-border"></div> : "Terminado"}
-              </button>
+              {!hideButton && (
+                <button
+                  type="submit"
+                  className="btn btn-dark btn-block mt-3"
+                  disabled={spinner}
+                >
+                  {spinner ? (
+                    <div className="spinner-border"></div>
+                  ) : (
+                    "Terminado"
+                  )}
+                </button>
+              )}
             </form>
           </div>
         </div>

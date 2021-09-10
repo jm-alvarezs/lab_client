@@ -30,6 +30,7 @@ export const SHOW_SPINNER = "SHOW_SPINNER";
 /**
  * Pruebas
  */
+export const ADD_TEST = "ADD_TEST";
 export const SET_FILA = "SET_FILA";
 export const SET_CONFIG = "SET_CONFIG";
 export const TEST_READY = "TEST_READY";

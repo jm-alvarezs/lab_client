@@ -4,7 +4,7 @@ import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 import Switch from "react-switch";
 
-const ConfigHanoi = ({ idPaciente }) => {
+const ConfigHanoi = ({ idPaciente, hideButton, submit, submitCallback }) => {
   const [config, setConfig] = useState({
     idTestType: 4,
     administracion: "A",
@@ -22,9 +22,17 @@ const ConfigHanoi = ({ idPaciente }) => {
     getSinglePaciente(idPaciente);
   }, []);
 
+  useEffect(() => {
+    if (submit) {
+      handleSubmit();
+    }
+  }, [submit]);
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    postPrueba(config, "hanoi", paciente);
+    if (e) {
+      e.preventDefault();
+    }
+    postPrueba(config, "hanoi", paciente, submitCallback);
   };
 
   const handleChange = (key, e) => {
@@ -113,13 +121,19 @@ const ConfigHanoi = ({ idPaciente }) => {
                   />
                 </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn-dark btn-block mt-3"
-                disabled={spinner}
-              >
-                {spinner ? <div className="spinner-border"></div> : "Terminado"}
-              </button>
+              {!hideButton && (
+                <button
+                  type="submit"
+                  className="btn btn-dark btn-block mt-3"
+                  disabled={spinner}
+                >
+                  {spinner ? (
+                    <div className="spinner-border"></div>
+                  ) : (
+                    "Terminado"
+                  )}
+                </button>
+              )}
             </form>
           </div>
         </div>

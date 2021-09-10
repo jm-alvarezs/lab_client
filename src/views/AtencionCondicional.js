@@ -46,7 +46,7 @@ const AtencionCondicional = () => {
 
   const { alert } = useContext(ModalContext);
 
-  const { postResultados } = useContext(PruebasContext);
+  const { prueba, clearPrueba, postResultados } = useContext(PruebasContext);
 
   let targets = [];
   let estimulos = 0;
@@ -57,28 +57,31 @@ const AtencionCondicional = () => {
   let interval = null;
 
   useEffect(() => {
-    let token = window.location.href.split("token=")[1];
-    if (!token) {
-      setDisabled(true);
-      return alert("No se puede iniciar la prueba");
+    if (prueba === null) {
+      let token = window.location.href.split("token=")[1];
+      if (!token) {
+        setDisabled(true);
+        return alert("No se puede iniciar la prueba");
+      }
+      token = token.split("&")[0];
+      UsuarioService.setToken(token);
+      let idTest = window.location.href.split("idTest=")[1];
+      if (!idTest) return navigate("/");
+      idTest = parseInt(idTest.split("&")[0]);
+      let params = window.location.href.split("?")[1];
+      let currentConfig = { ...defaultConfig };
+      if (params) {
+        params = params.split("&");
+        params.forEach((elem) => {
+          const single = elem.split("=");
+          currentConfig[single[0]] = single[1];
+        });
+      } else {
+        currentConfig = defaultConfig;
+      }
+      setConfig(currentConfig);
     }
-    token = token.split("&")[0];
-    UsuarioService.setToken(token);
-    let idTest = window.location.href.split("idTest=")[1];
-    if (!idTest) return navigate("/");
-    idTest = parseInt(idTest.split("&")[0]);
-    let params = window.location.href.split("?")[1];
-    let currentConfig = { ...defaultConfig };
-    if (params) {
-      params = params.split("&");
-      params.forEach((elem) => {
-        const single = elem.split("=");
-        currentConfig[single[0]] = single[1];
-      });
-    } else {
-      currentConfig = defaultConfig;
-    }
-    setConfig(currentConfig);
+    return clearPrueba;
   }, []);
 
   useEffect(() => {
@@ -88,20 +91,6 @@ const AtencionCondicional = () => {
       }, 5000);
     }
   }, [thankyou]);
-
-  function shuffle(array) {
-    var currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  }
 
   const handleKey = (e) => {
     let currentTarget = targets[targets.length - 1];

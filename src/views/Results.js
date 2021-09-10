@@ -31,12 +31,26 @@ const Results = ({ admin }) => {
   const renderResultados = () => {
     if (tab === "pruebas") {
       if (resultados && resultados !== null) {
+        if (resultados.length === 0) {
+          return (
+            <div className="row">
+              <p>No hay resultados registrados.</p>
+            </div>
+          );
+        }
         return resultados.map((resultado) => (
           <ResultadoCard key={resultado.id} resultado={resultado} />
         ));
       }
     } else {
       if (surveys && surveys !== null) {
+        if (surveys.length === 0) {
+          return (
+            <div className="row">
+              <p>No hay cuestionarios registrados.</p>
+            </div>
+          );
+        }
         return surveys.map((resultado) => (
           <ResultadoCard key={resultado.id} resultado={resultado} />
         ));

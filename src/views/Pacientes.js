@@ -41,6 +41,7 @@ const Pacientes = ({ admin }) => {
 
   const renderUsuarios = () => {
     if (pacientes && pacientes !== null) {
+      console.log(pacientes);
       let usuariosRender = [...pacientes];
       if (query !== "") {
         usuariosRender = searchRows(query, usuariosRender);
@@ -48,8 +49,8 @@ const Pacientes = ({ admin }) => {
       if (usuariosRender.length === 0) {
         return (
           <tr>
-            <td>
-              <p>No hay usuarios</p>
+            <td colSpan="4">
+              <p>No hay usuarios registrados</p>
             </td>
           </tr>
         );
@@ -74,10 +75,10 @@ const Pacientes = ({ admin }) => {
   return (
     <div className="container">
       <div className="row mx-0 border-bottom pb-3 mb-3 mt-4 align-items-center">
-        <div className="col-12 col-md-6 px-0">
+        <div className="col-6 px-0">
           <h1>Pacientes</h1>
         </div>
-        <div className="col-12 col-md-6 text-right px-0">
+        <div className="col-6 text-right px-0">
           <Link to="/pacientes/nuevo" className="btn btn-dark">
             + Agregar
           </Link>
@@ -92,7 +93,7 @@ const Pacientes = ({ admin }) => {
       />
       <div className="row mx-0">
         <div className="container card">
-          <table className="table mt-4">
+          <table className="table table-responsive mt-4">
             <thead>
               <tr>
                 <th>ID</th>

@@ -41,7 +41,8 @@ const AtencionSimple = () => {
 
   const { alert } = useContext(ModalContext);
 
-  const { prueba, getPrueba, postResultados } = useContext(PruebasContext);
+  const { prueba, getPrueba, clearPrueba, postResultados } =
+    useContext(PruebasContext);
 
   let targets = [];
   let estimulos = 0;
@@ -52,29 +53,32 @@ const AtencionSimple = () => {
   let interval = null;
 
   useEffect(() => {
-    let token = window.location.href.split("token=")[1];
-    if (!token) {
-      setDisabled(true);
-      return alert("No se puede iniciar la prueba");
+    if (prueba === null) {
+      let token = window.location.href.split("token=")[1];
+      if (!token) {
+        setDisabled(true);
+        return alert("No se puede iniciar la prueba");
+      }
+      token = token.split("&")[0];
+      UsuarioService.setToken(token);
+      let idTest = window.location.href.split("idTest=")[1];
+      if (!idTest) return navigate("/");
+      idTest = parseInt(idTest.split("&")[0]);
+      getPrueba(idTest, token);
+      let params = window.location.href.split("?")[1];
+      let currentConfig = { ...defaultConfig };
+      if (params) {
+        params = params.split("&");
+        params.forEach((elem) => {
+          const single = elem.split("=");
+          currentConfig[single[0]] = single[1];
+        });
+      } else {
+        currentConfig = defaultConfig;
+      }
+      setConfig(currentConfig);
     }
-    token = token.split("&")[0];
-    UsuarioService.setToken(token);
-    let idTest = window.location.href.split("idTest=")[1];
-    if (!idTest) return navigate("/");
-    idTest = parseInt(idTest.split("&")[0]);
-    getPrueba(idTest, token);
-    let params = window.location.href.split("?")[1];
-    let currentConfig = { ...defaultConfig };
-    if (params) {
-      params = params.split("&");
-      params.forEach((elem) => {
-        const single = elem.split("=");
-        currentConfig[single[0]] = single[1];
-      });
-    } else {
-      currentConfig = defaultConfig;
-    }
-    setConfig(currentConfig);
+    return clearPrueba;
   }, []);
 
   useEffect(() => {

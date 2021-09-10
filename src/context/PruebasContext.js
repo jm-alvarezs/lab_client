@@ -13,6 +13,7 @@ import {
   POP_ESTIMULO,
   SET_CONFIG,
   SET_FILA,
+  ADD_TEST,
 } from "../types";
 import { ModalContext } from "./ModalContext";
 
@@ -23,6 +24,7 @@ const initialState = {
   current: false,
   estimulos: [],
   config: {},
+  tests: [],
 };
 
 export const PruebasContext = createContext(initialState);
@@ -52,7 +54,7 @@ export const PruebasProvider = ({ children }) => {
     }
   };
 
-  const postPrueba = (config, type, patient) => {
+  const postPrueba = (config, type, patient, callback) => {
     dispatch({ type: SHOW_SPINNER });
     PruebasService.postPrueba(config).then((res) => {
       const idTest = res.data.data.id;
@@ -77,17 +79,25 @@ export const PruebasProvider = ({ children }) => {
           `?idTest=${idTest}&token=${accessUrl.token}&` +
           args;
         dispatch({ type: HIDE_SPINNER });
-        modalComponent(
-          "Prueba Agregada",
-          <PostPrueba
-            id={idTest}
-            url={url}
-            type={type}
-            defaultEmail={patient.email}
-          />
-        );
+        if (callback && typeof callback === "function") {
+          callback(idTest, accessUrl.token);
+        } else {
+          modalComponent(
+            "Prueba Agregada",
+            <PostPrueba
+              id={idTest}
+              url={url}
+              type={type}
+              defaultEmail={patient.email}
+            />
+          );
+        }
       });
     });
+  };
+
+  const clearPrueba = () => {
+    dispatch({ type: PRUEBA_RECIBIDA, payload: null });
   };
 
   const postResultados = (resultados) => {
@@ -122,14 +132,20 @@ export const PruebasProvider = ({ children }) => {
     dispatch({ type: SET_CONFIG, payload: config });
   };
 
+  const addTest = (idTest, token) => {
+    dispatch({ type: ADD_TEST, payload: { idTest, token } });
+  };
+
   return (
     <PruebasContext.Provider
       value={{
         ...state,
+        addTest,
         setFila,
         setConfig,
         getPrueba,
         postPrueba,
+        clearPrueba,
         popEstimulo,
         putResultados,
         postResultados,

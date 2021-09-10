@@ -2,7 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 
-const ConfigHemiAtencion = ({ idPaciente }) => {
+const ConfigHemiAtencion = ({
+  idPaciente,
+  hideButton,
+  submit,
+  submitCallback,
+}) => {
   const [config, setConfig] = useState({
     idTestType: 3,
     tiempoExposicion: "500",
@@ -37,32 +42,22 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
     getSinglePaciente(idPaciente);
   }, []);
 
+  useEffect(() => {
+    if (submit) {
+      handleSubmit();
+    }
+  }, [submit]);
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const args = Object.keys(config)
-      .map((key) =>
-        config[key] !== "" && config[key] !== null && config[key]
-          ? `${key}=${config[key]}`
-          : null
-      )
-      .filter((obj) => obj !== null)
-      .join("&");
-    postPrueba(config, "hemi", paciente);
+    if (e) {
+      e.preventDefault();
+    }
+    postPrueba(config, "hemi", paciente, submitCallback);
   };
 
   const handleChange = (key, e) => {
     const { value } = e.target;
     setConfig({ ...config, [key]: value });
-  };
-
-  const getNumeroDeEstimulos = () => {
-    const { estimulosQ1, estimulosQ2, estimulosQ3, estimulosQ4 } = config;
-    return (
-      parseInt(estimulosQ1) +
-      parseInt(estimulosQ2) +
-      parseInt(estimulosQ3) +
-      parseInt(estimulosQ4)
-    );
   };
 
   const {
@@ -417,13 +412,19 @@ const ConfigHemiAtencion = ({ idPaciente }) => {
                   <p>segundos (s)</p>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn-dark btn-block mt-3"
-                disabled={spinner}
-              >
-                {spinner ? <div className="spinner-border"></div> : "Terminado"}
-              </button>
+              {!hideButton && (
+                <button
+                  type="submit"
+                  className="btn btn-dark btn-block mt-3"
+                  disabled={spinner}
+                >
+                  {spinner ? (
+                    <div className="spinner-border"></div>
+                  ) : (
+                    "Terminado"
+                  )}
+                </button>
+              )}
             </form>
           </div>
         </div>

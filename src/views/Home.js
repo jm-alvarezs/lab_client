@@ -19,12 +19,13 @@ import ConfigHanoi from "./ConfigHanoi";
 import ResultadosHanoi from "./ResultadosHanoi";
 import ConfigFlanker from "./ConfigFlanker";
 import ResultadosFlanker from "./ResultadosFlanker";
+import MultiConfig from "./MultiConfig";
 
 const Home = ({ user }) => {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid px-0">
       <Navbar user={user} />
-      <div className="container-fluid">
+      <div className="container-fluid px-0">
         <Router>
           {/*Pruebas */}
           <Pruebas path="/pruebas" />
@@ -33,6 +34,7 @@ const Home = ({ user }) => {
           <ConfigHemiAtencion path="/config/hemi/:idPaciente" />
           <ConfigHanoi path="/config/hanoi/:idPaciente" />
           <ConfigFlanker path="/config/flanker/:idPaciente" />
+          <MultiConfig path="/config/multi/:idPaciente/*" />
           {/* Resultados */}
           <Results path="/resultados" />
           <SingleResults path="/resultados/:id" />

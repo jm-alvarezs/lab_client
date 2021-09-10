@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import EmailsService from "../../services/EmailsService";
+import { BASE_URL } from "../../utils";
 
 const PostPrueba = ({ id, type, url, defaultEmail }) => {
   const [email, setEmail] = useState("");
@@ -63,7 +64,12 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
       {copied && (
         <span className="text-success">¡Copiado al portapapeles!</span>
       )}
-      <input id="url-input" type="text" value={url} className="invisible" />
+      <input
+        id="url-input"
+        type="text"
+        value={`${BASE_URL}${url}`}
+        className="invisible"
+      />
     </div>
   );
 };
