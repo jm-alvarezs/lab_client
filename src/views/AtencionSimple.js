@@ -86,6 +86,9 @@ const AtencionSimple = () => {
       if (prueba.results.config) {
         setDisabled(true);
         return alert("Lo sentimos, este ejercicio ya fue realizado.");
+      } else if (prueba.settings) {
+        setConfig(prueba.settings);
+        getStyle();
       }
     }
   }, [prueba]);
@@ -199,20 +202,14 @@ const AtencionSimple = () => {
   };
 
   const renderInstrucciones = () => {
-    return (
-      <div>
-        <p>
-          En el centro de la pantalla irán apareciendo de manera secuencial
+    return [
+      `En el centro de la pantalla irán apareciendo de manera secuencial
           distintas letras del abecedario. La tarea consiste que usted pulse la
-          tecla {String.fromCharCode(config.keyCode)} cuando vea aparecer la
-          letra {config.target}.
-        </p>
-        <p>
-          Es importante que responda tan rápido como pueda, ya que los estímulos
-          aparecen y desaparecen rápidamente.
-        </p>
-      </div>
-    );
+          tecla ${String.fromCharCode(config.keyCode)} cuando vea aparecer la
+          letra ${config.target}.`,
+      `Es importante que responda tan rápido como pueda, ya que los estímulos
+          aparecen y desaparecen rápidamente.`,
+    ];
   };
 
   return (

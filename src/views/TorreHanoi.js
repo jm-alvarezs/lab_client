@@ -51,6 +51,7 @@ const TorreHanoi = () => {
   const [finishTime, setFinishTime] = useState(null);
 
   const {
+    prueba,
     getPrueba,
     current,
     estimulos,
@@ -59,7 +60,7 @@ const TorreHanoi = () => {
     setPropiedadEstimulo,
   } = useContext(PruebasContext);
 
-  const { success, alert } = useContext(ModalContext);
+  const { success, alert, modalComponent } = useContext(ModalContext);
 
   const defaultConfig = {
     administracion: "A",
@@ -85,6 +86,14 @@ const TorreHanoi = () => {
       setThree([]);
     };
   }, []);
+
+  useEffect(() => {
+    if (prueba !== null) {
+      if (prueba.settings) {
+        setConfig(prueba.settings);
+      }
+    }
+  }, [prueba]);
 
   useEffect(() => {
     if (current.origen && current.destino) {
@@ -120,6 +129,16 @@ const TorreHanoi = () => {
         break;
     }
     return discosRender;
+  };
+
+  const confirmEnd = () => {
+    modalComponent(
+      "Precaución",
+      <div>
+        <p>¿Terminar ejercicio sin completar?</p>
+        <button className="btn btn-dark">Terminar</button>
+      </div>
+    );
   };
 
   const handleStart = () => {
@@ -295,10 +314,7 @@ const TorreHanoi = () => {
 
         <div className="container-fluid text-center py-3 my-3">
           {start && !finish && (
-            <div
-              className="btn btn-outline-dark"
-              onClick={() => handleEnd(false)}
-            >
+            <div className="btn btn-outline-dark" onClick={confirmEnd}>
               Terminar
             </div>
           )}

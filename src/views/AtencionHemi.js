@@ -54,7 +54,8 @@ const AtencionHemi = () => {
 
   const { alert } = useContext(ModalContext);
 
-  const { prueba, getPrueba, postResultados } = useContext(PruebasContext);
+  const { prueba, getPrueba, clearPrueba, postResultados } =
+    useContext(PruebasContext);
 
   let targets = [];
   let estimulos = 0;
@@ -65,30 +66,33 @@ const AtencionHemi = () => {
   let interval = null;
 
   useEffect(() => {
-    let currentToken = window.location.href.split("token=")[1];
-    if (!currentToken) {
-      setDisabled(true);
-      return alert("No se puede iniciar la prueba");
+    if (prueba === null) {
+      let currentToken = window.location.href.split("token=")[1];
+      if (!currentToken) {
+        setDisabled(true);
+        return alert("No se puede iniciar la prueba");
+      }
+      currentToken = currentToken.split("&")[0];
+      setToken(currentToken);
+      UsuarioService.setToken(currentToken);
+      let idTest = window.location.href.split("idTest=")[1];
+      if (!idTest) return navigate("/");
+      idTest = parseInt(idTest.split("&")[0]);
+      getPrueba(idTest, currentToken);
+      let params = window.location.href.split("?")[1];
+      let currentConfig = { ...defaultConfig };
+      if (params) {
+        params = params.split("&");
+        params.forEach((elem) => {
+          const single = elem.split("=");
+          currentConfig[single[0]] = single[1];
+        });
+      } else {
+        currentConfig = defaultConfig;
+      }
+      setConfig(currentConfig);
     }
-    currentToken = currentToken.split("&")[0];
-    setToken(currentToken);
-    UsuarioService.setToken(currentToken);
-    let idTest = window.location.href.split("idTest=")[1];
-    if (!idTest) return navigate("/");
-    idTest = parseInt(idTest.split("&")[0]);
-    getPrueba(idTest, currentToken);
-    let params = window.location.href.split("?")[1];
-    let currentConfig = { ...defaultConfig };
-    if (params) {
-      params = params.split("&");
-      params.forEach((elem) => {
-        const single = elem.split("=");
-        currentConfig[single[0]] = single[1];
-      });
-    } else {
-      currentConfig = defaultConfig;
-    }
-    setConfig(currentConfig);
+    return clearPrueba;
   }, []);
 
   useEffect(() => {
@@ -96,6 +100,9 @@ const AtencionHemi = () => {
       if (prueba.results.config) {
         setDisabled(true);
         return alert("Lo sentimos, este ejercicio ya fue realizado.");
+      } else if (prueba.settings) {
+        setConfig(prueba.settings);
+        getStyle();
       }
     }
   }, [prueba]);

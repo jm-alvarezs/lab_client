@@ -85,6 +85,15 @@ const AtencionCondicional = () => {
   }, []);
 
   useEffect(() => {
+    if (prueba !== null) {
+      if (prueba.settings) {
+        setConfig(prueba.settings);
+        getStyle();
+      }
+    }
+  }, [prueba]);
+
+  useEffect(() => {
     if (thankyou) {
       setTimeout(() => {
         setThankyou(false);

@@ -93,7 +93,7 @@ const Pacientes = ({ admin }) => {
       />
       <div className="row mx-0">
         <div className="container card">
-          <table className="table table-responsive mt-4">
+          <table className="table mt-4">
             <thead>
               <tr>
                 <th>ID</th>

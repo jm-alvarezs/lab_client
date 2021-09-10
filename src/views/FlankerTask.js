@@ -33,7 +33,7 @@ const FlankerTask = () => {
 
   const {
     config,
-    estimulos,
+    prueba,
     current,
     fila,
     popEstimulo,
@@ -156,7 +156,7 @@ const FlankerTask = () => {
     <BaseTest
       ended={ended}
       startCallback={handleStart}
-      defaultConfig={defaultConfig}
+      defaultConfig={prueba !== null ? prueba.settings : defaultConfig}
       instrucciones={instrucciones}
       TestComponent={renderFlanker()}
     />
