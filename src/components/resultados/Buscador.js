@@ -94,7 +94,9 @@ const Buscador = ({ survey }) => {
               <>
                 <option value="1">Atención Simple</option>
                 <option value="2">Atención Condicional</option>
-                <option value="3">Atención Condicional</option>
+                <option value="3">Hemi Atención</option>
+                <option value="4">Torre de Hanoi</option>
+                <option value="5">Flanker Task</option>
               </>
             )}
           </select>

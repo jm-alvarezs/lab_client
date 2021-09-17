@@ -102,7 +102,7 @@ const ConfigHemiAtencion = ({
                 </div>
                 <div className="col-3">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control mb-3"
                     value={tiempoExposicion}
                     onChange={(e) => handleChange("tiempoExposicion", e)}

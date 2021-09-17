@@ -53,7 +53,19 @@ const ConfigCondicional = ({
 
   const handleChange = (key, e) => {
     let { value } = e.target;
-    if (key === "fontSize") value = Math.abs(value);
+    if (
+      [
+        "tiempoExposicion",
+        "tiempoInterestimular",
+        "claveTarget",
+        "noClaveTarget",
+        "claveNoTarget",
+        "noClaveNoTarget",
+        "fontSize",
+      ].includes(key)
+    ) {
+      value = Math.abs(value);
+    }
     if (key === "fontSize" && parseInt(value) === 0) value = 1;
     setConfig({ ...config, [key]: value });
   };
@@ -95,7 +107,7 @@ const ConfigCondicional = ({
                 </div>
                 <div className="col-3">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control mb-3"
                     value={tiempoExposicion}
                     onChange={(e) => handleChange("tiempoExposicion", e)}

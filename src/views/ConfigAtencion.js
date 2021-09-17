@@ -44,7 +44,11 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
 
   const handleChange = (key, e) => {
     let { value } = e.target;
-    if (key === "fontSize") value = Math.abs(value);
+    if (
+      ["tiempoExposicion", "tiempoInterestimular", "fontSize"].includes(key)
+    ) {
+      value = Math.abs(value);
+    }
     if (key === "fontSize" && parseInt(value) === 0) value = 1;
     setConfig({ ...config, [key]: value });
   };
@@ -87,7 +91,7 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
                 </div>
                 <div className="col-3">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control mb-3"
                     value={tiempoExposicion}
                     onChange={(e) => handleChange("tiempoExposicion", e)}
