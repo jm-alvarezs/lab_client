@@ -96,7 +96,6 @@ const FlankerTask = () => {
     let estimulosPrueba = getEstimulosFlanker(config.estimulosPrueba);
     estimulosPrueba = shuffle(estimulosPrueba);
     setFila(estimulosPrueba);
-    console.log(estimulosPrueba);
     setFijacion(true);
   };
 
@@ -113,7 +112,6 @@ const FlankerTask = () => {
     if (fila.length === 0) {
       return setEnded(true);
     }
-    console.log(current);
     let service;
     if (current.position === "top") {
       service = setEstimuloInferior;

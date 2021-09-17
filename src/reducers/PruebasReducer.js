@@ -58,7 +58,6 @@ export default (state, { type, payload }) => {
           ...current,
           ...fila.shift(),
         };
-        console.log("calculo: ", current);
         return { ...state, estimulos, current, fila };
       }
       return { ...state, estimulos, current };
