@@ -15,7 +15,7 @@ const ConfigCondicional = ({
     target: "O",
     fontFamily: "Courier",
     fontStyle: "Normal",
-    fontSize: "24",
+    fontSize: "42",
     color: "#ffffff",
     backgroundColor: "#000000",
     clave: "X",
@@ -52,7 +52,9 @@ const ConfigCondicional = ({
   };
 
   const handleChange = (key, e) => {
-    const { value } = e.target;
+    let { value } = e.target;
+    if (key === "fontSize") value = Math.abs(value);
+    if (key === "fontSize" && parseInt(value) === 0) value = 1;
     setConfig({ ...config, [key]: value });
   };
 
@@ -145,9 +147,8 @@ const ConfigCondicional = ({
                     value={fontStyle}
                     onChange={(e) => handleChange("fontStyle", e)}
                   >
-                    <option>Normal</option>
-                    <option>Negrita</option>
-                    <option>Cursiva</option>
+                    <option value="regular">Normal</option>
+                    <option value="italic">Cursiva</option>
                   </select>
                 </div>
               </div>
@@ -279,7 +280,7 @@ const ConfigCondicional = ({
                     type="number"
                     className="form-control mb-3"
                     value={noClaveNoTarget}
-                    onChange={(e) => handleChange("noClavenoTarget", e)}
+                    onChange={(e) => handleChange("noClaveNoTarget", e)}
                   />
                 </div>
                 <div className="col-3">

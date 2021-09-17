@@ -14,7 +14,7 @@ const defaultConfig = {
   target: "O",
   fontFamily: "Courier",
   fontStyle: "Normal",
-  fontSize: "24",
+  fontSize: "42",
   color: "#fff",
   backgroundColor: "#000",
   clave: "X",
@@ -87,7 +87,13 @@ const AtencionCondicional = () => {
   useEffect(() => {
     if (prueba !== null) {
       if (prueba.settings) {
-        setConfig(prueba.settings);
+        let token = window.location.href.split("token=")[1];
+        if (!token) {
+          setDisabled(true);
+          return alert("No se puede iniciar la prueba");
+        }
+        token = token.split("&")[0];
+        setConfig({ ...prueba.settings, token });
         getStyle();
       }
     }
@@ -121,6 +127,7 @@ const AtencionCondicional = () => {
       target: config.target,
       finished: true,
       idTest: config.idTest,
+      token: config.token,
       idPatient: config.idPatient,
       config: 1,
     };
@@ -141,25 +148,64 @@ const AtencionCondicional = () => {
     let claveNoTarget = [];
     for (let i = 0; i < parseInt(config.claveTarget); i++) {
       claveNoTarget.push(config.clave);
-      let current = Math.floor(Math.random() * characters.length) + 1;
+      let current = Math.floor(Math.random() * characters.length);
       let currentTarget = characters[current];
       claveNoTarget.push(currentTarget);
     }
     let noClaveTarget = [];
     for (let i = 0; i < parseInt(config.claveTarget); i++) {
-      let current = Math.floor(Math.random() * characters.length) + 1;
+      let current = Math.floor(Math.random() * characters.length);
       let currentTarget = characters[current];
       noClaveTarget.push(currentTarget);
       noClaveTarget.push(config.target);
     }
     let noClaveNoTarget = [];
     for (let i = 0; i < parseInt(config.claveTarget); i++) {
-      let current = Math.floor(Math.random() * characters.length) + 1;
+      let current = Math.floor(Math.random() * characters.length);
       let currentTarget = characters[current];
       noClaveNoTarget.push(currentTarget);
-      current = Math.floor(Math.random() * characters.length) + 1;
+      current = Math.floor(Math.random() * characters.length);
       currentTarget = characters[current];
       noClaveNoTarget.push(currentTarget);
+    }
+    let total =
+      parseInt(config.claveTarget) +
+      parseInt(config.claveNoTarget) +
+      parseInt(config.noClaveTarget) +
+      parseInt(config.noClaveNoTarget);
+    while (targets.length < total) {
+      let cuadrante = Math.floor(Math.random() * 4) + 1;
+      let currentTarget = "";
+      let nextTarget = "";
+      switch (cuadrante) {
+        case 1:
+          if (claveTarget.length > 0) {
+            currentTarget = claveTarget.shift();
+            nextTarget = claveTarget.shift();
+            break;
+          }
+        case 2:
+          if (claveNoTarget.length > 0) {
+            currentTarget = claveNoTarget.shift();
+            nextTarget = claveNoTarget.shift();
+            break;
+          }
+        case 3:
+          if (noClaveTarget.length > 0) {
+            currentTarget = noClaveTarget.shift();
+            nextTarget = noClaveTarget.shift();
+            break;
+          }
+        default:
+          if (noClaveNoTarget.length > 0) {
+            currentTarget = noClaveNoTarget.shift();
+            nextTarget = noClaveNoTarget.shift();
+          }
+      }
+      if (currentTarget && currentTarget !== "") {
+        targets.push({ target: currentTarget });
+        targets.push({ target: nextTarget });
+      }
     }
     let intervalo =
       parseInt(config["tiempoInterestimular"]) +
@@ -168,47 +214,16 @@ const AtencionCondicional = () => {
       endTest();
     };
     interval = setInterval(() => {
-      if (estimulos >= config["estimulos"]) {
+      if (estimulos >= total) {
         endTest();
       } else {
-        let cuadrante = Math.floor(Math.random() * 4 + 1);
-        let currentTarget = "";
-        let nextTarget = "";
-        switch (cuadrante) {
-          case 1:
-            if (claveTarget.length > 0) {
-              currentTarget = claveTarget.shift();
-              nextTarget = claveTarget.shift();
-              break;
-            }
-          case 2:
-            if (claveNoTarget.length > 0) {
-              currentTarget = claveNoTarget.shift();
-              nextTarget = claveNoTarget.shift();
-              break;
-            }
-          case 3:
-            if (noClaveTarget.length > 0) {
-              currentTarget = noClaveTarget.shift();
-              nextTarget = noClaveTarget.shift();
-              break;
-            }
-          default:
-            if (noClaveNoTarget.length > 0) {
-              currentTarget = noClaveNoTarget.shift();
-              nextTarget = noClaveNoTarget.shift();
-            }
-        }
         setTimeout(() => {
           setDisplay("");
         }, parseInt(config["tiempoExposicion"]));
-        setTimeout(() => {
-          setDisplay(nextTarget);
-          estimulos++;
-        }, intervalo);
+        setDisplay(targets[estimulos].target);
         estimulos++;
       }
-    }, intervalo * 2);
+    }, intervalo);
   };
 
   const getStyle = () => {
