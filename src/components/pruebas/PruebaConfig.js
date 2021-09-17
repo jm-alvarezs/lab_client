@@ -103,7 +103,10 @@ const PruebaConfig = ({ prueba }) => {
           <label>Aparición del Target</label>
         </div>
         <div className="col-6">
-          <p>{aparicion}</p>
+          <p>
+            {aparicion}
+            {"%"}
+          </p>
         </div>
       </div>
       <div className="row">
@@ -111,7 +114,13 @@ const PruebaConfig = ({ prueba }) => {
           <label>Botón o tecla de respuesta</label>
         </div>
         <div className="col-6">
-          <p>{keyCode}</p>
+          <p>
+            {keyCode === "any"
+              ? "Cualquiera"
+              : keyCode === "32"
+              ? "Espacio"
+              : "Intro"}
+          </p>
         </div>
       </div>
       <div className="row">
