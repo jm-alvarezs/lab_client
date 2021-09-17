@@ -31,6 +31,8 @@ const FlankerTask = () => {
   const estimulo = 1800;
   const blanco = 1200;
 
+  let timeoutFijacion = null;
+
   const {
     config,
     prueba,
@@ -55,12 +57,17 @@ const FlankerTask = () => {
   useEffect(() => {
     if (fijacion) {
       popEstimulo();
-      setTimeout(() => {
+    }
+  }, [fijacion]);
+
+  useEffect(() => {
+    if (current && fijacion && timeoutFijacion === null) {
+      timeoutFijacion = setTimeout(() => {
         setFijacion(false);
         sigEstimulo();
       }, cruz);
     }
-  }, [fijacion]);
+  }, [current]);
 
   useEffect(() => {
     if (EstimuloInferior !== null) {
@@ -89,7 +96,7 @@ const FlankerTask = () => {
     let estimulosPrueba = getEstimulosFlanker(config.estimulosPrueba);
     estimulosPrueba = shuffle(estimulosPrueba);
     setFila(estimulosPrueba);
-    popEstimulo();
+    console.log(estimulosPrueba);
     setFijacion(true);
   };
 
@@ -106,6 +113,7 @@ const FlankerTask = () => {
     if (fila.length === 0) {
       return setEnded(true);
     }
+    console.log(current);
     let service;
     if (current.position === "top") {
       service = setEstimuloInferior;

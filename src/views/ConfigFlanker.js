@@ -7,7 +7,6 @@ import { PruebasContext } from "../context/PruebasContext";
 const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
   const [config, setConfig] = useState({
     idTestType: 5,
-    estimulosEntrenamiento: 0,
     estimulosPrueba: 48,
     fontSize: 100,
     color: "#000",
@@ -69,7 +68,6 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
     color,
     estimulosPrueba,
     backgroundColor,
-    estimulosEntrenamiento,
   } = config;
 
   return (
@@ -90,22 +88,6 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
           <div className="card p-3 mb-4 shadow-sm">
             <form onSubmit={handleSubmit}>
               <h2 className="h4 mb-3 border-bottom pb-3">Parámetros</h2>
-              <div className="row mb-2">
-                <div className="col-6">
-                  <label>Estímulos de Entrenamiento</label>
-                </div>
-                <div className="col-6">
-                  <select
-                    className="form-control mb-3"
-                    value={estimulosEntrenamiento}
-                    onChange={(e) => handleChange("estimulosEntrenamiento", e)}
-                  >
-                    <option value="0">0</option>
-                    <option value="8">8</option>
-                    <option value="16">16</option>
-                  </select>
-                </div>
-              </div>
               <div className="row mb-2">
                 <div className="col-6">
                   <label>Estímulos de Prueba</label>

@@ -41,7 +41,6 @@ const Pacientes = ({ admin }) => {
 
   const renderUsuarios = () => {
     if (pacientes && pacientes !== null) {
-      console.log(pacientes);
       let usuariosRender = [...pacientes];
       if (query !== "") {
         usuariosRender = searchRows(query, usuariosRender);
