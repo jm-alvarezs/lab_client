@@ -31,7 +31,10 @@ const ResumenFlanker = ({
           </div>
           <div className="row py-2">
             <div className="col-6">Tiempo medio de reacción</div>
-            <div className="col-6">{getTiempoReaccionFlanker(estimulos)}</div>
+            <div className="col-6">
+              {getTiempoReaccionFlanker(estimulos)}
+              {" ms"}
+            </div>
           </div>
           <div className="row py-2">
             <div className="col-6">Errores Totales</div>

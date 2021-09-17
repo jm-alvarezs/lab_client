@@ -6,15 +6,15 @@ import { EstimuloFlanker } from "../components/flanker/EstimuloFlanker";
 import BaseTest from "./BaseTest";
 import moment from "moment";
 
-const instrucciones = [
+const instrucciones = ({ leftKey, rightKey }) => [
   `A continuación, vas a realizar un juego. En la pantalla vas a ver 5
     flechas, tu tarea es fijarte en la dirección en la que apunta la
     flecha que se encuentra en medio. Si la flecha va hacia la derecha vas
-    a presionar la tecla “L” y si va hacia la izquierda vas a presionar la
-    tecla “A”. Presiona cualquier tecla para ver un ejemplo.`,
+    a presionar la tecla “${rightKey}” y si va hacia la izquierda vas a presionar la
+    tecla “${leftKey}”. Presiona cualquier tecla para ver un ejemplo.`,
   `Primero vas a hacer un ejercicio de prueba para que aprendas cómo
-    funciona el juego. Pon tu dedo derecho sobre la tecla “L” y tu dedo
-    izquierdo sobre la tecla “A” y no lo levantes hasta que se termine el
+    funciona el juego. Pon tu dedo derecho sobre la tecla “${rightKey}” y tu dedo
+    izquierdo sobre la tecla “${leftKey}” y no lo levantes hasta que se termine el
     juego. ¿Estás preparado? presiona cualquier tecla para empezar.
     Posterior a la fase de prueba, se dirá lo siguiente: “ya se terminó la
     fase de prueba, ya vamos a empezar el juego, ¿estás preparado?
@@ -161,7 +161,9 @@ const FlankerTask = () => {
       ended={ended}
       startCallback={handleStart}
       defaultConfig={prueba !== null ? prueba.settings : defaultConfig}
-      instrucciones={instrucciones}
+      instrucciones={instrucciones(
+        prueba !== null ? { ...prueba.settings } : { ...defaultConfig }
+      )}
       TestComponent={renderFlanker()}
     />
   );

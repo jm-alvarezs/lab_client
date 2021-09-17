@@ -10,7 +10,7 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
     estimulosPrueba: 48,
     fontSize: 100,
     color: "#000",
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
     leftKey: "A",
     rightKey: "L",
   });
@@ -58,6 +58,8 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
     if (String(key).includes("Key")) {
       value = value[0];
     }
+    if (key === "fontSize") value = Math.abs(value);
+    if (key === "fontSize" && parseInt(value) === 0) value = 1;
     setConfig({ ...config, [key]: value });
   };
 

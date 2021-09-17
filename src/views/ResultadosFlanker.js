@@ -46,8 +46,8 @@ const ResultadosFlanker = ({ idTest }) => {
           <ResumenFlanker
             resultado={resultado}
             estimulos={resultado.results.estimulos}
-            finishTime={resultado.results.end}
-            startTime={resultado.results.start}
+            finishTime={resultado.results.endTime}
+            startTime={resultado.results.startTime}
             right={resultado.results.settings.rightKey}
             left={resultado.results.settings.leftKey}
             toPdf={toPdf}

@@ -16,7 +16,7 @@ const BaseTest = ({
   const [startTime, setStartTime] = useState(null);
   const [finishTime, setFinishTime] = useState(null);
 
-  const { config, estimulos, getPrueba, setConfig, postResultados } =
+  const { prueba, config, estimulos, getPrueba, setConfig, postResultados } =
     useContext(PruebasContext);
 
   const { alert } = useContext(ModalContext);
@@ -26,6 +26,7 @@ const BaseTest = ({
       handleEnd(false);
     };
     let currentConfig = getConfig(defaultConfig);
+
     if (currentConfig.idTest && currentConfig.token) {
       getPrueba(currentConfig.idTest, currentConfig.token);
       setConfig(currentConfig);
@@ -42,6 +43,16 @@ const BaseTest = ({
       handleEnd(ended);
     }
   }, [ended]);
+
+  useEffect(() => {
+    if (prueba !== null) {
+      if (prueba.results) {
+        if (prueba.results._id) {
+          setDisabled(true);
+        }
+      }
+    }
+  }, [prueba]);
 
   const handleStart = () => {
     setStartTime(moment().format("YYYY-MM-DD HH:mm:ss:SSS"));
