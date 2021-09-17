@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useContext } from "react/cjs/react.development";
+import React, { useEffect, useState, useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
 import EmailsService from "../../services/EmailsService";
 
 const PostPrueba = ({ id, type, url, defaultEmail }) => {
-  const [email, setEmail] = useState("");
+  const [correo, setCorreo] = useState("");
   const [copied, setCopied] = useState(false);
 
   const { success } = useContext(ModalContext);
 
   useEffect(() => {
     if (defaultEmail) {
-      setEmail(defaultEmail);
+      setCorreo(defaultEmail);
     }
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    EmailsService.postEmail(id, "test", correo).then(() => {
+      success("¡Correo enviado!");
+    });
+  };
 
   const copyURL = () => {
     var copyText = document.getElementById("url-input");
@@ -42,19 +48,12 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
           <input
             type="email"
             className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.result)}
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
           />
         </div>
         <div className="col-4">
-          <button
-            className="btn btn-dark w-100"
-            onClick={() =>
-              EmailsService.postEmail(id, "test", email).then(() => {
-                success("¡Correo enviado!");
-              })
-            }
-          >
+          <button className="btn btn-dark w-100" onClick={handleSubmit}>
             Enviar
           </button>
         </div>

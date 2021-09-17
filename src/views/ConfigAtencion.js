@@ -16,7 +16,7 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
     backgroundColor: "#000000",
     numeroEstimulos: "10",
     aparicion: "17",
-    keyCode: "13",
+    keyCode: "32",
     duracion: "10",
   });
 
