@@ -2,20 +2,24 @@ import { Link } from "@reach/router";
 import moment from "moment";
 import React, { useContext, useEffect } from "react";
 import DamageForm from "../components/damages/DamageForm";
+import { ModalContext } from "../context/ModalContext";
 import { PacientesContext } from "../context/PacientesContext";
+import { validateEmail } from "../utils";
 
 const UsuarioForm = ({ id }) => {
   const {
     paciente,
     getSinglePaciente,
     createPaciente,
-    setPropiedadUsuario,
+    setPropiedadPaciente,
     updatePaciente,
     postPaciente,
     createDamage,
     deleteDamage,
     setDamageLocation,
   } = useContext(PacientesContext);
+
+  const { alert } = useContext(ModalContext);
 
   useEffect(() => {
     if (isNaN(id)) {
@@ -28,6 +32,12 @@ const UsuarioForm = ({ id }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (paciente.id === "nuevo") {
+      if (paciente.name === "") {
+        return alert("El nombre no puede estar vacío.");
+      }
+      if (!validateEmail(paciente.email)) {
+        return alert("El correo electrónico no es válido.");
+      }
       postPaciente(paciente);
     } else {
       updatePaciente(paciente);
@@ -71,7 +81,7 @@ const UsuarioForm = ({ id }) => {
                 type="text"
                 className="form-control mb-3"
                 value={name}
-                onChange={(e) => setPropiedadUsuario("name", e.target.value)}
+                onChange={(e) => setPropiedadPaciente("name", e.target.value)}
               />
             </div>
           </div>
@@ -81,20 +91,20 @@ const UsuarioForm = ({ id }) => {
             type="text"
             className="form-control mb-3"
             value={email}
-            onChange={(e) => setPropiedadUsuario("email", e.target.value)}
+            onChange={(e) => setPropiedadPaciente("email", e.target.value)}
           />
           <label>Fecha de Nacimiento</label>
           <input
             type="date"
             className="form-control mb-3"
             value={moment(birthDate).utc().format("YYYY-MM-DD")}
-            onChange={(e) => setPropiedadUsuario("birthDate", e.target.value)}
+            onChange={(e) => setPropiedadPaciente("birthDate", e.target.value)}
           />
           <label>Género</label>
           <select
             className="form-control mb-3"
             value={gender}
-            onChange={(e) => setPropiedadUsuario("gender", e.target.value)}
+            onChange={(e) => setPropiedadPaciente("gender", e.target.value)}
           >
             <option>Hombre</option>
             <option>Mujer</option>
@@ -105,7 +115,7 @@ const UsuarioForm = ({ id }) => {
             className="form-control mb-3"
             value={dominantHand}
             onChange={(e) =>
-              setPropiedadUsuario("dominantHand", e.target.value)
+              setPropiedadPaciente("dominantHand", e.target.value)
             }
           >
             <option>Diestro</option>
@@ -133,7 +143,7 @@ const UsuarioForm = ({ id }) => {
                 : drugsConsumption
             }
             onChange={(e) =>
-              setPropiedadUsuario(
+              setPropiedadPaciente(
                 typeof drugsConsumption === "boolean"
                   ? "whichDrugs"
                   : "drugsConsumption",
@@ -146,7 +156,7 @@ const UsuarioForm = ({ id }) => {
             rows="4"
             className="form-control mb-3"
             value={antecedent}
-            onChange={(e) => setPropiedadUsuario("antecedent", e.target.value)}
+            onChange={(e) => setPropiedadPaciente("antecedent", e.target.value)}
           />
           <div className="row">
             <div className="col-12 col-md-6">

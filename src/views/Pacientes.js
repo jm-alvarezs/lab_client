@@ -79,7 +79,7 @@ const Pacientes = ({ admin }) => {
           <h1>Pacientes</h1>
         </div>
         <div className="col-6 text-right px-0">
-          <Link to="/pacientes/nuevo" className="btn btn-dark">
+          <Link to="/pacientes/nuevo/edit" className="btn btn-dark">
             + Agregar
           </Link>
         </div>

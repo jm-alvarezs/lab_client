@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import { navigate } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import moment from "moment";
 import axios from "axios";
-import { BASE_URL } from "../utils";
+import { BASE_URL, validateEmail } from "../utils";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -34,12 +34,6 @@ const SignUp = () => {
     if (paises && paises !== null) {
       return paises.map(({ pais }) => <option value={pais}>{pais}</option>);
     }
-  };
-
-  const validateEmail = (email) => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
   };
 
   const handleSubmit = (e) => {
@@ -158,6 +152,9 @@ const SignUp = () => {
                     value="Registrarme"
                   />
                 </form>
+                <p className="mt-3 mb-1">
+                  ¿Ya tienes una cuenta? <Link to="/login">Inicia Sesión</Link>
+                </p>
               </div>
             </div>
           </div>
