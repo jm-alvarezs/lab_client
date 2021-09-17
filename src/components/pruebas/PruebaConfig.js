@@ -63,12 +63,12 @@ const PruebaConfig = ({ prueba }) => {
           <p>{fontStyle}</p>
         </div>
       </div>
-      <div className="row">
+      <div className="row mb-2">
         <div className="col-6">
           <label>Color de la Fuente</label>
         </div>
         <div className="col-6">
-          <p>{color}</p>
+          <input type="color" value={color} className="form-control" disabled />
         </div>
       </div>
       <div className="row">
@@ -79,12 +79,17 @@ const PruebaConfig = ({ prueba }) => {
           <p>{fontSize}</p>
         </div>
       </div>
-      <div className="row">
+      <div className="row mb-2">
         <div className="col-6">
           <label>Color del fondo</label>
         </div>
         <div className="col-6">
-          <p>{backgroundColor}</p>
+          <input
+            type="color"
+            value={backgroundColor}
+            className="form-control"
+            disabled
+          />
         </div>
       </div>
       <div className="row">
