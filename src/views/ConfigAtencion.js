@@ -155,7 +155,6 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
                     onChange={(e) => handleChange("fontStyle", e)}
                   >
                     <option value="regular">Normal</option>
-                    <option value="bold">Negrita</option>
                     <option value="italic">Cursiva</option>
                   </select>
                 </div>
