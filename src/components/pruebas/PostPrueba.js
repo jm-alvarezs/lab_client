@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useContext } from "react/cjs/react.development";
+import { ModalContext } from "../../context/ModalContext";
 import EmailsService from "../../services/EmailsService";
 
 const PostPrueba = ({ id, type, url, defaultEmail }) => {
   const [email, setEmail] = useState("");
   const [copied, setCopied] = useState(false);
+
+  const { success } = useContext(ModalContext);
 
   useEffect(() => {
     if (defaultEmail) {
@@ -45,7 +49,11 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
         <div className="col-4">
           <button
             className="btn btn-dark w-100"
-            onClick={() => EmailsService.postEmail(id, "test", email)}
+            onClick={() =>
+              EmailsService.postEmail(id, "test", email).then(() => {
+                success("¡Correo enviado!");
+              })
+            }
           >
             Enviar
           </button>

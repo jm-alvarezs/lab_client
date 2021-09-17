@@ -126,6 +126,13 @@ export const UserProvider = ({ children }) => {
       })
       .catch((error) => {
         dispatch({ type: HIDE_SPINNER });
+        if (error.response) {
+          if (error.response.status === 409) {
+            return alert(
+              "Ya hay una cuenta registrada con ese correo electrónico."
+            );
+          }
+        }
         alert(error);
       });
   }

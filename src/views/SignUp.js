@@ -10,7 +10,7 @@ const SignUp = () => {
   const [profession, setProfession] = useState("");
   const [institution, setInstitution] = useState("");
   const [birthdate, setBirthdate] = useState("");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("México");
   const [scholarship, setScholarship] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
