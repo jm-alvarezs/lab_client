@@ -31,13 +31,13 @@ const UsuarioForm = ({ id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (paciente.name === "") {
+      return alert("El nombre no puede estar vacío.");
+    }
+    if (!validateEmail(paciente.email)) {
+      return alert("El correo electrónico no es válido.");
+    }
     if (paciente.id === "nuevo") {
-      if (paciente.name === "") {
-        return alert("El nombre no puede estar vacío.");
-      }
-      if (!validateEmail(paciente.email)) {
-        return alert("El correo electrónico no es válido.");
-      }
       postPaciente(paciente);
     } else {
       updatePaciente(paciente);
