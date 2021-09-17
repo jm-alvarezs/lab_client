@@ -13,7 +13,7 @@ export const EstimuloFlanker = ({ type, direction, style }) => {
     <div className="container-fluid px-0 text-center">
       <i
         className={`fas ${
-          type === "neutral"
+          type === "Neutral"
             ? "fa-minus"
             : `fa-long-arrow-alt-${getDirection()}`
         } mx-1`}
@@ -21,7 +21,7 @@ export const EstimuloFlanker = ({ type, direction, style }) => {
       ></i>
       <i
         className={`fas ${
-          type === "neutral"
+          type === "Neutral"
             ? "fa-minus"
             : `fa-long-arrow-alt-${getDirection()}`
         } mx-1`}
@@ -33,7 +33,7 @@ export const EstimuloFlanker = ({ type, direction, style }) => {
       ></i>
       <i
         className={`fas ${
-          type === "neutral"
+          type === "Neutral"
             ? "fa-minus"
             : `fa-long-arrow-alt-${getDirection()}`
         } mx-1`}
@@ -41,7 +41,7 @@ export const EstimuloFlanker = ({ type, direction, style }) => {
       ></i>
       <i
         className={`fas ${
-          type === "neutral"
+          type === "Neutral"
             ? "fa-minus"
             : `fa-long-arrow-alt-${getDirection()}`
         } mx-1`}
