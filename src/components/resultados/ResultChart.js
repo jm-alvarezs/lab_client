@@ -46,7 +46,7 @@ const ResultChart = ({ items, target, type, prevTarget }) => {
     if (correcto) correctos++;
   }
 
-  let result = (correctos / items.length) * 100;
+  let result = parseFloat((correctos / items.length) * 100).toFixed(2);
 
   return (
     <Chart type="radialBar" options={options} series={[result]} height={250} />
