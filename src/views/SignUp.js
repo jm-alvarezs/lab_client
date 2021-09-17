@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { navigate } from "@reach/router";
+import moment from "moment";
+import axios from "axios";
+import { BASE_URL } from "../utils";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -11,8 +14,15 @@ const SignUp = () => {
   const [scholarship, setScholarship] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [paises, setPaises] = useState([]);
 
   const { created, signUp } = useContext(UserContext);
+
+  useEffect(() => {
+    axios.get(`${BASE_URL}/countries`).then((res) => {
+      setPaises(res.data.paises);
+    });
+  }, []);
 
   useEffect(() => {
     if (created) {
@@ -20,8 +30,41 @@ const SignUp = () => {
     }
   }, [created]);
 
+  const renderPaises = () => {
+    if (paises && paises !== null) {
+      return paises.map(({ pais }) => <option value={pais}>{pais}</option>);
+    }
+  };
+
+  const validateEmail = (email) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateEmail(email)) {
+      return alert("El correo no es válido.");
+    }
+    if (profession === "") {
+      return alert("Profesion no puede estar vacío.");
+    }
+    if (password.length < 6) {
+      return alert("La contraseña debe tener al menos 6 caracteres.");
+    }
+    if (institution === "") {
+      return alert("La institución no puede estar vacía.");
+    }
+    if (!moment(birthdate).isValid()) {
+      return alert("La fecha de nacimiento no es válida.");
+    }
+    if (moment().diff(moment(birthdate), "years") < 18) {
+      return alert("Debes ser mayor de edad para registrarte.");
+    }
+    if (country === "") {
+      return alert("El país no puede ser vacío");
+    }
     signUp(
       name,
       profession,
@@ -71,7 +114,7 @@ const SignUp = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <label>Profession</label>
+                  <label>Profesión</label>
                   <input
                     type="text"
                     className="form-control mb-3"
@@ -93,18 +136,18 @@ const SignUp = () => {
                     onChange={(e) => setBirthdate(e.target.value)}
                   />
                   <label>País</label>
-                  <input
-                    type="text"
-                    className="form-control mb-3"
+                  <select
                     value={country}
+                    className="form-control mb-3"
                     onChange={(e) => setCountry(e.target.value)}
-                  />
+                  >
+                    {renderPaises()}
+                  </select>
                   <label>Nivel Educativo</label>
                   <select
                     className="form-control mb-3"
                     onChange={(e) => setScholarship(e.target.value)}
                   >
-                    <option value="Preparatoria">Preparatoria</option>
                     <option value="Universidad">Universidad</option>
                     <option value="Maestria">Maestría</option>
                     <option value="Doctorado">Doctorado</option>

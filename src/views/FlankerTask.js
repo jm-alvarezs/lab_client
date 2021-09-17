@@ -53,12 +53,6 @@ const FlankerTask = () => {
   };
 
   useEffect(() => {
-    if (Array.isArray(fila) && !current) {
-      popEstimulo();
-    }
-  }, [fila]);
-
-  useEffect(() => {
     if (fijacion) {
       popEstimulo();
       setTimeout(() => {
@@ -95,6 +89,8 @@ const FlankerTask = () => {
     let estimulosPrueba = getEstimulosFlanker(config.estimulosPrueba);
     estimulosPrueba = shuffle(estimulosPrueba);
     setFila(estimulosPrueba);
+    popEstimulo();
+    setFijacion(true);
   };
 
   const handleKeyPress = (e) => {

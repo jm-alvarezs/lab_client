@@ -56,6 +56,7 @@ export const UserProvider = ({ children }) => {
               type: LOGIN,
               payload: user,
             });
+            dispatch({ type: HIDE_SPINNER });
           });
         }
       })
@@ -75,20 +76,26 @@ export const UserProvider = ({ children }) => {
     if (!token) token = window.location.pathname.split("token=")[1];
     if (token) {
       setToken(token);
-      AuthService.getUser().then((res) => {
-        const user = { ...res.data.data, token };
-        dispatch({
-          type: LOGIN,
-          payload: user,
+      AuthService.getUser()
+        .then((res) => {
+          const user = { ...res.data.data, token };
+          dispatch({
+            type: LOGIN,
+            payload: user,
+          });
+          dispatch({ type: HIDE_SPINNER });
+        })
+        .catch((error) => {
+          alert(error);
+          dispatch({ type: HIDE_SPINNER });
         });
-      });
     }
-    dispatch({ type: HIDE_SPINNER });
   }
 
   function signOut() {
     AuthService.signOut();
     dispatch({ type: LOGOUT });
+    dispatch({ type: HIDE_SPINNER });
     window.localStorage.setItem("token", null);
     navigate("/");
   }
@@ -115,11 +122,11 @@ export const UserProvider = ({ children }) => {
     })
       .then(() => {
         dispatch({ type: USER_CREATED });
-        displaySuccess(dispatch, "Registrado con éxito.");
+        success("Registrado con éxito.");
       })
       .catch((error) => {
         dispatch({ type: HIDE_SPINNER });
-        displayError(dispatch, error);
+        alert(error);
       });
   }
 
