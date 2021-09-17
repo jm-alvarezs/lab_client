@@ -88,7 +88,8 @@ const TorreHanoi = () => {
   useEffect(() => {
     if (prueba !== null) {
       if (prueba.settings) {
-        setConfig(prueba.settings);
+        let currentConfig = getConfig(defaultConfig);
+        setConfig({ ...prueba.settings, token: currentConfig.token });
       }
     }
   }, [prueba]);
@@ -290,21 +291,21 @@ const TorreHanoi = () => {
                   current.origen === 1 ? "text-success bold" : ""
                 }`}
               >
-                1
+                <span style={{ fontSize: 64 }}>1</span>
               </div>
               <div
                 className={`col-4 text-center ${
                   current.origen === 2 ? "text-success bold" : ""
                 }`}
               >
-                2
+                <span style={{ fontSize: 64 }}>2</span>
               </div>
               <div
                 className={`col-4 text-center ${
                   current.origen === 3 ? "text-success bold" : ""
                 }`}
               >
-                3
+                <span style={{ fontSize: 64 }}>3</span>
               </div>
             </div>
           </div>
