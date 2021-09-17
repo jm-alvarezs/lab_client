@@ -7,34 +7,10 @@ import {
   FIABILITY_RECIBIDA,
 } from "../types";
 import moment from "moment";
-import { generateRandom } from "../utils";
 import SurveyService from "../services/SurveyService";
 
 const initialState = {
   resultados: null,
-};
-
-const cuestionarios = {
-  nechapi: {
-    idPatient: 1,
-    nombre: "Juan Manuel",
-    idCuestionario: 2,
-    nombre_cuestionario: "nechapi",
-    relacion: "Familiar directo",
-    observaciones: "ninguna",
-    fecha_hora: "2021-04-29",
-    respuestas: generateRandom("nechapi"),
-  },
-  cupom: {
-    idPatient: 1,
-    nombre: "Juan Manuel",
-    idCuestionario: 2,
-    nombre_cuestionario: "cupom",
-    relacion: "Familiar directo",
-    observaciones: "ninguna",
-    fecha_hora: "2021-04-29",
-    respuestas: generateRandom("cupom"),
-  },
 };
 
 export const ResultadosContext = createContext(initialState);
@@ -95,6 +71,14 @@ export const ResultadosProvider = ({ children }) => {
     });
   };
 
+  const clearSingleResultado = () => {
+    dispatch({ type: SINGLE_RESULTADO_RECIBIDO, payload: null });
+  };
+
+  const clearResultados = () => {
+    dispatch({ type: RESULTADOS_RECIBIDOS, payload: null });
+  };
+
   return (
     <ResultadosContext.Provider
       value={{
@@ -103,7 +87,9 @@ export const ResultadosProvider = ({ children }) => {
         fetchResults,
         getSingleTest,
         getResultados,
+        clearResultados,
         getResultadosAdmin,
+        clearSingleResultado,
         getCuestionarioResults,
       }}
     >

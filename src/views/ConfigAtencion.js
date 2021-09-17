@@ -11,7 +11,7 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
     target: "O",
     fontFamily: "Courier",
     fontStyle: "Normal",
-    fontSize: "24",
+    fontSize: "42",
     color: "#ffffff",
     backgroundColor: "#000000",
     numeroEstimulos: "10",
@@ -43,7 +43,9 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
   };
 
   const handleChange = (key, e) => {
-    const { value } = e.target;
+    let { value } = e.target;
+    if (key === "fontSize") value = Math.abs(value);
+    if (key === "fontSize" && parseInt(value) === 0) value = 1;
     setConfig({ ...config, [key]: value });
   };
 
@@ -59,7 +61,6 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
     numeroEstimulos,
     aparicion,
     keyCode,
-    duracion,
   } = config;
 
   return (
@@ -153,9 +154,9 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
                     value={fontStyle}
                     onChange={(e) => handleChange("fontStyle", e)}
                   >
-                    <option>Normal</option>
-                    <option>Negrita</option>
-                    <option>Cursiva</option>
+                    <option value="regular">Normal</option>
+                    <option value="bold">Negrita</option>
+                    <option value="italic">Cursiva</option>
                   </select>
                 </div>
               </div>
@@ -240,9 +241,9 @@ const ConfigAtencion = ({ idPaciente, hideButton, submit, submitCallback }) => {
                     value={keyCode}
                     onChange={(e) => handleChange("keyCode", e)}
                   >
-                    <option>Espacio</option>
-                    <option>Intro</option>
-                    <option>Cualquiera</option>
+                    <option value="32">Espacio</option>
+                    <option value="13">Intro</option>
+                    <option value="any">Cualquiera</option>
                   </select>
                 </div>
               </div>

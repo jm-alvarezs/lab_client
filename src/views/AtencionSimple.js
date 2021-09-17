@@ -15,9 +15,9 @@ const defaultConfig = {
   fontFamily: "Courier",
   fontStyle: "bold",
   color: "#fff",
-  fontSize: 85,
+  fontSize: 42,
   backgroundColor: "#000",
-  estimulos: 10,
+  numeroEstimulos: 10,
   aparicion: 17,
   keyCode: 32,
   duration: 5 * 60,
@@ -87,7 +87,13 @@ const AtencionSimple = () => {
         setDisabled(true);
         return alert("Lo sentimos, este ejercicio ya fue realizado.");
       } else if (prueba.settings) {
-        setConfig(prueba.settings);
+        let token = window.location.href.split("token=")[1];
+        if (!token) {
+          setDisabled(true);
+          return alert("No se puede iniciar la prueba");
+        }
+        token = token.split("&")[0];
+        setConfig({ ...prueba.settings, token });
         getStyle();
       }
     }
@@ -139,11 +145,12 @@ const AtencionSimple = () => {
       start: startTime,
       end: endTime,
       targets,
-      target: defaultConfig.target,
+      target: config.target,
       finished: true,
       idTest: config.idTest,
       idPatient: config.idPatient,
       config: 1,
+      token: config.token,
     };
     postResultados(result);
     setThankyou(true);
@@ -155,12 +162,12 @@ const AtencionSimple = () => {
     document.body.addEventListener("keydown", handleKey);
     startTime = moment();
     let charTargets = [];
-    const porcAparicion = defaultConfig.aparicion / 100;
-    const numberTargets = Math.ceil(defaultConfig.estimulos * porcAparicion);
+    const porcAparicion = config.aparicion / 100;
+    const numberTargets = Math.ceil(config.numeroEstimulos * porcAparicion);
     for (let i = 0; i < numberTargets; i++) {
-      charTargets.push(defaultConfig.target);
+      charTargets.push(config.target);
     }
-    for (let i = numberTargets; i < defaultConfig.estimulos; i++) {
+    for (let i = numberTargets; i < config.numeroEstimulos; i++) {
       let current = Math.floor(Math.random() * characters.length) + 1;
       let currentTarget = characters[current];
       charTargets.push(currentTarget);
@@ -173,7 +180,7 @@ const AtencionSimple = () => {
       endTest();
     };
     interval = setInterval(() => {
-      if (estimulos >= config["estimulos"]) {
+      if (estimulos >= parseInt(config.numeroEstimulos)) {
         endTest();
       } else {
         const currentTarget = charTargets[estimulos];
@@ -204,8 +211,11 @@ const AtencionSimple = () => {
   const renderInstrucciones = () => {
     return [
       `En el centro de la pantalla irán apareciendo de manera secuencial
-          distintas letras del abecedario. La tarea consiste que usted pulse la
-          tecla ${String.fromCharCode(config.keyCode)} cuando vea aparecer la
+          distintas letras del abecedario. La tarea consiste que usted pulse ${
+            config.keyCode === "any"
+              ? "cualquier tecla"
+              : `la tecla ${config.keyCode === "13" ? '"Intro"' : '"Espacio"'}`
+          } cuando vea aparecer la
           letra ${config.target}.`,
       `Es importante que responda tan rápido como pueda, ya que los estímulos
           aparecen y desaparecen rápidamente.`,

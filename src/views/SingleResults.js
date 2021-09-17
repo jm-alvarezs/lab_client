@@ -11,13 +11,19 @@ import ResumenResultados from "../components/resultados/ResumenResultados";
 import SujetoPrueba from "../components/resultados/SujetoPrueba";
 
 const SingleResults = ({ id }) => {
-  const { resultado, fiability, getSingleTest, getFiablity } =
-    useContext(ResultadosContext);
+  const {
+    resultado,
+    fiability,
+    getSingleTest,
+    getFiablity,
+    clearSingleResults,
+  } = useContext(ResultadosContext);
   const [showEstimulos, setShowEstimulos] = useState(true);
 
   useEffect(() => {
     getSingleTest(id);
     getFiablity();
+    return clearSingleResults;
   }, []);
 
   const renderConfig = () => {

@@ -38,8 +38,6 @@ const instruccionesB = [
 ];
 
 const TorreHanoi = () => {
-  const [origen, setOrigen] = useState(null);
-  const [destino, setDestino] = useState(null);
   const [one, setOne] = useState([]);
   const [two, setTwo] = useState([]);
   const [three, setThree] = useState([]);
