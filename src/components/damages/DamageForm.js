@@ -24,6 +24,21 @@ const DamageForm = ({ id, damageLocation, modifier, deleteDamage }) => {
     modifier(`${location}_${section}_${side}`);
   }, [location, section, side]);
 
+  useEffect(() => {
+    if (section === "" && location !== "") {
+      const seccion = secciones[location];
+      if (seccion) {
+        if (seccion.options) {
+          let option = seccion.options[0];
+          if (option && option !== null) {
+            let value = option.value;
+            setSection(value);
+          }
+        }
+      }
+    }
+  }, [location]);
+
   const renderSecciones = () => {
     const seccion = secciones[location];
     if (seccion)
