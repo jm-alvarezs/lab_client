@@ -4,6 +4,9 @@ import moment from "moment";
 const UsuarioData = ({ usuario }) => {
   const renderDamages = () => {
     if (Array.isArray(usuario.damages)) {
+      if (usuario.damages.length === 0) {
+        return <p>No hay daños registrados.</p>;
+      }
       return usuario.damages.map(({ id, damageLocation }) => (
         <p key={id}>{damageLocation.split("_").join(" ")}</p>
       ));
