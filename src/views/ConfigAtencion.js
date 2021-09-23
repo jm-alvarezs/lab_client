@@ -3,6 +3,7 @@ import Breadcrumbs from "../components/global/Breadcrumbs";
 import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
 import { Link } from "@reach/router";
+import { ModalContext } from "../context/ModalContext";
 
 const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
   const [config, setConfig] = useState({
@@ -31,6 +32,8 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
 
   const { paciente, getSinglePaciente } = useContext(PacientesContext);
 
+  const { alert } = useContext(ModalContext);
+
   useEffect(() => {
     setConfig({ ...config, idPatient: idPaciente });
     getSinglePaciente(idPaciente);
@@ -40,7 +43,7 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
     if (e) {
       e.preventDefault();
     }
-    if (["", " "].includes(config.target)) {
+    if (["", " ", undefined].includes(config.target)) {
       return alert("El target no puede estar vacío");
     }
     postPrueba(config, "simple", paciente, submitCallback);

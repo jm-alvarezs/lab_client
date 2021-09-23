@@ -74,7 +74,7 @@ const ConfigHemiAtencion = ({ idPaciente, submit, submitCallback }) => {
       value = Math.abs(value);
     }
     if (key === "fontSize" && parseInt(value) === 0) value = 1;
-    if (["", " "].includes(config.target)) {
+    if (["", " ", undefined].includes(config.target)) {
       return alert("El target no puede estar vacío");
     }
     setConfig({ ...config, [key]: value });
