@@ -159,11 +159,13 @@ const AtencionCondicional = () => {
       noClaveNoTarget.push(currentTarget);
     }
     let total =
-      parseInt(config.claveTarget) +
-      parseInt(config.claveNoTarget) +
-      parseInt(config.noClaveTarget) +
-      parseInt(config.noClaveNoTarget);
-    while (targets.length < total * 2) {
+      (parseInt(config.claveTarget) +
+        parseInt(config.claveNoTarget) +
+        parseInt(config.noClaveTarget) +
+        parseInt(config.noClaveNoTarget)) *
+      2;
+
+    while (targets.length < total) {
       let cuadrante = Math.floor(Math.random() * 4) + 1;
       let currentTarget = "";
       let nextTarget = "";
