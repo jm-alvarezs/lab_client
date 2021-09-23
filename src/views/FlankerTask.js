@@ -13,8 +13,8 @@ const instrucciones = ({ leftKey, rightKey }) => [
     a presionar la tecla “${rightKey}” y si va hacia la izquierda vas a presionar la
     tecla “${leftKey}”. Presiona cualquier tecla para ver un ejemplo.`,
   `Primero vas a hacer un ejercicio de prueba para que aprendas cómo
-    funciona el juego. Pon tu dedo derecho sobre la tecla “${rightKey}” y tu dedo
-    izquierdo sobre la tecla “${leftKey}” y no lo levantes hasta que se termine el
+    funciona el juego. Pon tu dedo índice derecho sobre la tecla “${rightKey}” y tu dedo
+    índice izquierdo sobre la tecla “${leftKey}” y no lo levantes hasta que se termine el
     juego. ¿Estás preparado? presiona cualquier tecla para empezar.
     Posterior a la fase de prueba, se dirá lo siguiente: “ya se terminó la
     fase de prueba, ya vamos a empezar el juego, ¿estás preparado?
