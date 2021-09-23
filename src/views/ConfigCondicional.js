@@ -226,13 +226,16 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
                 <div className="col-6">
                   <label>Clave</label>
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                   <input
                     type="text"
                     className="form-control mb-3"
                     value={clave}
                     onChange={(e) => handleChange("clave", e)}
                   />
+                </div>
+                <div className="col-3">
+                  <p>[A-Z]</p>
                 </div>
               </div>
               <div className="row">
