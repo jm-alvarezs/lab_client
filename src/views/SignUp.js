@@ -16,7 +16,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [paises, setPaises] = useState([]);
 
-  const { created, signUp } = useContext(UserContext);
+  const { created, signUp, signIn } = useContext(UserContext);
 
   useEffect(() => {
     axios.get(`${BASE_URL}/countries`).then((res) => {
@@ -26,6 +26,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (created) {
+      signIn(email, password);
       navigate("/");
     }
   }, [created]);
