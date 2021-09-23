@@ -47,6 +47,9 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
     if (["", " ", undefined].includes(config.target)) {
       return alert("El target no puede estar vacío");
     }
+    if (["", " ", undefined].includes(config.clave)) {
+      return alert("La clave no puede estar vacía");
+    }
     postPrueba(config, "condicional", paciente, submitCallback);
   };
 
