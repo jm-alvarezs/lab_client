@@ -163,7 +163,7 @@ const AtencionCondicional = () => {
       parseInt(config.claveNoTarget) +
       parseInt(config.noClaveTarget) +
       parseInt(config.noClaveNoTarget);
-    while (targets.length < total) {
+    while (targets.length < total * 2) {
       let cuadrante = Math.floor(Math.random() * 4) + 1;
       let currentTarget = "";
       let nextTarget = "";
@@ -211,6 +211,7 @@ const AtencionCondicional = () => {
           setDisplay("");
         }, parseInt(config["tiempoExposicion"]));
         setDisplay(targets[estimulos].target);
+        targets[estimulos].timestamp = moment();
         estimulos++;
       }
     }, intervalo);

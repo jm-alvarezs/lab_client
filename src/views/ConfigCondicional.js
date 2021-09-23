@@ -91,10 +91,11 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
   } = config;
 
   const paresTotales =
-    parseInt(claveTarget) +
-    parseInt(claveNoTarget) +
-    parseInt(noClaveNoTarget) +
-    parseInt(noClaveTarget);
+    (parseInt(claveTarget) +
+      parseInt(claveNoTarget) +
+      parseInt(noClaveNoTarget) +
+      parseInt(noClaveTarget)) *
+    2;
 
   return (
     <div className="container-fluid">
