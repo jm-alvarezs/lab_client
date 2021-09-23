@@ -66,6 +66,7 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
       value = Math.abs(value);
     }
     if (key === "fontSize" && parseInt(value) === 0) value = 1;
+    if (["target", "clave"].includes(key)) value = String(value)[0];
     setConfig({ ...config, [key]: value });
   };
 
