@@ -12,6 +12,7 @@ import {
 } from "../types";
 import { ModalContext } from "./ModalContext";
 import { navigate } from "@reach/router";
+import { hideModal } from "../utils";
 
 const initialState = {
   pacientes: null,
@@ -94,6 +95,7 @@ export const PacientesProvider = ({ children }) => {
     PacientesService.deletePaciente(id).then(() => {
       success("¡Paciente eliminado con éxito!");
       getPacientes();
+      hideModal();
     });
   };
 

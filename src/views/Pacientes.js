@@ -22,6 +22,7 @@ const Pacientes = ({ admin }) => {
   }, []);
 
   const confirmDelete = (paciente) => {
+    console.log(paciente);
     modalComponent(
       "Precaución",
       <div>

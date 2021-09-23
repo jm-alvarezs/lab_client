@@ -3,8 +3,9 @@ import Breadcrumbs from "../components/global/Breadcrumbs";
 import { ModalContext } from "../context/ModalContext";
 import { PacientesContext } from "../context/PacientesContext";
 import { PruebasContext } from "../context/PruebasContext";
+import { Link } from "@reach/router";
 
-const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
+const ConfigFlanker = ({ idPaciente, submit, submitCallback }) => {
   const [config, setConfig] = useState({
     idTestType: 5,
     estimulosPrueba: 48,
@@ -177,19 +178,29 @@ const ConfigFlanker = ({ idPaciente, hideButton, submit, submitCallback }) => {
                   />
                 </div>
               </div>
-              {!hideButton && (
-                <button
-                  type="submit"
-                  className="btn btn-dark btn-block mt-3"
-                  disabled={spinner}
-                >
-                  {spinner ? (
-                    <div className="spinner-border"></div>
-                  ) : (
-                    "Terminado"
-                  )}
-                </button>
-              )}
+              <div className="row">
+                <div className="col-6">
+                  <Link
+                    to="../"
+                    className="btn btn-link text-danger btn-block mt-3"
+                  >
+                    Cancelar
+                  </Link>
+                </div>
+                <div className="col-6">
+                  <button
+                    type="submit"
+                    className="btn btn-dark btn-block mt-3"
+                    disabled={spinner}
+                  >
+                    {spinner ? (
+                      <div className="spinner-border"></div>
+                    ) : (
+                      "Terminado"
+                    )}
+                  </button>
+                </div>
+              </div>
             </form>
           </div>
         </div>

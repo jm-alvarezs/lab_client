@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from "react";
 import DamageForm from "../components/damages/DamageForm";
 import { ModalContext } from "../context/ModalContext";
 import { PacientesContext } from "../context/PacientesContext";
+import { UserContext } from "../context/UserContext";
 import { validateEmail } from "../utils";
 
 const UsuarioForm = ({ id }) => {
@@ -20,6 +21,8 @@ const UsuarioForm = ({ id }) => {
   } = useContext(PacientesContext);
 
   const { alert } = useContext(ModalContext);
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (isNaN(id)) {
@@ -38,6 +41,7 @@ const UsuarioForm = ({ id }) => {
       return alert("El correo electrónico no es válido.");
     }
     if (paciente.id === "nuevo") {
+      paciente.idUser = user.idUser;
       postPaciente(paciente);
     } else {
       updatePaciente(paciente);
