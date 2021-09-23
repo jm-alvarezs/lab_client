@@ -119,7 +119,7 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
                 </div>
                 <div className="col-3">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control mb-3"
                     value={tiempoInterestimular}
                     onChange={(e) => handleChange("tiempoInterestimular", e)}
