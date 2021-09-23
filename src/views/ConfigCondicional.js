@@ -44,6 +44,9 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
     if (e) {
       e.preventDefault();
     }
+    if (["", " "].includes(config.target)) {
+      return alert("El target no puede estar vacío");
+    }
     postPrueba(config, "condicional", paciente, submitCallback);
   };
 

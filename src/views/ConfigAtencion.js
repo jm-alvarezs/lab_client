@@ -40,7 +40,7 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
     if (e) {
       e.preventDefault();
     }
-    if (config.target === "") {
+    if (["", " "].includes(config.target)) {
       return alert("El target no puede estar vacío");
     }
     postPrueba(config, "simple", paciente, submitCallback);
