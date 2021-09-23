@@ -23,7 +23,12 @@ const SingleResults = ({ id }) => {
   const renderConfig = () => {
     if (resultado && resultado !== null) {
       if (resultado.results.settings && resultado.results.settings !== null) {
-        return <PruebaConfig prueba={resultado.results.settings} />;
+        return (
+          <PruebaConfig
+            prueba={resultado.results.settings}
+            idTestType={resultado.test.testType.id}
+          />
+        );
       }
     }
   };
