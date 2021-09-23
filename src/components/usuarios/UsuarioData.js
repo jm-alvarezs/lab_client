@@ -28,7 +28,7 @@ const UsuarioData = ({ usuario }) => {
         <p>Género: {gender}</p>
       </div>
       <div className="col-12 col-md-6">
-        <p>Edad: {moment().diff(birthDate, "years")}</p>
+        <p>Edad: {moment().diff(birthDate, "years")} años</p>
         <p>Mano Dominante: {dominantHand}</p>
         <p>Antecedentes: {antecedent}</p>
         <p>Drogas o Medicamentos: {whichDrugs}</p>

@@ -40,6 +40,9 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
     if (e) {
       e.preventDefault();
     }
+    if (config.target === "") {
+      return alert("El target no puede estar vacío");
+    }
     postPrueba(config, "simple", paciente, submitCallback);
   };
 
@@ -51,6 +54,7 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
       value = Math.abs(value);
     }
     if (key === "fontSize" && parseInt(value) === 0) value = 1;
+    if (key === "target") value = String(value)[0];
     setConfig({ ...config, [key]: value });
   };
 
