@@ -56,6 +56,27 @@ const ConfigHemiAtencion = ({ idPaciente, submit, submitCallback }) => {
 
   const handleChange = (key, e) => {
     const { value } = e.target;
+    if (
+      [
+        "tiempoExposicion",
+        "tiempoInterestimular",
+        "fontSize",
+        "estimulosQ1",
+        "estimulosQ2",
+        "estimulosQ3",
+        "estimulosQ4",
+        "aparicionQ1",
+        "aparicionQ2",
+        "aparicionQ3",
+        "aparicionQ4",
+      ].includes(key)
+    ) {
+      value = Math.abs(value);
+    }
+    if (key === "fontSize" && parseInt(value) === 0) value = 1;
+    if (["", " "].includes(config.target)) {
+      return alert("El target no puede estar vacío");
+    }
     setConfig({ ...config, [key]: value });
   };
 

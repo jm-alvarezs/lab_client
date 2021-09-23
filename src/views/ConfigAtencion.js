@@ -49,7 +49,13 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
   const handleChange = (key, e) => {
     let { value } = e.target;
     if (
-      ["tiempoExposicion", "tiempoInterestimular", "fontSize"].includes(key)
+      [
+        "tiempoExposicion",
+        "tiempoInterestimular",
+        "fontSize",
+        "numeroEstimulos",
+        "aparicion",
+      ].includes(key)
     ) {
       value = Math.abs(value);
     }
