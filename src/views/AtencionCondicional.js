@@ -108,7 +108,7 @@ const AtencionCondicional = () => {
   }, [thankyou]);
 
   const handleKey = (e) => {
-    let currentTarget = targets[targets.length - 1];
+    let currentTarget = targets[estimulos - 1];
     if (currentTarget) {
       currentTarget.clicked = moment();
       currentTarget.character = String.fromCharCode(e.keyCode);
