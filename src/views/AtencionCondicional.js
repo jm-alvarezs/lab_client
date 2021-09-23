@@ -4,6 +4,7 @@ import { PruebasContext } from "../context/PruebasContext";
 import { navigate } from "@reach/router";
 import UsuarioService from "../services/UsuarioService";
 import { ModalContext } from "../context/ModalContext";
+import { getConfig } from "../utils";
 
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -58,27 +59,13 @@ const AtencionCondicional = () => {
 
   useEffect(() => {
     if (prueba === null) {
-      let token = window.location.href.split("token=")[1];
-      if (!token) {
+      const currentConfig = getConfig(defaultConfig);
+      if (!currentConfig.token) {
         setDisabled(true);
         return alert("No se puede iniciar la prueba");
       }
-      token = token.split("&")[0];
-      UsuarioService.setToken(token);
-      let idTest = window.location.href.split("idTest=")[1];
-      if (!idTest) return navigate("/");
-      idTest = parseInt(idTest.split("&")[0]);
-      let params = window.location.href.split("?")[1];
-      let currentConfig = { ...defaultConfig };
-      if (params) {
-        params = params.split("&");
-        params.forEach((elem) => {
-          const single = elem.split("=");
-          currentConfig[single[0]] = single[1];
-        });
-      } else {
-        currentConfig = defaultConfig;
-      }
+      UsuarioService.setToken(currentConfig.token);
+      if (!currentConfig.idTest) return navigate("/");
       setConfig(currentConfig);
     }
     return clearPrueba;
@@ -94,7 +81,6 @@ const AtencionCondicional = () => {
         }
         token = token.split("&")[0];
         setConfig({ ...prueba.settings, token });
-        getStyle();
       }
     }
   }, [prueba]);
@@ -106,6 +92,10 @@ const AtencionCondicional = () => {
       }, 5000);
     }
   }, [thankyou]);
+
+  useEffect(() => {
+    getStyle();
+  }, [config]);
 
   const handleKey = (e) => {
     let currentTarget = targets[estimulos - 1];
