@@ -198,6 +198,7 @@ h6 {
   position: absolute;
   top: calc(50vh - 12px);
   left: calc(50vw - 12px);
+  font-size: 42px;
 }
 
 #input-hidden {
