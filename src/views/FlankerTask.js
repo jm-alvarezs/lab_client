@@ -48,8 +48,8 @@ const FlankerTask = () => {
     estimulosEntrenamiento: 8,
     estimulosPrueba: 48,
     fontSize: 24,
-    color: "#000",
-    backgroundColor: "#fff",
+    color: "#000000",
+    backgroundColor: "#cccccc",
     leftKey: "A",
     rightKey: "L",
   };
