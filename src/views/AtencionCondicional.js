@@ -8,6 +8,12 @@ import { getConfig } from "../utils";
 
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+const charactersExclude = (target, clave) => {
+  characters.replace(target, "");
+  characters.replace(clave, "");
+  return characters;
+};
+
 const defaultConfig = {
   idTestType: 2,
   tiempoExposicion: "500",
@@ -139,23 +145,29 @@ const AtencionCondicional = () => {
     for (let i = 0; i <= parseInt(config.claveTarget); i++) {
       claveNoTarget.push(config.clave);
       let current = Math.floor(Math.random() * characters.length);
-      let currentTarget = characters[current];
+      let currentTarget = charactersExclude(config.target, config.clave)[
+        current
+      ];
       claveNoTarget.push(currentTarget);
     }
     let noClaveTarget = [];
     for (let i = 0; i <= parseInt(config.claveTarget); i++) {
       let current = Math.floor(Math.random() * characters.length);
-      let currentTarget = characters[current];
+      let currentTarget = charactersExclude(config.target, config.clave)[
+        current
+      ];
       noClaveTarget.push(currentTarget);
       noClaveTarget.push(config.target);
     }
     let noClaveNoTarget = [];
     for (let i = 0; i <= parseInt(config.claveTarget); i++) {
       let current = Math.floor(Math.random() * characters.length);
-      let currentTarget = characters[current];
+      let currentTarget = charactersExclude(config.target, config.clave)[
+        current
+      ];
       noClaveNoTarget.push(currentTarget);
       current = Math.floor(Math.random() * characters.length);
-      currentTarget = characters[current];
+      currentTarget = charactersExclude(config.target, config.clave)[current];
       noClaveNoTarget.push(currentTarget);
     }
     let total =

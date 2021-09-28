@@ -132,6 +132,7 @@ export const getTargetResult = (
   clave,
   prevItem
 ) => {
+  console.log(target, condicional, clave);
   if (condicional) {
     if (current.clicked) {
       return current.character === target && prevItem.character === clave;
