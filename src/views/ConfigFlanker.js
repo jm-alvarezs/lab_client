@@ -11,7 +11,7 @@ const ConfigFlanker = ({ idPaciente, submit, submitCallback }) => {
     estimulosPrueba: 48,
     fontSize: 100,
     color: "#000",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#ccc",
     leftKey: "A",
     rightKey: "L",
   });
