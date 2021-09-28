@@ -77,7 +77,6 @@ const AnswerCuestionario = () => {
       answered = questions.filter((question) => question !== "").length;
       targetAnswers = preguntasCUPOM.length;
     } else {
-      console.log(questions);
       answered = questions.filter((question) => question.before !== "").length;
       targetAnswers = preguntasNechapi.length;
     }

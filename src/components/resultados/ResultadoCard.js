@@ -3,7 +3,9 @@ import React from "react";
 import { Link } from "@reach/router";
 
 const ResultadoCard = ({ resultado }) => {
-  const type = String(resultado.testType.name).toLowerCase();
+  const type = String(
+    resultado.testType ? resultado.testType.name : resultado.surveyType.name
+  ).toLowerCase();
   return (
     <div key={resultado.id} className="card my-2 p-3 shadow-sm">
       <div className="row">
