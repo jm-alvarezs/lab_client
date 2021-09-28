@@ -18,12 +18,12 @@ const ResumenResultados = ({ resultado }) => {
           ? getResultadoTargetsCondicional(
               resultado.results.targets,
               resultado.results.target,
-              resultado.results.settings.clave,
-              "aciertos"
+              "aciertos",
+              resultado.results.settings.clave
             )
           : getResultadoTargets(
               resultado.results.targets,
-              resultado.results.settings.target,
+              resultado.results.target,
               "aciertos"
             )}
       </p>
@@ -33,8 +33,8 @@ const ResumenResultados = ({ resultado }) => {
           ? getResultadoTargetsCondicional(
               resultado.results.targets,
               resultado.results.target,
-              resultado.results.settings.clave,
-              "errores"
+              "errores",
+              resultado.results.settings.clave
             )
           : getResultadoTargets(
               resultado.results.targets,
@@ -49,14 +49,15 @@ const ResumenResultados = ({ resultado }) => {
           ? getResultadoTargetsCondicional(
               resultado.results.targets,
               resultado.results.target,
-              resultado.results.settings.clave,
               "omision",
+              resultado.results.settings.clave,
               true
             )
           : getResultadoTargets(
               resultado.results.targets,
               resultado.results.target,
               "omision",
+              "",
               true
             )}
       </p>
@@ -66,8 +67,8 @@ const ResumenResultados = ({ resultado }) => {
           ? getResultadoTargetsCondicional(
               resultado.results.targets,
               resultado.results.target,
-              resultado.results.prevTarget,
               "omision",
+              resultado.results.settings.clave,
               false
             )
           : getResultadoTargets(
@@ -83,8 +84,8 @@ const ResumenResultados = ({ resultado }) => {
           ? getResultadoTargetsCondicional(
               resultado.results.targets,
               resultado.results.target,
-              resultado.results.prevTarget,
               "click",
+              resultado.results.settings.clave,
               true
             )
           : getResultadoTargets(
@@ -100,8 +101,8 @@ const ResumenResultados = ({ resultado }) => {
           ? getResultadoTargetsCondicional(
               resultado.results.targets,
               resultado.results.target,
-              resultado.results.prevTarget,
               "click",
+              resultado.results.settings.clave,
               false
             )
           : getResultadoTargets(

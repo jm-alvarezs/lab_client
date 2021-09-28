@@ -29,7 +29,7 @@ const defaultConfig = {
   noClaveTarget: "19",
   claveNoTarget: "19",
   noClaveNoTarget: "75",
-  paresTotales: "150",
+  paresTotales: "300",
   keyCode: "13",
   duracion: "10",
   idPatient: "",
@@ -137,12 +137,13 @@ const AtencionCondicional = () => {
     document.body.addEventListener("keydown", handleKey);
     startTime = moment();
     let claveTarget = [];
-    for (let i = 0; i <= parseInt(config.claveTarget); i++) {
+    for (let i = 0; i < parseInt(config.claveTarget); i++) {
       claveTarget.push(config.clave);
       claveTarget.push(config.target);
     }
+    console.log(claveTarget);
     let claveNoTarget = [];
-    for (let i = 0; i <= parseInt(config.claveTarget); i++) {
+    for (let i = 0; i < parseInt(config.claveNoTarget); i++) {
       claveNoTarget.push(config.clave);
       let current = Math.floor(Math.random() * characters.length);
       let currentTarget = charactersExclude(config.target, config.clave)[
@@ -150,8 +151,9 @@ const AtencionCondicional = () => {
       ];
       claveNoTarget.push(currentTarget);
     }
+    console.log(claveNoTarget);
     let noClaveTarget = [];
-    for (let i = 0; i <= parseInt(config.claveTarget); i++) {
+    for (let i = 0; i < parseInt(config.noClaveTarget); i++) {
       let current = Math.floor(Math.random() * characters.length);
       let currentTarget = charactersExclude(config.target, config.clave)[
         current
@@ -159,8 +161,9 @@ const AtencionCondicional = () => {
       noClaveTarget.push(currentTarget);
       noClaveTarget.push(config.target);
     }
+    console.log(noClaveTarget);
     let noClaveNoTarget = [];
-    for (let i = 0; i <= parseInt(config.claveTarget); i++) {
+    for (let i = 0; i < parseInt(config.noClaveNoTarget); i++) {
       let current = Math.floor(Math.random() * characters.length);
       let currentTarget = charactersExclude(config.target, config.clave)[
         current
@@ -170,6 +173,7 @@ const AtencionCondicional = () => {
       currentTarget = charactersExclude(config.target, config.clave)[current];
       noClaveNoTarget.push(currentTarget);
     }
+    console.log(noClaveNoTarget);
     let total =
       (parseInt(config.claveTarget) +
         parseInt(config.claveNoTarget) +

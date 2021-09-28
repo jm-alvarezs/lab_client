@@ -132,12 +132,14 @@ export const getTargetResult = (
   clave,
   prevItem
 ) => {
-  console.log(target, condicional, clave);
+  console.log(current, target, condicional, clave, prevItem);
   if (condicional) {
     if (current.clicked) {
-      return current.character === target && prevItem.character === clave;
+      return current.target === target && prevItem.target !== clave;
     }
-    return current.character !== target;
+    return (
+      current.target === target && prevItem.target === clave && prevItem.clicked
+    );
   }
   if (current.target === target) {
     if (current.clicked) return true;
@@ -150,17 +152,20 @@ export const getTargetResult = (
 export const getResultadoTargetsCondicional = (
   targets,
   character,
-  prevCharacter,
   type,
+  prevCharacter,
   correct
 ) => {
+  if (type === "omision") {
+    console.log(targets, character, prevCharacter, correct);
+  }
   switch (type) {
     case "aciertos":
       return targets.filter((target, index) => {
         if (index === 0) {
           return !target.clicked;
         } else {
-          if (target.character === character) {
+          if (target.target === character) {
             if (targets[index - 1].target === prevCharacter) {
               return target.clicked;
             }
@@ -173,7 +178,7 @@ export const getResultadoTargetsCondicional = (
         if (index === 0) {
           return target.clicked;
         } else {
-          if (target.character === character) {
+          if (target.target === character) {
             if (targets[index - 1].target === prevCharacter) {
               return !target.clicked;
             }
@@ -208,7 +213,7 @@ export const getResultadoTargetsCondicional = (
       return targets.filter((target, index) => {
         if (!target.clicked) {
           if (correct) {
-            return getTargetResult(
+            return !getTargetResult(
               target,
               character,
               true,
@@ -216,7 +221,7 @@ export const getResultadoTargetsCondicional = (
               index > 0 ? targets[index - 1] : {}
             );
           } else {
-            return !getTargetResult(
+            return getTargetResult(
               target,
               character,
               true,

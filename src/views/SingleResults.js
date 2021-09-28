@@ -41,7 +41,7 @@ const SingleResults = ({ id }) => {
             key={target.timestamp}
             target={target}
             type={resultado.test.testType.id}
-            objective={resultado.results.target}
+            objective={resultado.results.settings.target}
             index={index}
             prevItem={index > 0 ? resultado.results.targets[index - 1] : {}}
             clave={resultado.results.settings.clave}
