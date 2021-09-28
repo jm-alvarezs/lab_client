@@ -63,8 +63,8 @@ const TorreHanoi = () => {
   const defaultConfig = {
     administracion: "A",
     discos: 3,
-    mensajeError: true,
-    sonidoError: true,
+    mensajeError: false,
+    sonidoError: false,
   };
 
   const errorSound = new Audio(error_sound);

@@ -10,8 +10,8 @@ const ConfigHanoi = ({ idPaciente, submit, submitCallback }) => {
     idTestType: 4,
     administracion: "A",
     discos: "3",
-    sonidoError: true,
-    mensajeError: true,
+    sonidoError: false,
+    mensajeError: false,
   });
 
   const { spinner, postPrueba } = useContext(PruebasContext);
