@@ -35,11 +35,16 @@ const PreguntasNechapi = ({ modifier }) => {
         <div className="col col-md-6">
           <p className="mb-0 bold">Pregunta</p>
         </div>
-        <div className="col col-md-3 text-center">
-          <p className="mb-0 bold">Antes</p>
-        </div>
-        <div className="col col-md-3 text-center">
-          <p className="mb-0 bold">Despues</p>
+        {/*
+          <div className="col col-md-3 text-center">
+            <p className="mb-0 bold">Antes</p>
+          </div>
+          <div className="col col-md-3 text-center">
+            <p className="mb-0 bold">Despues</p>
+          </div>
+          */}
+        <div className="col col-md-6 text-center">
+          <p className="mb-0 bold">Respuesta</p>
         </div>
       </div>{" "}
       {preguntasNechapi.map((pregunta, index) => (
@@ -50,7 +55,7 @@ const PreguntasNechapi = ({ modifier }) => {
           <div className="col col-md-6">
             <p>{pregunta}</p>
           </div>
-          <div className="col col-md-3 text-center">
+          <div className="col col-md-6 text-center">
             {new Array(5).fill(1).map((one, idx) => (
               <div key={idx} className="d-inline-block mx-2">
                 <label className="d-block">{idx + 1}</label>
@@ -63,6 +68,7 @@ const PreguntasNechapi = ({ modifier }) => {
               </div>
             ))}
           </div>
+          {/*
           <div className="col col-md-3 text-center">
             {new Array(5).fill(1).map((one, idx) => (
               <div key={idx} className="d-inline-block mx-2">
@@ -75,6 +81,7 @@ const PreguntasNechapi = ({ modifier }) => {
               </div>
             ))}
           </div>
+            */}
         </div>
       ))}
     </div>
