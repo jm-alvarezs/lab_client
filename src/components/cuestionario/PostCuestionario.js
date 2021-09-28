@@ -60,7 +60,7 @@ const PostCuestionario = ({ id, type, url, defaultEmail }) => {
       <input
         id="url-input"
         type="text"
-        value={url}
+        value={`${window.location.origin}${url}`}
         className="invisible"
         onChange={(e) => e}
       />
