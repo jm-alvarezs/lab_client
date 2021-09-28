@@ -131,26 +131,26 @@ const AtencionCondicional = () => {
     document.body.addEventListener("keydown", handleKey);
     startTime = moment();
     let claveTarget = [];
-    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+    for (let i = 0; i <= parseInt(config.claveTarget); i++) {
       claveTarget.push(config.clave);
       claveTarget.push(config.target);
     }
     let claveNoTarget = [];
-    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+    for (let i = 0; i <= parseInt(config.claveTarget); i++) {
       claveNoTarget.push(config.clave);
       let current = Math.floor(Math.random() * characters.length);
       let currentTarget = characters[current];
       claveNoTarget.push(currentTarget);
     }
     let noClaveTarget = [];
-    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+    for (let i = 0; i <= parseInt(config.claveTarget); i++) {
       let current = Math.floor(Math.random() * characters.length);
       let currentTarget = characters[current];
       noClaveTarget.push(currentTarget);
       noClaveTarget.push(config.target);
     }
     let noClaveNoTarget = [];
-    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+    for (let i = 0; i <= parseInt(config.claveTarget); i++) {
       let current = Math.floor(Math.random() * characters.length);
       let currentTarget = characters[current];
       noClaveNoTarget.push(currentTarget);
@@ -164,7 +164,6 @@ const AtencionCondicional = () => {
         parseInt(config.noClaveTarget) +
         parseInt(config.noClaveNoTarget)) *
       2;
-
     while (targets.length < total) {
       let cuadrante = Math.floor(Math.random() * 4) + 1;
       let currentTarget = "";
