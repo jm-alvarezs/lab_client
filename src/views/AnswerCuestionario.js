@@ -13,6 +13,7 @@ const AnswerCuestionario = () => {
   const [token, setToken] = useState("");
   const [idSurvey, setIdSurvey] = useState("");
   const [idSurveyType, setidSurveyType] = useState("");
+  const [finished, setFinished] = useState(false);
 
   const { postAnswer } = useContext(SurveyContext);
 
@@ -33,9 +34,40 @@ const AnswerCuestionario = () => {
     setidSurveyType(parseInt(idSurveyType));
     setIdPatient(idPatient);
     setIdSurvey(idSurvey);
-    if (idSurveyType === 1) setTipo("nechapi");
+    if (parseInt(idSurveyType) === 1) setTipo("nechapi");
     else setTipo("cupom");
   }, []);
+
+  const renderForm = () => {
+    if (finished) {
+      return (
+        <div>
+          <p>Gracias. Ya terminaste, puedes cerrar esta ventana.</p>
+        </div>
+      );
+    }
+    return (
+      <form onSubmit={handleSubmit}>
+        <div className="row my-2 mx-0">
+          <div className="col-12 col-md-6">
+            <label>Observaciones</label>
+          </div>
+          <div className="col-12 col-md-6">
+            <textarea
+              rows="4"
+              className="form-control mw-100"
+              value={observaciones}
+              onChange={(e) => setObservaciones(e.target.value)}
+            />
+          </div>
+        </div>
+        {renderPreguntas()}
+        <button type="submit" className="btn btn-dark">
+          Terminado
+        </button>
+      </form>
+    );
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,6 +92,7 @@ const AnswerCuestionario = () => {
       questions,
     };
     postAnswer(data, token);
+    setFinished(true);
   };
 
   const renderPreguntas = () => {
@@ -74,27 +107,7 @@ const AnswerCuestionario = () => {
           ? String(tipo)[0].toUpperCase() + String(tipo).substring(1)
           : ""}
       </h1>
-      <div className="card p-3">
-        <form onSubmit={handleSubmit}>
-          <div className="row my-2 mx-0">
-            <div className="col-12 col-md-6">
-              <label>Observaciones</label>
-            </div>
-            <div className="col-12 col-md-6">
-              <textarea
-                rows="4"
-                className="form-control mw-100"
-                value={observaciones}
-                onChange={(e) => setObservaciones(e.target.value)}
-              />
-            </div>
-          </div>
-          {renderPreguntas()}
-          <button type="submit" className="btn btn-dark">
-            Terminado
-          </button>
-        </form>
-      </div>
+      <div className="card p-3">{renderForm()}</div>
     </div>
   );
 };

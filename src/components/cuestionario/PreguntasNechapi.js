@@ -67,7 +67,11 @@ const PreguntasNechapi = ({ modifier }) => {
             {new Array(5).fill(1).map((one, idx) => (
               <div key={idx} className="d-inline-block mx-2">
                 <label className="d-block">{idx + 1}</label>
-                <input type="radio" name={`after-${index}`} />
+                <input
+                  type="radio"
+                  name={`after-${index}`}
+                  onChange={handleChange}
+                />
               </div>
             ))}
           </div>
