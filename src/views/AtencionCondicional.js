@@ -21,7 +21,7 @@ const defaultConfig = {
   target: "O",
   fontFamily: "Courier",
   fontStyle: "Normal",
-  fontSize: "42",
+  fontSize: "100",
   color: "#000000",
   backgroundColor: "#cccccc",
   clave: "X",
@@ -141,7 +141,6 @@ const AtencionCondicional = () => {
       claveTarget.push(config.clave);
       claveTarget.push(config.target);
     }
-    console.log(claveTarget);
     let claveNoTarget = [];
     for (let i = 0; i < parseInt(config.claveNoTarget); i++) {
       claveNoTarget.push(config.clave);
@@ -151,7 +150,6 @@ const AtencionCondicional = () => {
       ];
       claveNoTarget.push(currentTarget);
     }
-    console.log(claveNoTarget);
     let noClaveTarget = [];
     for (let i = 0; i < parseInt(config.noClaveTarget); i++) {
       let current = Math.floor(Math.random() * characters.length);
@@ -161,7 +159,6 @@ const AtencionCondicional = () => {
       noClaveTarget.push(currentTarget);
       noClaveTarget.push(config.target);
     }
-    console.log(noClaveTarget);
     let noClaveNoTarget = [];
     for (let i = 0; i < parseInt(config.noClaveNoTarget); i++) {
       let current = Math.floor(Math.random() * characters.length);
@@ -173,7 +170,6 @@ const AtencionCondicional = () => {
       currentTarget = charactersExclude(config.target, config.clave)[current];
       noClaveNoTarget.push(currentTarget);
     }
-    console.log(noClaveNoTarget);
     let total =
       (parseInt(config.claveTarget) +
         parseInt(config.claveNoTarget) +
@@ -242,6 +238,11 @@ const AtencionCondicional = () => {
     setStyleObject(current);
   };
 
+  const getTecla = () => {
+    if (config.keyCode === "any") return "cualquier tecla";
+    return `la tecla ${config.keyCode === "13" ? "Intro" : "Espacio"}`;
+  };
+
   return (
     <div className="container-fluid">
       {!started ? (
@@ -251,17 +252,18 @@ const AtencionCondicional = () => {
               {!thankyou ? (
                 <div className="p-5">
                   <h1>Bienvenido</h1>
-                  <p>A continuación realizarás un ejercicio.</p>
+                  <p className="instrucciones">
+                    A continuación realizarás un ejercicio.
+                  </p>
                   <h3>Instrucciones</h3>
-                  <p>
+                  <p className="instrucciones">
                     En el centro de la pantalla irán apareciendo de manera
                     secuencial distintas letras del abecedario. La tarea
-                    consiste que usted pulse la tecla{" "}
-                    {String.fromCharCode(config.keyCode)} cuando vea aparecer la
-                    letra {config.target}, siempre y cuando el caracter esté
-                    precedido por el caracter {config.clave}.
+                    consiste que usted pulse la tecla “{getTecla()}” cuando vea
+                    aparecer la letra {config.target}, siempre y cuando la letra
+                    O esté precedido por la letra {config.clave}.
                   </p>
-                  <p>
+                  <p className="instrucciones">
                     Es importante que responda tan rápido como pueda, ya que los
                     estímulos aparecen y desaparecen rápidamente.
                   </p>
@@ -276,7 +278,7 @@ const AtencionCondicional = () => {
               ) : (
                 <div className="p-5">
                   <h1>¡Gracias!</h1>
-                  <p>Haz completado el ejercicio.</p>
+                  <p className="instrucciones">Haz completado el ejercicio.</p>
                 </div>
               )}
             </div>

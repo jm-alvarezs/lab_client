@@ -7,34 +7,49 @@ import { ModalContext } from "../context/ModalContext";
 import InterScreen from "../components/pruebas/InterScreen";
 
 const instruccionesA = [
-  `En la pantalla aparecerán tres barras, numeradas con los números
-    1, 2 y 3. En la barra número 1 hay una torre formada por varios
-    discos. Lo que tiene que hacer es formar la misma torre, con los
-    discos en el mismo orden, en la barra número 3. Para hacerlo,
-    tiene que mover los discos de uno en uno, tecleando primero el
-    número de la barra donde esté el disco que quiere mover, y después
-    el número de la barra hacia donde lo quiere mover. Puede mover los
-    discos hacia la derecha o hacia la izquierda, y puede usar las
-    tres barras.`,
-  `Tiene que tener en cuenta que para mover el disco que está abajo
-   -el más grande-, primero tiene que quitar los que estén encima.`,
+  <p className="instrucciones">
+    En la pantalla aparecerán tres barras, numeradas con los números 1, 2 y 3.
+    En la barra número 1 hay una torre formada por varios discos. Lo que tiene
+    que hacer es formar la misma torre, con los discos en el mismo orden, en la
+    barra número 3. Para hacerlo, tiene que mover los discos de uno en uno,
+    tecleando primero el número de la barra donde esté el disco que quiere
+    mover, y después el número de la barra hacia donde lo quiere mover. Puede
+    mover los discos hacia la derecha o hacia la izquierda, y puede usar las
+    tres barras.
+  </p>,
+  <p className="instrucciones">
+    Para hacerlo, tiene que mover los discos de uno en uno, tecleando primero el
+    número de la barra donde esté el disco que quiere mover, y después el número
+    de la barra hacia donde lo quiere mover. Puede mover los discos hacia la
+    derecha o hacia la izquierda, y puede usar las tres barras.
+  </p>,
+  <p className="instrucciones">
+    Tiene que tener en cuenta que para mover el disco que está abajo, primero
+    tiene que quitar los discos que estén encima (si los hubiera).
+  </p>,
 ];
 
 const instruccionesB = [
-  `En la pantalla aparecerán tres barras, numeradas con los números 1,
-    2 y 3. En la barra número 1 hay una torre formada por varios discos.
-    Lo que tiene que hacer es formar la misma torre, con los discos en
-    el mismo orden, en la barra número 3. Para hacerlo, tiene que mover
-    los discos de uno en uno, tecleando primero el número de la barra
-    donde esté el disco que quiere mover, y después el número de la
-    barra hacia donde lo quiere mover. Puede mover los discos hacia la
-    derecha o hacia la izquierda, y puede usar las tres barras.`,
-  `Tiene que tener en cuenta que para mover el disco que está abajo -el
-    más grande-, primero tiene que quitar los que estén encima. También
-    debe tener en cuenta que sólo podrá poner un disco o bien en una
-    barra que esté vacía, o bien en una barra sobre un disco que sea más
-    grande que el que esté moviendo. Es decir, no puede poner un disco
-    grande sobre uno más pequeño.`,
+  <p className="instrucciones">
+    En la pantalla aparecerán tres barras, numeradas con los números 1, 2 y 3.
+    En la barra número 1 hay una torre formada por varios discos. Lo que tiene
+    que hacer es formar la misma torre, con los discos en el mismo orden, en la
+    barra número 3. Para hacerlo, tiene que mover los discos de uno en uno,
+    tecleando primero el número de la barra donde esté el disco que quiere
+    mover, y después el número de la barra hacia donde lo quiere mover. Puede
+    mover los discos hacia la derecha o hacia la izquierda, y puede usar las
+    tres barras.
+  </p>,
+  <p className="instrucciones">
+    Para hacerlo, tiene que mover los discos de uno en uno, tecleando primero el
+    número de la barra donde esté el disco que quiere mover, y después el número
+    de la barra hacia donde lo quiere mover. Puede mover los discos hacia la
+    derecha o hacia la izquierda, y puede usar las tres barras.
+  </p>,
+  <p className="instrucciones">
+    Tiene que tener en cuenta que para mover el disco que está abajo, primero
+    tiene que quitar los discos que estén encima (si los hubiera).
+  </p>,
 ];
 
 const TorreHanoi = () => {
@@ -160,10 +175,6 @@ const TorreHanoi = () => {
   const handleEnd = (finished) => {
     if (!finished) {
       popEstimulo();
-    } else {
-      setTimeout(() => {
-        success("Ganaste");
-      }, 500);
     }
     if (startTime !== null) {
       setFinish(true);
@@ -258,7 +269,10 @@ const TorreHanoi = () => {
           width: `calc(100% - ${disco.size} * 60px)`,
           margin: "auto",
           position: "absolute",
-          bottom: `${index * 40}px`,
+          bottom:
+            current.origen === disc && index === discosRender.length - 1
+              ? "280px"
+              : `${index * 40}px`,
           left: `${disco.size * 30}px`,
         }}
       ></div>

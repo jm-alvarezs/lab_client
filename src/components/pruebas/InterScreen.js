@@ -19,7 +19,9 @@ const InterScreen = ({
           {!thankyou ? (
             <div className="p-5">
               <h1>Bienvenido</h1>
-              <p>A continuación realizarás un ejercicio.</p>
+              <p className="instrucciones">
+                A continuación realizarás un ejercicio.
+              </p>
               <h3>Instrucciones</h3>
               {<Instrucciones contents={instrucciones} />}
               <button
@@ -33,7 +35,7 @@ const InterScreen = ({
           ) : (
             <div className="p-5">
               <h1>¡Gracias!</h1>
-              <p>Haz completado el ejercicio.</p>
+              <p className="instrucciones">Haz completado el ejercicio.</p>
             </div>
           )}
         </div>

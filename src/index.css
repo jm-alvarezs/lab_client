@@ -177,9 +177,14 @@ h6 {
   margin-bottom: 25vh;
 }
 
+.instrucciones {
+  font-size: 20px;
+}
+
 .disco {
   height: 40px;
   border-radius: 5px;
+  transition: all 0.25s;
 }
 
 .flanker-input-container {

@@ -13,7 +13,7 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
     target: "O",
     fontFamily: "Courier",
     fontStyle: "Normal",
-    fontSize: "42",
+    fontSize: "100",
     color: "#000000",
     backgroundColor: "#cccccc",
     numeroEstimulos: "300",

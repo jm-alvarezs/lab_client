@@ -14,7 +14,7 @@ const defaultConfig = {
   target: "O",
   fontFamily: "Courier",
   fontStyle: "Normal",
-  fontSize: 24,
+  fontSize: 100,
   color: "#000000",
   backgroundColor: "#cccccc",
   keyCode: "13",
@@ -287,9 +287,11 @@ const AtencionHemi = () => {
               {!thankyou ? (
                 <div className="p-5">
                   <h1>Bienvenido</h1>
-                  <p>A continuación realizarás un ejercicio.</p>
+                  <p className="instrucciones">
+                    A continuación realizarás un ejercicio.
+                  </p>
                   <h3>Instrucciones</h3>
-                  <p>
+                  <p className="instrucciones">
                     En el centro de la pantalla irán apareciendo de manera
                     secuencial distintas letras del abecedario. La tarea
                     consiste que usted pulse la tecla{" "}
@@ -297,7 +299,7 @@ const AtencionHemi = () => {
                     letra {config.target} sin retirar la mirada del punto del
                     centro.
                   </p>
-                  <p>
+                  <p className="instrucciones">
                     Es importante que responda tan rápido como pueda, ya que los
                     estímulos aparecen y desaparecen rápidamente.
                   </p>
@@ -312,7 +314,7 @@ const AtencionHemi = () => {
               ) : (
                 <div className="p-5">
                   <h1>¡Gracias!</h1>
-                  <p>Haz completado el ejercicio.</p>
+                  <p className="instrucciones">Haz completado el ejercicio.</p>
                 </div>
               )}
             </div>

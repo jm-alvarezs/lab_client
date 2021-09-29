@@ -11,7 +11,7 @@ const ConfigHemiAtencion = ({ idPaciente, submit, submitCallback }) => {
     target: "O",
     fontFamily: "Courier",
     fontStyle: "Normal",
-    fontSize: "24",
+    fontSize: "100",
     color: "#000000",
     backgroundColor: "#cccccc",
     keyCode: "13",

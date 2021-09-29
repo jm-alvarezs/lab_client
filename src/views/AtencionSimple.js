@@ -15,7 +15,7 @@ const defaultConfig = {
   fontFamily: "Courier",
   fontStyle: "bold",
   color: "#000000",
-  fontSize: 42,
+  fontSize: 100,
   backgroundColor: "#cccccc",
   numeroEstimulos: 300,
   aparicion: 17,
@@ -208,17 +208,22 @@ const AtencionSimple = () => {
     setStyleObject(current);
   };
 
+  const getTecla = () => {
+    if (config.keyCode === "any") return "cualquier tecla";
+    return `la tecla ${config.keyCode === "13" ? "Intro" : "Espacio"}`;
+  };
+
   const renderInstrucciones = () => {
     return [
-      `En el centro de la pantalla irán apareciendo de manera secuencial
-          distintas letras del abecedario. La tarea consiste que usted pulse ${
-            config.keyCode === "any"
-              ? "cualquier tecla"
-              : `la tecla ${config.keyCode === "13" ? '"Intro"' : '"Espacio"'}`
-          } cuando vea aparecer la
-          letra ${config.target}.`,
-      `Es importante que responda tan rápido como pueda, ya que los estímulos
-          aparecen y desaparecen rápidamente.`,
+      <p className="instrucciones">
+        En el centro de la pantalla irán apareciendo de manera secuencial
+        distintas letras del abecedario. La tarea consiste que usted pulse la
+        tecla "{getTecla()}" cuando vea aparecer la letra {config.target}.
+      </p>,
+      <p className="instrucciones">
+        Es importante que responda tan rápido como pueda, ya que los estímulos
+        aparecen y desaparecen rápidamente.
+      </p>,
     ];
   };
 

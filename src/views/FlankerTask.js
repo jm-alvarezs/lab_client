@@ -5,20 +5,20 @@ import { PruebasContext } from "../context/PruebasContext";
 import { EstimuloFlanker } from "../components/flanker/EstimuloFlanker";
 import BaseTest from "./BaseTest";
 import moment from "moment";
+import flanker from "../assets/images/flanker.png";
 
 const instrucciones = ({ leftKey, rightKey }) => [
-  `A continuación, vas a realizar un juego. En la pantalla vas a ver 5
-    flechas, tu tarea es fijarte en la dirección en la que apunta la
-    flecha que se encuentra en medio. Si la flecha va hacia la derecha vas
-    a presionar la tecla “${rightKey}” y si va hacia la izquierda vas a presionar la
-    tecla “${leftKey}”. Presiona cualquier tecla para ver un ejemplo.`,
-  `Primero vas a hacer un ejercicio de prueba para que aprendas cómo
-    funciona el juego. Pon tu dedo índice derecho sobre la tecla “${rightKey}” y tu dedo
-    índice izquierdo sobre la tecla “${leftKey}” y no lo levantes hasta que se termine el
-    juego. ¿Estás preparado? presiona cualquier tecla para empezar.
-    Posterior a la fase de prueba, se dirá lo siguiente: “ya se terminó la
-    fase de prueba, ya vamos a empezar el juego, ¿estás preparado?
-    presiona cualquier tecla para empezar.`,
+  <p className="instrucciones">
+    A continuación, vas a realizar un juego. En la pantalla vas a ver 5 flechas,
+    tu tarea es fijarte en la dirección en la que apunta la flecha que se
+    encuentra en medio.
+  </p>,
+  <img src={flanker} className="mw-50 w-50 m-auto d-block" />,
+  <p className="instrucciones">
+    Si la flecha va hacia la derecha vas a presionar la tecla “{rightKey}” y si
+    va hacia la izquierda vas a presionar la tecla “{leftKey}”.
+  </p>,
+  <p className="instrucciones">Presiona “Comenzar” para iniciar la prueba.</p>,
 ];
 
 const FlankerTask = () => {
@@ -47,7 +47,7 @@ const FlankerTask = () => {
     idTestType: 5,
     estimulosEntrenamiento: 8,
     estimulosPrueba: 48,
-    fontSize: 24,
+    fontSize: 100,
     color: "#000000",
     backgroundColor: "#cccccc",
     leftKey: "A",
