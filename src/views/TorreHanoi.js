@@ -11,11 +11,7 @@ const instruccionesA = [
     En la pantalla aparecerán tres barras, numeradas con los números 1, 2 y 3.
     En la barra número 1 hay una torre formada por varios discos. Lo que tiene
     que hacer es formar la misma torre, con los discos en el mismo orden, en la
-    barra número 3. Para hacerlo, tiene que mover los discos de uno en uno,
-    tecleando primero el número de la barra donde esté el disco que quiere
-    mover, y después el número de la barra hacia donde lo quiere mover. Puede
-    mover los discos hacia la derecha o hacia la izquierda, y puede usar las
-    tres barras.
+    barra número 3.
   </p>,
   <p className="instrucciones">
     Para hacerlo, tiene que mover los discos de uno en uno, tecleando primero el
