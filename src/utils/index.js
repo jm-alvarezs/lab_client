@@ -306,6 +306,7 @@ export const preguntasNechapi = [
   "Es una persona que se mete mucho en líos",
   "No tiene miedo a nada",
   "Es una persona que tiene muchos amigos",
+  "Participa en muchas actividades sociales",
   "Bebe más de lo que debiera",
   "Toma drogas",
   "Le gusta castigar a los demás",
