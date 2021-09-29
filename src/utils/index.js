@@ -132,7 +132,6 @@ export const getTargetResult = (
   clave,
   prevItem
 ) => {
-  console.log(current, target, condicional, clave, prevItem);
   if (condicional) {
     if (current.clicked) {
       return current.target === target && prevItem.target !== clave;
@@ -156,9 +155,6 @@ export const getResultadoTargetsCondicional = (
   prevCharacter,
   correct
 ) => {
-  if (type === "omision") {
-    console.log(targets, character, prevCharacter, correct);
-  }
   switch (type) {
     case "aciertos":
       return targets.filter((target, index) => {
@@ -369,13 +365,15 @@ export const getPuntuacionNechapi = (categoria, respuestas, tiempo) => {
   let total = 0;
   let puntuacion = 0;
   categoriasNechapi[categoria].forEach((numero) => {
-    let respuesta = respuestas.find((resp) => resp.numero === numero);
+    let respuesta = respuestas.find(
+      (resp) => parseInt(resp.index) === parseInt(numero)
+    );
     total += 5;
     if (respuesta) {
-      puntuacion += respuesta[tiempo];
+      puntuacion += parseInt(respuesta[tiempo]);
     }
   });
-  return parseFloat((puntuacion / total).toFixed(2));
+  return parseFloat((puntuacion / total).toFixed(2)) * 100;
 };
 
 export const generateRandom = (type) => {

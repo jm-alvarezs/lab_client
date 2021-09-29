@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ResultadosContext } from "../context/ResultadosContext";
-import { getPuntuacionCUPOM, getPuntuacionNechapi } from "../utils";
+import {
+  getChartSeries,
+  getPuntuacionCUPOM,
+  getPuntuacionNechapi,
+} from "../utils";
 import ReactToPdf from "react-to-pdf";
 import moment from "moment";
 import RespuestasCUPOM from "../components/cuestionario/RespuestasCUPOM";
@@ -58,7 +62,7 @@ const ResultadosCuestionario = ({ id }) => {
   const renderResults = () => {
     if (resultado && resultado !== null) {
       if (resultado.results) {
-        if (resultado.survey.idSurveyType === 1)
+        if (resultado.survey.type === 1)
           return (
             <div className="container-fluid mx-0">
               <div className="row my-2">
@@ -73,7 +77,7 @@ const ResultadosCuestionario = ({ id }) => {
                   {getPuntuacionNechapi(
                     "anger",
                     resultado.results.questions,
-                    "antes"
+                    "before"
                   )}
                   {"%"}
                 </div>
@@ -95,7 +99,7 @@ const ResultadosCuestionario = ({ id }) => {
                     getPuntuacionNechapi(
                       "anger",
                       resultado.results.questions,
-                      "antes"
+                      "before"
                     )
                   ).toFixed(2)}
                   {"%"}
@@ -107,7 +111,7 @@ const ResultadosCuestionario = ({ id }) => {
                   {getPuntuacionNechapi(
                     "sensation",
                     resultado.results.questions,
-                    "antes"
+                    "before"
                   )}
                   {"%"}
                 </div>
@@ -129,7 +133,7 @@ const ResultadosCuestionario = ({ id }) => {
                     getPuntuacionNechapi(
                       "sensation",
                       resultado.results.questions,
-                      "antes"
+                      "before"
                     )
                   ).toFixed(2)}
                   {"%"}
@@ -141,7 +145,7 @@ const ResultadosCuestionario = ({ id }) => {
                   {getPuntuacionNechapi(
                     "emotional",
                     resultado.results.questions,
-                    "antes"
+                    "before"
                   )}
                   {"%"}
                 </div>
@@ -163,7 +167,7 @@ const ResultadosCuestionario = ({ id }) => {
                     getPuntuacionNechapi(
                       "emotional",
                       resultado.results.questions,
-                      "antes"
+                      "before"
                     )
                   ).toFixed(2)}
                   {"%"}
@@ -175,7 +179,7 @@ const ResultadosCuestionario = ({ id }) => {
                   {getPuntuacionNechapi(
                     "sociability",
                     resultado.results.questions,
-                    "antes"
+                    "before"
                   )}
                   {"%"}
                 </div>
@@ -197,7 +201,7 @@ const ResultadosCuestionario = ({ id }) => {
                     getPuntuacionNechapi(
                       "sociability",
                       resultado.results.questions,
-                      "antes"
+                      "before"
                     )
                   ).toFixed(2)}
                   {"%"}
@@ -209,7 +213,7 @@ const ResultadosCuestionario = ({ id }) => {
                   {getPuntuacionNechapi(
                     "motivation",
                     resultado.results.questions,
-                    "antes"
+                    "before"
                   )}
                   {"%"}
                 </div>
@@ -231,7 +235,7 @@ const ResultadosCuestionario = ({ id }) => {
                     getPuntuacionNechapi(
                       "motivation",
                       resultado.results.questions,
-                      "antes"
+                      "before"
                     )
                   ).toFixed(2)}
                   {"%"}
@@ -291,7 +295,7 @@ const ResultadosCuestionario = ({ id }) => {
 
   const renderChart = () => {
     if (resultado && resultado !== null) {
-      if (resultado.survey.idSurveyType === 2) {
+      if (resultado.survey.type === 1) {
         return <ChartNechapi questions={resultado.results.questions} />;
       }
       return <ChartCUPOM questions={resultado.results.questions} />;
@@ -300,7 +304,7 @@ const ResultadosCuestionario = ({ id }) => {
 
   const renderRespuestas = () => {
     if (resultado && resultado !== null && showPreguntas) {
-      if (resultado.survey.idSurveyType === 1) {
+      if (resultado.survey.type === 1) {
         return <RespuestasNechapi respuestas={resultado.results.questions} />;
       }
       return <RespuestasCUPOM respuestas={resultado.results.questions} />;

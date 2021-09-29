@@ -29,11 +29,11 @@ const ChartNechapi = ({ questions }) => {
       series={[
         {
           name: "Antes",
-          data: getChartSeries("nechapi", questions, "antes"),
+          data: getChartSeries("nechapi", questions, "before"),
         },
         {
           name: "Después",
-          data: getChartSeries("nechapi", questions, "despues"),
+          data: getChartSeries("nechapi", questions, "after"),
         },
       ]}
     />
