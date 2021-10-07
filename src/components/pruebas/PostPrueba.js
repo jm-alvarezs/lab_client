@@ -12,7 +12,14 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
     if (defaultEmail) {
       setCorreo(defaultEmail);
     }
+    return () => {
+      setCorreo("");
+    };
   }, []);
+
+  useEffect(() => {
+    setCorreo(defaultEmail);
+  }, [defaultEmail]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

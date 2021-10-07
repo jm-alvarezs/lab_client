@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ResultadosContext } from "../context/ResultadosContext";
-import {
-  getChartSeries,
-  getPuntuacionCUPOM,
-  getPuntuacionNechapi,
-} from "../utils";
+import { getPuntuacionCUPOM, getPuntuacionNechapi } from "../utils";
 import ReactToPdf from "react-to-pdf";
 import moment from "moment";
 import RespuestasCUPOM from "../components/cuestionario/RespuestasCUPOM";
@@ -23,84 +19,62 @@ const ResultadosCuestionario = ({ id }) => {
 
   const renderDatos = () => {
     if (resultado && resultado !== null) {
-      return (
-        <div className="container-fluid my-4">
-          <h5 className="bold border-bottom pb-2">Datos</h5>
-          <div className="row my-2">
-            <div className="col-12 col-md-6">Nombre:</div>
-            <div className="col-12 col-md-6">
-              {resultado.survey.name} {resultado.survey.lastName}
-            </div>
-          </div>
-          <div className="row my-2">
-            <div className="col-12 col-md-6">Relación:</div>
-            <div className="col-12 col-md-6">
-              {resultado.survey.relationship}
-            </div>
-          </div>
-          <div className="row my-2">
-            <div className="col-12 col-md-6">Fecha:</div>
-            <div className="col-12 col-md-6">
-              {moment(resultado.survey.createdAt)
-                .utc()
-                .format("DD MMM YYYY HH:mm")}
-            </div>
-          </div>
-          {resultado.results && (
+      if (resultado.survey) {
+        return (
+          <div className="container-fluid my-4">
+            <h5 className="bold border-bottom pb-2">Datos</h5>
             <div className="row my-2">
-              <div className="col-12 col-md-6">Observaciones:</div>
+              <div className="col-12 col-md-6">Nombre:</div>
               <div className="col-12 col-md-6">
-                {resultado.results.observaciones}
+                {resultado.survey.patient.name}{" "}
+                {resultado.survey.patient.lastName}
               </div>
             </div>
-          )}
-        </div>
-      );
+            <div className="row my-2">
+              <div className="col-12 col-md-6">Relación:</div>
+              <div className="col-12 col-md-6">
+                {resultado.survey.patient.relationship}
+              </div>
+            </div>
+            <div className="row my-2">
+              <div className="col-12 col-md-6">Fecha:</div>
+              <div className="col-12 col-md-6">
+                {moment(resultado.survey.createdAt)
+                  .utc()
+                  .format("DD MMM YYYY HH:mm")}
+              </div>
+            </div>
+            {resultado.results && (
+              <div className="row my-2">
+                <div className="col-12 col-md-6">Observaciones:</div>
+                <div className="col-12 col-md-6">
+                  {resultado.results ? resultado.results.observaciones : ""}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }
     }
   };
 
   const renderResults = () => {
     if (resultado && resultado !== null) {
       if (resultado.results) {
-        if (resultado.survey.type === 1)
+        if (resultado.survey.type === 1) {
           return (
             <div className="container-fluid mx-0">
               <div className="row my-2">
                 <div className="col-6 col-md-6 bold">Categoría</div>
-                <div className="col-6 col-md-2 bold">Antes</div>
-                <div className="col-6 col-md-2 bold">Después</div>
-                <div className="col-6 col-md-2 bold">ICX</div>
+                <div className="col-6 col-md-6 bold">Antes</div>
               </div>
               <div className="row my-2">
                 <div className="col-6 col-md-6">Anger</div>
-                <div className="col-6 col-md-2">
+                <div className="col-6 col-md-6">
                   {getPuntuacionNechapi(
                     "anger",
                     resultado.results.questions,
                     "before"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {getPuntuacionNechapi(
-                    "anger",
-                    resultado.results.questions,
-                    "despues"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {(
-                    getPuntuacionNechapi(
-                      "anger",
-                      resultado.results.questions,
-                      "despues"
-                    ) -
-                    getPuntuacionNechapi(
-                      "anger",
-                      resultado.results.questions,
-                      "before"
-                    )
                   ).toFixed(2)}
                   {"%"}
                 </div>
@@ -112,29 +86,6 @@ const ResultadosCuestionario = ({ id }) => {
                     "sensation",
                     resultado.results.questions,
                     "before"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {getPuntuacionNechapi(
-                    "sensation",
-                    resultado.results.questions,
-                    "despues"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {(
-                    getPuntuacionNechapi(
-                      "sensation",
-                      resultado.results.questions,
-                      "despues"
-                    ) -
-                    getPuntuacionNechapi(
-                      "sensation",
-                      resultado.results.questions,
-                      "before"
-                    )
                   ).toFixed(2)}
                   {"%"}
                 </div>
@@ -146,29 +97,6 @@ const ResultadosCuestionario = ({ id }) => {
                     "emotional",
                     resultado.results.questions,
                     "before"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {getPuntuacionNechapi(
-                    "emotional",
-                    resultado.results.questions,
-                    "despues"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {(
-                    getPuntuacionNechapi(
-                      "emotional",
-                      resultado.results.questions,
-                      "despues"
-                    ) -
-                    getPuntuacionNechapi(
-                      "emotional",
-                      resultado.results.questions,
-                      "before"
-                    )
                   ).toFixed(2)}
                   {"%"}
                 </div>
@@ -180,29 +108,6 @@ const ResultadosCuestionario = ({ id }) => {
                     "sociability",
                     resultado.results.questions,
                     "before"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {getPuntuacionNechapi(
-                    "sociability",
-                    resultado.results.questions,
-                    "despues"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {(
-                    getPuntuacionNechapi(
-                      "sociability",
-                      resultado.results.questions,
-                      "despues"
-                    ) -
-                    getPuntuacionNechapi(
-                      "sociability",
-                      resultado.results.questions,
-                      "before"
-                    )
                   ).toFixed(2)}
                   {"%"}
                 </div>
@@ -214,100 +119,85 @@ const ResultadosCuestionario = ({ id }) => {
                     "motivation",
                     resultado.results.questions,
                     "before"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {getPuntuacionNechapi(
-                    "motivation",
-                    resultado.results.questions,
-                    "despues"
-                  )}
-                  {"%"}
-                </div>
-                <div className="col-6 col-md-2">
-                  {(
-                    getPuntuacionNechapi(
-                      "motivation",
-                      resultado.results.questions,
-                      "despues"
-                    ) -
-                    getPuntuacionNechapi(
-                      "motivation",
-                      resultado.results.questions,
-                      "before"
-                    )
                   ).toFixed(2)}
                   {"%"}
                 </div>
               </div>
             </div>
           );
+        }
+        return (
+          <div className="container-fluid mx-0">
+            <div className="row my-2">
+              <div className="col-6 col-md-6 bold">Categoría</div>
+              <div className="col-6 col-md-3 bold">Puntuación</div>
+            </div>
+            <div className="row my-2">
+              <div className="col-6 col-md-6">Memoria del Trabajo</div>
+              <div className="col-6 col-md-6">
+                {getPuntuacionCUPOM("trabajo", resultado.results.questions)}
+                {"%"}
+              </div>
+            </div>
+            <div className="row my-2">
+              <div className="col-6 col-md-6">Memoria de Reconocimiento</div>
+              <div className="col-6 col-md-6">
+                {getPuntuacionCUPOM(
+                  "reconocimiento",
+                  resultado.results.questions
+                )}
+                {"%"}
+              </div>
+            </div>
+            <div className="row my-2">
+              <div className="col-6 col-md-6">Memoria de Fijación</div>
+              <div className="col-6 col-md-6">
+                {getPuntuacionCUPOM("fijacion", resultado.results.questions)}
+                {"%"}
+              </div>
+            </div>
+            <div className="row my-2">
+              <div className="col-6 col-md-6">Memoria de Prospectiva</div>
+              <div className="col-6 col-md-6">
+                {getPuntuacionCUPOM("prospectiva", resultado.results.questions)}
+                {"%"}
+              </div>
+            </div>
+            <div className="row my-2">
+              <div className="col-6 col-md-6">Memoria Procedimental</div>
+              <div className="col-6 col-md-6">
+                {getPuntuacionCUPOM(
+                  "procedimental",
+                  resultado.results.questions
+                )}
+                {"%"}
+              </div>
+            </div>
+          </div>
+        );
       }
-      return (
-        <div className="container-fluid mx-0">
-          <div className="row my-2">
-            <div className="col-6 col-md-6 bold">Categoría</div>
-            <div className="col-6 col-md-3 bold">Puntuación</div>
-          </div>
-          <div className="row my-2">
-            <div className="col-6 col-md-6">Memoria del Trabajo</div>
-            <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("trabajo", resultado.results.questions)}
-              {"%"}
-            </div>
-          </div>
-          <div className="row my-2">
-            <div className="col-6 col-md-6">Memoria de Reconocimiento</div>
-            <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM(
-                "reconocimiento",
-                resultado.results.questions
-              )}
-              {"%"}
-            </div>
-          </div>
-          <div className="row my-2">
-            <div className="col-6 col-md-6">Memoria de Fijación</div>
-            <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("fijacion", resultado.results.questions)}
-              {"%"}
-            </div>
-          </div>
-          <div className="row my-2">
-            <div className="col-6 col-md-6">Memoria de Prospectiva</div>
-            <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("prospectiva", resultado.results.questions)}
-              {"%"}
-            </div>
-          </div>
-          <div className="row my-2">
-            <div className="col-6 col-md-6">Memoria Procedimental</div>
-            <div className="col-6 col-md-6">
-              {getPuntuacionCUPOM("procedimental", resultado.results.questions)}
-              {"%"}
-            </div>
-          </div>
-        </div>
-      );
     }
   };
 
   const renderChart = () => {
     if (resultado && resultado !== null) {
-      if (resultado.survey.type === 1) {
-        return <ChartNechapi questions={resultado.results.questions} />;
+      if (resultado.survey && resultado.results) {
+        if (resultado.survey.type === 1) {
+          return <ChartNechapi questions={resultado.results.questions} />;
+        }
+        return <ChartCUPOM questions={resultado.results.questions} />;
       }
-      return <ChartCUPOM questions={resultado.results.questions} />;
     }
   };
 
   const renderRespuestas = () => {
     if (resultado && resultado !== null && showPreguntas) {
-      if (resultado.survey.type === 1) {
-        return <RespuestasNechapi respuestas={resultado.results.questions} />;
+      if (resultado.survey && resultado.results) {
+        if (resultado.survey.type === 1) {
+          return <RespuestasNechapi respuestas={resultado.results.questions} />;
+        }
+        return <RespuestasCUPOM respuestas={resultado.results.questions} />;
       }
-      return <RespuestasCUPOM respuestas={resultado.results.questions} />;
     }
   };
 
@@ -326,7 +216,11 @@ const ResultadosCuestionario = ({ id }) => {
                 <h1 className="h3">
                   <b>Resultados:</b>{" "}
                   {resultado && resultado !== null ? (
-                    resultado.survey.surveyType.name
+                    resultado.survey ? (
+                      resultado.survey.surveyType.name
+                    ) : (
+                      ""
+                    )
                   ) : (
                     <div className="spinner-border"></div>
                   )}

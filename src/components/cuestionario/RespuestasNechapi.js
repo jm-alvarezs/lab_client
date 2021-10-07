@@ -8,29 +8,25 @@ const RespuestasNechapi = ({ respuestas }) => {
         <div className="col col-md-6">
           <p className="mb-0 bold">Pregunta</p>
         </div>
-        <div className="col col-md-3 text-center">
-          <p className="mb-0 bold">Antes</p>
-        </div>
-        <div className="col col-md-3 text-center">
-          <p className="mb-0 bold">Despues</p>
+        <div className="col col-md-6 text-center">
+          <p className="mb-0 bold">Respuesta</p>
         </div>
       </div>{" "}
-      {preguntasNechapi.map((pregunta, index) => (
-        <div
-          key={index}
-          className="row mt-2 mb-4 border-top border-bottom py-2 mx-0"
-        >
-          <div className="col col-md-6">
-            <p>{pregunta}</p>
+      {preguntasNechapi.map((pregunta, index) => {
+        return (
+          <div
+            key={index}
+            className="row mt-2 mb-4 border-top border-bottom py-2 mx-0"
+          >
+            <div className="col col-md-6">
+              <p>{pregunta}</p>
+            </div>
+            <div className="col col-md-6 text-center">
+              {respuestas[index].before}
+            </div>
           </div>
-          <div className="col col-md-3 text-center">
-            {respuestas[index].before}
-          </div>
-          <div className="col col-md-3 text-center">
-            {respuestas[index].after}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

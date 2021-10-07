@@ -60,7 +60,7 @@ const Results = ({ admin }) => {
   };
 
   const renderFiltros = () => {
-    if (showFilters) {
+    if (showFilters && tab !== "cuestionarios") {
       return (
         <div className="row my-4">
           <Buscador survey={tab === "cuestionarios"} />
@@ -76,12 +76,14 @@ const Results = ({ admin }) => {
           <h1>Resultados</h1>
         </div>
         <div className="col-md-6 text-right">
-          <button
-            className="btn btn-light shadow-sm"
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <i className="fa fa-filter"></i> Filtros
-          </button>
+          {tab !== "cuestionarios" && (
+            <button
+              className="btn btn-light shadow-sm"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              <i className="fa fa-filter"></i> Filtros
+            </button>
+          )}
         </div>
       </div>
       <div className="row">

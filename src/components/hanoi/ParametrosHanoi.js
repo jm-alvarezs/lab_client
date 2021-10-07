@@ -19,13 +19,21 @@ const ParametrosHanoi = ({ idTest, settings, putResultados }) => {
           <div className="row py-2">
             <div className="col-6">Sonido Error</div>
             <div className="col-6">
-              {settings.sonidoError ? <i className="fa fa-check"></i> : ""}
+              {settings.sonidoError ? (
+                <i className="fa fa-check"></i>
+              ) : (
+                <i className="fa fa-times"></i>
+              )}
             </div>
           </div>
           <div className="row py-2">
             <div className="col-6">Mensaje Error</div>
             <div className="col-6">
-              {settings.mensajeError ? <i className="fa fa-check"></i> : ""}
+              {settings.mensajeError ? (
+                <i className="fa fa-check"></i>
+              ) : (
+                <i className="fa fa-times"></i>
+              )}
             </div>
           </div>
           <div className="row py-2">

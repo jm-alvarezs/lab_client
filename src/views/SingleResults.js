@@ -11,13 +11,13 @@ import ResumenResultados from "../components/resultados/ResumenResultados";
 import SujetoPrueba from "../components/resultados/SujetoPrueba";
 
 const SingleResults = ({ id }) => {
-  const { resultado, fiability, getSingleTest, clearSingleResults } =
+  const { resultado, fiability, getSingleTest, clearSingleResultado } =
     useContext(ResultadosContext);
   const [showEstimulos, setShowEstimulos] = useState(true);
 
   useEffect(() => {
     getSingleTest(id);
-    return clearSingleResults;
+    return clearSingleResultado;
   }, []);
 
   const renderConfig = () => {

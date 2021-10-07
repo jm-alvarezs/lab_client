@@ -28,7 +28,9 @@ const SujetoPrueba = ({ patient }) => {
         <h4>{name}</h4>
         <p>{email}</p>
         <p>Género: {gender}</p>
-        <p>Fecha de Nacimiento: {moment(birthDate).format("DD MMM YYYY")}</p>
+        <p>
+          Fecha de Nacimiento: {moment(birthDate).utc().format("DD MMM YYYY")}
+        </p>
         <p>Mano Dominante: {dominantHand}</p>
         <p>Tratamiento Médico/Consumo de Drogas: {whichDrugs}</p>
       </div>
