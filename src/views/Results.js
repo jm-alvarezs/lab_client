@@ -7,10 +7,18 @@ import { SurveyContext } from "../context/SurveyContext";
 const Results = ({ admin }) => {
   const [tab, setTab] = useState("pruebas");
   const [showFilters, setShowFilters] = useState(false);
-  const { resultados, getResultados, getResultadosAdmin } =
-    useContext(ResultadosContext);
+  const {
+    resultados,
+    getResultados,
+    getResultadosAdmin,
+    clearSingleResultado,
+  } = useContext(ResultadosContext);
 
   const { surveys, getSurveys, getSurveysAdmin } = useContext(SurveyContext);
+
+  useEffect(() => {
+    clearSingleResultado();
+  }, []);
 
   useEffect(() => {
     if (tab === "pruebas") {

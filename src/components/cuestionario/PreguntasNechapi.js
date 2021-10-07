@@ -31,22 +31,19 @@ const PreguntasNechapi = ({ modifier }) => {
 
   return (
     <div className="container px-0">
+      <div className="container-fluid mb-4">
+        <p className="bold">Indicaciones</p>
+        <p>1 = Totalmente en Desacuerdo</p>
+        <p>5 = Totalmente Deacuerdo</p>
+      </div>
       <div className="row mx-0">
         <div className="col col-md-6">
           <p className="mb-0 bold">Pregunta</p>
         </div>
-        {/*
-          <div className="col col-md-3 text-center">
-            <p className="mb-0 bold">Antes</p>
-          </div>
-          <div className="col col-md-3 text-center">
-            <p className="mb-0 bold">Despues</p>
-          </div>
-          */}
         <div className="col col-md-6 text-center">
           <p className="mb-0 bold">Respuesta</p>
         </div>
-      </div>{" "}
+      </div>
       {preguntasNechapi.map((pregunta, index) => (
         <div
           key={index}
