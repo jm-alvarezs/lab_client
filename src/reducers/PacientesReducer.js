@@ -3,9 +3,12 @@ import {
   CREATE_DAMAGE,
   CREATE_PACIENTE,
   DELETE_DAMAGE,
+  HIDE_SPINNER,
+  NECHAPI_RECIBIDO,
   PACIENTES_RECIBIDOS,
   SET_DAMAGE_LOCATION,
   SET_PROPIEDAD_PACIENTE,
+  SHOW_SPINNER,
   SINGLE_USER_RECIBIDO,
 } from "../types";
 
@@ -31,6 +34,10 @@ const damageSchema = {
 
 export default (state, { type, payload }) => {
   switch (type) {
+    case SHOW_SPINNER:
+      return { ...state, spinner: true };
+    case HIDE_SPINNER:
+      return { ...state, spinner: false };
     case PACIENTES_RECIBIDOS:
       return { ...state, pacientes: payload };
     case SINGLE_USER_RECIBIDO:
@@ -70,6 +77,8 @@ export default (state, { type, payload }) => {
       }
       return { ...state, paciente };
     }
+    case NECHAPI_RECIBIDO:
+      return { ...state, categorias: payload };
     default:
       return { ...state };
   }

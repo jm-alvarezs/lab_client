@@ -4,19 +4,25 @@ import PacientesService from "../services/PacientesService";
 import {
   PACIENTES_RECIBIDOS,
   SINGLE_USER_RECIBIDO,
-  CREATE_PACIENTE,
   SET_PROPIEDAD_PACIENTE,
   SET_DAMAGE_LOCATION,
+  NECHAPI_RECIBIDO,
+  CREATE_PACIENTE,
   CREATE_DAMAGE,
   DELETE_DAMAGE,
+  SHOW_SPINNER,
+  HIDE_SPINNER,
 } from "../types";
 import { ModalContext } from "./ModalContext";
 import { navigate } from "@reach/router";
 import { hideModal } from "../utils";
+import PruebasService from "../services/PruebasService";
 
 const initialState = {
+  spinner: false,
   pacientes: null,
   paciente: null,
+  categorias: null,
 };
 
 export const PacientesContext = createContext(initialState);
@@ -103,6 +109,19 @@ export const PacientesProvider = ({ children }) => {
     dispatch({ type: DELETE_DAMAGE, payload: id });
   };
 
+  const getNechapiForecast = (idPatient) => {
+    dispatch({ type: SHOW_SPINNER });
+    PruebasService.getNechapi(idPatient)
+      .then((res) => {
+        const categorias = res.data.data;
+        dispatch({ type: NECHAPI_RECIBIDO, payload: categorias });
+        dispatch({ type: HIDE_SPINNER });
+      })
+      .catch((error) => {
+        dispatch({ type: HIDE_SPINNER });
+      });
+  };
+
   return (
     <PacientesContext.Provider
       value={{
@@ -116,6 +135,7 @@ export const PacientesProvider = ({ children }) => {
         deletePaciente,
         createDamage,
         deleteDamage,
+        getNechapiForecast,
         setDamageLocation,
         setPropiedadPaciente,
       }}

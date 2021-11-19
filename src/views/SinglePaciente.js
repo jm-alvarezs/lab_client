@@ -1,26 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Breadcrumbs from "../components/global/Breadcrumbs";
 import UsuarioData from "../components/usuarios/UsuarioData";
 import { PacientesContext } from "../context/PacientesContext";
 import { Link } from "@reach/router";
 import { allTests } from "../utils";
+import NechapiSummary from "../components/cuestionario/NechapiSummary";
 
 const SinglePaciente = ({ id }) => {
-  const [ejercicios, setEjercicios] = useState([]);
-  const { paciente, getSinglePaciente } = useContext(PacientesContext);
+  const {
+    spinner,
+    categorias,
+    paciente,
+    getSinglePaciente,
+    getNechapiForecast,
+  } = useContext(PacientesContext);
 
   useEffect(() => {
     getSinglePaciente(id);
   }, []);
-
-  const handleSelect = (e) => {
-    const id = parseInt(e.target.value);
-    if (ejercicios.includes(id)) {
-      setEjercicios(ejercicios.filter((idTest) => idTest !== id));
-    } else {
-      setEjercicios([...ejercicios, id]);
-    }
-  };
 
   const renderUsuario = () => {
     if (paciente && paciente !== null) {
@@ -81,6 +78,39 @@ const SinglePaciente = ({ id }) => {
     }
   };
 
+  const renderNechapi = () => {
+    if (!isNaN(id)) {
+      if (paciente && paciente !== null) {
+        return (
+          <div className="card p-3 shadow-sm my-3">
+            <div className="row border-bottom pb-2 mb-4">
+              <div className="col-6">
+                <h3>Nechapi Pronosticado</h3>
+              </div>
+            </div>
+            {categorias && categorias !== null && (
+              <NechapiSummary {...categorias} />
+            )}
+            <div className="row mx-0 px-3">
+              <button
+                className="btn btn-outline-primary"
+                onClick={() => getNechapiForecast(id)}
+                disabled={spinner}
+              >
+                <i class="fas fa-calculator mr-2"></i>{" "}
+                {spinner ? (
+                  <div className="spinner-border"></div>
+                ) : (
+                  "Calcular Categorías"
+                )}
+              </button>
+            </div>
+          </div>
+        );
+      }
+    }
+  };
+
   return (
     <>
       <div className="container pb-5">
@@ -103,6 +133,7 @@ const SinglePaciente = ({ id }) => {
         </div>
         {renderPruebas()}
         {renderCuestionarios()}
+        {renderNechapi()}
       </div>
     </>
   );
