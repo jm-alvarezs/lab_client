@@ -13,52 +13,80 @@ const NechapiSummary = ({
       <div className="container-fluid mx-0">
         <div className="row mb-2">
           <div className="col-6 col-md-6 bold">Categoría</div>
-          <div className="col-6 col-md-6 bold">Resultado</div>
+          <div className="col-6 col-md-2 bold">Pronóstico</div>
+          <div className="col-6 col-md-2 bold">Real</div>
         </div>
         <div className="row my-2">
           <div className="col-6 col-md-6">Anger</div>
-          <div className="col-6 col-md-6">
-            {anger}
+          <div className="col-6 col-md-2">
+            {anger.result}
+            {"%"}
+          </div>
+          <div className="col-6 col-md-2">
+            {anger.real}
             {"%"}
           </div>
         </div>
         <div className="row my-2">
           <div className="col-6 col-md-6">Sensation Seeking</div>
           <div className="col-6 col-md-2">
-            {sensation}
+            {sensation.result}
+            {"%"}
+          </div>
+          <div className="col-6 col-md-2">
+            {sensation.real}
             {"%"}
           </div>
         </div>
         <div className="row my-2">
           <div className="col-6 col-md-6">Emotional Vulnerabilty</div>
           <div className="col-6 col-md-2">
-            {emotional}
+            {emotional.result}
+            {"%"}
+          </div>
+          <div className="col-6 col-md-2">
+            {emotional.real}
             {"%"}
           </div>
         </div>
         <div className="row my-2">
           <div className="col-6 col-md-6">Sociability</div>
           <div className="col-6 col-md-2">
-            {sociability}
+            {sociability.result}
+            {"%"}
+          </div>
+          <div className="col-6 col-md-2">
+            {sociability.real}
             {"%"}
           </div>
         </div>
         <div className="row my-2">
           <div className="col-6 col-md-6">Motivation</div>
           <div className="col-6 col-md-2">
-            {motivation}
+            {motivation.result}
+            {"%"}
+          </div>
+          <div className="col-6 col-md-2">
+            {motivation.real}
             {"%"}
           </div>
         </div>
       </div>
       <Chart
-        type="bar"
+        type="line"
         options={{
-          type: "bar",
+          type: "line",
           chart: {
-            type: "bar",
+            type: "line",
           },
-          colors: ["#ff0000", "#0000ff"],
+          colors: [
+            "#fcf300",
+            "#333333",
+            "#368F8B",
+            "#ff0000",
+            "#0000ff",
+            "#368F8B",
+          ],
           xaxis: {
             categories: [
               "Irritabilidad",
@@ -76,7 +104,58 @@ const NechapiSummary = ({
         series={[
           {
             name: "Pronosticado",
-            data: [anger, sensation, emotional, sociability, motivation],
+            type: "column",
+            data: [
+              anger.result,
+              sensation.result,
+              emotional.result,
+              sociability.result,
+              motivation.result,
+            ],
+          },
+          {
+            name: "Real",
+            type: "column",
+            data: [
+              anger.real,
+              sensation.real,
+              emotional.real,
+              sociability.real,
+              motivation.real,
+            ],
+          },
+          {
+            name: "Promedio",
+            type: "line",
+            data: [
+              anger.average,
+              sensation.average,
+              emotional.average,
+              sociability.average,
+              motivation.average,
+            ],
+          },
+          {
+            name: "Lim. Superior",
+            type: "line",
+            data: [
+              anger.average + anger.dev,
+              sensation.average + sensation.dev,
+              emotional.average + emotional.dev,
+              sociability.average + sociability.dev,
+              motivation.average + motivation.dev,
+            ],
+          },
+          {
+            name: "Lim. Inferior",
+            type: "line",
+            data: [
+              anger.average - anger.dev,
+              sensation.average - sensation.dev,
+              emotional.average - emotional.dev,
+              sociability.average - sociability.dev,
+              motivation.average - motivation.dev,
+            ],
           },
         ]}
       />
