@@ -99,6 +99,11 @@ const NechapiSummary = ({
           yaxis: {
             min: 0,
             max: 100,
+            labels: {
+              formatter: (value) => {
+                return parseInt(val);
+              },
+            },
           },
         }}
         series={[
