@@ -278,7 +278,7 @@ const AtencionCondicional = () => {
               ) : (
                 <div className="p-5">
                   <h1>¡Gracias!</h1>
-                  <p className="instrucciones">Haz completado el ejercicio.</p>
+                  <p className="instrucciones">Has completado el ejercicio.</p>
                 </div>
               )}
             </div>

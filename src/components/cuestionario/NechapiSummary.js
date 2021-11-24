@@ -101,7 +101,7 @@ const NechapiSummary = ({
             max: 100,
             labels: {
               formatter: (value) => {
-                return parseInt(val);
+                return parseInt(value);
               },
             },
           },
