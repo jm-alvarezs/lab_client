@@ -91,7 +91,7 @@ const Pacientes = ({ admin }) => {
         onChange={(e) => setQuery(e.target.value)}
       />
       <div className="row mx-0">
-        <div className="container card">
+        <div className="container container-x card">
           <table className="table mt-4">
             <thead>
               <tr>

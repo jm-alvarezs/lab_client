@@ -24,6 +24,14 @@ export const SurveyProvider = ({ children }) => {
     });
   };
 
+  const fetchSurveys = (idPatient, idSurveyType, date) => {
+    dispatch({ type: SURVEYS_RECIBIDAS, payload: null });
+    SurveyService.fetchSurveys(idPatient, idSurveyType, date).then((res) => {
+      const surveys = res.data.data;
+      dispatch({ type: SURVEYS_RECIBIDAS, payload: surveys });
+    });
+  };
+
   const getSurveysAdmin = () => {
     SurveyService.getSurveysAdmin().then((res) => {
       const surveys = res.data.data;
@@ -70,6 +78,7 @@ export const SurveyProvider = ({ children }) => {
         ...state,
         getSurveys,
         getSurvey,
+        fetchSurveys,
         getSurveysAdmin,
         postSurvey,
         postAnswer,

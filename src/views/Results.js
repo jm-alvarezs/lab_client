@@ -68,7 +68,7 @@ const Results = ({ admin }) => {
   };
 
   const renderFiltros = () => {
-    if (showFilters && tab !== "cuestionarios") {
+    if (showFilters) {
       return (
         <div className="row my-4">
           <Buscador survey={tab === "cuestionarios"} />
@@ -78,20 +78,18 @@ const Results = ({ admin }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container pt-3">
       <div className="row border-bottom pb-3 mb-3">
         <div className="col-md-6">
           <h1>Resultados</h1>
         </div>
         <div className="col-md-6 text-right">
-          {tab !== "cuestionarios" && (
-            <button
-              className="btn btn-light shadow-sm"
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              <i className="fa fa-filter"></i> Filtros
-            </button>
-          )}
+          <button
+            className="btn btn-light shadow-sm"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <i className="fa fa-filter"></i> Filtros
+          </button>
         </div>
       </div>
       <div className="row">
