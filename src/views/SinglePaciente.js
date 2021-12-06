@@ -31,16 +31,18 @@ const SinglePaciente = ({ id }) => {
   useEffect(() => {
     if (paciente !== null) {
       const { results } = paciente;
-      let testSet = new Set();
-      results.forEach((result) => {
-        const { settings } = result;
-        if (settings) {
-          testSet.add(settings.idTestType);
-        }
-      });
-      testSet = Array.from(testSet);
-      setCompleted(testSet);
-      setCanPredict(testSet.length === 4);
+      if (results) {
+        let testSet = new Set();
+        results.forEach((result) => {
+          const { settings } = result;
+          if (settings) {
+            testSet.add(settings.idTestType);
+          }
+        });
+        testSet = Array.from(testSet);
+        setCompleted(testSet);
+        setCanPredict(testSet.length === 4);
+      }
     }
   }, [paciente]);
 

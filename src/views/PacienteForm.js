@@ -38,9 +38,7 @@ const UsuarioForm = ({ id }) => {
       return alert("El nombre no puede estar vacío.");
     }
     if (!validateEmail(paciente.email)) {
-      return alert(
-        "Ya existe un paciente registrado con ese correo electrónico."
-      );
+      return alert("El correo electrónico no es válido.");
     }
     if (paciente.id === "nuevo") {
       paciente.idUser = user.idUser;

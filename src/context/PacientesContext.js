@@ -30,7 +30,7 @@ export const PacientesContext = createContext(initialState);
 export const PacientesProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PacientesReducer, initialState);
 
-  const { success } = useContext(ModalContext);
+  const { success, alert } = useContext(ModalContext);
 
   const getPacientes = () => {
     PacientesService.getPacientes().then((res) => {
@@ -71,11 +71,22 @@ export const PacientesProvider = ({ children }) => {
       paciente.drugsConsumption = false;
       paciente.drugsTreatment = false;
     }
-    PacientesService.postPaciente(paciente).then((res) => {
-      const id = res.data.data.id;
-      navigate(`/pacientes/${id}`);
-      success("¡Paciente guardado!");
-    });
+    PacientesService.postPaciente(paciente)
+      .then((res) => {
+        const id = res.data.data.id;
+        navigate(`/pacientes/${id}`);
+        success("¡Paciente guardado!");
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status == 409) {
+            return alert(
+              "Ya existe un paciente registrado con esa dirección de correo electrónico."
+            );
+          }
+        }
+        alert(error);
+      });
   };
 
   const updatePaciente = (paciente) => {
