@@ -64,6 +64,7 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
     }
     if (key === "fontSize" && parseInt(value) === 0) value = 1;
     if (key === "target") value = String(value)[0];
+    if (key === "numeroEstimulos" && value < 1) value = 1;
     setConfig({ ...config, [key]: value });
   };
 

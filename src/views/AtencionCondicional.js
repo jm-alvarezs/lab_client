@@ -240,7 +240,7 @@ const AtencionCondicional = () => {
 
   const getTecla = () => {
     if (config.keyCode === "any") return "cualquier tecla";
-    return `la tecla ${config.keyCode === "13" ? "Intro" : "Espacio"}`;
+    return `${config.keyCode === "13" ? "Intro" : "Espacio"}`;
   };
 
   return (
