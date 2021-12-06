@@ -14,7 +14,7 @@ const ConfigHemiAtencion = ({ idPaciente, submit, submitCallback }) => {
     fontSize: "100",
     color: "#000000",
     backgroundColor: "#cccccc",
-    keyCode: "13",
+    keyCode: "32",
     duracion: "10",
     radioFijacion: "20",
     colorFijacion: "#000000",

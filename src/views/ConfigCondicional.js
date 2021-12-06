@@ -20,7 +20,7 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
     claveNoTarget: "19",
     noClaveNoTarget: "75",
     paresTotales: "",
-    keyCode: "13",
+    keyCode: "32",
     duracion: "",
     idPatient: "",
   });
@@ -346,10 +346,11 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
                     type="number"
                     className="form-control mb-3"
                     value={
-                      ((parseInt(tiempoInterestimular) +
+                      (((parseInt(tiempoInterestimular) +
                         parseInt(tiempoExposicion)) *
                         parseInt(paresTotales)) /
-                      1000
+                        1000) *
+                      2
                     }
                     disabled
                   />
