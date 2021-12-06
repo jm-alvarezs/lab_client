@@ -174,7 +174,7 @@ const SinglePaciente = ({ id }) => {
                 </p>
                 <div className="row">
                   {testsNechapi.map((test) => (
-                    <div className="col-12 col-md-3">
+                    <div key={test.key} className="col-12 col-md-3">
                       <i
                         className={`fa ${
                           completed !== null
