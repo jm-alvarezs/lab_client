@@ -176,6 +176,11 @@ const ResultadosCuestionario = ({ id }) => {
           </div>
         );
       }
+      return (
+        <p className="text-danger px-3">
+          Este cuestionario no ha sido completado.
+        </p>
+      );
     }
   };
 
