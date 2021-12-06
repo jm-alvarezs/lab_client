@@ -137,7 +137,7 @@ const AtencionCondicional = () => {
     document.body.addEventListener("keydown", handleKey);
     startTime = moment();
     let claveTarget = [];
-    for (let i = 0; i < parseInt(config.claveTarget); i++) {
+    for (let i = 0; i < parseInt(config.claveTarget - 1); i++) {
       claveTarget.push(config.clave);
       claveTarget.push(config.target);
     }
