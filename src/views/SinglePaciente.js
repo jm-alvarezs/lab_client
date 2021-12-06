@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Breadcrumbs from "../components/global/Breadcrumbs";
 import UsuarioData from "../components/usuarios/UsuarioData";
 import { PacientesContext } from "../context/PacientesContext";
@@ -7,6 +7,8 @@ import { allTests } from "../utils";
 import NechapiSummary from "../components/cuestionario/NechapiSummary";
 
 const SinglePaciente = ({ id }) => {
+  const [test, setTest] = useState(1);
+  const [survey, setSurvey] = useState("nechapi");
   const {
     spinner,
     categorias,
@@ -30,19 +32,27 @@ const SinglePaciente = ({ id }) => {
       if (paciente && paciente !== null) {
         return (
           <div className="card p-3 shadow-sm my-3">
-            <h3 className="border-bottom pb-2 mb-4">Cuestionarios</h3>
-            <Link
-              to={`/cuestionario/CUPOM/${id}`}
-              className="btn btn-outline-dark my-2"
-            >
-              Cuestionario CUPOM
-            </Link>
-            <Link
-              to={`/cuestionario/nechapi/${id}`}
-              className="btn btn-outline-dark my-2"
-            >
-              Cuestionario Nechapi
-            </Link>
+            <h4 className="border-bottom pb-2 mb-4">Aplicar un cuestionario</h4>
+            <div className="row">
+              <div className="col-12 col-md-6 col-xl-8">
+                <select
+                  value={survey}
+                  className="form-control"
+                  onChange={(e) => setSurvey(e.target.value)}
+                >
+                  <option value="nechapi">Nechapi</option>
+                  <option value="nechapi">CUPOM</option>
+                </select>
+              </div>
+              <div className="col-12 col-md-6 col-xl-4">
+                <Link
+                  to={`/cuestionario/${survey}/${id}`}
+                  className="btn btn-dark btn-block"
+                >
+                  Aplicar
+                </Link>
+              </div>
+            </div>
           </div>
         );
       }
@@ -51,13 +61,9 @@ const SinglePaciente = ({ id }) => {
 
   const renderOpciones = () => {
     return allTests.map((test) => (
-      <Link
-        key={test.id}
-        to={`/config/${test.key}/${id}`}
-        className="btn btn-outline-dark my-2"
-      >
+      <option key={test.id} value={test.key}>
         {test.name}
-      </Link>
+      </option>
     ));
   };
 
@@ -68,10 +74,28 @@ const SinglePaciente = ({ id }) => {
           <div className="card p-3 shadow-sm my-3">
             <div className="row border-bottom pb-2 mb-4">
               <div className="col-6">
-                <h3>Pruebas</h3>
+                <h4>Aplicar una Prueba</h4>
               </div>
             </div>
-            {renderOpciones()}
+            <div className="row">
+              <div className="col-12 col-md-6 col-xl-8">
+                <select
+                  value={test}
+                  className="form-control mb-3"
+                  onChange={(e) => setTest(e.target.value)}
+                >
+                  {renderOpciones()}
+                </select>
+              </div>
+              <div className="col-12 col-md-6 col-xl-4">
+                <Link
+                  to={`/config/${test}/${id}`}
+                  className="btn btn-dark btn-block"
+                >
+                  Aplicar
+                </Link>
+              </div>
+            </div>
           </div>
         );
       }
