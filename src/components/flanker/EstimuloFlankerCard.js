@@ -32,8 +32,10 @@ const EstimuloFlankerCard = ({ estimulo, prevEstimulo, right, left }) => {
           moment(estimulo.emitted).diff(prevEstimulo.clicked, "milliseconds")}
       </div>
       <div className="col-1">
-        {isValidFlanker(estimulo, right, left) && (
+        {isValidFlanker(estimulo, right, left) ? (
           <i className="fa fa-check text-success"></i>
+        ) : (
+          <i className="fa fa-times text-danger"></i>
         )}
       </div>
     </div>

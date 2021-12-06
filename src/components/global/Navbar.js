@@ -6,7 +6,7 @@ const Navbar = ({ user }) => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark-udem py-2 mw-100">
       <div className="container-fluid navbar-container container">
         <Link to="/" className="navbar-brand">
-          Laboratorio
+          Laboratorio de Cognición
         </Link>
         <button
           className="navbar-toggler"

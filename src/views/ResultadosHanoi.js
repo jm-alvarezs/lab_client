@@ -89,7 +89,7 @@ const ResultadosHanoi = ({ idTest }) => {
       scale={0.65}
     >
       {({ toPdf, targetRef }) => (
-        <div className="container" ref={targetRef}>
+        <div className="container pt-4" ref={targetRef}>
           {renderResumen(toPdf)}
           {renderParametros()}
           {renderSujeto()}

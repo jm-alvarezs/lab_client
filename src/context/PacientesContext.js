@@ -62,6 +62,7 @@ export const PacientesProvider = ({ children }) => {
   };
 
   const postPaciente = (paciente) => {
+    dispatch({ type: SHOW_SPINNER });
     if (paciente.drugsConsumption !== "") {
       paciente.dose = paciente.drugsConsumption;
       paciente.drugsConsumption = true;
@@ -72,11 +73,13 @@ export const PacientesProvider = ({ children }) => {
     }
     PacientesService.postPaciente(paciente)
       .then((res) => {
+        dispatch({ type: HIDE_SPINNER });
         const id = res.data.data.id;
         navigate(`/pacientes/${id}`);
         success("¡Paciente guardado!");
       })
       .catch((error) => {
+        dispatch({ type: HIDE_SPINNER });
         if (error.response) {
           if (error.response.status == 409) {
             return alert(
@@ -89,6 +92,7 @@ export const PacientesProvider = ({ children }) => {
   };
 
   const updatePaciente = (paciente) => {
+    dispatch({ type: SHOW_SPINNER });
     if (typeof paciente.drugsConsumption !== "boolean") {
       paciente.whichDrugs = paciente.drugsConsumption;
       paciente.drugsConsumption = true;
@@ -97,8 +101,10 @@ export const PacientesProvider = ({ children }) => {
     PacientesService.updatePaciente(paciente)
       .then(() => {
         success("Paciente actualizado!");
+        dispatch({ type: HIDE_SPINNER });
       })
       .catch((error) => {
+        dispatch({ type: HIDE_SPINNER });
         if (error.response) {
           if (error.response.status == 409) {
             return alert(

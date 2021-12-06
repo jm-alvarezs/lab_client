@@ -13,6 +13,10 @@ h6 {
   font-weight: 600;
 }
 
+.damage-item {
+  text-transform: capitalize;
+}
+
 .container-x {
   overflow-x: scroll;
 }

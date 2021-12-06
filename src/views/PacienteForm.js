@@ -9,6 +9,7 @@ import { validateEmail } from "../utils";
 
 const UsuarioForm = ({ id }) => {
   const {
+    spinner,
     paciente,
     getSinglePaciente,
     createPaciente,
@@ -173,14 +174,16 @@ const UsuarioForm = ({ id }) => {
           />
           <div className="row">
             <div className="col-12 col-md-6">
-              <button type="submit" className="btn btn-dark">
-                Guardar
+              <button type="submit" className="btn btn-dark" disabled={spinner}>
+                {spinner ? <div className="spinner-border"></div> : "Guardar"}
               </button>
             </div>
             <div className="col-12 col-md-6 text-right">
-              <Link className="btn btn-link text-danger" to="/pacientes">
-                Cancelar
-              </Link>
+              {!spinner && (
+                <Link className="btn btn-link text-danger" to="/pacientes">
+                  Cancelar
+                </Link>
+              )}
             </div>
           </div>
         </>

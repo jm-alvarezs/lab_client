@@ -8,7 +8,9 @@ const UsuarioData = ({ usuario }) => {
         return <p>No hay daños registrados.</p>;
       }
       return usuario.damages.map(({ id, damageLocation }) => (
-        <p key={id}>{damageLocation.split("_").join(" ")}</p>
+        <p key={id} className="damage-item">
+          {damageLocation.split("_").join(" ")}
+        </p>
       ));
     }
   };
