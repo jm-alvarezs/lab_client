@@ -26,7 +26,10 @@ const Login = () => {
         <div className="col-12 col-md-6 vh-100">
           <div className="row align-items-center vh-100">
             <div className="container-fluid">
-              <h1 className="text-center mb-4">Ingresar</h1>
+              <h1 className="text-center form-card h2 mb-5 bold">
+                Laboratorio de Cognición de la Universidad de Monterrey
+              </h1>
+              <h2 className="text-center h4 mb-4">Ingresar</h2>
               <div className="card shadow-sm p-4 form-card">
                 <form onSubmit={handleSubmit}>
                   <label>Correo Electrónico</label>

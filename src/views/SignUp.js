@@ -84,8 +84,11 @@ const SignUp = () => {
         </div>
         <div className="col col-md-6 vh-100">
           <div className="row align-items-center vh-100">
-            <div className="container-fluid">
-              <h1 className="text-center mb-4">Registrate</h1>
+            <div className="container-fluid py-5">
+              <h1 className="text-center form-card h2 mb-3 bold">
+                Laboratorio de Cognición de la Universidad de Monterrey
+              </h1>
+              <h2 className="text-center h4 mb-4">Regístrate</h2>
               <div className="card shadow-sm p-3">
                 <form onSubmit={handleSubmit}>
                   <label>Nombre Completo</label>
@@ -147,6 +150,10 @@ const SignUp = () => {
                     <option value="Maestria">Maestría</option>
                     <option value="Doctorado">Doctorado</option>
                   </select>
+                  <p className="mt-2 small">
+                    Al registrarte, aceptas los Términos y Condiciones y el
+                    Aviso de Privacidad de la Universidad de Monterrey.
+                  </p>
                   <input
                     type="submit"
                     className="btn btn-dark btn-block"

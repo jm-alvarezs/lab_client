@@ -134,11 +134,15 @@ export const getTargetResult = (
 ) => {
   if (condicional) {
     if (current.clicked) {
-      return current.target === target && prevItem.target !== clave;
+      return current.target === target && prevItem.target === clave;
     }
-    return (
-      current.target === target && prevItem.target === clave && prevItem.clicked
-    );
+    if (current.target === target) {
+      return prevItem.target !== clave;
+    }
+    if (prevItem.target !== clave) {
+      return current.target !== target;
+    }
+    return current.target !== target;
   }
   if (current.target === target) {
     if (current.clicked) return true;
