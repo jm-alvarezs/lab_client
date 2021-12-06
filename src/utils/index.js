@@ -593,6 +593,8 @@ export const allTests = [
   { id: 5, name: "Flanker Task", key: "flanker" },
 ];
 
+export const testsNechapi = allTests.filter((test) => test.id !== 3);
+
 export const processMultiTestUrl = (url) => {
   let href = url;
   href = href.split("?")[1];

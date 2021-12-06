@@ -8,12 +8,18 @@ import { ModalContext } from "../context/ModalContext";
 const Pacientes = ({ admin }) => {
   const [query, setQuery] = useState("");
 
-  const { pacientes, getPacientes, getPacientesAdmin, deletePaciente } =
-    useContext(PacientesContext);
+  const {
+    pacientes,
+    clearPaciente,
+    getPacientes,
+    getPacientesAdmin,
+    deletePaciente,
+  } = useContext(PacientesContext);
 
   const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
+    clearPaciente();
     if (admin) {
       getPacientesAdmin();
     } else {

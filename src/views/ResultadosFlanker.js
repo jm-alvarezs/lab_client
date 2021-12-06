@@ -54,6 +54,7 @@ const ResultadosFlanker = ({ idTest }) => {
           />
         );
       }
+      return <p className="text-danger">Esta prueba no ha sido completada.</p>;
     }
     return <div className="spinner-border"></div>;
   };

@@ -39,6 +39,14 @@ export const PacientesProvider = ({ children }) => {
     });
   };
 
+  const clearPaciente = () => {
+    dispatch({ type: SINGLE_USER_RECIBIDO, payload: null });
+  };
+
+  const clearCategorias = () => {
+    dispatch({ type: NECHAPI_RECIBIDO, payload: null });
+  };
+
   const getPacientesAdmin = () => {
     PacientesService.getPacientesAdmin().then((res) => {
       const pacientes = res.data.data;
@@ -109,9 +117,9 @@ export const PacientesProvider = ({ children }) => {
     dispatch({ type: DELETE_DAMAGE, payload: id });
   };
 
-  const getNechapiForecast = (idPatient) => {
+  const getNechapiForecast = (idPatient, method) => {
     dispatch({ type: SHOW_SPINNER });
-    PruebasService.getNechapi(idPatient)
+    PruebasService.getNechapi(idPatient, method)
       .then((res) => {
         const categorias = res.data.data;
         dispatch({ type: NECHAPI_RECIBIDO, payload: categorias });
@@ -135,6 +143,8 @@ export const PacientesProvider = ({ children }) => {
         deletePaciente,
         createDamage,
         deleteDamage,
+        clearPaciente,
+        clearCategorias,
         getNechapiForecast,
         setDamageLocation,
         setPropiedadPaciente,

@@ -54,6 +54,9 @@ const ResultadosHanoi = ({ idTest }) => {
           />
         );
       }
+      return (
+        <p className="text-danger mt-4">Esta prueba no ha sido completada.</p>
+      );
     }
     return <div className="spinner-border"></div>;
   };

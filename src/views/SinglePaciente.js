@@ -3,28 +3,52 @@ import Breadcrumbs from "../components/global/Breadcrumbs";
 import UsuarioData from "../components/usuarios/UsuarioData";
 import { PacientesContext } from "../context/PacientesContext";
 import { Link } from "@reach/router";
-import { allTests } from "../utils";
+import { allTests, testsNechapi } from "../utils";
 import NechapiSummary from "../components/cuestionario/NechapiSummary";
 
 const SinglePaciente = ({ id }) => {
-  const [test, setTest] = useState(1);
+  const [test, setTest] = useState("atencion");
+  const [canPredict, setCanPredict] = useState(false);
+  const [completed, setCompleted] = useState(null);
+  const [method, setMethod] = useState("kmeans");
   const [survey, setSurvey] = useState("nechapi");
   const {
     spinner,
     categorias,
     paciente,
+    clearCategorias,
     getSinglePaciente,
     getNechapiForecast,
   } = useContext(PacientesContext);
 
   useEffect(() => {
     getSinglePaciente(id);
+    return () => {
+      clearCategorias();
+    };
   }, []);
+
+  useEffect(() => {
+    if (paciente !== null) {
+      const { results } = paciente;
+      let testSet = new Set();
+      results.forEach((result) => {
+        const { settings } = result;
+        if (settings) {
+          testSet.add(settings.idTestType);
+        }
+      });
+      testSet = Array.from(testSet);
+      setCompleted(testSet);
+      setCanPredict(testSet.length === 4);
+    }
+  }, [paciente]);
 
   const renderUsuario = () => {
     if (paciente && paciente !== null) {
       return <UsuarioData usuario={paciente} />;
     }
+    return <div className="spinner-border"></div>;
   };
 
   const renderCuestionarios = () => {
@@ -109,26 +133,66 @@ const SinglePaciente = ({ id }) => {
           <div className="card p-3 shadow-sm my-3">
             <div className="row border-bottom pb-2 mb-4">
               <div className="col-6">
-                <h3>Nechapi Pronosticado</h3>
+                <h4>Pronosticar Nechapi</h4>
               </div>
             </div>
+            {canPredict ? (
+              <div className="row mb-3">
+                <div className="col-12 col-md-6 col-xl-8">
+                  <select
+                    value={method}
+                    className="form-control"
+                    onChange={(e) => setMethod(e.target.value)}
+                  >
+                    <option value="kmeans">Método A: K Means</option>
+                    <option value="bayes">
+                      Método B: Clasificador de Bayes
+                    </option>
+                    <option value="knn">Método C: K Nearest Neghbors</option>
+                  </select>
+                </div>
+                <div className="col-12 col-md-6 col-xl-4">
+                  <button
+                    className="btn btn-outline-primary btn-block"
+                    onClick={() => getNechapiForecast(id, method)}
+                    disabled={spinner}
+                  >
+                    <i class="fas fa-calculator mr-2"></i>{" "}
+                    {spinner ? (
+                      <div className="spinner-border"></div>
+                    ) : (
+                      "Pronosticar Resultado"
+                    )}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p>
+                  El paciente no ha completado las 4 pruebas necesarias para
+                  pronosticar su Nechapi.
+                </p>
+                <div className="row">
+                  {testsNechapi.map((test) => (
+                    <div className="col-12 col-md-3">
+                      <i
+                        className={`fa ${
+                          completed !== null
+                            ? completed.includes(test.id)
+                              ? "fa-check text-success"
+                              : "fa-times"
+                            : "fa-times"
+                        }`}
+                      ></i>{" "}
+                      {test.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {categorias && categorias !== null && (
               <NechapiSummary {...categorias} />
             )}
-            <div className="row mx-0 px-3">
-              <button
-                className="btn btn-outline-primary"
-                onClick={() => getNechapiForecast(id)}
-                disabled={spinner}
-              >
-                <i class="fas fa-calculator mr-2"></i>{" "}
-                {spinner ? (
-                  <div className="spinner-border"></div>
-                ) : (
-                  "Calcular Categorías"
-                )}
-              </button>
-            </div>
           </div>
         );
       }

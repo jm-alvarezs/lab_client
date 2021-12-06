@@ -100,7 +100,7 @@ const SingleResults = ({ id }) => {
           </div>
         );
       }
-      return <p>Prueba no completada.</p>;
+      return <p className="text-danger">Esta prueba no ha sido completada.</p>;
     }
   };
 
