@@ -37,9 +37,14 @@ export const ResultadosProvider = ({ children }) => {
     });
   };
 
-  const fetchResults = (idPatient, idTestType, date) => {
+  const fetchResults = (idPatient, idTestType, startDate, endDate) => {
     dispatch({ type: RESULTADOS_RECIBIDOS, payload: null });
-    ResultadosService.fetchResults(idPatient, idTestType, date).then((res) => {
+    ResultadosService.fetchResults(
+      idPatient,
+      idTestType,
+      startDate,
+      endDate
+    ).then((res) => {
       const results = res.data.data;
       dispatch({ type: RESULTADOS_RECIBIDOS, payload: results });
     });

@@ -38,10 +38,21 @@ const UsuarioForm = ({ id }) => {
       return alert("El nombre no puede estar vacío.");
     }
     if (!validateEmail(paciente.email)) {
-      return alert("El correo electrónico no es válido.");
+      return alert(
+        "Ya existe un paciente registrado con ese correo electrónico."
+      );
     }
     if (paciente.id === "nuevo") {
       paciente.idUser = user.idUser;
+      if (paciente.antecedent === "") {
+        paciente.antecedent = "Ninguno.";
+      }
+      if (paciente.whichDrugs === "") {
+        paciente.whichDrugs = "Ninguno.";
+      }
+      if (paciente.drugsConsumption === "") {
+        paciente.drugsConsumption = "Ninguno.";
+      }
       postPaciente(paciente);
     } else {
       updatePaciente(paciente);
