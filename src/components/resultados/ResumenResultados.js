@@ -19,7 +19,8 @@ const ResumenResultados = ({ resultado }) => {
               resultado.results.targets,
               resultado.results.target,
               "aciertos",
-              resultado.results.settings.clave
+              resultado.results.settings.clave,
+              true
             )
           : getResultadoTargets(
               resultado.results.targets,
@@ -50,8 +51,7 @@ const ResumenResultados = ({ resultado }) => {
               resultado.results.targets,
               resultado.results.target,
               "omision",
-              resultado.results.settings.clave,
-              true
+              resultado.results.settings.clave
             )
           : getResultadoTargets(
               resultado.results.targets,
@@ -68,7 +68,7 @@ const ResumenResultados = ({ resultado }) => {
               resultado.results.target,
               "omision",
               resultado.results.settings.clave,
-              false
+              true
             )
           : getResultadoTargets(
               resultado.results.targets,
