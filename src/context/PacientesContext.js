@@ -62,7 +62,6 @@ export const PacientesProvider = ({ children }) => {
   };
 
   const postPaciente = (paciente) => {
-    delete paciente.id;
     if (paciente.drugsConsumption !== "") {
       paciente.dose = paciente.drugsConsumption;
       paciente.drugsConsumption = true;
