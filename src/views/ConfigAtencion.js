@@ -259,9 +259,8 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
                     value={keyCode}
                     onChange={(e) => handleChange("keyCode", e)}
                   >
-                    <option value="32">Espacio</option>
-                    <option value="13">Intro</option>
-                    <option value="any">Cualquiera</option>
+                    <option value={32}>Espacio</option>
+                    <option value={13}>Intro</option>
                   </select>
                 </div>
               </div>

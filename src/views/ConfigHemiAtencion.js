@@ -248,9 +248,8 @@ const ConfigHemiAtencion = ({ idPaciente, submit, submitCallback }) => {
                     value={keyCode}
                     onChange={(e) => handleChange("keyCode", e)}
                   >
-                    <option>Espacio</option>
-                    <option>Intro</option>
-                    <option>Cualquiera</option>
+                    <option value={32}>Espacio</option>
+                    <option value={13}>Intro</option>
                   </select>
                 </div>
               </div>

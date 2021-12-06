@@ -92,11 +92,10 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
   } = config;
 
   const paresTotales =
-    (parseInt(claveTarget) +
-      parseInt(claveNoTarget) +
-      parseInt(noClaveNoTarget) +
-      parseInt(noClaveTarget)) *
-    2;
+    parseInt(claveTarget) +
+    parseInt(claveNoTarget) +
+    parseInt(noClaveNoTarget) +
+    parseInt(noClaveTarget);
 
   return (
     <div className="container-fluid">
@@ -333,9 +332,8 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
                     value={keyCode}
                     onChange={(e) => handleChange("keyCode", e)}
                   >
-                    <option>Espacio</option>
-                    <option>Intro</option>
-                    <option>Cualquiera</option>
+                    <option value={32}>Espacio</option>
+                    <option value={13}>Intro</option>
                   </select>
                 </div>
               </div>
