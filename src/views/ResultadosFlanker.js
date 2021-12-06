@@ -84,7 +84,7 @@ const ResultadosFlanker = ({ idTest }) => {
   return (
     <ReactToPdf
       filename={`Test_${idTest}_${moment().format("YYYY-MM-DD_HH:mm")}.pdf`}
-      scale={0.65}
+      scale={0.5}
     >
       {({ toPdf, targetRef }) => (
         <div className="container mt-4" ref={targetRef}>
