@@ -151,7 +151,7 @@ const AtencionCondicional = () => {
       claveNoTarget.push(currentTarget);
     }
     let noClaveTarget = [];
-    for (let i = 0; i < parseInt(config.noClaveTarget); i++) {
+    for (let i = 0; i < parseInt(config.noClaveTarget - 1); i++) {
       let current = Math.floor(Math.random() * characters.length);
       let currentTarget = charactersExclude(config.target, config.clave)[
         current
