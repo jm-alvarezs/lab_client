@@ -177,7 +177,7 @@ const AtencionCondicional = () => {
         parseInt(config.noClaveNoTarget)) *
       2;
     while (targets.length < total) {
-      let cuadrante = Math.floor(Math.random() * 4) + 1;
+      let cuadrante = Math.floor(Math.random() * 4);
       let currentTarget = "";
       let nextTarget = "";
       switch (cuadrante) {
