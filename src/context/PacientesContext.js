@@ -94,9 +94,20 @@ export const PacientesProvider = ({ children }) => {
       paciente.drugsConsumption = true;
       paciente.drugsTreatment = true;
     }
-    PacientesService.updatePaciente(paciente).then(() => {
-      success("Paciente actualizado!");
-    });
+    PacientesService.updatePaciente(paciente)
+      .then(() => {
+        success("Paciente actualizado!");
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status == 409) {
+            return alert(
+              "Ya existe un paciente registrado con esa dirección de correo electrónico."
+            );
+          }
+        }
+        alert(error);
+      });
   };
 
   const createPaciente = () => {

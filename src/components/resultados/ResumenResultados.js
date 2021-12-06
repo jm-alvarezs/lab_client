@@ -57,7 +57,6 @@ const ResumenResultados = ({ resultado }) => {
               resultado.results.targets,
               resultado.results.target,
               "omision",
-              "",
               true
             )}
       </p>

@@ -258,9 +258,10 @@ export const getResultadoTargets = (targets, character, type, correct) => {
     default:
       targets = targets.filter((target) => !target.clicked);
       if (correct) {
-        return targets.filter((target) =>
+        targets = targets.filter((target) =>
           getTargetResult(target, character, false)
-        ).length;
+        );
+        return targets.length;
       }
       return targets.filter(
         (target) => !getTargetResult(target, character, false)
