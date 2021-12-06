@@ -137,10 +137,12 @@ const AtencionHemi = () => {
   }
 
   const handleKey = (e) => {
-    let currentTarget = targets[targets.length - 1];
-    if (currentTarget) {
-      currentTarget.clicked = moment();
-      currentTarget.character = String.fromCharCode(e.keyCode);
+    if (e.keyCode === config.keyCode) {
+      let currentTarget = targets[targets.length - 1];
+      if (currentTarget) {
+        currentTarget.clicked = moment();
+        currentTarget.character = String.fromCharCode(e.keyCode);
+      }
     }
   };
 

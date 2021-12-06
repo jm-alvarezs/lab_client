@@ -104,10 +104,12 @@ const AtencionCondicional = () => {
   }, [config]);
 
   const handleKey = (e) => {
-    let currentTarget = targets[estimulos - 1];
-    if (currentTarget) {
-      currentTarget.clicked = moment();
-      currentTarget.character = String.fromCharCode(e.keyCode);
+    if (config.keyCode === e.keyCode) {
+      let currentTarget = targets[estimulos - 1];
+      if (currentTarget) {
+        currentTarget.clicked = moment();
+        currentTarget.character = String.fromCharCode(e.keyCode);
+      }
     }
   };
 

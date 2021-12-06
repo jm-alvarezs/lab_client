@@ -100,11 +100,16 @@ const FlankerTask = () => {
   };
 
   const handleKeyPress = (e) => {
-    const clicked = moment().format("YYYY-MM-DD HH:mm:ss:SSS");
-    const pressed = String.fromCharCode(e.charCode);
-    if (!current.clicked) {
-      setPropiedadEstimulo("clicked", clicked);
-      setPropiedadEstimulo("char", pressed);
+    if (
+      String.fromCharCode(e.keyCode) === config.leftKey ||
+      String.fromCharCode(e.keyCode) === config.rightKey
+    ) {
+      const clicked = moment().format("YYYY-MM-DD HH:mm:ss:SSS");
+      const pressed = String.fromCharCode(e.charCode);
+      if (!current.clicked) {
+        setPropiedadEstimulo("clicked", clicked);
+        setPropiedadEstimulo("char", pressed);
+      }
     }
   };
 
