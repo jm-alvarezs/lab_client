@@ -1,0 +1,25 @@
+:root {
+  --success: #28a745;
+  --primary: #007bff;
+  --danger: #dc3545;
+}
+
+.stroop-btn {
+  min-height: 100px;
+}
+
+.stroop-container {
+  height: 30vh;
+}
+
+.target-verde {
+  color: var(--success);
+}
+
+.target-rojo {
+  color: var(--danger);
+}
+
+.target-azul {
+  color: var(--primary);
+}

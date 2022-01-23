@@ -5,6 +5,14 @@ import { PruebasContext } from "../context/PruebasContext";
 import { ModalContext } from "../context/ModalContext";
 import InterScreen from "../components/pruebas/InterScreen";
 
+/**
+ * Componente General de Prueba
+ * Muestra instrucciones y pantalla de gracias
+ * Sube resultados a Back End
+ * @param {*} TestComponent: El componente de prueba específico
+ * @param {*} startCallback: Función que se llama al inicar prueba
+ * @returns
+ */
 const BaseTest = ({
   ended,
   instrucciones,
@@ -26,9 +34,10 @@ const BaseTest = ({
       handleEnd(false);
     };
     let currentConfig = getConfig(defaultConfig);
-
+    //Construir prueba usando el token
     if (currentConfig.idTest && currentConfig.token) {
       getPrueba(currentConfig.idTest, currentConfig.token);
+      //Agregar configuración de prueba
       setConfig(currentConfig);
       setDisabled(false);
     } else {
@@ -57,7 +66,7 @@ const BaseTest = ({
   const handleStart = () => {
     setStartTime(moment().format("YYYY-MM-DD HH:mm:ss:SSS"));
     if (typeof startCallback === "function") {
-      startCallback();
+      startCallback(config);
     }
   };
 
@@ -73,6 +82,7 @@ const BaseTest = ({
       finished,
       device,
     };
+    //Subir resultados al back end
     postResultados(result);
   };
 

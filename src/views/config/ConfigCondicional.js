@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { PacientesContext } from "../context/PacientesContext";
-import { PruebasContext } from "../context/PruebasContext";
+import { PacientesContext } from "../../context/PacientesContext";
+import { PruebasContext } from "../../context/PruebasContext";
 import { Link } from "@reach/router";
 
 const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {

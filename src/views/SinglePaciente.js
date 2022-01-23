@@ -3,11 +3,11 @@ import Breadcrumbs from "../components/global/Breadcrumbs";
 import UsuarioData from "../components/usuarios/UsuarioData";
 import { PacientesContext } from "../context/PacientesContext";
 import { Link } from "@reach/router";
-import { allTests, testsNechapi } from "../utils";
+import { testsNechapi } from "../utils";
 import NechapiSummary from "../components/cuestionario/NechapiSummary";
+import ApplyTest from "../components/pruebas/ApplyTest";
 
 const SinglePaciente = ({ id }) => {
-  const [test, setTest] = useState("atencion");
   const [canPredict, setCanPredict] = useState(false);
   const [completed, setCompleted] = useState(null);
   const [method, setMethod] = useState("kmeans");
@@ -73,49 +73,6 @@ const SinglePaciente = ({ id }) => {
               <div className="col-12 col-md-6 col-xl-4">
                 <Link
                   to={`/cuestionario/${survey}/${id}`}
-                  className="btn btn-dark btn-block"
-                >
-                  Aplicar
-                </Link>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    }
-  };
-
-  const renderOpciones = () => {
-    return allTests.map((test) => (
-      <option key={test.id} value={test.key}>
-        {test.name}
-      </option>
-    ));
-  };
-
-  const renderPruebas = () => {
-    if (!isNaN(id)) {
-      if (paciente && paciente !== null) {
-        return (
-          <div className="card p-3 shadow-sm my-3">
-            <div className="row border-bottom pb-2 mb-4">
-              <div className="col-6">
-                <h4>Aplicar una Prueba</h4>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12 col-md-6 col-xl-8">
-                <select
-                  value={test}
-                  className="form-control mb-3"
-                  onChange={(e) => setTest(e.target.value)}
-                >
-                  {renderOpciones()}
-                </select>
-              </div>
-              <div className="col-12 col-md-6 col-xl-4">
-                <Link
-                  to={`/config/${test}/${id}`}
                   className="btn btn-dark btn-block"
                 >
                   Aplicar
@@ -221,7 +178,7 @@ const SinglePaciente = ({ id }) => {
           <h2 className="border-bottom pb-3 mb-3">Expediente</h2>
           {renderUsuario()}
         </div>
-        {renderPruebas()}
+        <ApplyTest idPatient={id} />
         {renderCuestionarios()}
         {renderNechapi()}
       </div>

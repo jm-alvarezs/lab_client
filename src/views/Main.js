@@ -14,6 +14,7 @@ import AnswerCuestionario from "./AnswerCuestionario";
 import TorreHanoi from "./TorreHanoi";
 import FlankerTask from "./FlankerTask";
 import MultiTest from "./MultiTest";
+import StroopTest from "./tests/stroop/StroopTest";
 
 const Main = () => {
   const { user, userLoggedIn } = useContext(UserContext);
@@ -37,6 +38,7 @@ const Main = () => {
         <AtencionSimple path="/atencion/*" />
         <AtencionCondicional path="/atencion/condicional/*" />
         <AtencionHemi path="/atencion/hemi/*" />
+        <StroopTest path="/stroop/*" />
         <AnswerCuestionario path="/cuestionario/answer/*" />
         <MultiTest path="/multi/*" />
       </Router>

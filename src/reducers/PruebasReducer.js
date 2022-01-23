@@ -24,6 +24,7 @@ export default (state, { type, payload }) => {
       return { ...state, spinner: false };
     case RESET_ALL_ESTIMULOS:
       return { ...state, estimulos: [] };
+    //Agregar datos a estimulo mostrado en pantalla
     case SET_PROPIEDAD_ESTIMULO:
       const current = { ...state.current };
       const { key, value } = payload;
@@ -39,12 +40,14 @@ export default (state, { type, payload }) => {
         }
       } else current[key] = value;
       return { ...state, current };
+    //Agregar todos los estimulos en una fila
     case SET_FILA: {
       return {
         ...state,
         fila: payload,
       };
     }
+    //Mostrar un nuevo estimulo en pantalla y guardar el que estaba antes
     case POP_ESTIMULO: {
       let estimulos = [...state.estimulos];
       if (state.current) {

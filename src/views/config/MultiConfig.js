@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ModalContext } from "../context/ModalContext";
-import { PacientesContext } from "../context/PacientesContext";
-import { PruebasContext } from "../context/PruebasContext";
-import { BASE_URL, hideModal, processMultiTestUrl } from "../utils";
+import { ModalContext } from "../../context/ModalContext";
+import { PacientesContext } from "../../context/PacientesContext";
+import { PruebasContext } from "../../context/PruebasContext";
+import { hideModal, processMultiTestUrl } from "../../utils";
 import ConfigAtencion from "./ConfigAtencion";
 import ConfigCondicional from "./ConfigCondicional";
 import ConfigFlanker from "./ConfigFlanker";

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import Breadcrumbs from "../components/global/Breadcrumbs";
-import { ModalContext } from "../context/ModalContext";
-import { PacientesContext } from "../context/PacientesContext";
-import { PruebasContext } from "../context/PruebasContext";
+import Breadcrumbs from "../../components/global/Breadcrumbs";
+import { ModalContext } from "../../context/ModalContext";
+import { PacientesContext } from "../../context/PacientesContext";
+import { PruebasContext } from "../../context/PruebasContext";
 import { Link } from "@reach/router";
 
 const ConfigFlanker = ({ idPaciente, submit, submitCallback }) => {

@@ -89,6 +89,8 @@ export const UserProvider = ({ children }) => {
           alert(error);
           dispatch({ type: HIDE_SPINNER });
         });
+    } else {
+      dispatch({ type: HIDE_SPINNER });
     }
   }
 

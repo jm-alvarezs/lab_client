@@ -39,7 +39,7 @@ const FlankerTask = () => {
     current,
     fila,
     popEstimulo,
-    setFila,
+    setEstimulos,
     setPropiedadEstimulo,
   } = useContext(PruebasContext);
 
@@ -95,7 +95,7 @@ const FlankerTask = () => {
     document.body.addEventListener("keypress", handleKeyPress);
     let estimulosPrueba = getEstimulosFlanker(config.estimulosPrueba);
     estimulosPrueba = shuffle(estimulosPrueba);
-    setFila(estimulosPrueba);
+    setEstimulos(estimulosPrueba);
     setFijacion(true);
   };
 

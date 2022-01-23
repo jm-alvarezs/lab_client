@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import Breadcrumbs from "../components/global/Breadcrumbs";
-import { PacientesContext } from "../context/PacientesContext";
-import { PruebasContext } from "../context/PruebasContext";
+import Breadcrumbs from "../../components/global/Breadcrumbs";
+import { PacientesContext } from "../../context/PacientesContext";
+import { PruebasContext } from "../../context/PruebasContext";
 import Switch from "react-switch";
 import { Link } from "@reach/router";
 

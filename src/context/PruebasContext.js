@@ -54,7 +54,7 @@ export const PruebasProvider = ({ children }) => {
     }
   };
 
-  const postPrueba = (config, type, patient, callback) => {
+  const postPrueba = (config, patient, testType, callback) => {
     dispatch({ type: SHOW_SPINNER });
     PruebasService.postPrueba(config).then((res) => {
       const idTest = res.data.data.id;
@@ -69,14 +69,7 @@ export const PruebasProvider = ({ children }) => {
           .filter((obj) => obj !== null)
           .join("&");
         const url =
-          `/${
-            config.idTestType > 3
-              ? type === "hanoi"
-                ? "hanoi"
-                : "flanker"
-              : `atencion${type && type !== null ? `/${type}` : ""}`
-          }` +
-          `?idTest=${idTest}&token=${accessUrl.token}&` +
+          `/${testType.handle}?idTest=${idTest}&token=${accessUrl.token}&` +
           args;
         dispatch({ type: HIDE_SPINNER });
         if (callback && typeof callback === "function") {
@@ -87,7 +80,7 @@ export const PruebasProvider = ({ children }) => {
             <PostPrueba
               id={idTest}
               url={url}
-              type={type}
+              type={testType.handle}
               defaultEmail={patient.email}
             />
           );
@@ -114,7 +107,7 @@ export const PruebasProvider = ({ children }) => {
     dispatch({ type: RESET_ALL_ESTIMULOS });
   };
 
-  const setFila = (estimulos) => {
+  const setEstimulos = (estimulos) => {
     dispatch({ type: SET_FILA, payload: estimulos });
   };
 
@@ -141,12 +134,12 @@ export const PruebasProvider = ({ children }) => {
       value={{
         ...state,
         addTest,
-        setFila,
         setConfig,
         getPrueba,
         postPrueba,
         clearPrueba,
         popEstimulo,
+        setEstimulos,
         putResultados,
         postResultados,
         resetAllEstimulos,
