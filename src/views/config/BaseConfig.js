@@ -47,42 +47,40 @@ const BaseConfig = ({
   };
 
   const renderForm = () => {
-    return Object.keys(configSchema).map((key) => {
-      return (
-        <div className="row">
-          <div className="col-6">
-            <label className="text-capitalze">{configSchema[key].label}</label>
-          </div>
-          <div className="col-6">
-            {configSchema[key].type === "select" ? (
-              <select
-                value={config[key]}
-                className="form-control mb-3"
-                onChange={(e) => handleChange(key, e)}
-              >
-                {configSchema[key].options.map((value) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            ) : configSchema[key].type === "boolean" ? (
-              <Switch
-                checked={config[key]}
-                onChange={(checked) => handleChange(key, checked)}
-              />
-            ) : (
-              <input
-                type={configSchema[key].type}
-                value={config[key]}
-                className="form-control mb-3"
-                onChange={(e) => handleChange(key, e)}
-              />
-            )}
-          </div>
+    return Object.keys(configSchema).map((key) => (
+      <div className="row" key={key}>
+        <div className="col-6">
+          <label className="text-capitalze">{configSchema[key].label}</label>
         </div>
-      );
-    });
+        <div className="col-6">
+          {configSchema[key].type === "select" ? (
+            <select
+              value={config[key]}
+              className="form-control mb-3"
+              onChange={(e) => handleChange(key, e)}
+            >
+              {configSchema[key].options.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          ) : configSchema[key].type === "boolean" ? (
+            <Switch
+              checked={config[key]}
+              onChange={(checked) => handleChange(key, checked)}
+            />
+          ) : (
+            <input
+              type={configSchema[key].type}
+              value={config[key]}
+              className="form-control mb-3"
+              onChange={(e) => handleChange(key, e)}
+            />
+          )}
+        </div>
+      </div>
+    ));
   };
 
   return (
