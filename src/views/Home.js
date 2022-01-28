@@ -21,6 +21,7 @@ import ConfigFlanker from "./config/ConfigFlanker";
 import ResultadosFlanker from "./ResultadosFlanker";
 import MultiConfig from "./config/MultiConfig";
 import ConfigStroop from "./tests/stroop/ConfigStroop";
+import StroopResults from "./tests/stroop/StroopResults";
 
 const Home = ({ user }) => {
   return (
@@ -42,6 +43,7 @@ const Home = ({ user }) => {
           <SingleResults path="/resultados/:id" />
           <ResultadosHanoi path="/resultados/hanoi/:idTest" />
           <ResultadosFlanker path="/resultados/flanker/:idTest" />
+          <StroopResults path="/resultados/stroop/:id" />
           {/* Pacientes */}
           <Pacientes path="/pacientes" default />
           <SinglePaciente path="/pacientes/:id" />

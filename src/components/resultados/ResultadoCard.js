@@ -29,11 +29,7 @@ const ResultadoCard = ({ resultado }) => {
             to={`./${
               resultado.surveyType
                 ? `cuestionario/${resultado.id}`
-                : (type.includes("hanoi")
-                    ? "hanoi/"
-                    : type.includes("flanker")
-                    ? "flanker/"
-                    : "") + resultado.id
+                : `${resultado.testType.handle}/${resultado.id}`
             }`}
             className="btn btn-outline-secondary"
           >
