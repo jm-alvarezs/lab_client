@@ -1,5 +1,6 @@
 import { ModalProvider } from "./context/ModalContext";
 import { PacientesProvider } from "./context/PacientesContext";
+import { PaymentsProvider } from "./context/PaymentsContext";
 import { PruebasProvider } from "./context/PruebasContext";
 import { ResultadosProvider } from "./context/ResultadosContext";
 import { SurveyProvider } from "./context/SurveyContext";
@@ -18,7 +19,9 @@ function App() {
               <PacientesProvider>
                 <SurveyProvider>
                   <TestTypeProvider>
-                    <Main />
+                    <PaymentsProvider>
+                      <Main />
+                    </PaymentsProvider>
                   </TestTypeProvider>
                 </SurveyProvider>
               </PacientesProvider>

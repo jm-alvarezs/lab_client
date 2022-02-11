@@ -2,13 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import PruebaConfig from "../../../components/pruebas/PruebaConfig";
 import { ResultadosContext } from "../../../context/ResultadosContext";
 import moment from "moment";
-import SplitHalfTesting from "../../SplitHalfTesting";
-import ResultChart from "../../../components/resultados/ResultChart";
-import EstimuloRow from "../../../components/resultados/EstimuloRow";
 import { calculateAverage } from "../../../utils";
 import ReactToPdf from "react-to-pdf";
-import ResumenResultados from "../../../components/resultados/ResumenResultados";
 import SujetoPrueba from "../../../components/resultados/SujetoPrueba";
+import StroopRow from "../../../components/resultados/StroopRow";
 
 const StroopResults = ({ id }) => {
   const { resultado, fiability, getSingleTest, clearSingleResultado } =
@@ -35,15 +32,14 @@ const StroopResults = ({ id }) => {
 
   const renderEstimulos = () => {
     if (resultado && resultado !== null && showEstimulos) {
-      if (resultado.results.targets) {
-        return resultado.results.targets.map((target, index) => (
-          <EstimuloRow
+      if (resultado.results.estimulos) {
+        return resultado.results.estimulos.map((target, index) => (
+          <StroopRow
             key={target.timestamp}
             target={target}
             type={resultado.test.testType.id}
             objective={resultado.results.settings.target}
             index={index}
-            prevItem={index > 0 ? resultado.results.targets[index - 1] : {}}
             clave={resultado.results.settings.clave}
           />
         ));
@@ -66,37 +62,17 @@ const StroopResults = ({ id }) => {
 
   const renderResults = () => {
     if (resultado && resultado !== null) {
-      console.log(resultado.results);
-      if (resultado.results.targets) {
+      if (resultado.results.estimulos) {
         return (
           <div className="container-fluid">
             <div className="row">
               <div className="col col-md-6">
                 <div className="row">
-                  <div className="col-12 col-md-6">
-                    <ResultChart
-                      items={resultado.results.targets}
-                      target={resultado.results.target}
-                      type={resultado.test.testType.id}
-                      prevTarget={resultado.results.prevTarget}
-                    />
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <ResumenResultados resultado={resultado} />
-                  </div>
+                  <div className="col-12 col-md-6"></div>
+                  <div className="col-12 col-md-6"></div>
                 </div>
               </div>
-              <div className="col col-md-6">
-                {fiability && fiability !== null && (
-                  <SplitHalfTesting
-                    items={resultado.results.targets}
-                    average_one={fiability.average_one}
-                    average_two={fiability.average_two}
-                    column="reaction"
-                    result={getTiempoReaccion()}
-                  />
-                )}
-              </div>
+              <div className="col col-md-6"></div>
             </div>
           </div>
         );
@@ -114,31 +90,16 @@ const StroopResults = ({ id }) => {
 
   const renderHeaders = () => {
     if (resultado && resultado !== null && showEstimulos) {
-      switch (resultado.test.testType.id) {
-        case 3:
-          return (
-            <div className="row">
-              <div className="col col-md-1">#</div>
-              <div className="col col-md-2">Emisión</div>
-              <div className="col col-md-2">Caracter</div>
-              <div className="col col-md-1">QN</div>
-              <div className="col col-md-2">Click</div>
-              <div className="col col-md-2">TR</div>
-              <div className="col col-md-2">Resultado</div>
-            </div>
-          );
-        default:
-          return (
-            <div className="row bold">
-              <div className="col col-md-2">#</div>
-              <div className="col col-md-2">Emisión</div>
-              <div className="col col-md-2">Caracter</div>
-              <div className="col col-md-2">Click</div>
-              <div className="col col-md-2">TR</div>
-              <div className="col col-md-2">Resultado</div>
-            </div>
-          );
-      }
+      return (
+        <div className="row bold">
+          <div className="col">#</div>
+          <div className="col">Texto</div>
+          <div className="col">Color</div>
+          <div className="col">Tipo</div>
+          <div className="col">Click</div>
+          <div className="col">TR (ms)</div>
+        </div>
+      );
     }
   };
 

@@ -31,6 +31,11 @@ const Navbar = ({ user }) => {
                 Resultados
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/payments">
+                Pagos
+              </Link>
+            </li>
             {user.isAdmin && (
               <li className="nav-item dropdown">
                 <a

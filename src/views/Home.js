@@ -22,6 +22,7 @@ import ResultadosFlanker from "./ResultadosFlanker";
 import MultiConfig from "./config/MultiConfig";
 import ConfigStroop from "./tests/stroop/ConfigStroop";
 import StroopResults from "./tests/stroop/StroopResults";
+import Payments from "./Payments";
 
 const Home = ({ user }) => {
   return (
@@ -54,6 +55,8 @@ const Home = ({ user }) => {
           <Cuestionario path="/cuestionario/:tipo/:idPaciente" />
           <AnswerCuestionario path="/cuestionario/:tipo" />
           <ResultadosCuestionario path="/resultados/cuestionario/:id" />
+          {/* Payments */}
+          <Payments path="/payments" />
           {/* Admin */}
           {user.isAdmin && <Pacientes path="/admin/pacientes" admin={true} />}
           {user.isAdmin && <Results path="/admin/resultados" admin={true} />}
