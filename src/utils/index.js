@@ -20,7 +20,10 @@ export const displayError = (dispatch, error) => {
   setTimeout(() => dispatch({ type: CLEAR_ALERT }), 3000);
 };
 
-export const BASE_URL = "https://lab-cognicion-api.herokuapp.com";
+export const BASE_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://lab-cognicion-api.herokuapp.com";
 
 export const searchRows = (query, rows) => {
   if (!rows) return;
@@ -636,4 +639,20 @@ export const getEstimulosCondicional = (prueba) => {
       parseInt(prueba.noClaveTarget)) *
     2
   );
+};
+
+export const hasCredits = (user) => {
+  let { payments, tests } = user;
+  const vigente = payments.find((payment) =>
+    moment(payment.expiration_date).isAfter(moment())
+  );
+  if (!vigente) return 0;
+  let available = 0;
+  payments.forEach((payment) => {
+    available += payment.test_amount;
+  });
+  if (available <= tests.length) {
+    return 0;
+  }
+  return available - tests.length;
 };

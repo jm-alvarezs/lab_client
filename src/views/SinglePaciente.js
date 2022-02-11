@@ -3,9 +3,11 @@ import Breadcrumbs from "../components/global/Breadcrumbs";
 import UsuarioData from "../components/usuarios/UsuarioData";
 import { PacientesContext } from "../context/PacientesContext";
 import { Link } from "@reach/router";
-import { testsNechapi } from "../utils";
+import { hasCredits, testsNechapi } from "../utils";
 import NechapiSummary from "../components/cuestionario/NechapiSummary";
 import ApplyTest from "../components/pruebas/ApplyTest";
+import { UserContext } from "../context/UserContext";
+import { navigate } from "@reach/router";
 
 const SinglePaciente = ({ id }) => {
   const [canPredict, setCanPredict] = useState(false);
@@ -20,6 +22,8 @@ const SinglePaciente = ({ id }) => {
     getSinglePaciente,
     getNechapiForecast,
   } = useContext(PacientesContext);
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     getSinglePaciente(id);
@@ -58,7 +62,15 @@ const SinglePaciente = ({ id }) => {
       if (paciente && paciente !== null) {
         return (
           <div className="card p-3 shadow-sm my-3">
-            <h4 className="border-bottom pb-2 mb-4">Aplicar un cuestionario</h4>
+            <div className="row border-bottom pb-2 mb-4">
+              <div className="col-6">
+                <h4>Aplicar un cuestionario</h4>
+              </div>
+              <div className="col-6 text-right">
+                <b>Restantes: </b>
+                {hasCredits(user)}
+              </div>
+            </div>
             <div className="row">
               <div className="col-12 col-md-6 col-xl-8">
                 <select
@@ -71,12 +83,13 @@ const SinglePaciente = ({ id }) => {
                 </select>
               </div>
               <div className="col-12 col-md-6 col-xl-4">
-                <Link
-                  to={`/cuestionario/${survey}/${id}`}
+                <button
+                  onClick={() => navigate(`/cuestionario/${survey}/${id}`)}
                   className="btn btn-dark btn-block"
+                  disabled={hasCredits(user) === 0}
                 >
                   Aplicar
-                </Link>
+                </button>
               </div>
             </div>
           </div>

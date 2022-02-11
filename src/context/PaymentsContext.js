@@ -15,7 +15,7 @@ export const PaymentsProvider = ({ children }) => {
 
   const getMyPayments = () => {
     PaymentsService.getMyPayments().then((res) => {
-      const { payments } = res.data;
+      const payments = res.data.data;
       dispatch({ type: PAYMENTS_RECIBIDOS, payload: payments });
     });
   };

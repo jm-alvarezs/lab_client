@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TestTypeContext } from "../../context/TestTypeContext";
 import { Link } from "@reach/router";
+import { hasCredits } from "../../utils";
+import { UserContext } from "../../context/UserContext";
+import { navigate } from "@reach/router";
 
 const ApplyTest = ({ idPatient }) => {
   const [test, setTest] = useState("");
 
   const { testTypes, getTestTypes } = useContext(TestTypeContext);
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     getTestTypes();
@@ -27,6 +32,10 @@ const ApplyTest = ({ idPatient }) => {
         <div className="col-6">
           <h4>Aplicar una Prueba</h4>
         </div>
+        <div className="col-6 text-right">
+          <b>Restantes: </b>
+          {hasCredits(user)}
+        </div>
       </div>
       <div className="row">
         <div className="col-12 col-md-6 col-xl-8">
@@ -39,12 +48,13 @@ const ApplyTest = ({ idPatient }) => {
           </select>
         </div>
         <div className="col-12 col-md-6 col-xl-4">
-          <Link
-            to={`/config/${test}/${idPatient}`}
+          <button
+            disabled={hasCredits(user) === 0}
+            onClick={() => navigate(`/config/${test}/${idPatient}`)}
             className="btn btn-dark btn-block"
           >
             Aplicar
-          </Link>
+          </button>
         </div>
       </div>
     </div>
