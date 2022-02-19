@@ -50,7 +50,7 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
     if (["", " ", undefined].includes(config.clave)) {
       return alert("La clave no puede estar vacía");
     }
-    postPrueba(config, "condicional", paciente, submitCallback);
+    postPrueba(config, paciente, { handle: "condicional" }, submitCallback);
   };
 
   const handleChange = (key, e) => {

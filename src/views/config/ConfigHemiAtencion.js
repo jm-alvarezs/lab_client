@@ -51,7 +51,7 @@ const ConfigHemiAtencion = ({ idPaciente, submit, submitCallback }) => {
     if (["", " "].includes(config.target)) {
       return alert("El target no puede estar vacío");
     }
-    postPrueba(config, "hemi", paciente, submitCallback);
+    postPrueba(config, paciente, { handle: "hemi" }, submitCallback);
   };
 
   const handleChange = (key, e) => {

@@ -43,7 +43,7 @@ const ConfigFlanker = ({ idPaciente, submit, submitCallback }) => {
     if (config.fontSize === "" || config.fontSize === 0) {
       return alert("El tamaño de letra no puede estar vacío o ser 0.");
     }
-    postPrueba(config, "flanker", paciente, submitCallback);
+    postPrueba(config, paciente, { handle: "flanker" }, submitCallback);
   };
 
   const handleChange = (key, e) => {

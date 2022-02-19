@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TestTypeContext } from "../../context/TestTypeContext";
-import { Link } from "@reach/router";
 import { hasCredits } from "../../utils";
 import { UserContext } from "../../context/UserContext";
 import { navigate } from "@reach/router";
@@ -15,6 +14,20 @@ const ApplyTest = ({ idPatient }) => {
   useEffect(() => {
     getTestTypes();
   }, []);
+
+  useEffect(() => {
+    if (Array.isArray(testTypes)) {
+      if (testTypes[0]) {
+        setTest(testTypes[0].handle);
+      }
+    }
+  }, [testTypes]);
+
+  const handleApplyTest = () => {
+    if (test && test !== null) {
+      navigate(`/config/${test}/${idPatient}`);
+    }
+  };
 
   const renderOpciones = () => {
     if (Array.isArray(testTypes)) {
@@ -50,7 +63,7 @@ const ApplyTest = ({ idPatient }) => {
         <div className="col-12 col-md-6 col-xl-4">
           <button
             disabled={hasCredits(user) === 0}
-            onClick={() => navigate(`/config/${test}/${idPatient}`)}
+            onClick={handleApplyTest}
             className="btn btn-dark btn-block"
           >
             Aplicar

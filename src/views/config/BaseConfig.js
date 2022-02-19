@@ -22,6 +22,8 @@ const BaseConfig = ({
 
   const { testType, getSingleTestType } = useContext(TestTypeContext);
 
+  console.log(testType);
+
   useEffect(() => {
     setConfig({ ...defaultConfig, idPatient });
     getSinglePaciente(idPatient);

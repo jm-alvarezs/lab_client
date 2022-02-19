@@ -33,7 +33,7 @@ const ConfigHanoi = ({ idPaciente, submit, submitCallback }) => {
     if (e) {
       e.preventDefault();
     }
-    postPrueba(config, "hanoi", paciente, submitCallback);
+    postPrueba(config, paciente, { handle: "hanoi" }, submitCallback);
   };
 
   const handleChange = (key, e) => {

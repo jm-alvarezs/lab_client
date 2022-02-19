@@ -46,7 +46,7 @@ const ConfigAtencion = ({ idPaciente, submit, submitCallback }) => {
     if (["", " ", undefined].includes(config.target)) {
       return alert("El target no puede estar vacío");
     }
-    postPrueba(config, "simple", paciente, submitCallback);
+    postPrueba(config, paciente, { handle: "atencion" }, submitCallback);
   };
 
   const handleChange = (key, e) => {
