@@ -1,5 +1,4 @@
-import React, { createContext } from "react";
-import { useReducer } from "react/cjs/react.development";
+import React, { createContext, useReducer } from "react";
 import PaymentsReducer from "../reducers/PaymentsReducer";
 import PaymentsService from "../services/PaymentsService";
 import { PAYMENTS_RECIBIDOS } from "../types";
