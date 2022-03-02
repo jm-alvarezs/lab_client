@@ -16,7 +16,7 @@ const instruccionesA = [
   <p className="instrucciones">
     Para hacerlo, tiene que mover los discos de uno en uno, tecleando primero el
     número de la barra donde esté el disco que quiere mover, y después el número
-    de la barra hacia donde lo quiere mover. Puede mover los discos hacia la
+    de la barra hacia donde lo quiere mover. Puedes mover los discos hacia la
     derecha o hacia la izquierda, y puede usar las tres barras.
   </p>,
   <p className="instrucciones">
@@ -35,7 +35,7 @@ const instruccionesB = [
   <p className="instrucciones">
     Para hacerlo, tiene que mover los discos de uno en uno, tecleando primero el
     número de la barra donde esté el disco que quiere mover, y después el número
-    de la barra hacia donde lo quiere mover. Puede mover los discos hacia la
+    de la barra hacia donde lo quiere mover. Puedes mover los discos hacia la
     derecha o hacia la izquierda, y puede usar las tres barras.
   </p>,
   <p className="instrucciones">

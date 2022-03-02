@@ -25,6 +25,9 @@ const ChartNechapi = ({ questions }) => {
           min: 0,
           max: 100,
         },
+        dataLabels: {
+          formatter: (val) => parseInt(val),
+        },
       }}
       series={[
         {

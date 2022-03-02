@@ -41,7 +41,8 @@ const Home = ({ user }) => {
           <MultiConfig path="/config/multi/:idPaciente/*" />
           {/* Resultados */}
           <Results path="/resultados" />
-          <SingleResults path="/resultados/:id" />
+          <SingleResults path="/resultados/atencion/:id" />
+          <SingleResults path="/resultados/condicional/:id" />
           <ResultadosHanoi path="/resultados/hanoi/:idTest" />
           <ResultadosFlanker path="/resultados/flanker/:idTest" />
           <StroopResults path="/resultados/stroop/:id" />

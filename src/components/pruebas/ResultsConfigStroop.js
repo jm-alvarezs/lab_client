@@ -3,9 +3,7 @@ import { getEstimulosCondicional } from "../../utils";
 
 const PruebaConfig = ({ idTestType, prueba }) => {
   const {
-    tiempoExposicion,
     tiempoInterestimular,
-    target,
     fontFamily,
     fontStyle,
     fontSize,
@@ -13,21 +11,9 @@ const PruebaConfig = ({ idTestType, prueba }) => {
     backgroundColor,
     numeroEstimulos,
     aparicion,
-    keyCode,
   } = prueba;
   return (
     <div className="container-fluid px-0">
-      <div className="row">
-        <div className="col-6">
-          <label>Tiempo de Exposición</label>
-        </div>
-        <div className="col-6">
-          <p>
-            {tiempoExposicion}
-            {"ms"}
-          </p>
-        </div>
-      </div>
       <div className="row">
         <div className="col-6">
           <label>Tiempo Interestimular</label>
@@ -37,14 +23,6 @@ const PruebaConfig = ({ idTestType, prueba }) => {
             {tiempoInterestimular}
             {"ms"}
           </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-6">
-          <label>Target</label>
-        </div>
-        <div className="col-6">
-          <p>{target}</p>
         </div>
       </div>
       <div className="row">
@@ -117,30 +95,7 @@ const PruebaConfig = ({ idTestType, prueba }) => {
         <div className="col-6">
           <label>Botón o tecla de respuesta</label>
         </div>
-        <div className="col-6">
-          <p>
-            {keyCode === "any"
-              ? "Cualquiera"
-              : keyCode === "32"
-              ? "Espacio"
-              : "Intro"}
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-6">
-          <label>Duración</label>
-        </div>
-        <div className="col-6">
-          <p>
-            {((parseInt(tiempoExposicion) + parseInt(tiempoInterestimular)) *
-              (idTestType === 2
-                ? getEstimulosCondicional(prueba)
-                : numeroEstimulos)) /
-              1000}
-            {" segundos"}
-          </p>
-        </div>
+        <div className="col-6">Click</div>
       </div>
     </div>
   );

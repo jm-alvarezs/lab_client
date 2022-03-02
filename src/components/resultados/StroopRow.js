@@ -21,6 +21,13 @@ const StroopRow = ({ target, type, index }) => {
           )}{" "}
           ms
         </div>
+        <div className="col">
+          {target.clicked === target.target ? (
+            <i className="fa fa-check text-success"></i>
+          ) : (
+            <i className="fa fa-times text-danger"></i>
+          )}
+        </div>
       </div>
     </div>
   );

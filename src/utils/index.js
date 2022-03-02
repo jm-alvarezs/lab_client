@@ -541,6 +541,7 @@ export const getTiempoPromedio = (movimientos) => {
       "miliseconds"
     );
   });
+  console.log(suma);
   return parseFloat(suma / movimientos.length).toFixed(2);
 };
 

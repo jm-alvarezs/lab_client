@@ -98,6 +98,7 @@ const StroopResults = ({ id }) => {
           <div className="col">Tipo</div>
           <div className="col">Click</div>
           <div className="col">TR (ms)</div>
+          <div className="col">Resultado</div>
         </div>
       );
     }

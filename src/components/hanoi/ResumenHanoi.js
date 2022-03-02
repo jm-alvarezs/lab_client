@@ -89,7 +89,7 @@ const ResumenHanoi = ({
         </div>
       </div>
       <div className="row py-2">
-        <div className="col-6">Movimientos Repetidos</div>
+        <div className="col-6">Movimientos Revertidos</div>
         <div className="col-6">{getConteoRepetidos(movimientos)}</div>
       </div>
     </div>
