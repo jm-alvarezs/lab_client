@@ -66,7 +66,7 @@ const ResultadosCuestionario = ({ id }) => {
             <div className="container-fluid mx-0">
               <div className="row my-2">
                 <div className="col-6 col-md-6 bold">Categoría</div>
-                <div className="col-6 col-md-6 bold">Antes</div>
+                <div className="col-6 col-md-6 bold">Resultado</div>
               </div>
               <div className="row my-2">
                 <div className="col-6 col-md-6">Anger</div>

@@ -6,6 +6,7 @@ import { calculateAverage } from "../../../utils";
 import ReactToPdf from "react-to-pdf";
 import SujetoPrueba from "../../../components/resultados/SujetoPrueba";
 import StroopRow from "../../../components/resultados/StroopRow";
+import StroopConfig from "./StroopConfig";
 
 const StroopResults = ({ id }) => {
   const { resultado, fiability, getSingleTest, clearSingleResultado } =
@@ -21,8 +22,8 @@ const StroopResults = ({ id }) => {
     if (resultado && resultado !== null) {
       if (resultado.results.settings && resultado.results.settings !== null) {
         return (
-          <PruebaConfig
-            prueba={resultado.results.settings}
+          <StroopConfig
+            prueba={resultado.results}
             idTestType={resultado.test.testType.id}
           />
         );
@@ -94,9 +95,9 @@ const StroopResults = ({ id }) => {
         <div className="row bold">
           <div className="col">#</div>
           <div className="col">Texto</div>
-          <div className="col">Color</div>
-          <div className="col">Tipo</div>
+          <div className="col">Tinta</div>
           <div className="col">Click</div>
+          <div className="col">Tipo</div>
           <div className="col">TR (ms)</div>
           <div className="col">Resultado</div>
         </div>

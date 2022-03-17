@@ -100,14 +100,6 @@ const AtencionSimple = () => {
   }, [prueba]);
 
   useEffect(() => {
-    if (thankyou) {
-      setTimeout(() => {
-        setThankyou(false);
-      }, 5000);
-    }
-  }, [thankyou]);
-
-  useEffect(() => {
     getStyle();
   }, [config]);
 

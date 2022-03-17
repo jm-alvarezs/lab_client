@@ -536,12 +536,14 @@ export const discs = [
 export const getTiempoPromedio = (movimientos) => {
   let suma = 0;
   movimientos.forEach((movimiento) => {
-    suma += moment(movimiento.timestamp_destino).diff(
-      movimiento.timestamp_origen,
+    suma += moment(
+      movimiento.timestamp_destino,
+      "YYYY-MM-DD HH:mm:ss:SSS"
+    ).diff(
+      moment(movimiento.timestamp_origen, "YYYY-MM-DD HH:mm:ss:SSS"),
       "miliseconds"
     );
   });
-  console.log(suma);
   return parseFloat(suma / movimientos.length).toFixed(2);
 };
 
@@ -549,8 +551,14 @@ export const getTiempoPromedioReflexion = (movimientos) => {
   let suma = 0;
   movimientos.forEach((movimiento, index) => {
     if (index > 0) {
-      suma += moment(movimiento.timestamp_origen).diff(
-        movimientos[index - 1].timestamp_destino,
+      suma += moment(
+        movimiento.timestamp_origen,
+        "YYYY-MM-DD HH:mm:ss:SSS"
+      ).diff(
+        moment(
+          movimientos[index - 1].timestamp_destino,
+          "YYYY-MM-DD HH:mm:ss:SSS"
+        ),
         "miliseconds"
       );
     }

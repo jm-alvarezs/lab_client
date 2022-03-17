@@ -24,8 +24,15 @@ const ResumenFlanker = ({
           <div className="row py-2">
             <div className="col-6">Tiempo Total</div>
             <div className="col-6">
-              {moment(finishTime).diff(startTime, "seconds")}.
-              {moment(finishTime).diff(startTime, "miliseconds") % 1000}{" "}
+              {moment(finishTime, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+                moment(startTime, "YYYY-MM-DD HH:mm:ss:SSS"),
+                "seconds"
+              )}
+              .
+              {moment(finishTime, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+                moment(startTime, "YYYY-MM-DD HH:mm:ss:SSS"),
+                "miliseconds"
+              ) % 1000}{" "}
               segundos
             </div>
           </div>

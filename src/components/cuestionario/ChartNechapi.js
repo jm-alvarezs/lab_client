@@ -24,19 +24,18 @@ const ChartNechapi = ({ questions }) => {
         yaxis: {
           min: 0,
           max: 100,
+          labels: {
+            formatter: (val) => parseInt(val),
+          },
         },
         dataLabels: {
-          formatter: (val) => parseInt(val),
+          formatter: (val) => `${parseInt(val)}%`,
         },
       }}
       series={[
         {
-          name: "Antes",
+          name: "Resultado",
           data: getChartSeries("nechapi", questions, "before"),
-        },
-        {
-          name: "Después",
-          data: getChartSeries("nechapi", questions, "after"),
         },
       ]}
     />

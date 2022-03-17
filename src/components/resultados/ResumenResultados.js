@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  calculateAverage,
   getResultadoTargets,
   getResultadoTargetsCondicional,
 } from "../../utils";
@@ -7,6 +8,19 @@ import {
 const ResumenResultados = ({ resultado }) => {
   const isCondicional = () => {
     return resultado.test.testType.id === 2;
+  };
+
+  const getTiempoReaccion = () => {
+    if (resultado && resultado !== null) {
+      if (resultado.results.targets && resultado.results.targets !== null) {
+        let reacciones = resultado.results.targets.map((target) =>
+          target.reaction ? target.reaction : null
+        );
+        reacciones = reacciones.filter((item) => item !== null);
+        return parseInt(calculateAverage(reacciones));
+      }
+    }
+    return "N/D";
   };
 
   return (
@@ -43,6 +57,7 @@ const ResumenResultados = ({ resultado }) => {
               "errores"
             )}
       </p>
+      <p className="mb-1">Reaccion Media: {getTiempoReaccion()} ms</p>
       <h4>Detalle</h4>
       <p>
         Omisiones Correctas:{" "}

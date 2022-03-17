@@ -148,6 +148,10 @@ const StroopTest = () => {
         Es importante que responda tan rápido como pueda, ya que los estímulos
         aparecen y desaparecen rápidamente.
       </p>,
+      <p className="instrucciones">
+        Señale en la pantalla el color con el que está escrita la palabra que
+        aparece en pantalla, ignorando su significado.
+      </p>,
     ];
   };
 

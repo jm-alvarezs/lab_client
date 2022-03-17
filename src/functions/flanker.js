@@ -5,7 +5,10 @@ export const getTiempoReaccionFlanker = (estimulos) => {
   let clicks = 0;
   estimulos.forEach((estimulo) => {
     if (estimulo.clicked) {
-      suma += moment(estimulo.clicked).diff(estimulo.emitted, "miliseconds");
+      suma += moment(estimulo.clicked, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+        moment(estimulo.emitted, "YYYY-MM-DD HH:mm:ss:SSS"),
+        "miliseconds"
+      );
       clicks++;
     }
   });

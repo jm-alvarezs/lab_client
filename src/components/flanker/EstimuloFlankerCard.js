@@ -21,7 +21,10 @@ const EstimuloFlankerCard = ({ estimulo, prevEstimulo, right, left }) => {
       </div>
       <div className="col-2">
         {estimulo.clicked ? (
-          moment(estimulo.clicked).diff(estimulo.emitted, "miliseconds")
+          moment(estimulo.clicked, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+            moment(estimulo.emitted, "YYYY-MM-DD HH:mm:ss:SSS"),
+            "miliseconds"
+          )
         ) : (
           <i className="fa fa-times"></i>
         )}
@@ -29,7 +32,10 @@ const EstimuloFlankerCard = ({ estimulo, prevEstimulo, right, left }) => {
       <div className="col-2">
         {prevEstimulo !== null &&
           prevEstimulo.clicked &&
-          moment(estimulo.emitted).diff(prevEstimulo.clicked, "milliseconds")}
+          moment(estimulo.emitted, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+            moment(prevEstimulo.clicked, "YYYY-MM-DD HH:mm:ss:SSS"),
+            "milliseconds"
+          )}
       </div>
       <div className="col-1">
         {isValidFlanker(estimulo, right, left) ? (

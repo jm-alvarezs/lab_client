@@ -15,6 +15,9 @@ const ResumenHanoi = ({
   startTime,
   finishTime,
 }) => {
+  console.log(finishTime);
+  console.log(startTime);
+  console.log();
   return (
     <div className="card container shadow-sm p-3 mb-4">
       <div className="row border-bottom pb-3 mb-2">
@@ -56,8 +59,16 @@ const ResumenHanoi = ({
       <div className="row py-2">
         <div className="col-6">Tiempo Total</div>
         <div className="col-6">
-          {moment(finishTime).diff(startTime, "seconds")}.
-          {moment(finishTime).diff(startTime, "miliseconds") % 1000} segundos
+          {moment(finishTime, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+            moment(startTime, "YYYY-MM-DD HH:mm:ss:SSS"),
+            "seconds"
+          )}
+          .
+          {moment(finishTime, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+            moment(startTime, "YYYY-MM-DD HH:mm:ss:SSS"),
+            "miliseconds"
+          ) % 1000}{" "}
+          segundos
         </div>
       </div>
       <div className="row py-2">

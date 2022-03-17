@@ -36,8 +36,8 @@ const Main = () => {
         <FlankerTask path="/flanker/*" />
         <TorreHanoi path="/hanoi/*" />
         <AtencionSimple path="/atencion/*" />
-        <AtencionCondicional path="/atencion/condicional/*" />
-        <AtencionHemi path="/atencion/hemi/*" />
+        <AtencionCondicional path="/condicional/*" />
+        <AtencionHemi path="/hemi/*" />
         <StroopTest path="/stroop/*" />
         <AnswerCuestionario path="/cuestionario/answer/*" />
         <MultiTest path="/multi/*" />

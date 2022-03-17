@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import PruebaConfig from "../components/pruebas/PruebaConfig";
 import { ResultadosContext } from "../context/ResultadosContext";
-import moment from "moment";
-import SplitHalfTesting from "./SplitHalfTesting";
 import ResultChart from "../components/resultados/ResultChart";
 import EstimuloRow from "../components/resultados/EstimuloRow";
-import { calculateAverage } from "../utils";
-import ReactToPdf from "react-to-pdf";
 import ResumenResultados from "../components/resultados/ResumenResultados";
 import SujetoPrueba from "../components/resultados/SujetoPrueba";
+import SplitHalfTesting from "./SplitHalfTesting";
+import ReactToPdf from "react-to-pdf";
+import moment from "moment";
 
 const SingleResults = ({ id }) => {
   const { resultado, fiability, getSingleTest, clearSingleResultado } =
@@ -51,19 +50,6 @@ const SingleResults = ({ id }) => {
     }
   };
 
-  const getTiempoReaccion = () => {
-    if (resultado && resultado !== null) {
-      if (resultado.results.targets && resultado.results.targets !== null) {
-        let reacciones = resultado.results.targets.map((target) =>
-          target.reaction ? target.reaction : null
-        );
-        reacciones = reacciones.filter((item) => item !== null);
-        return calculateAverage(reacciones).toFixed(4);
-      }
-    }
-    return "N/D";
-  };
-
   const renderResults = () => {
     if (resultado && resultado !== null) {
       if (resultado.results.targets) {
@@ -92,7 +78,6 @@ const SingleResults = ({ id }) => {
                     average_one={fiability.average_one}
                     average_two={fiability.average_two}
                     column="reaction"
-                    result={getTiempoReaccion()}
                   />
                 )}
               </div>
@@ -193,7 +178,6 @@ const SingleResults = ({ id }) => {
             <div className="border-bottom pb-3 mb-3 row mx-0">
               <div className="col col-md-8 px-0">
                 <h3>Estímulos</h3>
-                <p className="mb-1">Reaccion Media: {getTiempoReaccion()}ms</p>
               </div>
               <div className="col col-md-4 text-right px-0">
                 <button

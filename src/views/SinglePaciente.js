@@ -79,7 +79,7 @@ const SinglePaciente = ({ id }) => {
                   onChange={(e) => setSurvey(e.target.value)}
                 >
                   <option value="nechapi">Nechapi</option>
-                  <option value="nechapi">CUPOM</option>
+                  <option value="cupom">CUPOM</option>
                 </select>
               </div>
               <div className="col-12 col-md-6 col-xl-4">

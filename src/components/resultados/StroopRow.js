@@ -15,14 +15,14 @@ const StroopRow = ({ target, type, index }) => {
         <div className="col text-capitalize">{target.clicked}</div>
         <div className="col text-capitalize">{target.type}</div>
         <div className="col">
-          {moment(target.timestamp).diff(
-            moment(target.emitted),
+          {moment(target.timestamp, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+            moment(target.emitted, "YYYY-MM-DD HH:mm:ss:SSS"),
             "milliseconds"
           )}{" "}
           ms
         </div>
         <div className="col">
-          {target.clicked === target.target ? (
+          {target.clicked === target.display ? (
             <i className="fa fa-check text-success"></i>
           ) : (
             <i className="fa fa-times text-danger"></i>
