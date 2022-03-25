@@ -55,7 +55,7 @@ const ConfigHemiAtencion = ({ idPaciente, submit, submitCallback }) => {
   };
 
   const handleChange = (key, e) => {
-    const { value } = e.target;
+    let { value } = e.target;
     if (
       [
         "tiempoExposicion",

@@ -43,6 +43,7 @@ const Home = ({ user }) => {
           <Results path="/resultados" />
           <SingleResults path="/resultados/atencion/:id" />
           <SingleResults path="/resultados/condicional/:id" />
+          <SingleResults path="/resultados/hemi/:id" />
           <ResultadosHanoi path="/resultados/hanoi/:idTest" />
           <ResultadosFlanker path="/resultados/flanker/:idTest" />
           <StroopResults path="/resultados/stroop/:id" />
