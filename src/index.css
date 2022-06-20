@@ -13,6 +13,10 @@ h6 {
   font-weight: 600;
 }
 
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
 .damage-item {
   text-transform: capitalize;
 }

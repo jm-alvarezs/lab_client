@@ -22,6 +22,11 @@ const Navbar = ({ user }) => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav text-right">
             <li className="nav-item">
+              <Link className="nav-link" to="/tests">
+                Pruebas
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link" to="/pacientes">
                 Pacientes
               </Link>

@@ -23,6 +23,9 @@ import MultiConfig from "./config/MultiConfig";
 import ConfigStroop from "./tests/stroop/ConfigStroop";
 import StroopResults from "./tests/stroop/StroopResults";
 import Payments from "./Payments";
+import MultiTestList from "./multitest/MultiTestList";
+import MultiTestConfig from "./multitest/MultiTestConfig";
+import MultiTestRun from "./multitest/MultiTestRun";
 
 const Home = ({ user }) => {
   return (
@@ -39,6 +42,9 @@ const Home = ({ user }) => {
           <ConfigFlanker path="/config/flanker/:idPaciente" />
           <ConfigStroop path="/config/stroop/:idPaciente" />
           <MultiConfig path="/config/multi/:idPaciente/*" />
+          {/* MultiTest Standalone */}
+          <MultiTestList path="/tests" />
+          <MultiTestConfig path="/tests/:idMultiTest/edit" />
           {/* Resultados */}
           <Results path="/resultados" />
           <SingleResults path="/resultados/atencion/:id" />
