@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Consent = ({ callback }) => {
+const Consent = ({ alert, callback }) => {
+  const [selected, setSelected] = useState(false);
+
+  const handleCallback = () => {
+    if (!selected) {
+      return alert("Debes aceptar para continuar con el ejercicio.");
+    }
+    callback();
+  };
+
   return (
     <div className="container-fluid bg-light p-5">
       <div className="container card p-4 shadow-sm">
@@ -81,10 +90,17 @@ const Consent = ({ callback }) => {
           Entiendo que cualquier cambio se discutirá conmigo.
         </p>
         <label>
-          Yo <input type="text" className="form-control d-inline w-50" /> acepto
-          participa en la investigación.
+          <input
+            type="radio"
+            className="mr-2"
+            checked={selected}
+            onChange={(e) => {
+              setSelected(e.target.checked);
+            }}
+          />{" "}
+          Yo acepto participa en la investigación.
         </label>
-        <button className="btn btn-dark mt-4" onClick={callback}>
+        <button className="btn btn-dark mt-4" onClick={handleCallback}>
           Continuar
         </button>
       </div>

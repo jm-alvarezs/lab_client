@@ -35,6 +35,13 @@ export const MultiTestProvider = ({ children }) => {
     });
   };
 
+  const getMultiTestPatient = (idMultiTest, idPatient) => {
+    MultiTestService.getMultiTestPatient(idMultiTest, idPatient).then((res) => {
+      const { multitest } = res.data;
+      dispatch({ type: SET_MULTITEST, payload: multitest });
+    });
+  };
+
   const createMultiTest = () => {
     dispatch({ type: CREATE_MULTITEST });
   };
@@ -65,6 +72,7 @@ export const MultiTestProvider = ({ children }) => {
         getMultiTests,
         createMultiTest,
         getSingleMultiTest,
+        getMultiTestPatient,
         setPropiedadMultiTest,
         postMultiTest,
       }}

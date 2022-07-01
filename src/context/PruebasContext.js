@@ -50,6 +50,7 @@ export const PruebasProvider = ({ children }) => {
         const token = prueba.accessUrl.token;
         UsuarioService.setToken(token);
         dispatch({ type: TEST_READY });
+        dispatch({ type: PRUEBA_RECIBIDA, payload: res.data.data });
       });
     }
   };

@@ -23,9 +23,9 @@ const MultiTestConfig = ({ idMultiTest }) => {
       if (multitest.tests.length === 0) {
         return <p>Aún no hay ejercicios registrados.</p>;
       }
-      return multitest.tests.map((test) => (
-        <TestConfigCard key={test.id} test={test} />
-      ));
+      return multitest.tests
+        .filter((test) => test.idPatient === null)
+        .map((test) => <TestConfigCard key={test.id} test={test} />);
     }
   };
 
