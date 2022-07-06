@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import PreguntasCUPOM from "../components/cuestionario/PreguntasCUPOM";
-import PreguntasNechapi from "../components/cuestionario/PreguntasNechapi";
 import { ModalContext } from "../context/ModalContext";
 import { SurveyContext } from "../context/SurveyContext";
 import { preguntasCUPOM, preguntasNechapi } from "../utils";
+import PreguntasCUPOM from "../components/cuestionario/PreguntasCUPOM";
+import PreguntasNechapi from "../components/cuestionario/PreguntasNechapi";
 
-const AnswerCuestionario = () => {
+const AnswerCuestionario = ({ endCallback }) => {
   const [tipo, setTipo] = useState("");
   const [idPatient, setIdPatient] = useState("");
   const [observaciones, setObservaciones] = useState("");
@@ -15,27 +15,39 @@ const AnswerCuestionario = () => {
   const [idSurveyType, setidSurveyType] = useState("");
   const [finished, setFinished] = useState(false);
 
-  const { postAnswer } = useContext(SurveyContext);
+  const { survey, postAnswer } = useContext(SurveyContext);
 
   const { alert } = useContext(ModalContext);
 
   useEffect(() => {
     let currentToken = window.location.href.split("token=")[1];
-    if (!currentToken) {
-      return alert("No se puede iniciar la prueba");
+    if (survey.results) {
+      if (typeof endCallback === "function") {
+        endCallback();
+      }
+      return alert("Este cuestionario ya ha sido contestado.");
     }
-    currentToken = currentToken.split("&")[0];
-    setToken(currentToken);
-    let idSurveyType = window.location.href
-      .split("idSurveyType=")[1]
-      .split("&")[0];
-    let idPatient = window.location.href.split("idPatient=")[1].split("&")[0];
-    let idSurvey = window.location.href.split("idSurvey=")[1].split("&")[0];
-    setidSurveyType(parseInt(idSurveyType));
-    setIdPatient(idPatient);
-    setIdSurvey(idSurvey);
-    if (parseInt(idSurveyType) === 1) setTipo("nechapi");
-    else setTipo("cupom");
+    if (!currentToken && survey === null) {
+      return alert("No se puede iniciar la prueba");
+    } else if (survey !== null) {
+      setIdSurvey(survey.survey.id);
+      setToken(survey.survey.accessUrl.token);
+      setIdPatient(survey.survey.idPatient);
+      setidSurveyType(survey.survey.type);
+    } else {
+      currentToken = currentToken.split("&")[0];
+      setToken(currentToken);
+      let idSurveyType = window.location.href
+        .split("idSurveyType=")[1]
+        .split("&")[0];
+      let idPatient = window.location.href.split("idPatient=")[1].split("&")[0];
+      let idSurvey = window.location.href.split("idSurvey=")[1].split("&")[0];
+      setidSurveyType(parseInt(idSurveyType));
+      setIdPatient(idPatient);
+      setIdSurvey(idSurvey);
+      if (parseInt(idSurveyType) === 1) setTipo("nechapi");
+      else setTipo("cupom");
+    }
   }, []);
 
   const renderForm = () => {
@@ -91,6 +103,9 @@ const AnswerCuestionario = () => {
     };
     postAnswer(data, token);
     setFinished(true);
+    if (typeof endCallback === "function") {
+      endCallback();
+    }
   };
 
   const renderPreguntas = () => {

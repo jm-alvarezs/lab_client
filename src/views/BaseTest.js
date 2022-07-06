@@ -11,16 +11,19 @@ import InterScreen from "../components/pruebas/InterScreen";
  * Sube resultados a Back End
  * @param {*} TestComponent: El componente de prueba específico
  * @param {*} startCallback: Función que se llama al inicar prueba
+ * @param {*} endCallback: Función para pasar a siguiente ejercicio
  * @returns
  */
+
 const BaseTest = ({
   ended,
   instrucciones,
   TestComponent,
   defaultConfig,
   startCallback,
+  endCallback,
 }) => {
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [startTime, setStartTime] = useState(null);
   const [finishTime, setFinishTime] = useState(null);
 
@@ -35,12 +38,13 @@ const BaseTest = ({
     };
     let currentConfig = getConfig(defaultConfig);
     //Construir prueba usando el token
-    if (currentConfig.idTest && currentConfig.token) {
+    if (currentConfig.idTest && currentConfig.token && prueba === null) {
       getPrueba(currentConfig.idTest, currentConfig.token);
       //Agregar configuración de prueba
       setConfig(currentConfig);
       setDisabled(false);
-    } else {
+    } else if (prueba === null) {
+      setDisabled(true);
       alert(
         "El enlace del ejercicio es incorrecto. Contacta al profesional que te lo envió."
       );
@@ -55,10 +59,18 @@ const BaseTest = ({
 
   useEffect(() => {
     if (prueba !== null) {
+      console.log(prueba);
       if (prueba.results) {
         if (prueba.results._id) {
           setDisabled(true);
         }
+      }
+      if (prueba.settings) {
+        setConfig({
+          ...defaultConfig,
+          ...prueba.settings,
+          token: prueba.test.accessUrl.token,
+        });
       }
     }
   }, [prueba]);
@@ -84,22 +96,26 @@ const BaseTest = ({
     };
     //Subir resultados al back end
     postResultados(result);
+    if (typeof endCallback === "function") {
+      endCallback();
+    }
   };
 
-  return (
-    <div>
-      {startTime === null || finishTime !== null ? (
+  const renderContent = () => {
+    if (startTime === null || finishTime !== null) {
+      return (
         <InterScreen
           start={handleStart}
           thankyou={finishTime !== null}
           disabled={disabled}
           instrucciones={instrucciones}
         />
-      ) : (
-        TestComponent
-      )}
-    </div>
-  );
+      );
+    }
+    return TestComponent;
+  };
+
+  return <div>{renderContent()}</div>;
 };
 
 export default BaseTest;

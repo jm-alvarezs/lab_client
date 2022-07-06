@@ -44,7 +44,7 @@ const instruccionesB = [
   </p>,
 ];
 
-const TorreHanoi = () => {
+const TorreHanoi = ({ endCallback }) => {
   const [one, setOne] = useState([]);
   const [two, setTwo] = useState([]);
   const [three, setThree] = useState([]);
@@ -65,7 +65,7 @@ const TorreHanoi = () => {
     setPropiedadEstimulo,
   } = useContext(PruebasContext);
 
-  const { success, alert, modalComponent } = useContext(ModalContext);
+  const { alert, modalComponent } = useContext(ModalContext);
 
   const defaultConfig = {
     administracion: "A",
@@ -78,11 +78,11 @@ const TorreHanoi = () => {
 
   useEffect(() => {
     let currentConfig = getConfig(defaultConfig);
-    if (currentConfig.idTest && currentConfig.token) {
+    if (currentConfig.idTest && currentConfig.token && prueba === null) {
       getPrueba(currentConfig.idTest, currentConfig.token);
       setConfig(currentConfig);
       setDisabled(false);
-    } else {
+    } else if (prueba === null) {
       alert(
         "El enlace del ejercicio es incorrecto. Contacta al profesional que te lo envió."
       );
@@ -94,9 +94,14 @@ const TorreHanoi = () => {
 
   useEffect(() => {
     if (prueba !== null) {
-      if (prueba.settings) {
-        let currentConfig = getConfig(defaultConfig);
-        setConfig({ ...prueba.settings, token: currentConfig.token });
+      if (prueba.results.config) {
+        setDisabled(true);
+        if (typeof endCallback === "function") {
+          endCallback();
+        }
+      } else if (prueba.settings) {
+        setDisabled(false);
+        setConfig({ ...prueba.settings, token: prueba.test.accessUrl.token });
       }
     }
   }, [prueba]);

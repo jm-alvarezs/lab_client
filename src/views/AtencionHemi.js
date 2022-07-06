@@ -40,7 +40,7 @@ const styleProperties = [
   "backgroundColor",
 ];
 
-const AtencionHemi = () => {
+const AtencionHemi = ({ endCallback }) => {
   const [displayQ1, setDisplayQ1] = useState("");
   const [displayQ2, setDisplayQ2] = useState("");
   const [displayQ3, setDisplayQ3] = useState("");
@@ -99,6 +99,11 @@ const AtencionHemi = () => {
     if (prueba !== null) {
       if (prueba.results.config) {
         setDisabled(true);
+        setTimeout(() => {
+          if (typeof endCallback === "function") {
+            endCallback();
+          }
+        }, 1500);
         return alert("Lo sentimos, este ejercicio ya fue realizado.");
       } else if (prueba.settings) {
         setConfig(prueba.settings);

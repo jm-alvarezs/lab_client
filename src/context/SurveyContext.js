@@ -39,8 +39,12 @@ export const SurveyProvider = ({ children }) => {
     });
   };
 
-  const getSurvey = (id) => {
-    SurveyService.getSuvrey(id).then((res) => {
+  const getSurvey = (id, token) => {
+    SurveyService.getSingleSurvey(id, {
+      headers: {
+        Authorization: token,
+      },
+    }).then((res) => {
       const survey = res.data.data;
       dispatch({ type: SINGLE_SURVEY_RECIBIDA, payload: survey });
     });

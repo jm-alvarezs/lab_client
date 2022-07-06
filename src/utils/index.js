@@ -590,22 +590,41 @@ export const getConteoRepetidos = (movimientos) => {
 
 export const getConfig = (defaultConfig) => {
   let currentConfig = { ...defaultConfig };
-  let token = window.location.href.split("token=")[1];
-  if (token) token = token.split("&")[0];
-  let idTest = window.location.href.split("idTest=")[1];
-  if (idTest) idTest = idTest.split("&")[0];
-  let params = window.location.href.split("?")[1];
-  params = params.split("&");
-  params.forEach((elem) => {
-    const single = elem.split("=");
-    if (!isNaN(single[1])) {
-      currentConfig[single[0]] = parseInt(single[1]);
-    } else {
-      currentConfig[single[0]] = single[1];
-    }
-  });
+  let idTest = getTestId();
+  let token = getTestToken();
+  let params = getTestParams();
+  currentConfig = { ...currentConfig, ...params };
   currentConfig.token = token;
   currentConfig.idTest = idTest;
+  return currentConfig;
+};
+
+export const getTestId = () => {
+  let testSplit = window.location.href.split("idTest=");
+  if (testSplit.length > 0) {
+    let idTest = testSplit[1];
+    if (idTest) idTest = idTest.split("&")[0];
+    return idTest;
+  }
+};
+
+export const getTestParams = () => {
+  let params;
+  let currentConfig = [];
+  let splitParams = window.location.href.split("?");
+  if (splitParams.length > 1) {
+    currentConfig = {};
+    params = splitParams[1];
+    params = params.split("&");
+    params.forEach((elem) => {
+      const single = elem.split("=");
+      if (!isNaN(single[1])) {
+        currentConfig[single[0]] = parseInt(single[1]);
+      } else {
+        currentConfig[single[0]] = single[1];
+      }
+    });
+  }
   return currentConfig;
 };
 
@@ -664,4 +683,19 @@ export const hasCredits = (user) => {
     return 0;
   }
   return available - tests.length;
+};
+
+export const getTestToken = (test) => {
+  let token;
+  let tokenSplit = window.location.href.split("token=");
+  if (tokenSplit.length > 1) {
+    token = tokenSplit[1];
+    token = token.split("&")[0];
+  } else if (test && test !== null && test.test) {
+    let { accessUrl } = test.test;
+    if (typeof accessUrl === "object" && accessUrl !== null) {
+      token = accessUrl.token;
+    }
+  }
+  return token;
 };

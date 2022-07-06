@@ -4,7 +4,7 @@ import { PruebasContext } from "../context/PruebasContext";
 import { navigate } from "@reach/router";
 import UsuarioService from "../services/UsuarioService";
 import { ModalContext } from "../context/ModalContext";
-import { getConfig } from "../utils";
+import { getConfig, getTestToken } from "../utils";
 
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -43,7 +43,7 @@ const styleProperties = [
   "backgroundColor",
 ];
 
-const AtencionCondicional = () => {
+const AtencionCondicional = ({ endCallback }) => {
   const [display, setDisplay] = useState("");
   const [started, setStarted] = useState(false);
   const [config, setConfig] = useState({});
@@ -79,13 +79,21 @@ const AtencionCondicional = () => {
 
   useEffect(() => {
     if (prueba !== null) {
+      console.log(prueba);
       if (prueba.settings) {
-        let token = window.location.href.split("token=")[1];
+        let token = getTestToken(prueba);
         if (!token) {
           setDisabled(true);
           return alert("No se puede iniciar la prueba");
+        } else if (prueba.results.config) {
+          setDisabled(true);
+          setTimeout(() => {
+            if (typeof endCallback === "function") {
+              endCallback();
+            }
+          }, 1500);
+          return alert("Lo sentimos, este ejercicio ya fue realizado.");
         }
-        token = token.split("&")[0];
         setConfig({ ...prueba.settings, token });
       }
     }
@@ -121,6 +129,9 @@ const AtencionCondicional = () => {
     };
     postResultados(result);
     setThankyou(true);
+    if (typeof endCallback === "function") {
+      endCallback();
+    }
   };
 
   const start = () => {

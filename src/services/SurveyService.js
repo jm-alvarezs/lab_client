@@ -5,7 +5,7 @@ const route = "/surveys";
 export default {
   getSurveys: () => api.get(route),
   getSurveysAdmin: () => api.get(`${route}?admin=true`),
-  getSingleSurvey: (id) => api.get(`${route}/${id}`),
+  getSingleSurvey: (id, config) => api.get(`${route}/${id}`, { ...config }),
   fetchSurveys: (idPatient, idSurveyType, startDate, endDate) =>
     api.get(
       `${route}/search?idPatient=${idPatient}&type=${idSurveyType}&startDate=${startDate}&endDate=${endDate}`

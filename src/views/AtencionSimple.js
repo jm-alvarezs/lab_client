@@ -5,6 +5,7 @@ import { navigate } from "@reach/router";
 import UsuarioService from "../services/UsuarioService";
 import { ModalContext } from "../context/ModalContext";
 import InterScreen from "../components/pruebas/InterScreen";
+import { getTestToken } from "../utils";
 
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -31,7 +32,7 @@ const styleProperties = [
   "backgroundColor",
 ];
 
-const AtencionSimple = () => {
+const AtencionSimple = ({ endCallback }) => {
   const [display, setDisplay] = useState("");
   const [started, setStarted] = useState(false);
   const [config, setConfig] = useState({});
@@ -54,12 +55,11 @@ const AtencionSimple = () => {
 
   useEffect(() => {
     if (prueba === null) {
-      let token = window.location.href.split("token=")[1];
+      let token = getTestToken();
       if (!token) {
         setDisabled(true);
-        return alert("No se puede iniciar la prueba");
+        return alert("No se puede realizar este ejercicio.");
       }
-      token = token.split("&")[0];
       UsuarioService.setToken(token);
       let idTest = window.location.href.split("idTest=")[1];
       if (!idTest) return navigate("/");
@@ -85,14 +85,15 @@ const AtencionSimple = () => {
     if (prueba !== null) {
       if (prueba.results.config) {
         setDisabled(true);
+        setTimeout(() => {
+          if (typeof endCallback === "function") {
+            endCallback();
+          }
+        }, 1500);
         return alert("Lo sentimos, este ejercicio ya fue realizado.");
       } else if (prueba.settings) {
-        let token = window.location.href.split("token=")[1];
-        if (!token) {
-          setDisabled(true);
-          return alert("No se puede iniciar la prueba");
-        }
-        token = token.split("&")[0];
+        let token = getTestToken(prueba);
+        UsuarioService.setToken(token);
         setConfig({ ...prueba.settings, token });
         getStyle();
       }
@@ -146,6 +147,9 @@ const AtencionSimple = () => {
     };
     postResultados(result);
     setThankyou(true);
+    if (typeof endCallback === "function") {
+      endCallback();
+    }
   };
 
   const start = () => {
@@ -195,6 +199,9 @@ const AtencionSimple = () => {
       current[key] = config[key];
       if (key === "fontSize") {
         current[key] = parseInt(config[key]);
+        if (isNaN(current[key])) {
+          current[key] = defaultConfig[key];
+        }
       }
     });
     setStyleObject(current);

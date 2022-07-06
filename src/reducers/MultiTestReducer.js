@@ -9,6 +9,7 @@ const schema = {
   id: "new",
   name: "",
   tests: [],
+  surveys: [],
 };
 
 const MultiTestReducer = (state, { type, payload }) => {

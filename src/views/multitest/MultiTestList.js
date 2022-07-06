@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "@reach/router";
 import { searchRows } from "../../utils";
 import { MultiTestContext } from "../../context/MultiTestContext";
 import MultiTestRow from "../../components/pruebas/MultiTestRow";
@@ -48,9 +47,11 @@ const MultiTestList = () => {
           <h1>Pruebas</h1>
         </div>
         <div className="col-6 text-right px-0">
+          {/*
           <Link to="/tests/new/edit" className="btn btn-dark">
             + Crear
           </Link>
+          */}
         </div>
       </div>
       <input

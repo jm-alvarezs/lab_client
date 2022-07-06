@@ -1,25 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../../context/ModalContext";
 import { MultiTestContext } from "../../context/MultiTestContext";
-import { UserContext } from "../../context/UserContext";
 import PacientesService from "../../services/PacientesService";
 import Consent from "./Consent";
 import ExclusionForm from "./ExclusionForm";
+import MultiTestInstructions from "./MultiTestInstructions";
+import MultiTestThankYou from "./MultiTestThankYou";
+import SingleSurveyRun from "./SingleSurveyRun";
 import SingleTestRun from "./SingleTestRun";
 import SocialVariables from "./SocialVariables";
 
 const MultiTestRun = ({ idMultiTest }) => {
-  const [position, setPosition] = useState(1);
+  const [position, setPosition] = useState(0);
   const [testIndex, setTestIndex] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [answers, setAnswers] = useState({});
   const [patient, setPatient] = useState(null);
+  const [multiTestAmount, setMultiTestAmount] = useState(0);
+  const [multiSurveyAmount, setMultiSurveyAmount] = useState(0);
 
   const { multitest, getSingleMultiTest } = useContext(MultiTestContext);
 
   const { alert } = useContext(ModalContext);
-
-  const { user } = useContext(UserContext);
 
   useEffect(() => {
     getSingleMultiTest(idMultiTest);
@@ -28,6 +30,14 @@ const MultiTestRun = ({ idMultiTest }) => {
   useEffect(() => {
     if (multitest !== null && !loaded) {
       handlePreviousMultiTest();
+      let generalTests = multitest.tests.filter(
+        (test) => test.idPatient === null
+      );
+      let generalSurveys = multitest.surveys.filter(
+        (survey) => survey.idPatient === null
+      );
+      setMultiTestAmount(generalTests.length);
+      setMultiSurveyAmount(generalSurveys.length);
     }
   }, [multitest]);
 
@@ -35,25 +45,77 @@ const MultiTestRun = ({ idMultiTest }) => {
     if (patient !== null) {
       if (position < 4) {
         setPosition(4);
-        saveLocalData();
+        setTimeout(() => {
+          saveLocalData();
+        }, 1000);
       }
     }
   }, [patient]);
 
-  const getTest = () => {
-    if (patient !== null) {
-      let patientTests = multitest.tests.filter(
-        (test) => parseInt(test.idPatient) === parseInt(patient.id)
-      );
-      if (patientTests.length > 0) {
-        patientTests = patientTests.sort((a, b) =>
-          a.order > b.order ? 1 : -1
-        );
-        return patientTests[testIndex];
-      }
-      return multitest.tests[testIndex];
+  useEffect(() => {
+    if (testIndex > 0) {
+      saveLocalData();
     }
-    return null;
+  }, [testIndex]);
+
+  const handleReset = () => {
+    window.localStorage.clear();
+    window.location.reload();
+  };
+
+  const getTest = () => {
+    let test = null;
+    if (patient !== null) {
+      if (testIndex >= multiTestAmount) {
+        if (testIndex - multiTestAmount >= multiSurveyAmount) {
+          if (position <= 5) {
+            return setPosition(position + 1);
+          }
+        }
+        //Get Survey
+        if (position <= 4) {
+          setPosition(position + 1);
+        }
+        let surveyIndex = testIndex - multiTestAmount;
+        const patientSurveys = multitest.surveys.filter(
+          (survey) => parseInt(survey.idPatient) === parseInt(patient.id)
+        );
+        if (patientSurveys.length > 0) {
+          let survey = patientSurveys[surveyIndex];
+
+          if (survey) {
+            return survey;
+          }
+        }
+        const generalSurveys = multitest.surveys.filter(
+          (survey) => survey.idPatient === null
+        );
+        let survey = generalSurveys[surveyIndex];
+        if (survey) {
+          return survey;
+        }
+      } else {
+        //Get Test
+        let patientTests = multitest.tests.filter(
+          (test) => parseInt(test.idPatient) === parseInt(patient.id)
+        );
+        patientTests = patientTests.sort((a, b) =>
+          a.order > b.order ? -1 : 1
+        );
+        if (patientTests.length > 0) {
+          let current = patientTests[testIndex];
+          if (current) {
+            test = patientTests[testIndex];
+            return test;
+          }
+        }
+        let generalTests = multitest.tests.filter(
+          (test) => test.idPatient === null
+        );
+        test = generalTests[testIndex];
+      }
+    }
+    return test;
   };
 
   const setAnswer = (index, value) => {
@@ -63,13 +125,13 @@ const MultiTestRun = ({ idMultiTest }) => {
   };
 
   const processAnswers = () => {
-    let current = Array.from(answers);
+    let current = Object.keys(answers).map((key) => answers[key]);
     setAnswers(current);
     saveLocalData();
   };
 
   const postPatient = (patient) => {
-    patient.idUser = user.idUser;
+    patient.idUser = multitest.idUser;
     patient.email = "";
     patient.name = "";
     patient.q1 = answers[0];
@@ -89,8 +151,13 @@ const MultiTestRun = ({ idMultiTest }) => {
         position,
         answers,
         patient,
+        testIndex,
       })
     );
+  };
+
+  const testEndCallback = () => {
+    setTestIndex(testIndex + 1);
   };
 
   const testSetupCallback = () => {
@@ -101,10 +168,10 @@ const MultiTestRun = ({ idMultiTest }) => {
     let localData = window.localStorage.getItem(`multitest-${idMultiTest}`);
     if (localData && localData !== null) {
       localData = JSON.parse(localData);
-      console.log(localData);
       setPosition(localData.position);
       setAnswers(localData.answers);
       setPatient(localData.patient);
+      setTestIndex(localData.testIndex);
     } else {
       saveLocalData();
     }
@@ -113,7 +180,17 @@ const MultiTestRun = ({ idMultiTest }) => {
 
   const renderContent = () => {
     if (loaded) {
+      let test = getTest();
       switch (position) {
+        case 0:
+          return (
+            <MultiTestInstructions
+              handleNext={() => {
+                setPosition(1);
+                saveLocalData();
+              }}
+            />
+          );
         case 1:
           return (
             <Consent alert={alert} callback={() => setPosition(position + 1)} />
@@ -130,15 +207,29 @@ const MultiTestRun = ({ idMultiTest }) => {
           );
         case 3:
           return <SocialVariables alert={alert} callback={postPatient} />;
-        default:
+        case 4:
           return (
             <SingleTestRun
+              test={test}
               order={testIndex}
-              test={getTest()}
               patient={patient}
+              multiTestAmount={multiTestAmount}
+              endCallback={testEndCallback}
               testSetupCallback={testSetupCallback}
             />
           );
+        case 5:
+          return (
+            <SingleSurveyRun
+              patient={patient}
+              currentSurvey={test}
+              idMultiTest={idMultiTest}
+              endCallback={testEndCallback}
+              testSetupCallback={testSetupCallback}
+            />
+          );
+        default:
+          return <MultiTestThankYou handleReset={handleReset} />;
       }
     }
   };

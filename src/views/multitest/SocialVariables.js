@@ -31,7 +31,15 @@ const SocialVariables = ({ alert, callback }) => {
     if (dominantHand === null) {
       return alert("Ingresa una mano dominante válida");
     }
-    callback({ age, gender, level, major, birthPlace, semester, dominantHand });
+    callback({
+      age,
+      gender,
+      scholarship: level,
+      major,
+      birthPlace,
+      level: semester,
+      dominantHand,
+    });
   };
 
   return (
@@ -93,9 +101,9 @@ const SocialVariables = ({ alert, callback }) => {
               onChange={(e) => setLevel(e.target.value)}
             >
               <option value={null}>Selecciona uno</option>
-              <option value="S">Educación superior</option>
-              <option value="M">Educación media superior</option>
-              <option value="B">Educación básica</option>
+              <option value="superior">Educación superior</option>
+              <option value="media">Educación media superior</option>
+              <option value="básica">Educación básica</option>
             </select>
           </div>
         </div>

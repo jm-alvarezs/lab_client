@@ -24,7 +24,7 @@ const styleProperties = [
   "backgroundColor",
 ];
 
-const StroopTest = () => {
+const StroopTest = ({ endCallback }) => {
   const [ended, setEnded] = useState(false);
   const [display, setDisplay] = useState("");
   const [config, setConfig] = useState({});
@@ -42,7 +42,7 @@ const StroopTest = () => {
   useEffect(() => {
     if (Array.isArray(estimulos)) {
       //Terminar cuando todos los estimulos se han completado
-      if (estimulos.length === config.numeroEstimulos) {
+      if (parseInt(estimulos.length) === parseInt(config.numeroEstimulos)) {
         setEnded(true);
       }
     }
@@ -186,6 +186,7 @@ const StroopTest = () => {
     <BaseTest
       ended={ended}
       startCallback={start}
+      endCallback={endCallback}
       defaultConfig={defaultConfig}
       TestComponent={renderStroop()}
       instrucciones={renderInstrucciones()}
