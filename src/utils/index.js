@@ -23,7 +23,7 @@ export const displayError = (dispatch, error) => {
 export const BASE_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:4000"
-    : "http://lab-cognicion.disrupcion.mx";
+    : "http://67.205.147.30:4000";
 
 export const searchRows = (query, rows) => {
   if (!rows) return;
