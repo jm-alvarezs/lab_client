@@ -42,7 +42,7 @@ const UsuarioForm = ({ id }) => {
       return alert("El correo electrónico no es válido.");
     }
     if (paciente.id === "nuevo") {
-      paciente.idUser = user.idUser;
+      paciente.idUser = user.id;
       if (paciente.antecedent === "") {
         paciente.antecedent = "Ninguno.";
       }
