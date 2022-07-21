@@ -4,6 +4,10 @@ import React from "react";
 const MultiTestRow = ({ test }) => {
   const { idMultiTest, name, tests } = test;
 
+  const getTestNumber = () => {
+    return tests.filter((test) => test.idPatient === null).length;
+  };
+
   return (
     <tr
       className="usuario-row"
@@ -14,7 +18,7 @@ const MultiTestRow = ({ test }) => {
         {idMultiTest}
       </td>
       <td>{name}</td>
-      <td>{tests.length}</td>
+      <td>{getTestNumber()}</td>
       <td></td>
     </tr>
   );

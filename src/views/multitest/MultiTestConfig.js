@@ -46,6 +46,7 @@ const MultiTestConfig = ({ idMultiTest }) => {
       }
       return multitest.tests
         .filter((test) => test.idPatient === null)
+        .sort((a, b) => (a.order < b.order ? -1 : 1))
         .map((test) => <TestConfigCard key={test.id} test={test} />);
     }
   };
@@ -76,9 +77,9 @@ const MultiTestConfig = ({ idMultiTest }) => {
       if (multitest.surveys.length === 0) {
         return <p>No hay cuestionarios para esta prueba.</p>;
       }
-      return multitest.surveys.map((survey) => (
-        <SurveyConfigCard survey={survey} />
-      ));
+      return multitest.surveys
+        .filter((survey) => survey.idPatient === null)
+        .map((survey) => <SurveyConfigCard survey={survey} />);
     }
   };
 
