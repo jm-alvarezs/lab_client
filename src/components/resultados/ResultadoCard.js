@@ -14,9 +14,7 @@ const ResultadoCard = ({ resultado }) => {
         <div className="col col-md-6">
           <h4 className="h5">
             {resultado.testType ? "Prueba" : "Cuestionario"} #{resultado.id} -{" "}
-            {resultado.testType
-              ? resultado.testType.name
-              : resultado.surveyType.name}
+            {type}
           </h4>
           <p className="bold mb-0">
             Paciente #{resultado.patient.id} - {resultado.patient.name} -{" "}

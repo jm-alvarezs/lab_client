@@ -27,8 +27,15 @@ const BaseTest = ({
   const [startTime, setStartTime] = useState(null);
   const [finishTime, setFinishTime] = useState(null);
 
-  const { prueba, config, estimulos, getPrueba, setConfig, postResultados } =
-    useContext(PruebasContext);
+  const {
+    prueba,
+    config,
+    estimulos,
+    getPrueba,
+    setConfig,
+    setEstimulos,
+    postResultados,
+  } = useContext(PruebasContext);
 
   const { alert } = useContext(ModalContext);
 
@@ -93,6 +100,7 @@ const BaseTest = ({
       finished,
       device,
     };
+    setEstimulos([]);
     //Subir resultados al back end
     postResultados(result);
     if (typeof endCallback === "function") {
