@@ -21,11 +21,13 @@ const AnswerCuestionario = ({ endCallback }) => {
 
   useEffect(() => {
     let currentToken = window.location.href.split("token=")[1];
-    if (survey.results) {
-      if (typeof endCallback === "function") {
-        endCallback();
+    if (survey !== null) {
+      if (survey.results) {
+        if (typeof endCallback === "function") {
+          endCallback();
+        }
+        return alert("Este cuestionario ya ha sido contestado.");
       }
-      return alert("Este cuestionario ya ha sido contestado.");
     }
     if (!currentToken && survey === null) {
       return alert("No se puede iniciar la prueba");
