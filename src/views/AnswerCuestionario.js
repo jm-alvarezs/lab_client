@@ -22,11 +22,13 @@ const AnswerCuestionario = ({ endCallback }) => {
   useEffect(() => {
     let currentToken = window.location.href.split("token=")[1];
     if (survey !== null) {
-      if (survey.results.config) {
-        if (typeof endCallback === "function") {
-          endCallback();
+      if (survey.results && survey.results !== null) {
+        if (survey.results.config) {
+          if (typeof endCallback === "function") {
+            endCallback();
+          }
+          return alert("Este cuestionario ya ha sido contestado.");
         }
-        return alert("Este cuestionario ya ha sido contestado.");
       }
     }
     if (!currentToken && survey === null) {

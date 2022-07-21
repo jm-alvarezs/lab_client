@@ -104,7 +104,11 @@ const MultiTestConfig = ({ idMultiTest }) => {
       <input
         id="url-input"
         type="text"
-        value={`http://localhost:3000/multi/${idMultiTest}`}
+        value={
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:3000"
+            : "https://lab-cognicion.web.app" + `/multi/${idMultiTest}`
+        }
         className="invisible"
         onChange={(e) => e}
       />
