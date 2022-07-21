@@ -59,7 +59,6 @@ const BaseTest = ({
 
   useEffect(() => {
     if (prueba !== null) {
-      console.log(prueba);
       if (prueba.results) {
         if (prueba.results._id) {
           setDisabled(true);

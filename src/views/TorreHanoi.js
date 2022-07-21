@@ -189,6 +189,9 @@ const TorreHanoi = ({ endCallback }) => {
         token: config.token,
         device: navigator.userAgent,
       };
+      if (typeof endCallback === "function") {
+        endCallback();
+      }
       postResultados(result);
     }
   };

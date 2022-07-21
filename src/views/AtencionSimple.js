@@ -196,9 +196,13 @@ const AtencionSimple = ({ endCallback }) => {
   const getStyle = () => {
     let current = {};
     styleProperties.forEach((key) => {
-      current[key] = config[key];
+      let currentProp = config[key];
+      if (!currentProp) {
+        currentProp = defaultConfig[key];
+      }
+      current[key] = currentProp;
       if (key === "fontSize") {
-        current[key] = parseInt(config[key]);
+        current[key] = parseInt(currentProp);
         if (isNaN(current[key])) {
           current[key] = defaultConfig[key];
         }

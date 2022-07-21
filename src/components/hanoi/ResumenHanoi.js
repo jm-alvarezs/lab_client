@@ -15,9 +15,6 @@ const ResumenHanoi = ({
   startTime,
   finishTime,
 }) => {
-  console.log(finishTime);
-  console.log(startTime);
-  console.log();
   return (
     <div className="card container shadow-sm p-3 mb-4">
       <div className="row border-bottom pb-3 mb-2">

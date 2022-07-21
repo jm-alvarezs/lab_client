@@ -79,7 +79,6 @@ const AtencionCondicional = ({ endCallback }) => {
 
   useEffect(() => {
     if (prueba !== null) {
-      console.log(prueba);
       if (prueba.settings) {
         let token = getTestToken(prueba);
         if (!token) {
@@ -236,7 +235,11 @@ const AtencionCondicional = ({ endCallback }) => {
   const getStyle = () => {
     let current = {};
     styleProperties.forEach((key) => {
-      current[key] = config[key];
+      if (!isNaN(config[key])) {
+        current[key] = parseInt(config[key]);
+      } else {
+        current[key] = config[key];
+      }
     });
     setStyleObject(current);
   };
@@ -294,7 +297,7 @@ const AtencionCondicional = ({ endCallback }) => {
           </div>
         </div>
       ) : (
-        <div id="test-container" style={styleObject}>
+        <div id="test-container" style={{ ...styleObject }}>
           {display}
         </div>
       )}

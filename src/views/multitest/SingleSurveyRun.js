@@ -39,7 +39,6 @@ const SingleSurveyRun = ({
   }, [survey, currentSurvey]);
 
   const surveySetup = () => {
-    console.log(survey);
     let data = {
       ...survey.survey,
       idSurveyType: survey.type,

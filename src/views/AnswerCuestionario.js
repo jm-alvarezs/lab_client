@@ -22,7 +22,7 @@ const AnswerCuestionario = ({ endCallback }) => {
   useEffect(() => {
     let currentToken = window.location.href.split("token=")[1];
     if (survey !== null) {
-      if (survey.results) {
+      if (survey.results.config) {
         if (typeof endCallback === "function") {
           endCallback();
         }

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PruebasContext } from "../../context/PruebasContext";
 import PruebasService from "../../services/PruebasService";
+import UsuarioService from "../../services/UsuarioService";
 import AtencionCondicional from "../AtencionCondicional";
 import AtencionHemi from "../AtencionHemi";
 import AtencionSimple from "../AtencionSimple";
@@ -47,6 +48,9 @@ const SingleTestRun = ({
     data.idPatient = patient.id;
     delete data.settings;
     delete data.test;
+    let accessUrl = prueba.test.accessUrl;
+    let token = accessUrl.token;
+    UsuarioService.setToken(token);
     PruebasService.postPrueba(data).then((res) => {
       testSetupCallback();
     });

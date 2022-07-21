@@ -109,9 +109,9 @@ const MultiTestRun = ({ idMultiTest }) => {
             return test;
           }
         }
-        let generalTests = multitest.tests.filter(
-          (test) => test.idPatient === null
-        );
+        let generalTests = multitest.tests
+          .filter((test) => test.idPatient === null)
+          .sort((a, b) => (a.order < b.order ? -1 : 1));
         test = generalTests[testIndex];
       }
     }
