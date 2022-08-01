@@ -32,9 +32,12 @@ const PreguntasNechapi = ({ modifier }) => {
   return (
     <div className="container px-0">
       <div className="container-fluid mb-4">
-        <p className="bold">Indicaciones</p>
-        <p>1 = Totalmente en Desacuerdo</p>
-        <p>5 = Totalmente Deacuerdo</p>
+        <h4>Instrucciones</h4>
+        <p>
+          Responda a las declaraciones según su personalidad, por la que usted
+          puntuará 1 si considera que está totalmente en desacuerdo con usted y
+          5 si está totalmente de acuerdo con la declaración.
+        </p>
       </div>
       <div className="row mx-0">
         <div className="col col-md-6">
