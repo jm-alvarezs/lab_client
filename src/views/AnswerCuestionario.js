@@ -111,12 +111,7 @@ const AnswerCuestionario = ({ endCallback }) => {
           ? String(tipo)[0].toUpperCase() + String(tipo).substring(1)
           : ""}
       </h1>
-      <h2>Instrucciones</h2>
-      <p>
-        Responda a las declaraciones según su personalidad, por la que usted
-        puntuará 1 si considera que está totalmente en desacuerdo con usted y 5
-        si está totalmente de acuerdo con la declaración.
-      </p>
+
       <div className="card p-3">{renderForm()}</div>
     </div>
   );
