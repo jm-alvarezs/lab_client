@@ -263,11 +263,10 @@ const AtencionCondicional = ({ endCallback }) => {
                   </p>
                   <h3>Instrucciones</h3>
                   <p className="instrucciones">
-                    En el centro de la pantalla irán apareciendo de manera
-                    secuencial distintas letras del abecedario. La tarea
-                    consiste que usted pulse la tecla “{getTecla()}” cuando vea
-                    aparecer la letra {config.target}, siempre y cuando la letra
-                    O esté precedido por la letra {config.clave}.
+                    En el centro de la pantalla irán apareciendo distintas
+                    letras del abecedario. La tarea consiste en que usted pulse
+                    la tecla “Espacio” cuando vea aparecer la letra X, siempre y
+                    cuando la letra A esté antes de la letra X.
                   </p>
                   <p className="instrucciones">
                     Es importante que responda tan rápido como pueda, ya que los

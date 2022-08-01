@@ -140,8 +140,14 @@ const StroopTest = ({ endCallback }) => {
   const renderInstrucciones = () => {
     return [
       <p className="instrucciones">
-        Señale en la pantalla el color con el que está escrita la palabra que
-        aparece en pantalla, ignorando su significado.
+        En el centro de la pantalla irán apareciendo los nombres de los colores:
+        rojo, azul o verde de forma aleatoria. La tarea consiste en que usted
+        señale en la pantalla con su cursor el color con el que está escrita la
+        palabra que aparece en pantalla, ignorando su significado.
+      </p>,
+      <p>
+        Es importante que responda tan rápido como pueda, ya que los estímulos
+        aparecen y desaparecen rápidamente.
       </p>,
     ];
   };

@@ -64,19 +64,6 @@ const AnswerCuestionario = ({ endCallback }) => {
     }
     return (
       <form onSubmit={handleSubmit}>
-        <div className="row my-2 mx-0">
-          <div className="col-12 col-md-6">
-            <label>Observaciones</label>
-          </div>
-          <div className="col-12 col-md-6">
-            <textarea
-              rows="4"
-              className="form-control mw-100"
-              value={observaciones}
-              onChange={(e) => setObservaciones(e.target.value)}
-            />
-          </div>
-        </div>
         {renderPreguntas()}
         <button type="submit" className="btn btn-dark">
           Terminado
@@ -124,6 +111,12 @@ const AnswerCuestionario = ({ endCallback }) => {
           ? String(tipo)[0].toUpperCase() + String(tipo).substring(1)
           : ""}
       </h1>
+      <h2>Instrucciones</h2>
+      <p>
+        Responda a las declaraciones según su personalidad, por la que usted
+        puntuará 1 si considera que está totalmente en desacuerdo con usted y 5
+        si está totalmente de acuerdo con la declaración.
+      </p>
       <div className="card p-3">{renderForm()}</div>
     </div>
   );
