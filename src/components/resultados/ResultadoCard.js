@@ -29,9 +29,11 @@ const ResultadoCard = ({ resultado }) => {
         <div className="col col-md-6 text-right">
           <Link
             to={`./${
-              resultado.surveyType
+              resultado.surveyType !== null
                 ? `cuestionario/${resultado.id}`
-                : `${resultado.testType.handle}/${resultado.id}`
+                : resultado.testType !== null
+                ? `${resultado.testType.handle}/${resultado.id}`
+                : ""
             }`}
             className="btn btn-outline-secondary"
           >
