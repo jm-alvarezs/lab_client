@@ -1,16 +1,21 @@
 import React from "react";
 
-const MultiTestThankYou = ({ handleReset }) => {
+const WelcomeBack = ({ patient, handleNext }) => {
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col col-md-6 border-right shadow bg-light">
           <div className="row align-items-center vh-100">
             <div className="p-5">
-              <h1>Gracias</h1>
+              <h1>¡Bienvenido de vuelta!</h1>
+              <p>{patient && patient !== null ? patient.name : ""}</p>
               <p className="instrucciones">
-                Apreciamos su participación. Puede cerrar esta ventana.
+                A continuación realizarás la misma serie de ejercicios que ya
+                conoces, te tomará aproximadamente 10 minutos.
               </p>
+              <button className="btn btn-dark" onClick={handleNext}>
+                Comenzar
+              </button>
             </div>
           </div>
         </div>
@@ -25,4 +30,4 @@ const MultiTestThankYou = ({ handleReset }) => {
   );
 };
 
-export default MultiTestThankYou;
+export default WelcomeBack;

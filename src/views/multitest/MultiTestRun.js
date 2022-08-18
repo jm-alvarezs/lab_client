@@ -2,24 +2,39 @@ import React, { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../../context/ModalContext";
 import { MultiTestContext } from "../../context/MultiTestContext";
 import PacientesService from "../../services/PacientesService";
-import Consent from "./Consent";
+import PrivacyPolicy from "../PrivacyPolicy";
 import ExclusionForm from "./ExclusionForm";
 import MultiTestInstructions from "./MultiTestInstructions";
 import MultiTestThankYou from "./MultiTestThankYou";
 import SingleSurveyRun from "./SingleSurveyRun";
 import SingleTestRun from "./SingleTestRun";
 import SocialVariables from "./SocialVariables";
+import { validateEmail } from "../../utils";
+import MultiTestFinalQuestions from "./MultiTestFinalQuestions";
+import { PacientesContext } from "../../context/PacientesContext";
+import WelcomeBack from "./WelcomeBack";
+import IntermediateScreen from "./IntermediateScreen";
+import ConsentA from "./ConsentA";
+import ConsentB from "./ConsentB";
+import ConsentC from "./ConsentC";
 
 const MultiTestRun = ({ idMultiTest }) => {
-  const [position, setPosition] = useState(0);
+  const [position, setPosition] = useState(-1);
   const [testIndex, setTestIndex] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [answers, setAnswers] = useState({});
+  const [finalAnswer, setFinalAnswer] = useState("");
   const [patient, setPatient] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [prevPosition, setPrevPosition] = useState(null);
   const [multiTestAmount, setMultiTestAmount] = useState(0);
   const [multiSurveyAmount, setMultiSurveyAmount] = useState(0);
 
   const { multitest, getSingleMultiTest } = useContext(MultiTestContext);
+
+  const { updatePaciente } = useContext(PacientesContext);
 
   const { alert } = useContext(ModalContext);
 
@@ -43,7 +58,7 @@ const MultiTestRun = ({ idMultiTest }) => {
 
   useEffect(() => {
     if (patient !== null) {
-      if (position < 4) {
+      if (position < 4 && position !== "welcomeback") {
         setPosition(4);
         setTimeout(() => {
           saveLocalData();
@@ -126,22 +141,57 @@ const MultiTestRun = ({ idMultiTest }) => {
 
   const processAnswers = () => {
     let current = Object.keys(answers).map((key) => answers[key]);
+    if (current.length < 4) {
+      alert("Debes contestar todas las preguntas.");
+      return false;
+    }
     setAnswers(current);
     saveLocalData();
+    return true;
+  };
+
+  const savePatientData = () => {
+    if (name === "" || String(name).length < 3) {
+      return alert("Debes ingresar un nombre válido.");
+    }
+    if (!validateEmail(email)) {
+      return alert("Debes ingresar un correo electrónico válido.");
+    }
+    if (String(phone).length < 10) {
+      return alert("Debes ingresar un teléfono válido de 10 dígitos");
+    }
+    validatePaciente();
+    setPosition(position + 1);
+  };
+
+  const validatePaciente = () => {
+    PacientesService.getPacienteByEmail(email, multitest.idUser).then((res) => {
+      let paciente = res.data.data.patient;
+      setPosition("welcomeback");
+      setPatient(paciente);
+    });
   };
 
   const postPatient = (patient) => {
     patient.idUser = multitest.idUser;
-    patient.email = "";
-    patient.name = "";
+    patient.email = email;
+    patient.name = name;
+    patient.phone = phone;
     patient.q1 = answers[0];
     patient.q2 = answers[1];
     patient.q3 = answers[2];
     patient.q4 = answers[3];
-    PacientesService.postPaciente(patient).then((res) => {
-      let current = res.data.data;
-      setPatient(current);
-    });
+    PacientesService.postPaciente(patient)
+      .then((res) => {
+        let current = res.data.data;
+        setPatient(current);
+      })
+      .catch((error) => {
+        if (error.response.status === 409) {
+          let current = error.data.paciente;
+          setPatient(current);
+        }
+      });
   };
 
   const saveLocalData = () => {
@@ -157,6 +207,12 @@ const MultiTestRun = ({ idMultiTest }) => {
   };
 
   const testEndCallback = () => {
+    setPrevPosition(position);
+    setPosition("inter");
+  };
+
+  const nextTestCallback = () => {
+    setPosition(prevPosition);
     setTestIndex(testIndex + 1);
   };
 
@@ -178,31 +234,83 @@ const MultiTestRun = ({ idMultiTest }) => {
     setLoaded(true);
   };
 
+  const handleExclusionForm = () => {
+    if (processAnswers()) {
+      setPosition(position + 1);
+    }
+  };
+
+  const handleFinalForm = () => {
+    if (finalAnswer === "") {
+      return alert("Debes contestar la última pregunta");
+    }
+    patient.q5 = finalAnswer;
+    patient.idUser = multitest.idUser;
+    updatePaciente(patient);
+    setPosition(position + 1);
+  };
+
   const renderContent = () => {
     if (loaded) {
       let test = getTest();
       switch (position) {
-        case 0:
+        case "welcomeback":
+          return (
+            <WelcomeBack patient={patient} handleNext={() => setPosition(4)} />
+          );
+        case "inter":
+          return <IntermediateScreen handleNext={nextTestCallback} />;
+        case -1:
           return (
             <MultiTestInstructions
               handleNext={() => {
-                setPosition(1);
+                setPosition(position + 1);
                 saveLocalData();
               }}
             />
           );
-        case 1:
+        case 0:
           return (
-            <Consent alert={alert} callback={() => setPosition(position + 1)} />
+            <PrivacyPolicy
+              name={name}
+              email={email}
+              phone={phone}
+              setName={setName}
+              setEmail={setEmail}
+              setPhone={setPhone}
+              handleSubmit={savePatientData}
+            />
           );
+        case 1:
+          switch (idMultiTest) {
+            case 4:
+              return (
+                <ConsentB
+                  alert={alert}
+                  callback={() => setPosition(position + 1)}
+                />
+              );
+            case 5:
+              return (
+                <ConsentC
+                  alert={alert}
+                  callback={() => setPosition(position + 1)}
+                />
+              );
+            default:
+              return (
+                <ConsentA
+                  alert={alert}
+                  callback={() => setPosition(position + 1)}
+                />
+              );
+          }
+
         case 2:
           return (
             <ExclusionForm
               modifier={setAnswer}
-              callback={() => {
-                processAnswers();
-                setPosition(position + 1);
-              }}
+              callback={handleExclusionForm}
             />
           );
         case 3:
@@ -226,6 +334,16 @@ const MultiTestRun = ({ idMultiTest }) => {
               idMultiTest={idMultiTest}
               endCallback={testEndCallback}
               testSetupCallback={testSetupCallback}
+            />
+          );
+        case 6:
+          return (
+            <MultiTestFinalQuestions
+              modifier={setFinalAnswer}
+              questions={[
+                "¿Tiene conocimiento técnico de las pruebas que fueron aplicadas en esta investigación?",
+              ]}
+              callback={handleFinalForm}
             />
           );
         default:

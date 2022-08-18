@@ -62,6 +62,7 @@ const TorreHanoi = ({ endCallback }) => {
     estimulos,
     popEstimulo,
     postResultados,
+    resetAllEstimulos,
     setPropiedadEstimulo,
   } = useContext(PruebasContext);
 
@@ -77,6 +78,7 @@ const TorreHanoi = ({ endCallback }) => {
   const errorSound = new Audio(error_sound);
 
   useEffect(() => {
+    resetAllEstimulos();
     let currentConfig = getConfig(defaultConfig);
     if (currentConfig.idTest && currentConfig.token && prueba === null) {
       getPrueba(currentConfig.idTest, currentConfig.token);

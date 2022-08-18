@@ -69,6 +69,9 @@ const BaseTest = ({
       if (prueba.results) {
         if (prueba.results._id) {
           setDisabled(true);
+          if (typeof endCallback === "function") {
+            endCallback();
+          }
         }
       }
       if (prueba.settings) {

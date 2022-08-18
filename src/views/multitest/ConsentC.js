@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Consent = ({ alert, callback }) => {
+const ConsentC = ({ alert, callback }) => {
   const [selected, setSelected] = useState(false);
 
   const handleCallback = () => {
@@ -15,18 +15,28 @@ const Consent = ({ alert, callback }) => {
       <div className="container card p-4 shadow-sm">
         <h1>Consentimiento Informado</h1>
         <p>
-          Por medio de este presente le hacemos saber que usted está siendo
-          invitado a formar parte de este estudio, ya que cumple con los
-          criterios de inclusión del mismo: estudiantes universitarios dentro de
-          la población de la Vicerrectoría de Ciencias de la Salud. Este estudio
-          se lleva a cabo por un equipo de estudiantes de último semestre de la
-          Licenciatura en Psicología de la Universidad de Monterrey, que está
-          llevando a cabo una investigación que requiere la participación
-          voluntaria de un determinado número de personas. Las personas que
-          están realizando esta investigación son las estudiantes de psicología:
-          Natalia Garza Quiroga, Anna Sofía Araujo Justo, Ma. Florencia Lugo
-          Ramos y Sofía Zepeda Zambrano; bajo la supervisión de: Dr. Umberto
-          León Domínguez.
+          “Por este medio, acepto participar en la presente investigación
+          titulada: Estudio de validez y fiabilidad de una batería de pruebas
+          neuropsicológicas autoadministradas vía online. Declaro que nadie ha
+          influenciado en mi decisión y sé que puedo elegir participar en la
+          investigación o no hacerlo. Asimismo, sé que puedo retirarme cuando
+          quiera. Proclamo que he leído esta información (o se me ha leído la
+          información) y la entiendo. Me han respondido las preguntas y sé que
+          puedo hacer preguntas más tarde si las tengo. De igual modo, entiendo
+          que cualquier cambio se discutirá conmigo previo a las alteraciones.”
+        </p>
+        <p>
+          Le hacemos saber que usted está siendo invitado a formar parte de este
+          estudio, ya que cumple con los criterios de inclusión del mismo:
+          estudiantes universitarios dentro de la población de la Vicerrectoría
+          de Ciencias de la Salud. Este estudio se lleva a cabo por un equipo de
+          estudiantes de último semestre de la Licenciatura en Psicología de la
+          Universidad de Monterrey, que está llevando a cabo una investigación
+          que requiere la participación voluntaria de un determinado número de
+          personas. Las personas que están realizando esta investigación son las
+          estudiantes de psicología: Natalia Garza Quiroga, Anna Sofía Araujo
+          Justo, Ma. Florencia Lugo Ramos y Sofía Zepeda Zambrano; bajo la
+          asesoría de: Dr. Umberto León Domínguez.
         </p>
         <h3>Lo que debe saber acerca de este estudio:</h3>
         <ul>
@@ -48,19 +58,25 @@ const Consent = ({ alert, callback }) => {
             Tiene la libertad de hacer todas las preguntas que quiera antes de
             tomar su decisión.
           </li>
+          <li>
+            El participante tiene derecho a pedir por los resultados de las
+            pruebas aplicadas.
+          </li>
         </ul>
         <h3>Propósito del estudio de investigación:</h3>
         <p>
-          El objetivo principal de esta investigación es validar el uso de
-          online self-administered tasks para la evaluación neuropsicológica de
-          las funciones ejecutivas a población estudiantil universitaria.
+          El objetivo principal de esta investigación es validar el uso de las
+          pruebas autoadministradas de forma online para la evaluación
+          neuropsicológica de las funciones ejecutivas a población estudiantil
+          universitaria.
         </p>
         <h3>Lo que deberá hacer en este estudio:</h3>
         <p>
           Si acepta participar en este estudio, que es de carácter anónimo, se
           le pedirá contestar el cuestionario de información sociodemográfica,
           contestar un examen para evaluar la cognición y responder las
-          evaluaciones neuropsicológicas en dos tiempos diferentes.
+          evaluaciones neuropsicológicas. Se estima que la presentación tendrá
+          una duración de 20 minutos.
         </p>
         <h3>Riesgos</h3>
         <p>
@@ -69,8 +85,8 @@ const Consent = ({ alert, callback }) => {
           respondiendo preguntas acerca de opiniones personales y creencias.
           Aunque no se anticipa, si surge estrés como resultado de participación
           en el estudio, puedes contactar al Centro de Tratamiento de
-          Investigación de la Ansiedad (CETIA) de la UDEM al teléfono 8215-4500
-          (cetia@udem.edu.mx) de 8 a.m. a 8 p.m.
+          Investigación de la Ansiedad (CETIA) de la UDEM al teléfono 81
+          8215-4569 (cetia@udem.edu.mx) de 9 a.m. a 9 p.m.
         </p>
         <h3>
           Contacto del estudio para preguntas acerca de la investigación o para
@@ -81,13 +97,6 @@ const Consent = ({ alert, callback }) => {
           investigación le ha dañado, usted puede contactar a Natalia Garza
           Quiroga y/o Dr. Umberto León Domínguez por medio de correo
           electrónico: natalia.garzaq@udem.edu y umberto.leon@udem.edu
-        </p>
-        <p>
-          “Sé que puedo elegir participar en la investigación o no hacerlo. Sé
-          que puedo retirarme cuando quiera. He leído esta información (o se me
-          ha leído la información) y la entiendo. Me han respondido las
-          preguntas y sé que puedo hacer preguntas más tarde si las tengo.
-          Entiendo que cualquier cambio se discutirá conmigo.
         </p>
         <label>
           <input
@@ -108,4 +117,4 @@ const Consent = ({ alert, callback }) => {
   );
 };
 
-export default Consent;
+export default ConsentC;

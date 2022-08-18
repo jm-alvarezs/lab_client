@@ -4,6 +4,8 @@ const route = "/patients";
 
 export default {
   getPacientes: () => api.get(route),
+  getPacienteByEmail: (email, idUser) =>
+    api.get(`${route}/search/email?email=${email}&idUser=${idUser}`),
   getSinglePaciente: (id) => api.get(`${route}/${id}`),
   getPacientesAdmin: () => api.get(`${route}?admin=true`),
   postPaciente: (paciente) => api.post(route, { ...paciente }),
