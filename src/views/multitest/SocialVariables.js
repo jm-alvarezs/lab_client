@@ -159,9 +159,9 @@ const SocialVariables = ({ alert, callback }) => {
               onChange={(e) => setHand(e.target.value)}
             >
               <option value={null}>Selecciona uno</option>
-              <option value="1-3">Izquierda</option>
-              <option value="4-6">Derecha</option>
-              <option value="7-9">Ambidiestro</option>
+              <option value="izquierda">Izquierda</option>
+              <option value="derecha">Derecha</option>
+              <option value="ambidiestro">Ambidiestro</option>
             </select>
           </div>
         </div>
