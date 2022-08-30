@@ -87,7 +87,7 @@ const AtencionSimple = ({ endCallback }) => {
         setDisabled(true);
         setTimeout(() => {
           if (typeof endCallback === "function") {
-            endCallback();
+            endCallback(true);
           }
         }, 1500);
         return alert("Lo sentimos, este ejercicio ya fue realizado.");

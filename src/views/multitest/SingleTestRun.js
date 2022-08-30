@@ -26,6 +26,7 @@ const SingleTestRun = ({
 
   useEffect(() => {
     if (prueba !== null && prueba.test.idPatient !== patient.id && !loading) {
+      console.log("test setup");
       setLoading(true);
       setTimeout(() => {
         testSetup();

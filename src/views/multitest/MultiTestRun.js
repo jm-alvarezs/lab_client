@@ -117,7 +117,11 @@ const MultiTestRun = ({ idMultiTest }) => {
         patientTests = patientTests.sort((a, b) =>
           a.order > b.order ? -1 : 1
         );
-        if (patientTests.length > 0) {
+        let patientTestAmount = patientTests.length;
+        if (patientTestAmount > 0) {
+          if (patientTestAmount > multiTestAmount) {
+            patientTests = patientTests.slice(multiTestAmount);
+          }
           let current = patientTests[testIndex];
           if (current) {
             test = patientTests[testIndex];
