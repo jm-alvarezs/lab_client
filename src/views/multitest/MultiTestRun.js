@@ -119,7 +119,7 @@ const MultiTestRun = ({ idMultiTest }) => {
         );
         let patientTestAmount = patientTests.length;
         if (patientTestAmount > 0) {
-          if (patientTestAmount > multiTestAmount) {
+          if (patientTestAmount >= multiTestAmount) {
             patientTests = patientTests.slice(multiTestAmount);
           }
           let current = patientTests[testIndex];
