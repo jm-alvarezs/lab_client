@@ -45,7 +45,7 @@ const ApplyTest = ({ idPatient }) => {
         <div className="col-6">
           <h4>Aplicar una Prueba</h4>
         </div>
-        <div className="col-6 text-right">
+        <div className="col-6 text-end">
           <b>Restantes: </b>
           {hasCredits(user)}
         </div>
@@ -64,7 +64,7 @@ const ApplyTest = ({ idPatient }) => {
           <button
             disabled={hasCredits(user) === 0}
             onClick={handleApplyTest}
-            className="btn btn-dark btn-block"
+            className="btn btn-dark btn-block w-100"
           >
             Aplicar
           </button>

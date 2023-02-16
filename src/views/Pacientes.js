@@ -1,80 +1,42 @@
 import React, { useContext, useEffect, useState } from "react";
-import UsuarioRow from "../components/usuarios/UsuarioRow";
-import { Link } from "@reach/router";
-import { searchRows } from "../utils";
 import { PacientesContext } from "../context/PacientesContext";
-import { ModalContext } from "../context/ModalContext";
+import StickyHeadTable from "../components/global/StickyHeadTable";
+import { searchRows } from "../utils";
+import { Link } from "@reach/router";
 
-const Pacientes = ({ admin }) => {
+const columns = [
+  { id: "id", label: "#ID" },
+  {
+    id: "name",
+    label: "Name",
+    minWidth: 150,
+    component: (props) => (
+      <Link to={`/pacientes/${props.id}`}>{props.name}</Link>
+    ),
+  },
+  { id: "email", label: "Email", minWidth: 250 },
+];
+
+const Pacientes = () => {
   const [query, setQuery] = useState("");
 
-  const {
-    pacientes,
-    clearPaciente,
-    getPacientes,
-    getPacientesAdmin,
-    deletePaciente,
-  } = useContext(PacientesContext);
-
-  const { modalComponent } = useContext(ModalContext);
+  const { pacientes, getPacientes, clearPaciente } =
+    useContext(PacientesContext);
 
   useEffect(() => {
     clearPaciente();
-    if (admin) {
-      getPacientesAdmin();
-    } else {
-      getPacientes();
-    }
+    getPacientes();
   }, []);
 
-  const confirmDelete = (paciente) => {
-    modalComponent(
-      "Precaución",
-      <div>
-        <p>
-          ¿Estás seguro que deseas eliminar al paciente {paciente.name}? Esta
-          acción NO puede deshacerse y se perderán todas sus pruebas realizadas.
-        </p>
-        <button
-          className="btn btn-danger"
-          onClick={() => deletePaciente(paciente.id)}
-        >
-          <i className="fa fa-trash"></i> Eliminar
-        </button>
-      </div>
-    );
-  };
-
   const renderUsuarios = () => {
-    if (pacientes && pacientes !== null) {
+    if (Array.isArray(pacientes)) {
       let usuariosRender = [...pacientes];
       if (query !== "") {
         usuariosRender = searchRows(query, usuariosRender);
       }
-      if (usuariosRender.length === 0) {
-        return (
-          <tr>
-            <td colSpan="4">
-              <p>No hay usuarios registrados</p>
-            </td>
-          </tr>
-        );
-      }
-      return usuariosRender.map((usuario) => (
-        <UsuarioRow
-          key={usuario.id}
-          usuario={usuario}
-          confirmDelete={confirmDelete}
-        />
-      ));
+      return <StickyHeadTable columns={columns} rows={usuariosRender} />;
     }
-    return (
-      <tr>
-        <td>
-          <div className="spinner-border"></div>
-        </td>
-      </tr>
-    );
+    return <div className="spinner-border"></div>;
   };
 
   return (
@@ -83,7 +45,7 @@ const Pacientes = ({ admin }) => {
         <div className="col-6 px-0">
           <h1>Pacientes</h1>
         </div>
-        <div className="col-6 text-right px-0">
+        <div className="col-6 text-end px-0">
           <Link to="/pacientes/nuevo/edit" className="btn btn-dark">
             + Agregar
           </Link>
@@ -96,21 +58,7 @@ const Pacientes = ({ admin }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <div className="row mx-0">
-        <div className="container container-x card">
-          <table className="table mt-4">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>{renderUsuarios()}</tbody>
-          </table>
-        </div>
-      </div>
+      {renderUsuarios()}
     </div>
   );
 };

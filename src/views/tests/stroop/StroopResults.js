@@ -131,7 +131,7 @@ const StroopResults = ({ id }) => {
                   )}
                 </h1>
               </div>
-              <div className="col col-md-2 text-right">
+              <div className="col col-md-2 text-end">
                 <button className="btn btn-outline-dark" onClick={toPdf}>
                   <i className="fa fa-print"></i>
                 </button>
@@ -159,7 +159,7 @@ const StroopResults = ({ id }) => {
                 <h3>Estímulos</h3>
                 <p className="mb-1">Reaccion Media: {getTiempoReaccion()}ms</p>
               </div>
-              <div className="col col-md-4 text-right px-0">
+              <div className="col col-md-4 text-end px-0">
                 <button
                   className="btn btn-outline-secondary"
                   onClick={() => setShowEstimulos(!showEstimulos)}

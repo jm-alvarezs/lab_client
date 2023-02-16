@@ -231,7 +231,7 @@ const ResultadosCuestionario = ({ id }) => {
                   )}
                 </h1>
               </div>
-              <div className="col col-md-2 text-right">
+              <div className="col col-md-2 text-end">
                 <button className="btn btn-outline-dark" onClick={toPdf}>
                   <i className="fa fa-print"></i>
                 </button>
@@ -246,7 +246,7 @@ const ResultadosCuestionario = ({ id }) => {
               <div className="col-6">
                 <h4 className="bold">Preguntas</h4>
               </div>
-              <div className="col-6 text-right">
+              <div className="col-6 text-end">
                 <button
                   className="btn btn-outline-secondary"
                   onClick={() => setShowPreguntas(!showPreguntas)}

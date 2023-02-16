@@ -4,7 +4,8 @@ const route = "/tests";
 
 export default {
   getPruebas: () => api.get(route),
-  getPrueba: (idTest, config) => api.get(`${route}/${idTest}`, { ...config }),
+  getPrueba: (idTest, config) =>
+    api.get(`${route}/single/${idTest}`, { ...config }),
   getNechapi: (idPatient, method) =>
     api.get(`${route}/patient/${idPatient}?method=${method}`),
   postPrueba: (args) => api.post(route, { ...args }),

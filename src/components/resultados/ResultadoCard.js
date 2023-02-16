@@ -6,7 +6,7 @@ const ResultadoCard = ({ resultado }) => {
   const type = String(
     resultado.testType && resultado.testType !== null
       ? resultado.testType.name
-      : resultado.surveyType !== null
+      : resultado.surveyType && resultado.surveyType !== null
       ? resultado.surveyType.name
       : ""
   ).toLowerCase();
@@ -26,7 +26,7 @@ const ResultadoCard = ({ resultado }) => {
             {moment(resultado.createdAt).format("DD MMM YYYY HH:mm")}
           </p>
         </div>
-        <div className="col col-md-6 text-right">
+        <div className="col col-md-6 text-end">
           <Link
             to={`./${
               resultado.surveyType && resultado.surveyType !== null

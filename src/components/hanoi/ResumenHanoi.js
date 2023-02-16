@@ -23,7 +23,7 @@ const ResumenHanoi = ({
             Prueba #{resultado !== null && resultado.test.id} - Torre de Hanoi
           </h3>
         </div>
-        <div className="col-6 text-right">
+        <div className="col-6 text-end">
           <button className="btn btn-outline-dark mx-2" onClick={toPdf}>
             <i className="fa fa-print"></i>
           </button>

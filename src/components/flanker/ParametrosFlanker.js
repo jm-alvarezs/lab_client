@@ -65,7 +65,7 @@ const ParametrosFlanker = ({ settings }) => {
         <div className="col-6">
           <h3 className="bold">Parámetros</h3>
         </div>
-        <div className="col-6 text-right">
+        <div className="col-6 text-end">
           <button
             className="btn btn-outline-secondary"
             onClick={() => setShowMovimientos(!showMovimientos)}

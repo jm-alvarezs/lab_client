@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 import { PacientesContext } from "../../context/PacientesContext";
 import { ResultadosContext } from "../../context/ResultadosContext";
@@ -6,22 +5,24 @@ import { SurveyContext } from "../../context/SurveyContext";
 import { searchRows } from "../../utils";
 
 const Buscador = ({ survey }) => {
+  const [type, setType] = useState("");
   const [query, setQuery] = useState("");
   const [patient, setPatient] = useState("");
-  const [type, setType] = useState(null);
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
-
-  const { fetchResults } = useContext(ResultadosContext);
-  const { fetchSurveys } = useContext(SurveyContext);
+  const { spinner, getResultados } = useContext(ResultadosContext);
+  const { fetchSurveys, getSurveyTypes } = useContext(SurveyContext);
   const { pacientes, getPacientes } = useContext(PacientesContext);
 
   useEffect(() => {
     getPacientes();
+    getSurveyTypes();
   }, []);
 
   useEffect(() => {
-    fetchData();
+    if (!spinner) {
+      fetchData();
+    }
   }, [patient, type, startDate, endDate]);
 
   const handleSubmit = (e) => {
@@ -30,11 +31,11 @@ const Buscador = ({ survey }) => {
   };
 
   const fetchData = () => {
-    let service = fetchResults;
+    let service = getResultados;
     if (survey) {
       service = fetchSurveys;
     }
-    service(patient, type, startDate, endDate);
+    service({ idPatient: patient, type, startDate, endDate });
   };
 
   const renderPacientes = () => {
@@ -67,11 +68,11 @@ const Buscador = ({ survey }) => {
       let selected = pacientes.find((paciente) => paciente.id === patient);
       if (selected) {
         return (
-          <div className="row align-items-center p-1 mx-0 bg-light border">
+          <div className="row align-items-center mx-0 bg-light border">
             <div className="col-10">
               <b>Paciente:</b> {selected.name}
             </div>
-            <div className="col-2 text-right">
+            <div className="col-2 text-end">
               <button
                 type="button"
                 onClick={() => setPatient("")}
@@ -86,65 +87,94 @@ const Buscador = ({ survey }) => {
     }
   };
 
+  const renderOptions = () => {
+    if (survey) {
+      return [
+        <option key="todos" value="">
+          Todos
+        </option>,
+        <option key="1" value="1">
+          Nechapi
+        </option>,
+        <option key="2" value="2">
+          CUPOM
+        </option>,
+      ];
+    }
+    return [
+      <option key="todos" value="">
+        Todos
+      </option>,
+      <option key="1" value="1">
+        Atención Simple
+      </option>,
+      <option key="2" value="2">
+        Atención Condicional
+      </option>,
+      <option key="3" value="3">
+        Hemi Atención
+      </option>,
+      <option key="4" value="4">
+        Torre de Hanoi
+      </option>,
+      <option key="5" value="5">
+        Flanker Task
+      </option>,
+    ];
+  };
+
   return (
-    <div className="container">
+    <div className="container-fluid px-0">
       <div className="card p-3">
-        <h2 className="border-bottom pb-3 mb-3 h3">Buscador</h2>
         <form onSubmit={handleSubmit}>
-          <label>Paciente</label>
-          {patient === "" && (
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          )}
-          {renderSelected()}
+          <div className="row align-items-center">
+            <div className="col-12 col-md-4 mb-2">
+              <label>Paciente</label>
+              {patient === "" && (
+                <input
+                  type="text"
+                  value={query}
+                  className="form-control"
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Buscar por #ID, nombre o email"
+                />
+              )}
+              {renderSelected()}
+            </div>
+            <div className="col-12 col-md-3 mb-2">
+              <label>Tipo de Ejercicio</label>
+              <select
+                value={type}
+                className="form-control"
+                onChange={(e) => setType(e.target.value)}
+              >
+                {renderOptions()}
+              </select>
+            </div>
+            <div className="col-12 col-md-5 mb-2">
+              <label>Prueba Realizada entre</label>
+              <div className="row">
+                <div className="col-6">
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
+                </div>
+                <div className="col-6">
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="pb-4" style={{ marginTop: -16 }}>
             {renderPacientes()}
-          </div>
-          <label>Tipo de Ejercicio</label>
-          <select
-            className="form-control mb-4"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          >
-            {survey ? (
-              <>
-                <option value={null}>Todos</option>
-                <option value="1">Nechapi</option>
-                <option value="2">CUPOM</option>
-              </>
-            ) : (
-              <>
-                <option value={null}>Todos</option>
-                <option value="1">Atención Simple</option>
-                <option value="2">Atención Condicional</option>
-                <option value="3">Hemi Atención</option>
-                <option value="4">Torre de Hanoi</option>
-                <option value="5">Flanker Task</option>
-              </>
-            )}
-          </select>
-          <label>Prueba Realizada entre</label>
-          <div className="row">
-            <div className="col-6">
-              <input
-                type="date"
-                className="form-control mb-3"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-            </div>
-            <div className="col-6">
-              <input
-                type="date"
-                className="form-control mb-3"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
           </div>
         </form>
       </div>

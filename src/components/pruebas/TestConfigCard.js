@@ -1,55 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PruebasService from "../../services/PruebasService";
+import { S3_ENDOINT } from "../../utils";
 
-const TestConfigCard = ({ test }) => {
-  const [showSettings, setShowSettings] = useState(false);
-  const [settings, setSettings] = useState(null);
-
-  useEffect(() => {
-    if (showSettings && settings === null) {
-      PruebasService.getPrueba(test.id).then((res) => {
-        const prueba = res.data.data.settings;
-        if (prueba) {
-          setSettings(prueba);
-        }
-      });
+const TestConfigCard = ({ test, handleShowSettings, handleInfo }) => {
+  const getSrc = () => {
+    const { testType } = test;
+    if (testType !== null) {
+      const { thumbnail } = testType;
+      if (thumbnail !== null) {
+        return `${S3_ENDOINT}/${thumbnail.name}.${thumbnail.type}`;
+      }
     }
-  }, [showSettings]);
-
-  const renderSettings = () => {
-    if (settings && settings !== null && showSettings) {
-      let columns = Object.keys(settings).filter(
-        (key) =>
-          !String(key).startsWith("id") &&
-          key !== "_id" &&
-          key !== "createdAt" &&
-          key !== "updatedAt"
-      );
-      return columns.map((key) => (
-        <div className="row">
-          <div className="col-6">{key}</div>
-          <div className="col-6">{settings[key]}</div>
-        </div>
-      ));
-    }
+    return "";
   };
 
+  const handleSettings = () => {
+    PruebasService.getPrueba(test.id).then((res) => {
+      const { settings } = res.data.data;
+      if (settings) {
+        handleShowSettings(test.testType, settings);
+      }
+    });
+  };
+
+  const src = getSrc();
+
   return (
-    <div className="card p-3 shadow-sm my-3">
-      <div className="row">
-        <div className="col-10">
-          <h4>{test.testType.name}</h4>
-        </div>
-        <div className="col-2 text-right">
-          <button
-            className="btn btn-light border"
-            onClick={() => setShowSettings(!showSettings)}
-          >
-            <i className={`fa fa-chevron-${showSettings ? "up" : "down"}`}></i>
-          </button>
+    <div className="col-12 col-md-6 col-xl-4">
+      <div className="card p-3 shadow-sm my-3">
+        <img src={src} className="card-img" />
+        <div className="row align-items-center py-3">
+          <div className="col-10">
+            <h4>{test.testType.name}</h4>
+            <p className="text-muted mb-0">{test.testType.author}</p>
+          </div>
+          <div className="col-2 text-end">
+            <button className="btn btn-light border" onClick={handleSettings}>
+              <i className="fa fa-cog"></i>
+            </button>
+          </div>
         </div>
       </div>
-      {renderSettings()}
     </div>
   );
 };

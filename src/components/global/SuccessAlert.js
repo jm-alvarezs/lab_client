@@ -16,7 +16,7 @@ export default function () {
       {successContent}
       <button
         type="button"
-        className="btn btn-close"
+        className="btn text-muted ml-auto mr-0"
         data-bs-dismiss="alert"
         aria-label="Close"
         onClick={clearSuccess}

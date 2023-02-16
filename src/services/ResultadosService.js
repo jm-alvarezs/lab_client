@@ -1,14 +1,11 @@
 import api from "./api";
+import { getArgs } from "../utils";
 
 const route = "/tests";
 
 export default {
-  getResultados: () => api.get(`${route}`),
+  getResultados: (filters) => api.get(`${route}?${getArgs(filters)}`),
   getResultadosAdmin: () => api.get(`${route}?admin=true`),
-  fetchResults: (idPatient, idTestType, startDate, endDate) =>
-    api.get(
-      `${route}/search?idPatient=${idPatient}&type=${idTestType}&startDate=${startDate}&endDate=${endDate}`
-    ),
   getSingleTest: (id) => api.get(`${route}/${id}`),
   getFiability: () => api.get(`${route}/fiability`),
 };

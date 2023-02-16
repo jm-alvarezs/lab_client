@@ -55,7 +55,7 @@ const Payments = () => {
         <div className="col-md-6">
           <h1>Pagos</h1>
         </div>
-        <div className="col-md-6 text-right"></div>
+        <div className="col-md-6 text-end"></div>
       </div>
       <div className="row bg-light p-2 border bold">
         <div className="col">#ID</div>

@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { renderAge, renderBirthdate } from "../../utils";
 
 const UsuarioData = ({ usuario }) => {
   const renderDamages = () => {
@@ -18,8 +19,8 @@ const UsuarioData = ({ usuario }) => {
   const {
     name,
     email,
-    birthDate,
     gender,
+    birthDate,
     dominantHand,
     antecedent,
     whichDrugs,
@@ -29,13 +30,11 @@ const UsuarioData = ({ usuario }) => {
       <div className="col-12 col-md-6">
         <p>Nombre: {name}</p>
         <p>Correo: {email}</p>
-        <p>
-          Fecha de Nacimiento: {moment(birthDate).utc().format("DD MMM YYYY")}
-        </p>
+        <p>Fecha de Nacimiento: {renderBirthdate(birthDate)}</p>
         <p>Género: {gender}</p>
       </div>
       <div className="col-12 col-md-6">
-        <p>Edad: {moment().diff(moment(birthDate).utc(), "years")} años</p>
+        <p>Edad: {renderAge(birthDate)}</p>
         <p>Mano Dominante: {dominantHand}</p>
         <p>Antecedentes: {antecedent}</p>
         <p>Drogas o Medicamentos: {whichDrugs}</p>

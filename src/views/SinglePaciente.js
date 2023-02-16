@@ -8,6 +8,7 @@ import NechapiSummary from "../components/cuestionario/NechapiSummary";
 import ApplyTest from "../components/pruebas/ApplyTest";
 import { UserContext } from "../context/UserContext";
 import { navigate } from "@reach/router";
+import { ModalContext } from "../context/ModalContext";
 
 const SinglePaciente = ({ id }) => {
   const [canPredict, setCanPredict] = useState(false);
@@ -16,14 +17,17 @@ const SinglePaciente = ({ id }) => {
   const [survey, setSurvey] = useState("nechapi");
   const {
     spinner,
-    categorias,
     paciente,
+    categorias,
+    deletePaciente,
     clearCategorias,
     getSinglePaciente,
     getNechapiForecast,
   } = useContext(PacientesContext);
 
   const { user } = useContext(UserContext);
+
+  const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
     getSinglePaciente(id);
@@ -50,6 +54,24 @@ const SinglePaciente = ({ id }) => {
     }
   }, [paciente]);
 
+  const confirmDelete = (paciente) => {
+    modalComponent(
+      "Precaución",
+      <div>
+        <p>
+          ¿Estás seguro que deseas eliminar al paciente {paciente.name}? Esta
+          acción NO puede deshacerse y se perderán todas sus pruebas realizadas.
+        </p>
+        <button
+          className="btn btn-danger"
+          onClick={() => deletePaciente(paciente.id)}
+        >
+          <i className="fa fa-trash"></i> Eliminar
+        </button>
+      </div>
+    );
+  };
+
   const renderUsuario = () => {
     if (paciente && paciente !== null) {
       return <UsuarioData usuario={paciente} />;
@@ -66,7 +88,7 @@ const SinglePaciente = ({ id }) => {
               <div className="col-6">
                 <h4>Aplicar un cuestionario</h4>
               </div>
-              <div className="col-6 text-right">
+              <div className="col-6 text-end">
                 <b>Restantes: </b>
                 {hasCredits(user)}
               </div>
@@ -85,7 +107,7 @@ const SinglePaciente = ({ id }) => {
               <div className="col-12 col-md-6 col-xl-4">
                 <button
                   onClick={() => navigate(`/cuestionario/${survey}/${id}`)}
-                  className="btn btn-dark btn-block"
+                  className="btn btn-dark btn-block w-100"
                   disabled={hasCredits(user) === 0}
                 >
                   Aplicar
@@ -129,7 +151,7 @@ const SinglePaciente = ({ id }) => {
                     onClick={() => getNechapiForecast(id, method)}
                     disabled={spinner}
                   >
-                    <i class="fas fa-calculator mr-2"></i>{" "}
+                    <i className="fas fa-calculator mr-2"></i>{" "}
                     {spinner ? (
                       <div className="spinner-border"></div>
                     ) : (
@@ -181,7 +203,7 @@ const SinglePaciente = ({ id }) => {
           <div className="col-12 col-md-6">
             <h1>Paciente</h1>
           </div>
-          <div className="col-12 col-md-6 text-right">
+          <div className="col-12 col-md-6 text-end">
             <Link to="./edit" className="btn btn-outline-secondary">
               <i className="fa fa-edit"></i> Editar
             </Link>

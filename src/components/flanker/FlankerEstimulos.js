@@ -37,7 +37,7 @@ const FlankerEstimulos = ({ estimulos, right, left }) => {
         <div className="col-8">
           <h3 className="bold">Estímulos</h3>
         </div>
-        <div className="col-4 text-right">
+        <div className="col-4 text-end">
           <button
             className="btn btn-outline-secondary"
             onClick={() => setShowMovimientos(!showMovimientos)}

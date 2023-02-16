@@ -178,7 +178,7 @@ const UsuarioForm = ({ id }) => {
                 {spinner ? <div className="spinner-border"></div> : "Guardar"}
               </button>
             </div>
-            <div className="col-12 col-md-6 text-right">
+            <div className="col-12 col-md-6 text-end">
               {!spinner && (
                 <Link className="btn btn-link text-danger" to="/pacientes">
                   Cancelar

@@ -80,6 +80,7 @@ const TorreHanoi = ({ endCallback }) => {
   useEffect(() => {
     resetAllEstimulos();
     let currentConfig = getConfig(defaultConfig);
+    console.log(currentConfig);
     if (currentConfig.idTest && currentConfig.token && prueba === null) {
       getPrueba(currentConfig.idTest, currentConfig.token);
       setConfig(currentConfig);
@@ -96,14 +97,17 @@ const TorreHanoi = ({ endCallback }) => {
 
   useEffect(() => {
     if (prueba !== null) {
-      if (prueba.results.config) {
+      console.log(prueba);
+      if (prueba.results && prueba.results !== null) {
         setDisabled(true);
         if (typeof endCallback === "function") {
           endCallback();
         }
-      } else if (prueba.settings) {
+      } else if (prueba.settings && prueba.settings !== null) {
         setDisabled(false);
         setConfig({ ...prueba.settings, token: prueba.test.accessUrl.token });
+      } else {
+        setDisabled(false);
       }
     }
   }, [prueba]);

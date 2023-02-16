@@ -25,6 +25,8 @@ export const BASE_URL =
     ? "http://localhost:4000"
     : "https://lab-cognicion.disrupcion.mx";
 
+export const S3_ENDOINT = `${BASE_URL}/files`;
+
 export const searchRows = (query, rows) => {
   if (!rows) return;
   if (isNaN(query)) query = query.toLowerCase();
@@ -670,6 +672,7 @@ export const getEstimulosCondicional = (prueba) => {
 };
 
 export const hasCredits = (user) => {
+  return 1000;
   let { payments, tests } = user;
   const vigente = payments.find((payment) =>
     moment(payment.expiration_date).isAfter(moment())
@@ -698,4 +701,20 @@ export const getTestToken = (test) => {
     }
   }
   return token;
+};
+
+export const renderBirthdate = (birthDate) => {
+  let birthdate = moment(birthDate).utc();
+  if (birthdate.isValid()) {
+    return birthdate.format("DD MMM YYYY");
+  }
+  return "N/D";
+};
+
+export const renderAge = (birthDate) => {
+  let birthdate = moment(birthDate).utc();
+  if (birthdate.isValid()) {
+    return birthdate.diff(moment(), "years");
+  }
+  return "N/D";
 };

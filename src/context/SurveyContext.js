@@ -2,7 +2,11 @@ import React, { createContext, useContext, useReducer } from "react";
 import PostCuestionario from "../components/cuestionario/PostCuestionario";
 import SurveyReducer from "../reducers/SurveyReducer";
 import SurveyService from "../services/SurveyService";
-import { SINGLE_SURVEY_RECIBIDA, SURVEYS_RECIBIDAS } from "../types";
+import {
+  SURVEYS_RECIBIDAS,
+  SINGLE_SURVEY_RECIBIDA,
+  SURVEY_TYPES_RECIBIDAS,
+} from "../types";
 import { ModalContext } from "./ModalContext";
 
 const initialState = {
@@ -29,6 +33,13 @@ export const SurveyProvider = ({ children }) => {
     SurveyService.fetchSurveys(idPatient, idSurveyType, date).then((res) => {
       const surveys = res.data.data;
       dispatch({ type: SURVEYS_RECIBIDAS, payload: surveys });
+    });
+  };
+
+  const getSurveyTypes = () => {
+    SurveyService.getSurveyTypes().then((res) => {
+      const { surveyTypes } = res.data;
+      dispatch({ type: SURVEY_TYPES_RECIBIDAS, payload: surveyTypes });
     });
   };
 
@@ -80,12 +91,13 @@ export const SurveyProvider = ({ children }) => {
     <SurveyContext.Provider
       value={{
         ...state,
-        getSurveys,
         getSurvey,
-        fetchSurveys,
-        getSurveysAdmin,
         postSurvey,
         postAnswer,
+        getSurveys,
+        fetchSurveys,
+        getSurveyTypes,
+        getSurveysAdmin,
       }}
     >
       {children}

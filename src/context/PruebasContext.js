@@ -16,6 +16,7 @@ import {
   ADD_TEST,
 } from "../types";
 import { ModalContext } from "./ModalContext";
+import { getArgs } from "../utils";
 
 const initialState = {
   pruebas: null,
@@ -61,17 +62,9 @@ export const PruebasProvider = ({ children }) => {
       const idTest = res.data.data.id;
       PruebasService.getPrueba(idTest).then((res) => {
         const { accessUrl } = res.data.data.test;
-        const args = Object.keys(config)
-          .map((key) =>
-            config[key] !== "" && config[key] !== null && config[key]
-              ? `${key}=${config[key]}`
-              : null
-          )
-          .filter((obj) => obj !== null)
-          .join("&");
-        const url =
-          `/${testType.handle}?idTest=${idTest}&token=${accessUrl.token}&` +
-          args;
+        const url = `/${testType.handle}?idTest=${idTest}&token=${
+          accessUrl.token
+        }&${getArgs(config)}`;
         dispatch({ type: HIDE_SPINNER });
         if (callback && typeof callback === "function") {
           callback(idTest, accessUrl.token);

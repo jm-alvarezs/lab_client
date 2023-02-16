@@ -1,67 +1,84 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ResultadosContext } from "../context/ResultadosContext";
-import ResultadoCard from "../components/resultados/ResultadoCard";
 import Buscador from "../components/resultados/Buscador";
 import { SurveyContext } from "../context/SurveyContext";
+import { ResultadosContext } from "../context/ResultadosContext";
+import StickyHeadTable from "../components/global/StickyHeadTable";
+import moment from "moment";
 
-const Results = ({ admin }) => {
+const TypeName = ({ testType, surveyType }) => {
+  if (testType && testType !== null) {
+    return <div>{testType.name}</div>;
+  }
+  if (surveyType && surveyType !== null) {
+    return <div>{surveyType.name}</div>;
+  }
+  return <div></div>;
+};
+
+const PatientName = ({ patient }) => {
+  if (patient && patient !== null) {
+    return (
+      <div>
+        #{patient.id} - {patient.email} - {patient.name}
+      </div>
+    );
+  }
+  return <div></div>;
+};
+
+const columns = [
+  {
+    id: "id",
+    label: "#ID",
+  },
+  {
+    id: "name",
+    label: "Ejercicio",
+    component: TypeName,
+  },
+  {
+    id: "patient",
+    label: "Paciente",
+    component: PatientName,
+  },
+  {
+    id: "createdAt",
+    label: "Fecha",
+    component: ({ createdAt }) => moment(createdAt).format("DD MMM YYYY HH:mm"),
+  },
+];
+
+const Results = () => {
   const [tab, setTab] = useState("pruebas");
   const [showFilters, setShowFilters] = useState(false);
-  const {
-    resultados,
-    getResultados,
-    getResultadosAdmin,
-    clearSingleResultado,
-  } = useContext(ResultadosContext);
+  const { resultados, getResultados, clearSingleResultado } =
+    useContext(ResultadosContext);
 
-  const { surveys, getSurveys, getSurveysAdmin } = useContext(SurveyContext);
+  const { surveys, getSurveys } = useContext(SurveyContext);
 
   useEffect(() => {
     clearSingleResultado();
   }, []);
 
   useEffect(() => {
-    if (tab === "pruebas") {
-      if (admin) {
-        getResultadosAdmin();
-      } else {
-        getResultados();
-      }
-    } else {
-      if (admin) {
-        getSurveysAdmin();
-      } else {
-        getSurveys();
-      }
-    }
+    getSurveys();
+    getResultados();
   }, [tab]);
 
   const renderResultados = () => {
     if (tab === "pruebas") {
-      if (resultados && resultados !== null) {
+      if (Array.isArray(resultados)) {
         if (resultados.length === 0) {
-          return (
-            <div className="row">
-              <p>No hay resultados registrados.</p>
-            </div>
-          );
+          return <p>No hay resultados registrados.</p>;
         }
-        return resultados.map((resultado) => (
-          <ResultadoCard key={resultado.id} resultado={resultado} />
-        ));
+        return <StickyHeadTable columns={columns} rows={resultados} />;
       }
     } else {
-      if (surveys && surveys !== null) {
+      if (Array.isArray(surveys)) {
         if (surveys.length === 0) {
-          return (
-            <div className="row">
-              <p>No hay cuestionarios registrados.</p>
-            </div>
-          );
+          return <p>No hay cuestionarios registrados.</p>;
         }
-        return surveys.map((resultado) => (
-          <ResultadoCard key={resultado.id} resultado={resultado} />
-        ));
+        return <StickyHeadTable columns={columns} rows={surveys} />;
       }
     }
     return <div className="spinner-border"></div>;
@@ -79,23 +96,23 @@ const Results = ({ admin }) => {
 
   return (
     <div className="container pt-3">
-      <div className="row border-bottom pb-3 mb-3">
+      <div className="row align-items-center border-bottom pb-3 mb-3">
         <div className="col-md-6">
-          <h1>Resultados</h1>
+          <h1 className="mb-0">Resultados</h1>
         </div>
-        <div className="col-md-6 text-right">
+        <div className="col-md-6 text-end">
           <button
-            className="btn btn-light shadow-sm"
+            className="btn btn-primary shadow-sm"
             onClick={() => setShowFilters(!showFilters)}
           >
             <i className="fa fa-filter"></i> Filtros
           </button>
         </div>
       </div>
-      <div className="row">
+      <div className="row align-items-center br p-2 mb-2 bg-white border">
         <div
           className={
-            (tab === "pruebas" ? "selected " : "") + "col-6 text-center tab"
+            (tab === "pruebas" ? "selected " : "") + "col-6 br text-center tab"
           }
           onClick={() => setTab("pruebas")}
         >
@@ -104,7 +121,7 @@ const Results = ({ admin }) => {
         <div
           className={
             (tab === "cuestionarios" ? "selected " : "") +
-            "col-6 text-center tab"
+            "col-6 br text-center tab"
           }
           onClick={() => setTab("cuestionarios")}
         >
@@ -112,7 +129,7 @@ const Results = ({ admin }) => {
         </div>
       </div>
       {renderFiltros()}
-      {renderResultados()}
+      <div className="row">{renderResultados()}</div>
     </div>
   );
 };

@@ -44,9 +44,9 @@ const MultiTestList = () => {
     <div className="container">
       <div className="row mx-0 border-bottom pb-3 mb-3 mt-4 align-items-center">
         <div className="col-6 px-0">
-          <h1>Pruebas</h1>
+          <h1>Estudios</h1>
         </div>
-        <div className="col-6 text-right px-0">
+        <div className="col-6 text-end px-0">
           {/*
           <Link to="/tests/new/edit" className="btn btn-dark">
             + Crear

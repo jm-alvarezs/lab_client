@@ -24,7 +24,7 @@ const ResultadosFlanker = ({ idTest }) => {
             <div className="col-8">
               <h3 className="bold">Sujeto</h3>
             </div>
-            <div className="col-4 text-right">
+            <div className="col-4 text-end">
               <button
                 className="btn btn-outline-secondary"
                 onClick={() => setShowSujeto(!showSujeto)}

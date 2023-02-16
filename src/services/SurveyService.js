@@ -6,6 +6,7 @@ export default {
   getSurveys: () => api.get(route),
   getSurveysAdmin: () => api.get(`${route}?admin=true`),
   getSingleSurvey: (id, config) => api.get(`${route}/${id}`, { ...config }),
+  getSurveyTypes: () => api.get(`${route}/types`),
   fetchSurveys: (idPatient, idSurveyType, startDate, endDate) =>
     api.get(
       `${route}/search?idPatient=${idPatient}&type=${idSurveyType}&startDate=${startDate}&endDate=${endDate}`

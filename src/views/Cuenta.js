@@ -13,6 +13,12 @@ const Cuenta = () => {
     setEditMode(false);
     getUser();
   };
+  const renderBirthdate = () => {
+    let birthdate = moment(user.birthDate).utc();
+    if (birthdate.isValid()) {
+      return birthdate.format("DD MMM YYYY");
+    }
+  };
 
   const renderUser = () => {
     if (user && user !== null) {
@@ -102,10 +108,7 @@ const Cuenta = () => {
           <p>Correo: {email}</p>
           <p>Profesión: {profession}</p>
           <p>Institución: {institution}</p>
-          <p>
-            Fecha de Nacimiento:{" "}
-            {moment(birthDate).add(1, "day").format("DD MMM YYYY")}
-          </p>
+          <p>Fecha de Nacimiento: {renderBirthdate()}</p>
           <p>País: {country}</p>
           <p>Escolaridad: {scholarship}</p>
           <div className="row">
@@ -117,7 +120,7 @@ const Cuenta = () => {
                 <i className="fa fa-edit"></i> Editar
               </button>
             </div>
-            <div className="col col-md-6 text-right">
+            <div className="col col-md-6 text-end">
               <button className="btn btn-outline-danger" onClick={signOut}>
                 Salir <i className="fa fa-sign-out-alt ml-1"></i>
               </button>

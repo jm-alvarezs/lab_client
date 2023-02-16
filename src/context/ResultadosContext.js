@@ -5,6 +5,8 @@ import {
   RESULTADOS_RECIBIDOS,
   SINGLE_RESULTADO_RECIBIDO,
   FIABILITY_RECIBIDA,
+  SHOW_SPINNER,
+  HIDE_SPINNER,
 } from "../types";
 import moment from "moment";
 import SurveyService from "../services/SurveyService";
@@ -18,10 +20,16 @@ export const ResultadosContext = createContext(initialState);
 export const ResultadosProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ResultadosReducer, initialState);
 
-  const getResultados = () => {
-    ResultadosService.getResultados().then((res) => {
-      dispatch({ type: RESULTADOS_RECIBIDOS, payload: res.data.data });
-    });
+  const getResultados = (filters) => {
+    dispatch({ type: SHOW_SPINNER });
+    ResultadosService.getResultados(filters)
+      .then((res) => {
+        dispatch({ type: HIDE_SPINNER });
+        dispatch({ type: RESULTADOS_RECIBIDOS, payload: res.data.data });
+      })
+      .catch((error) => {
+        dispatch({ type: HIDE_SPINNER });
+      });
   };
 
   const getResultadosAdmin = () => {
@@ -37,14 +45,9 @@ export const ResultadosProvider = ({ children }) => {
     });
   };
 
-  const fetchResults = (idPatient, idTestType, startDate, endDate) => {
+  const fetchResults = (filters) => {
     dispatch({ type: RESULTADOS_RECIBIDOS, payload: null });
-    ResultadosService.fetchResults(
-      idPatient,
-      idTestType,
-      startDate,
-      endDate
-    ).then((res) => {
+    ResultadosService.fetchResults(filters).then((res) => {
       const results = res.data.data;
       dispatch({ type: RESULTADOS_RECIBIDOS, payload: results });
     });
