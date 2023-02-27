@@ -13,7 +13,7 @@ const MultiTestFinalQuestions = ({ questions, callback, modifier }) => {
             modifier={(value) => modifier(index, value)}
           />
         ))}
-        <button className="btn btn-dark mt-4" onClick={callback}>
+        <button className="btn btn-primary mt-4" onClick={callback}>
           Terminar
         </button>
       </div>

@@ -80,7 +80,7 @@ const MultiTestConfig = ({ idMultiTest }) => {
             </select>
           </div>
           <div className="col-4">
-            <button className="btn btn-dark btn-block">Agregar</button>
+            <button className="btn btn-primary btn-block">Agregar</button>
           </div>
         </div>
       );

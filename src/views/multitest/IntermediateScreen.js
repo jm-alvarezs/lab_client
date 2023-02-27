@@ -12,7 +12,7 @@ const IntermediateScreen = ({ handleNext }) => {
                 Haz terminado un ejercicio. Da click a siguiente para empezar el
                 siguiente cuando te sientas listo.
               </p>
-              <button className="btn btn-dark" onClick={handleNext}>
+              <button className="btn btn-primary" onClick={handleNext}>
                 Siguiente
               </button>
             </div>

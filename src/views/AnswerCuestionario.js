@@ -65,7 +65,7 @@ const AnswerCuestionario = ({ endCallback }) => {
     return (
       <form onSubmit={handleSubmit}>
         {renderPreguntas()}
-        <button type="submit" className="btn btn-dark">
+        <button type="submit" className="btn btn-primary">
           Terminado
         </button>
       </form>

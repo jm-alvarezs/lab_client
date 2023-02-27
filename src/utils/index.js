@@ -714,7 +714,7 @@ export const renderBirthdate = (birthDate) => {
 export const renderAge = (birthDate) => {
   let birthdate = moment(birthDate).utc();
   if (birthdate.isValid()) {
-    return birthdate.diff(moment(), "years");
+    return moment().diff(birthdate, "years");
   }
   return "N/D";
 };

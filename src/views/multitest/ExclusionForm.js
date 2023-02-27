@@ -19,7 +19,7 @@ const ExclusionForm = ({ callback, modifier }) => {
             label={question}
           />
         ))}
-        <button className="btn btn-dark mt-4" onClick={callback}>
+        <button className="btn btn-primary mt-4" onClick={callback}>
           Continuar
         </button>
       </div>

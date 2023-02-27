@@ -67,7 +67,7 @@ const Cuestionario = ({ tipo, idPaciente }) => {
               <p className="mb-0">{renderPaciente()}</p>
             </div>
           </div>
-          <button className="btn btn-dark ml-3">Crear Cuestionario</button>
+          <button className="btn btn-primary ml-3">Crear Cuestionario</button>
         </form>
       </div>
     </div>

@@ -48,7 +48,7 @@ const MultiTestList = () => {
         </div>
         <div className="col-6 text-end px-0">
           {/*
-          <Link to="/tests/new/edit" className="btn btn-dark">
+          <Link to="/tests/new/edit" className="btn btn-primary">
             + Crear
           </Link>
           */}

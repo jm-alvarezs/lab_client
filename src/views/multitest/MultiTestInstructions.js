@@ -12,7 +12,7 @@ const MultiTestInstructions = ({ handleNext }) => {
                 A continuación realizarás una serie de ejercicios, te tomará
                 aproximadamente 10 minutos.
               </p>
-              <button className="btn btn-dark" onClick={handleNext}>
+              <button className="btn btn-primary" onClick={handleNext}>
                 Comenzar
               </button>
             </div>

@@ -37,7 +37,7 @@ const MultiTestStart = () => {
               A continuación realizarás un ejercicio.
             </p>
             <h3>Instrucciones</h3>
-            <button className="btn btn-dark">Comenzar</button>
+            <button className="btn btn-primary">Comenzar</button>
           </div>
         </div>
       </div>

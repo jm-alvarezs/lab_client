@@ -25,7 +25,7 @@ const InterScreen = ({
               <h3>Instrucciones</h3>
               {<Instrucciones contents={instrucciones} />}
               <button
-                className="btn btn-dark"
+                className="btn btn-primary"
                 onClick={start}
                 disabled={disabled}
               >

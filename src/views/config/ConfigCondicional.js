@@ -371,7 +371,7 @@ const ConfigCondicional = ({ idPaciente, submit, submitCallback }) => {
                 <div className="col-6">
                   <button
                     type="submit"
-                    className="btn btn-dark btn-block mt-3"
+                    className="btn btn-primary btn-block mt-3"
                     disabled={spinner}
                   >
                     {spinner ? (

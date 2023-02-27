@@ -54,7 +54,7 @@ const MultiConfig = ({ idPaciente }) => {
           ?
         </p>
         <button
-          className="btn btn-dark"
+          className="btn btn-primary"
           onClick={() => {
             setSubmitAll(true);
           }}
@@ -121,7 +121,7 @@ const MultiConfig = ({ idPaciente }) => {
       <div className="container px-5 pb-5">
         <button
           disabled={spinner}
-          className="btn btn-dark"
+          className="btn btn-primary"
           onClick={confirmSubmit}
         >
           {spinner ? (

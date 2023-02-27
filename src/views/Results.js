@@ -4,13 +4,21 @@ import { SurveyContext } from "../context/SurveyContext";
 import { ResultadosContext } from "../context/ResultadosContext";
 import StickyHeadTable from "../components/global/StickyHeadTable";
 import moment from "moment";
+import { Link } from "@reach/router";
 
-const TypeName = ({ testType, surveyType }) => {
+const TypeName = (props) => {
+  const { id, testType, surveyType } = props;
   if (testType && testType !== null) {
-    return <div>{testType.name}</div>;
+    return (
+      <Link to={`/resultados/${testType.handle}/${id}`}>{testType.name}</Link>
+    );
   }
   if (surveyType && surveyType !== null) {
-    return <div>{surveyType.name}</div>;
+    return (
+      <Link to={`/resultados/${surveyType.handle}/${id}`}>
+        {surveyType.name}
+      </Link>
+    );
   }
   return <div></div>;
 };
@@ -34,12 +42,12 @@ const columns = [
   {
     id: "name",
     label: "Ejercicio",
-    component: TypeName,
+    component: (props) => <TypeName {...props} />,
   },
   {
     id: "patient",
     label: "Paciente",
-    component: PatientName,
+    component: (props) => <PatientName {...props} />,
   },
   {
     id: "createdAt",
@@ -112,7 +120,8 @@ const Results = () => {
       <div className="row align-items-center br p-2 mb-2 bg-white border">
         <div
           className={
-            (tab === "pruebas" ? "selected " : "") + "col-6 br text-center tab"
+            (tab === "pruebas" ? "btn btn-primary " : "") +
+            "col-6 br text-center tab"
           }
           onClick={() => setTab("pruebas")}
         >
@@ -120,7 +129,7 @@ const Results = () => {
         </div>
         <div
           className={
-            (tab === "cuestionarios" ? "selected " : "") +
+            (tab === "cuestionarios" ? "btn btn-primary " : "") +
             "col-6 br text-center tab"
           }
           onClick={() => setTab("cuestionarios")}

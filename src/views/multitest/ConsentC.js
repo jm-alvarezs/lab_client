@@ -109,7 +109,7 @@ const ConsentC = ({ alert, callback }) => {
           />{" "}
           Yo acepto participa en la investigación.
         </label>
-        <button className="btn btn-dark mt-4" onClick={handleCallback}>
+        <button className="btn btn-primary mt-4" onClick={handleCallback}>
           Continuar
         </button>
       </div>

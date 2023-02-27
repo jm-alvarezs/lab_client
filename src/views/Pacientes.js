@@ -46,7 +46,7 @@ const Pacientes = () => {
           <h1>Pacientes</h1>
         </div>
         <div className="col-6 text-end px-0">
-          <Link to="/pacientes/nuevo/edit" className="btn btn-dark">
+          <Link to="/pacientes/nuevo/edit" className="btn btn-primary">
             + Agregar
           </Link>
         </div>

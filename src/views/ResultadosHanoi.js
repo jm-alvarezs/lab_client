@@ -43,7 +43,7 @@ const ResultadosHanoi = ({ idTest }) => {
 
   const renderResumen = (toPdf) => {
     if (resultado && resultado !== null) {
-      if (resultado.results.settings && resultado.results.settings !== null) {
+      if (resultado.results && resultado.results !== null) {
         return (
           <ResumenHanoi
             resultado={resultado}

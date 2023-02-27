@@ -107,7 +107,7 @@ const SinglePaciente = ({ id }) => {
               <div className="col-12 col-md-6 col-xl-4">
                 <button
                   onClick={() => navigate(`/cuestionario/${survey}/${id}`)}
-                  className="btn btn-dark btn-block w-100"
+                  className="btn btn-primary btn-block w-100"
                   disabled={hasCredits(user) === 0}
                 >
                   Aplicar

@@ -13,7 +13,7 @@ const WelcomeBack = ({ patient, handleNext }) => {
                 A continuación realizarás la misma serie de ejercicios que ya
                 conoces, te tomará aproximadamente 10 minutos.
               </p>
-              <button className="btn btn-dark" onClick={handleNext}>
+              <button className="btn btn-primary" onClick={handleNext}>
                 Comenzar
               </button>
             </div>

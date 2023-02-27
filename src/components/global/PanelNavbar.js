@@ -7,22 +7,38 @@ const PanelNavbar = () => {
       <div className="container-fluid px-0">
         <div className="mt-4">
           <ul className="side-menu-list">
-            <li className="nav-item my-4">
+            <li
+              className={`nav-item my-4 ${
+                window.location.href.includes("tests") ? "bg-primary" : ""
+              }`}
+            >
               <Link className="nav-link" to="/tests">
                 <i className="fa fa-folder" />
               </Link>
             </li>
-            <li className="nav-item my-4">
-              <Link className="nav-link" to="/tests">
+            <li
+              className={`nav-item my-4 ${
+                window.location.pathname.includes("pruebas") ? "bg-primary" : ""
+              }`}
+            >
+              <Link className="nav-link" to="/pruebas">
                 <i className="fa fa-vial" />
               </Link>
             </li>
-            <li className="nav-item my-4">
+            <li
+              className={`nav-item my-4 ${
+                window.location.pathname.includes("pac") ? "bg-primary" : ""
+              }`}
+            >
               <Link className="nav-link" to="/pacientes">
                 <i className="fa fa-users" />
               </Link>
             </li>
-            <li className="nav-item my-4">
+            <li
+              className={`nav-item my-4 ${
+                window.location.pathname.includes("result") ? "bg-primary" : ""
+              }`}
+            >
               <Link className="nav-link" to="/resultados">
                 <i className="fa fa-poll" />
               </Link>

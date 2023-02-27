@@ -38,7 +38,7 @@ const PostCuestionario = ({ id, type, url, defaultEmail }) => {
         </div>
         <div className="col-4">
           <button
-            className="btn btn-dark w-100"
+            className="btn btn-primary w-100"
             onClick={() => EmailsService.postEmail(id, "survey", email)}
           >
             Enviar

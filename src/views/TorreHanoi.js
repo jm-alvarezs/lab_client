@@ -80,7 +80,7 @@ const TorreHanoi = ({ endCallback }) => {
   useEffect(() => {
     resetAllEstimulos();
     let currentConfig = getConfig(defaultConfig);
-    console.log(currentConfig);
+    //console.log(currentConfig);
     if (currentConfig.idTest && currentConfig.token && prueba === null) {
       getPrueba(currentConfig.idTest, currentConfig.token);
       setConfig(currentConfig);
@@ -97,7 +97,7 @@ const TorreHanoi = ({ endCallback }) => {
 
   useEffect(() => {
     if (prueba !== null) {
-      console.log(prueba);
+      //console.log(prueba);
       if (prueba.results && prueba.results !== null) {
         setDisabled(true);
         if (typeof endCallback === "function") {
@@ -105,7 +105,7 @@ const TorreHanoi = ({ endCallback }) => {
         }
       } else if (prueba.settings && prueba.settings !== null) {
         setDisabled(false);
-        setConfig({ ...prueba.settings, token: prueba.test.accessUrl.token });
+        setConfig({ ...config, token: prueba.test.accessUrl.token });
       } else {
         setDisabled(false);
       }
@@ -153,7 +153,7 @@ const TorreHanoi = ({ endCallback }) => {
       "Precaución",
       <div>
         <p>¿Deseas terminar este ejercicio sin completar?</p>
-        <button className="btn btn-dark">Terminar</button>
+        <button className="btn btn-primary">Terminar</button>
       </div>
     );
   };
@@ -161,6 +161,8 @@ const TorreHanoi = ({ endCallback }) => {
   const handleStart = () => {
     setStart(true);
     setStartTime(moment().format("YYYY-MM-DD HH:mm:ss:SSS"));
+    console.log(config);
+    console.log(config.discos);
     setOne(discs.slice(0, config.discos));
     popEstimulo();
     document.body.addEventListener("keypress", (e) => {
@@ -291,15 +293,15 @@ const TorreHanoi = ({ endCallback }) => {
         <div className="row torre-row align-items-center">
           <div className="container">
             <div className="row">
-              <div className="col-4">
+              <div className="col-4 position-relative">
                 <div className="stick"></div>
                 {renderDiscos(1)}
               </div>
-              <div className="col-4">
+              <div className="col-4 position-relative">
                 <div className="stick"></div>
                 {renderDiscos(2)}
               </div>
-              <div className="col-4">
+              <div className="col-4 position-relative">
                 <div className="stick"></div>
                 {renderDiscos(3)}
               </div>

@@ -60,7 +60,7 @@ const PostPrueba = ({ id, type, url, defaultEmail }) => {
           />
         </div>
         <div className="col-4">
-          <button className="btn btn-dark w-100" onClick={handleSubmit}>
+          <button className="btn btn-primary w-100" onClick={handleSubmit}>
             Enviar
           </button>
         </div>

@@ -64,7 +64,7 @@ const ApplyTest = ({ idPatient }) => {
           <button
             disabled={hasCredits(user) === 0}
             onClick={handleApplyTest}
-            className="btn btn-dark btn-block w-100"
+            className="btn btn-primary btn-block w-100"
           >
             Aplicar
           </button>

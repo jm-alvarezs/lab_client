@@ -93,7 +93,7 @@ const Cuenta = () => {
                 <option value="Maestria">Maestría</option>
                 <option value="Doctorado">Doctorado</option>
               </select>
-              <button type="submit" className="btn btn-dark btn-block">
+              <button type="submit" className="btn btn-primary btn-block">
                 Guardar
               </button>
             </form>

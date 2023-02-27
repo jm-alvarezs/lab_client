@@ -6,6 +6,6 @@ const route = "/tests";
 export default {
   getResultados: (filters) => api.get(`${route}?${getArgs(filters)}`),
   getResultadosAdmin: () => api.get(`${route}?admin=true`),
-  getSingleTest: (id) => api.get(`${route}/${id}`),
+  getSingleTest: (id) => api.get(`${route}/single/${id}`),
   getFiability: () => api.get(`${route}/fiability`),
 };

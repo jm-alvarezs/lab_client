@@ -301,7 +301,7 @@ const AtencionHemi = ({ endCallback }) => {
                     estímulos aparecen y desaparecen rápidamente.
                   </p>
                   <button
-                    className="btn btn-dark"
+                    className="btn btn-primary"
                     onClick={start}
                     disabled={disabled}
                   >

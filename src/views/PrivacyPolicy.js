@@ -88,7 +88,7 @@ const PrivacyPolicy = ({
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-          <input type="submit" value="Continuar" className="btn btn-dark" />
+          <input type="submit" value="Continuar" className="btn btn-primary" />
         </form>
       </div>
     </div>

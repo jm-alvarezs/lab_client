@@ -174,7 +174,11 @@ const UsuarioForm = ({ id }) => {
           />
           <div className="row">
             <div className="col-12 col-md-6">
-              <button type="submit" className="btn btn-dark" disabled={spinner}>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={spinner}
+              >
                 {spinner ? <div className="spinner-border"></div> : "Guardar"}
               </button>
             </div>

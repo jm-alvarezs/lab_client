@@ -165,7 +165,7 @@ const SocialVariables = ({ alert, callback }) => {
             </select>
           </div>
         </div>
-        <button className="btn btn-dark my-3" onClick={handleSubmit}>
+        <button className="btn btn-primary my-3" onClick={handleSubmit}>
           Terminé
         </button>
       </div>

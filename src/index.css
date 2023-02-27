@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
+:root {
+  --dark: #333;
+  --primary: #fff500 !important;
+  --secondary: #fff9c4;
+}
+
 body {
   font-family: "Inter", sans-serif;
 }
@@ -21,12 +27,22 @@ h6 {
   text-transform: capitalize;
 }
 
+.btn-primary {
+  background-color: var(--primary) !important;
+  border: 1px solid var(--dark) !important;
+  color: var(--dark) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary) !important;
+}
+
 .container-x {
   overflow-x: scroll;
 }
 
 .user-icon {
-  color: #fff500;
+  color: var(--primary);
 }
 
 .border-1 {
@@ -65,7 +81,7 @@ h6 {
 
 .dropdown-item.active,
 .dropdown-item:active {
-  background-color: #fff500;
+  background-color: var(--primary);
   color: #000;
 }
 
@@ -137,6 +153,10 @@ h6 {
   display: block;
   font-size: 20px;
   text-align: center;
+}
+
+.side-menu .nav-item:hover {
+  background-color: var(--secondary);
 }
 
 .side-menu-list {
