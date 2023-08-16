@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import PruebaConfig from "../../../components/pruebas/PruebaConfig";
 import { ResultadosContext } from "../../../context/ResultadosContext";
-import moment from "moment";
-import { calculateAverage } from "../../../utils";
-import ReactToPdf from "react-to-pdf";
-import SujetoPrueba from "../../../components/resultados/SujetoPrueba";
+import TestPatient from "../../../components/resultados/TestPatient";
 import StroopRow from "../../../components/resultados/StroopRow";
+import { calculateAverage } from "../../../utils";
 import StroopConfig from "./StroopConfig";
+import ReactToPdf from "react-to-pdf";
+import moment from "moment";
 
 const StroopResults = ({ id }) => {
-  const { resultado, fiability, getSingleTest, clearSingleResultado } =
+  const { resultado, getSingleTest, clearSingleResultado } =
     useContext(ResultadosContext);
   const [showEstimulos, setShowEstimulos] = useState(true);
 
@@ -85,7 +84,7 @@ const StroopResults = ({ id }) => {
   const renderSujeto = () => {
     if (resultado && resultado !== null) {
       const { patient } = resultado.test;
-      return <SujetoPrueba patient={patient} />;
+      return <TestPatient patient={patient} />;
     }
   };
 
@@ -118,10 +117,8 @@ const StroopResults = ({ id }) => {
             <div className="row border-bottom pb-3 mb-3 align-items-center">
               <div className="col col-md-10">
                 <h1 className="h3">
-                  {resultado && resultado !== null ? (
+                  {resultado && resultado !== null && (
                     <b>Prueba #{resultado !== null && resultado.test.id}</b>
-                  ) : (
-                    ""
                   )}
                   :{" "}
                   {resultado && resultado !== null ? (
@@ -161,7 +158,7 @@ const StroopResults = ({ id }) => {
               </div>
               <div className="col col-md-4 text-end px-0">
                 <button
-                  className="btn btn-outline-secondary"
+                  className="btn btn-outline-dark"
                   onClick={() => setShowEstimulos(!showEstimulos)}
                 >
                   <i

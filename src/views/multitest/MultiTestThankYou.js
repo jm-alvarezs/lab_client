@@ -18,6 +18,7 @@ const MultiTestThankYou = ({ handleReset }) => {
           <img
             src="https://www.udem.edu.mx/sites/default/files/inline-images/Entropia-UDEM.jpg"
             className="half-image"
+            alt="portada"
           />
         </div>
       </div>

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import SujetoPrueba from "../components/resultados/SujetoPrueba";
-import { ResultadosContext } from "../context/ResultadosContext";
-import ReactToPdf from "react-to-pdf";
-import moment from "moment";
+import ParametrosFlanker from "../components/flanker/ParametrosFlanker";
 import FlankerEstimulos from "../components/flanker/FlankerEstimulos";
 import ResumenFlanker from "../components/flanker/ResumenFlanker";
-import ParametrosFlanker from "../components/flanker/ParametrosFlanker";
+import { ResultadosContext } from "../context/ResultadosContext";
+import TestPatient from "../components/resultados/TestPatient";
+import ReactToPdf from "react-to-pdf";
+import moment from "moment";
 
 const ResultadosFlanker = ({ idTest }) => {
   const [showSujeto, setShowSujeto] = useState(true);
@@ -26,14 +26,14 @@ const ResultadosFlanker = ({ idTest }) => {
             </div>
             <div className="col-4 text-end">
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-dark"
                 onClick={() => setShowSujeto(!showSujeto)}
               >
                 <i className={`fa fa-eye${showSujeto ? "-slash" : ""}`}></i>
               </button>
             </div>
           </div>
-          {showSujeto && <SujetoPrueba patient={patient} />}
+          {showSujeto && <TestPatient patient={patient} />}
         </div>
       );
     }

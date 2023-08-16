@@ -54,6 +54,14 @@ const columns = [
     label: "Fecha",
     component: ({ createdAt }) => moment(createdAt).format("DD MMM YYYY HH:mm"),
   },
+  {
+    id: "completedAt",
+    label: "Completado",
+    component: ({ completedAt }) => {
+      if (completedAt === null) return "";
+      return moment(completedAt).format("DD MMM YYYY HH:mm");
+    },
+  },
 ];
 
 const Results = () => {

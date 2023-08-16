@@ -1,8 +1,7 @@
 import moment from "moment";
 import React from "react";
-import { getEstimulosCondicional } from "../../../utils";
 
-const StroopConfig = ({ idTestType, prueba }) => {
+const StroopConfig = ({ prueba }) => {
   const renderDuracion = () => {
     return moment(prueba.endTime, "YYYY-MM-DD HH:mm:ss:SSS").diff(
       moment(prueba.startTime, "YYYY-MM-DD HH:mm:ss:SSS"),
@@ -12,12 +11,11 @@ const StroopConfig = ({ idTestType, prueba }) => {
 
   const {
     tiempoInterestimular,
+    numeroEstimulos,
     fontFamily,
     fontStyle,
     fontSize,
     color,
-    numeroEstimulos,
-    aparicion,
   } = prueba.settings;
   return (
     <div className="container-fluid px-0">

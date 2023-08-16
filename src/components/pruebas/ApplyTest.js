@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TestTypeContext } from "../../context/TestTypeContext";
 import { hasCredits } from "../../utils";
-import { UserContext } from "../../context/UserContext";
+import { AuthContext } from "../../context/AuthContext";
 import { navigate } from "@reach/router";
 
 const ApplyTest = ({ idPatient }) => {
@@ -9,7 +9,7 @@ const ApplyTest = ({ idPatient }) => {
 
   const { testTypes, getTestTypes } = useContext(TestTypeContext);
 
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     getTestTypes();

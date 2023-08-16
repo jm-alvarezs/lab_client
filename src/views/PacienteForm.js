@@ -4,7 +4,7 @@ import React, { useContext, useEffect } from "react";
 import DamageForm from "../components/damages/DamageForm";
 import { ModalContext } from "../context/ModalContext";
 import { PacientesContext } from "../context/PacientesContext";
-import { UserContext } from "../context/UserContext";
+import { AuthContext } from "../context/AuthContext";
 import { validateEmail } from "../utils";
 
 const UsuarioForm = ({ id }) => {
@@ -23,7 +23,7 @@ const UsuarioForm = ({ id }) => {
 
   const { alert } = useContext(ModalContext);
 
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     if (isNaN(id)) {

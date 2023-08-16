@@ -1,7 +1,7 @@
 import React from "react";
 import { getEstimulosCondicional } from "../../utils";
 
-const PruebaConfig = ({ idTestType, prueba }) => {
+const TestSettings = ({ idTestType, settings }) => {
   const {
     tiempoExposicion,
     tiempoInterestimular,
@@ -14,7 +14,7 @@ const PruebaConfig = ({ idTestType, prueba }) => {
     numeroEstimulos,
     aparicion,
     keyCode,
-  } = prueba;
+  } = settings;
   return (
     <div className="container-fluid px-0">
       <div className="row">
@@ -97,7 +97,9 @@ const PruebaConfig = ({ idTestType, prueba }) => {
           <label>Número de Estímulos</label>
         </div>
         <div className="col-6">
-          {idTestType === 2 ? getEstimulosCondicional(prueba) : numeroEstimulos}
+          {idTestType === 2
+            ? getEstimulosCondicional(settings)
+            : numeroEstimulos}
         </div>
       </div>
       {idTestType === 1 && (
@@ -135,7 +137,7 @@ const PruebaConfig = ({ idTestType, prueba }) => {
           <p>
             {((parseInt(tiempoExposicion) + parseInt(tiempoInterestimular)) *
               (idTestType === 2
-                ? getEstimulosCondicional(prueba)
+                ? getEstimulosCondicional(settings)
                 : numeroEstimulos)) /
               1000}
             {" segundos"}
@@ -146,4 +148,4 @@ const PruebaConfig = ({ idTestType, prueba }) => {
   );
 };
 
-export default PruebaConfig;
+export default TestSettings;

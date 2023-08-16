@@ -39,7 +39,7 @@ const FlankerEstimulos = ({ estimulos, right, left }) => {
         </div>
         <div className="col-4 text-end">
           <button
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-dark"
             onClick={() => setShowMovimientos(!showMovimientos)}
           >
             <i className={`fa fa-eye${showMovimientos ? "-slash" : ""}`}></i>

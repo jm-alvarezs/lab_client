@@ -35,7 +35,7 @@ const ResultadoCard = ({ resultado }) => {
                 ? `${resultado.testType.handle}/${resultado.id}`
                 : ""
             }`}
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-dark"
           >
             <i className="fa fa-eye"></i> Consultar
           </Link>

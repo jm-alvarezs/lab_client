@@ -248,7 +248,7 @@ const ResultadosCuestionario = ({ id }) => {
               </div>
               <div className="col-6 text-end">
                 <button
-                  className="btn btn-outline-secondary"
+                  className="btn btn-outline-dark"
                   onClick={() => setShowPreguntas(!showPreguntas)}
                 >
                   <i

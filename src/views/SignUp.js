@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { AuthContext } from "../context/AuthContext";
 import { Link, navigate } from "@reach/router";
 import moment from "moment";
 import axios from "axios";
@@ -16,7 +16,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [paises, setPaises] = useState([]);
 
-  const { created, signUp, signIn } = useContext(UserContext);
+  const { created, signUp, signIn } = useContext(AuthContext);
 
   useEffect(() => {
     axios.get(`${BASE_URL}/countries`).then((res) => {
@@ -60,7 +60,7 @@ const SignUp = () => {
     if (country === "") {
       return alert("El país no puede ser vacío");
     }
-    signUp(
+    signUp({
       name,
       profession,
       email,
@@ -68,14 +68,14 @@ const SignUp = () => {
       birthdate,
       country,
       scholarship,
-      password
-    );
+      password,
+    });
   };
 
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col col-md-6 vh-100 pl-0">
+        <div className="col col-md-6 vh-100 ps-0">
           <img
             src="https://www.udem.edu.mx/sites/default/files/inline-images/Entropia-UDEM.jpg"
             className="login-img mw-100 w-100 vh-100"

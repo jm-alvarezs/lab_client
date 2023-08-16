@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { AuthContext } from "../context/AuthContext";
 import moment from "moment";
 
 const Cuenta = () => {
   const [editMode, setEditMode] = useState(false);
   const { user, getUser, signOut, updateUsuario, setPropiedadUser } =
-    useContext(UserContext);
+    useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -114,7 +114,7 @@ const Cuenta = () => {
           <div className="row">
             <div className="col col-md-6">
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-dark"
                 onClick={() => setEditMode(true)}
               >
                 <i className="fa fa-edit"></i> Editar

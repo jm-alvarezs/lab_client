@@ -29,7 +29,7 @@ export default function () {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-dark"
                 data-dismiss="modal"
                 onClick={onCancel}
               >

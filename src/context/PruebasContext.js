@@ -2,7 +2,7 @@ import React, { createContext, useContext, useReducer } from "react";
 import PostPrueba from "../components/pruebas/PostPrueba";
 import PruebasReducer from "../reducers/PruebasReducer";
 import PruebasService from "../services/PruebasService";
-import UsuarioService from "../services/UsuarioService";
+import UserService from "../services/UserService";
 import {
   TEST_READY,
   HIDE_SPINNER,
@@ -49,7 +49,7 @@ export const PruebasProvider = ({ children }) => {
       PruebasService.getPrueba(idTest).then((res) => {
         const prueba = res.data.data.test;
         const token = prueba.accessUrl.token;
-        UsuarioService.setToken(token);
+        UserService.setToken(token);
         dispatch({ type: TEST_READY });
         dispatch({ type: PRUEBA_RECIBIDA, payload: res.data.data });
       });

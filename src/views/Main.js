@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Router } from "@reach/router";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import { UserContext } from "../context/UserContext";
+import { AuthContext } from "../context/AuthContext";
 import Home from "./Home";
 import AtencionSimple from "./AtencionSimple";
 import ErrorAlert from "../components/global/ErrorAlert";
@@ -17,7 +17,7 @@ import StroopTest from "./tests/stroop/StroopTest";
 import MultiTestRun from "./multitest/MultiTestRun";
 
 const Main = () => {
-  const { user, userLoggedIn } = useContext(UserContext);
+  const { user, userLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     userLoggedIn();

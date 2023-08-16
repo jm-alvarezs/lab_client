@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import MovimientosHanoi from "../components/hanoi/MovimientosHanoi";
-import ResumenHanoi from "../components/hanoi/ResumenHanoi";
-import SujetoPrueba from "../components/resultados/SujetoPrueba";
+import ParametrosHanoi from "../components/hanoi/ParametrosHanoi";
 import { ResultadosContext } from "../context/ResultadosContext";
+import TestPatient from "../components/resultados/TestPatient";
+import ResumenHanoi from "../components/hanoi/ResumenHanoi";
+import { PruebasContext } from "../context/PruebasContext";
 import ReactToPdf from "react-to-pdf";
 import moment from "moment";
-import ParametrosHanoi from "../components/hanoi/ParametrosHanoi";
-import { PruebasContext } from "../context/PruebasContext";
 
 const ResultadosHanoi = ({ idTest }) => {
   const [showSujeto, setShowSujeto] = useState(true);
@@ -28,14 +28,14 @@ const ResultadosHanoi = ({ idTest }) => {
             </div>
             <div className="col-4 text-end">
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-dark"
                 onClick={() => setShowSujeto(!showSujeto)}
               >
                 <i className={`fa fa-eye${showSujeto ? "-slash" : ""}`}></i>
               </button>
             </div>
           </div>
-          {showSujeto && <SujetoPrueba patient={patient} />}
+          {showSujeto && <TestPatient patient={patient} />}
         </div>
       );
     }

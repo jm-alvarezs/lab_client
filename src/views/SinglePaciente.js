@@ -6,7 +6,7 @@ import { Link } from "@reach/router";
 import { hasCredits, testsNechapi } from "../utils";
 import NechapiSummary from "../components/cuestionario/NechapiSummary";
 import ApplyTest from "../components/pruebas/ApplyTest";
-import { UserContext } from "../context/UserContext";
+import { AuthContext } from "../context/AuthContext";
 import { navigate } from "@reach/router";
 import { ModalContext } from "../context/ModalContext";
 
@@ -25,7 +25,7 @@ const SinglePaciente = ({ id }) => {
     getNechapiForecast,
   } = useContext(PacientesContext);
 
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
 
   const { modalComponent } = useContext(ModalContext);
 
@@ -204,7 +204,7 @@ const SinglePaciente = ({ id }) => {
             <h1>Paciente</h1>
           </div>
           <div className="col-12 col-md-6 text-end">
-            <Link to="./edit" className="btn btn-outline-secondary">
+            <Link to="./edit" className="btn btn-outline-dark">
               <i className="fa fa-edit"></i> Editar
             </Link>
           </div>

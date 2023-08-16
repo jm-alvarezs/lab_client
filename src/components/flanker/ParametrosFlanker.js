@@ -67,7 +67,7 @@ const ParametrosFlanker = ({ settings }) => {
         </div>
         <div className="col-6 text-end">
           <button
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-dark"
             onClick={() => setShowMovimientos(!showMovimientos)}
           >
             <i className={`fa fa-eye${showMovimientos ? "-slash" : ""}`}></i>

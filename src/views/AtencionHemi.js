@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
 import { PruebasContext } from "../context/PruebasContext";
 import { navigate } from "@reach/router";
-import UsuarioService from "../services/UsuarioService";
+import UserService from "../services/UserService";
 import { ModalContext } from "../context/ModalContext";
 
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -74,7 +74,7 @@ const AtencionHemi = ({ endCallback }) => {
       }
       currentToken = currentToken.split("&")[0];
       setToken(currentToken);
-      UsuarioService.setToken(currentToken);
+      UserService.setToken(currentToken);
       let idTest = window.location.href.split("idTest=")[1];
       if (!idTest) return navigate("/");
       idTest = parseInt(idTest.split("&")[0]);

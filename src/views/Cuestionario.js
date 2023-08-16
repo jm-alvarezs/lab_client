@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from "react";
 import Breadcrumbs from "../components/global/Breadcrumbs";
 import { PacientesContext } from "../context/PacientesContext";
 import { SurveyContext } from "../context/SurveyContext";
-import { UserContext } from "../context/UserContext";
+import { AuthContext } from "../context/AuthContext";
 
 const Cuestionario = ({ tipo, idPaciente }) => {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
 
   const { paciente, getSinglePaciente } = useContext(PacientesContext);
 

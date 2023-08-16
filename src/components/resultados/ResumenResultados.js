@@ -5,15 +5,15 @@ import {
   getResultadoTargetsCondicional,
 } from "../../utils";
 
-const ResumenResultados = ({ resultado }) => {
+const ResumenResultados = ({ result }) => {
   const isCondicional = () => {
-    return resultado.test.testType.id === 2;
+    return result.test.testType.id === 2;
   };
 
   const getTiempoReaccion = () => {
-    if (resultado && resultado !== null) {
-      if (resultado.results.targets && resultado.results.targets !== null) {
-        let reacciones = resultado.results.targets.map((target) =>
+    if (result && result !== null) {
+      if (result.results.targets && result.results.targets !== null) {
+        let reacciones = result.results.targets.map((target) =>
           target.reaction ? target.reaction : null
         );
         reacciones = reacciones.filter((item) => item !== null);
@@ -30,15 +30,15 @@ const ResumenResultados = ({ resultado }) => {
         Aciertos:{" "}
         {isCondicional()
           ? getResultadoTargetsCondicional(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "aciertos",
-              resultado.results.settings.clave,
+              result.results.settings.clave,
               true
             )
           : getResultadoTargets(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "aciertos"
             )}
       </p>
@@ -46,14 +46,14 @@ const ResumenResultados = ({ resultado }) => {
         Errores:{" "}
         {isCondicional()
           ? getResultadoTargetsCondicional(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "errores",
-              resultado.results.settings.clave
+              result.results.settings.clave
             )
           : getResultadoTargets(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "errores"
             )}
       </p>
@@ -63,14 +63,14 @@ const ResumenResultados = ({ resultado }) => {
         Omisiones Correctas:{" "}
         {isCondicional()
           ? getResultadoTargetsCondicional(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "omision",
-              resultado.results.settings.clave
+              result.results.settings.clave
             )
           : getResultadoTargets(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "omision",
               true
             )}
@@ -79,15 +79,15 @@ const ResumenResultados = ({ resultado }) => {
         Omisiones Incorrectas:{" "}
         {isCondicional()
           ? getResultadoTargetsCondicional(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "omision",
-              resultado.results.settings.clave,
+              result.results.settings.clave,
               true
             )
           : getResultadoTargets(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "omision",
               false
             )}
@@ -96,15 +96,15 @@ const ResumenResultados = ({ resultado }) => {
         Clicks Correctos:{" "}
         {isCondicional()
           ? getResultadoTargetsCondicional(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "click",
-              resultado.results.settings.clave,
+              result.results.settings.clave,
               true
             )
           : getResultadoTargets(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "click",
               true
             )}
@@ -113,15 +113,15 @@ const ResumenResultados = ({ resultado }) => {
         Clicks Incorrectos:{" "}
         {isCondicional()
           ? getResultadoTargetsCondicional(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "click",
-              resultado.results.settings.clave,
+              result.results.settings.clave,
               false
             )
           : getResultadoTargets(
-              resultado.results.targets,
-              resultado.results.target,
+              result.results.targets,
+              result.results.target,
               "click",
               false
             )}

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
 import { PruebasContext } from "../context/PruebasContext";
 import { navigate } from "@reach/router";
-import UsuarioService from "../services/UsuarioService";
+import UserService from "../services/UserService";
 import { ModalContext } from "../context/ModalContext";
 import { getConfig, getTestToken } from "../utils";
 
@@ -70,7 +70,7 @@ const AtencionCondicional = ({ endCallback }) => {
         setDisabled(true);
         return alert("No se puede iniciar la prueba");
       }
-      UsuarioService.setToken(currentConfig.token);
+      UserService.setToken(currentConfig.token);
       if (!currentConfig.idTest) return navigate("/");
       setConfig(currentConfig);
     }

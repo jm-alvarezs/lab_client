@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import PruebaConfig from "../components/pruebas/PruebaConfig";
+import ResultParameters from "../components/resultados/ResultParameters";
+import ResultSummary from "../components/resultados/ResultSummary";
 import { ResultadosContext } from "../context/ResultadosContext";
-import ResultChart from "../components/resultados/ResultChart";
 import EstimuloRow from "../components/resultados/EstimuloRow";
-import ResumenResultados from "../components/resultados/ResumenResultados";
-import SujetoPrueba from "../components/resultados/SujetoPrueba";
-import SplitHalfTesting from "./SplitHalfTesting";
 import ReactToPdf from "react-to-pdf";
 import moment from "moment";
 
 const SingleResults = ({ id }) => {
-  const { resultado, fiability, getSingleTest, clearSingleResultado } =
+  const { resultado, getSingleTest, clearSingleResultado } =
     useContext(ResultadosContext);
   const [showEstimulos, setShowEstimulos] = useState(true);
 
@@ -18,19 +15,6 @@ const SingleResults = ({ id }) => {
     getSingleTest(id);
     return clearSingleResultado;
   }, []);
-
-  const renderConfig = () => {
-    if (resultado && resultado !== null) {
-      if (resultado.results.settings && resultado.results.settings !== null) {
-        return (
-          <PruebaConfig
-            prueba={resultado.results.settings}
-            idTestType={resultado.test.testType.id}
-          />
-        );
-      }
-    }
-  };
 
   const renderEstimulos = () => {
     if (resultado && resultado !== null && showEstimulos) {
@@ -40,59 +24,13 @@ const SingleResults = ({ id }) => {
             key={target.timestamp}
             target={target}
             type={resultado.test.testType.id}
-            objective={resultado.results.settings.target}
+            objective={resultado.settings.target}
             index={index}
             prevItem={index > 0 ? resultado.results.targets[index - 1] : {}}
-            clave={resultado.results.settings.clave}
+            clave={resultado.settings.clave}
           />
         ));
       }
-    }
-  };
-
-  const renderResults = () => {
-    if (resultado && resultado !== null) {
-      if (resultado.results.targets) {
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col col-md-6">
-                <div className="row">
-                  <div className="col-12 col-md-6">
-                    <ResultChart
-                      items={resultado.results.targets}
-                      target={resultado.results.target}
-                      type={resultado.test.testType.id}
-                      prevTarget={resultado.results.prevTarget}
-                    />
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <ResumenResultados resultado={resultado} />
-                  </div>
-                </div>
-              </div>
-              <div className="col col-md-6">
-                {fiability && fiability !== null && (
-                  <SplitHalfTesting
-                    items={resultado.results.targets}
-                    average_one={fiability.average_one}
-                    average_two={fiability.average_two}
-                    column="reaction"
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      }
-      return <p className="text-danger">Esta prueba no ha sido completada.</p>;
-    }
-  };
-
-  const renderSujeto = () => {
-    if (resultado && resultado !== null) {
-      const { patient } = resultado.test;
-      return <SujetoPrueba patient={patient} />;
     }
   };
 
@@ -135,45 +73,8 @@ const SingleResults = ({ id }) => {
     >
       {({ toPdf, targetRef }) => (
         <div className="container pb-3" ref={targetRef}>
-          <div className="card shadow-sm p-3 my-2">
-            <div className="row border-bottom pb-3 mb-3 align-items-center">
-              <div className="col col-md-10">
-                <h1 className="h3">
-                  {resultado && resultado !== null ? (
-                    <b>Prueba #{resultado !== null && resultado.test.id}</b>
-                  ) : (
-                    ""
-                  )}
-                  :{" "}
-                  {resultado && resultado !== null ? (
-                    resultado.test.testType.name
-                  ) : (
-                    <div className="spinner-border"></div>
-                  )}
-                </h1>
-              </div>
-              <div className="col col-md-2 text-end">
-                <button className="btn btn-outline-dark" onClick={toPdf}>
-                  <i className="fa fa-print"></i>
-                </button>
-              </div>
-            </div>
-            {renderResults()}
-          </div>
-          <div className="row">
-            <div className="col col-md-6">
-              <div className="card shadow-sm p-3 my-2">
-                <h3 className="pb-3 mb-3 border-bottom">Configuración</h3>
-                {renderConfig()}
-              </div>
-            </div>
-            <div className="col col-md-6">
-              <div className="card shadow-sm p-3 my-2">
-                <h3 className="pb-3 mb-3 border-bottom">Sujeto</h3>
-                {renderSujeto()}
-              </div>
-            </div>
-          </div>
+          <ResultSummary result={resultado} handlePDF={toPdf} />
+          <ResultParameters result={resultado} />
           <div className="card shadow-sm p-3 my-2">
             <div className="border-bottom pb-3 mb-3 row mx-0">
               <div className="col col-md-8 px-0">
@@ -181,7 +82,7 @@ const SingleResults = ({ id }) => {
               </div>
               <div className="col col-md-4 text-end px-0">
                 <button
-                  className="btn btn-outline-secondary"
+                  className="btn btn-outline-dark"
                   onClick={() => setShowEstimulos(!showEstimulos)}
                 >
                   <i

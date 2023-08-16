@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { AuthContext } from "../context/AuthContext";
 import { Link } from "@reach/router";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { spinner, signIn } = useContext(UserContext);
+  const { spinner, signIn } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ const Login = () => {
   return (
     <div className="container-fluid vh-100">
       <div className="row">
-        <div className="col-12 col-md-6 vh-100 pl-0 pr-0 hide-mobile">
+        <div className="col-12 col-md-6 vh-100 ps-0 pe-0 hide-mobile">
           <img
             src="https://www.udem.edu.mx/sites/default/files/inline-images/Entropia-UDEM.jpg"
             className="login-img mw-100 w-100 vh-100"

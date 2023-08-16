@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 import UsuariosReducer from "../reducers/UsuariosReducer";
-import UsuarioService from "../services/UsuarioService";
+import UserService from "../services/UserService";
 import {
   CREATE_USUARIO,
   SET_PROPIEDAD_USER,
@@ -22,14 +22,14 @@ export const UsuariosProvider = ({ children }) => {
   const { success } = useContext(ModalContext);
 
   const getUsuariosAdmin = () => {
-    UsuarioService.getUsuariosAdmin().then((res) => {
+    UserService.getUsuariosAdmin().then((res) => {
       const pacientes = res.data.data;
       dispatch({ type: USUARIOS_RECIBIDOS, payload: pacientes });
     });
   };
 
   const getUsuario = (id) => {
-    UsuarioService.getSinglePaciente(id).then((res) => {
+    UserService.getSinglePaciente(id).then((res) => {
       const paciente = res.data.data;
       dispatch({ type: SINGLE_USER_RECIBIDO, payload: paciente });
     });
@@ -44,7 +44,7 @@ export const UsuariosProvider = ({ children }) => {
   };
 
   const deleteUsuario = (id) => {
-    UsuarioService.deleteUsuario(id).then(() => {
+    UserService.deleteUsuario(id).then(() => {
       success("¡Usuario eliminado con éxito!");
       getUsuariosAdmin();
     });

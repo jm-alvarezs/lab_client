@@ -15,7 +15,7 @@ const UsuarioRow = ({ usuario, confirmDelete }) => {
       <td>
         <Link
           to={`/pacientes/${id}/edit`}
-          className="btn btn-outline-secondary"
+          className="btn btn-outline-dark"
           onClick={(e) => e.stopPropagation()}
         >
           <i className="fa fa-edit"></i>

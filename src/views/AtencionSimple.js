@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
 import { PruebasContext } from "../context/PruebasContext";
 import { navigate } from "@reach/router";
-import UsuarioService from "../services/UsuarioService";
+import UserService from "../services/UserService";
 import { ModalContext } from "../context/ModalContext";
 import InterScreen from "../components/pruebas/InterScreen";
 import { getTestToken } from "../utils";
@@ -60,7 +60,7 @@ const AtencionSimple = ({ endCallback }) => {
         setDisabled(true);
         return alert("No se puede realizar este ejercicio.");
       }
-      UsuarioService.setToken(token);
+      UserService.setToken(token);
       let idTest = window.location.href.split("idTest=")[1];
       if (!idTest) return navigate("/");
       idTest = parseInt(idTest.split("&")[0]);
@@ -83,17 +83,17 @@ const AtencionSimple = ({ endCallback }) => {
 
   useEffect(() => {
     if (prueba !== null) {
-      if (prueba.results.config) {
+      if (prueba.results && prueba.results !== null) {
         setDisabled(true);
         setTimeout(() => {
           if (typeof endCallback === "function") {
             endCallback(true);
           }
         }, 1500);
-        return alert("Lo sentimos, este ejercicio ya fue realizado.");
+        alert("Lo sentimos, este ejercicio ya fue realizado.");
       } else if (prueba.settings) {
         let token = getTestToken(prueba);
-        UsuarioService.setToken(token);
+        UserService.setToken(token);
         setConfig({ ...prueba.settings, token });
         getStyle();
       }

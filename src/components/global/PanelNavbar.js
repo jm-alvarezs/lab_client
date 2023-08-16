@@ -3,7 +3,7 @@ import { Link } from "@reach/router";
 
 const PanelNavbar = () => {
   return (
-    <nav className="bg-white hide-mobile side-menu px-2">
+    <nav className="bg-white hide-mobile side-menu shadow px-2">
       <div className="container-fluid px-0">
         <div className="mt-4">
           <ul className="side-menu-list">

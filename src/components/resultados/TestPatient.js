@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-const SujetoPrueba = ({ patient }) => {
+const TestPatient = ({ patient }) => {
   const renderDamages = () => {
     if (Array.isArray(patient.damages)) {
       if (patient.damages.length === 0) {
@@ -46,4 +46,4 @@ const SujetoPrueba = ({ patient }) => {
   );
 };
 
-export default SujetoPrueba;
+export default TestPatient;
