@@ -1,10 +1,45 @@
 import React from "react";
+import Chart from "react-apexcharts";
 
 const StroopSummary = ({ test }) => {
+  const renderChart = () => {
+    if (test.results && test.results !== null) {
+      let aciertosCongruentes =
+        test.results.congruentes / test.estimulos.length;
+
+      let aciertosIncongruentes =
+        test.results.incongruentes / test.estimulos.length;
+
+      let erroresCongruentes =
+        test.results.erroresCongruentes / test.estimulos.length;
+
+      let erroresIncongruentes =
+        test.results.erroresIncongruentes / test.estimulos.length;
+      return (
+        <Chart
+          type="pie"
+          options={{
+            labels: [
+              "Aciertos Congruentes",
+              "Aciertos Incongruentes",
+              "Errores Congruentes",
+              "Errores Incongruentes",
+            ],
+          }}
+          series={[
+            aciertosCongruentes,
+            aciertosIncongruentes,
+            erroresCongruentes,
+            erroresIncongruentes,
+          ]}
+        />
+      );
+    }
+  };
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col col-md-6"></div>
+        <div className="col col-md-6">{renderChart()}</div>
         <div className="col col-md-6">
           <div className="row">
             <div className="col-6"># Estimulos</div>
