@@ -53,7 +53,8 @@ const AtencionCondicional = ({ endCallback }) => {
 
   const { alert } = useContext(ModalContext);
 
-  const { prueba, clearPrueba, postResultados } = useContext(PruebasContext);
+  const { prueba, getPrueba, clearPrueba, postResultados } =
+    useContext(PruebasContext);
 
   let targets = [];
   let estimulos = 0;
@@ -65,13 +66,27 @@ const AtencionCondicional = ({ endCallback }) => {
 
   useEffect(() => {
     if (prueba === null) {
-      const currentConfig = getConfig(defaultConfig);
-      if (!currentConfig.token) {
+      let token = getTestToken();
+      if (!token) {
         setDisabled(true);
-        return alert("No se puede iniciar la prueba");
+        return alert("No se puede realizar este ejercicio.");
       }
-      UserService.setToken(currentConfig.token);
-      if (!currentConfig.idTest) return navigate("/");
+      UserService.setToken(token);
+      let idTest = window.location.href.split("idTest=")[1];
+      if (!idTest) return navigate("/");
+      idTest = parseInt(idTest.split("&")[0]);
+      getPrueba(idTest, token);
+      let params = window.location.href.split("?")[1];
+      let currentConfig = { ...defaultConfig };
+      if (params) {
+        params = params.split("&");
+        params.forEach((elem) => {
+          const single = elem.split("=");
+          currentConfig[single[0]] = single[1];
+        });
+      } else {
+        currentConfig = defaultConfig;
+      }
       setConfig(currentConfig);
     }
     return clearPrueba;
@@ -79,21 +94,19 @@ const AtencionCondicional = ({ endCallback }) => {
 
   useEffect(() => {
     if (prueba !== null) {
-      if (prueba.settings) {
+      if (prueba.results && prueba.results !== null) {
+        setDisabled(true);
+        setTimeout(() => {
+          if (typeof endCallback === "function") {
+            endCallback(true);
+          }
+        }, 1500);
+        alert("Lo sentimos, este ejercicio ya fue realizado.");
+      } else if (prueba.settings) {
         let token = getTestToken(prueba);
-        if (!token) {
-          setDisabled(true);
-          return alert("No se puede iniciar la prueba");
-        } else if (prueba.results.config) {
-          setDisabled(true);
-          setTimeout(() => {
-            if (typeof endCallback === "function") {
-              endCallback();
-            }
-          }, 1500);
-          return alert("Lo sentimos, este ejercicio ya fue realizado.");
-        }
+        UserService.setToken(token);
         setConfig({ ...prueba.settings, token });
+        getStyle();
       }
     }
   }, [prueba]);

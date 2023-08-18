@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import moment from "moment";
+import UserMenu from "../components/cuenta/UserMenu";
 
 const Cuenta = () => {
   const [editMode, setEditMode] = useState(false);
@@ -135,7 +136,14 @@ const Cuenta = () => {
     <div className="container-fluid px-0">
       <div className="container px-0">
         <h1>Mi Cuenta</h1>
-        <div className="card p-3 shadow-sm">{renderUser()}</div>
+        <div className="row">
+          <div className="col-md-4">
+            <UserMenu />
+          </div>
+          <div className="col-md-6">
+            <div className="card p-3 shadow-sm">{renderUser()}</div>
+          </div>
+        </div>
       </div>
     </div>
   );

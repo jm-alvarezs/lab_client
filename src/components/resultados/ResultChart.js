@@ -1,9 +1,8 @@
 import React from "react";
 import Chart from "react-apexcharts";
-import { getTargetResult } from "../../utils";
 
-const ResultChart = ({ items, target, type, prevTarget }) => {
-  var options = {
+const ResultChart = ({ aciertos, estimulos }) => {
+  const options = {
     colors: ["#fff500"],
     plotOptions: {
       radialBar: {
@@ -34,19 +33,7 @@ const ResultChart = ({ items, target, type, prevTarget }) => {
     labels: ["Aciertos"],
   };
 
-  let correctos = 0;
-  for (let i = 0; i < items.length; i++) {
-    let correcto = getTargetResult(
-      items[i],
-      target,
-      type === "condicional",
-      prevTarget,
-      items[i - 1]
-    );
-    if (correcto) correctos++;
-  }
-
-  let result = parseFloat((correctos / items.length) * 100).toFixed(2);
+  let result = parseFloat((aciertos / estimulos) * 100).toFixed(2);
 
   return (
     <Chart type="radialBar" options={options} series={[result]} height={250} />

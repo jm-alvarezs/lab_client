@@ -21,13 +21,13 @@ const SingleResults = ({ id }) => {
       if (resultado.results.targets) {
         return resultado.results.targets.map((target, index) => (
           <EstimuloRow
+            index={index}
+            estimulo={target}
             key={target.timestamp}
-            target={target}
+            clave={resultado.settings.clave}
             type={resultado.test.testType.id}
             objective={resultado.settings.target}
-            index={index}
             prevItem={index > 0 ? resultado.results.targets[index - 1] : {}}
-            clave={resultado.settings.clave}
           />
         ));
       }

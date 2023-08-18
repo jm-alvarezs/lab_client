@@ -14,6 +14,7 @@ const TestSettings = ({ idTestType, settings }) => {
     numeroEstimulos,
     aparicion,
     keyCode,
+    clave,
   } = settings;
   return (
     <div className="container-fluid px-0">
@@ -47,6 +48,16 @@ const TestSettings = ({ idTestType, settings }) => {
           <p>{target}</p>
         </div>
       </div>
+      {idTestType === 2 && (
+        <div className="row">
+          <div className="col-6">
+            <label>Clave</label>
+          </div>
+          <div className="col-6">
+            <p>{clave}</p>
+          </div>
+        </div>
+      )}
       <div className="row">
         <div className="col-6">
           <label>Tipo de Letra</label>
