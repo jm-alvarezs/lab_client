@@ -13,8 +13,10 @@ const ResultadosHanoi = ({ idTest }) => {
   const { resultado, getSingleTest } = useContext(ResultadosContext);
   const { putResultados } = useContext(PruebasContext);
 
+  const fetchTest = () => getSingleTest(idTest);
+
   useEffect(() => {
-    getSingleTest(idTest);
+    fetchTest();
   }, []);
 
   const renderSujeto = () => {
@@ -50,6 +52,7 @@ const ResultadosHanoi = ({ idTest }) => {
             movimientos={resultado.results.movements}
             finishTime={resultado.results.end}
             startTime={resultado.results.start}
+            {...resultado.results.results}
             toPdf={toPdf}
           />
         );
@@ -63,11 +66,13 @@ const ResultadosHanoi = ({ idTest }) => {
 
   const renderParametros = () => {
     if (resultado && resultado !== null) {
-      if (resultado.results.settings && resultado.results.settings !== null) {
+      if (resultado.settings && resultado.settings !== null) {
         return (
           <ParametrosHanoi
+            resultado={resultado.results}
             idTest={resultado.test.id}
-            settings={resultado.results.settings}
+            handleCallback={fetchTest}
+            settings={resultado.settings}
             putResultados={putResultados}
           />
         );

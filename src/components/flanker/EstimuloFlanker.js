@@ -17,7 +17,7 @@ export const EstimuloFlanker = ({ type, direction, style }) => {
             ? "fa-minus"
             : `fa-long-arrow-alt-${getDirection()}`
         } mx-1`}
-        style={style}
+        style={{ ...style, fontSize: parseInt(style.fontSize) }}
       ></i>
       <i
         className={`fas ${
@@ -25,11 +25,11 @@ export const EstimuloFlanker = ({ type, direction, style }) => {
             ? "fa-minus"
             : `fa-long-arrow-alt-${getDirection()}`
         } mx-1`}
-        style={style}
+        style={{ ...style, fontSize: parseInt(style.fontSize) }}
       ></i>
       <i
         className={`fas fa-long-arrow-alt-${direction} mx-1`}
-        style={style}
+        style={{ ...style, fontSize: parseInt(style.fontSize) }}
       ></i>
       <i
         className={`fas ${
@@ -37,7 +37,7 @@ export const EstimuloFlanker = ({ type, direction, style }) => {
             ? "fa-minus"
             : `fa-long-arrow-alt-${getDirection()}`
         } mx-1`}
-        style={style}
+        style={{ ...style, fontSize: parseInt(style.fontSize) }}
       ></i>
       <i
         className={`fas ${
@@ -45,7 +45,7 @@ export const EstimuloFlanker = ({ type, direction, style }) => {
             ? "fa-minus"
             : `fa-long-arrow-alt-${getDirection()}`
         } mx-1`}
-        style={style}
+        style={{ ...style, fontSize: parseInt(style.fontSize) }}
       ></i>
     </div>
   );

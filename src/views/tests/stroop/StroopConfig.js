@@ -3,10 +3,12 @@ import React from "react";
 
 const StroopConfig = ({ prueba }) => {
   const renderDuracion = () => {
-    return moment(prueba.endTime, "YYYY-MM-DD HH:mm:ss:SSS").diff(
-      moment(prueba.startTime, "YYYY-MM-DD HH:mm:ss:SSS"),
-      "seconds"
-    );
+    if (prueba.results && prueba.results !== null) {
+      return moment(prueba.results.endTime, "YYYY-MM-DD HH:mm:ss:SSS").diff(
+        moment(prueba.results.startTime, "YYYY-MM-DD HH:mm:ss:SSS"),
+        "seconds"
+      );
+    }
   };
 
   const {
@@ -17,6 +19,7 @@ const StroopConfig = ({ prueba }) => {
     fontSize,
     color,
   } = prueba.settings;
+
   return (
     <div className="container-fluid px-0">
       <div className="row">
@@ -68,7 +71,7 @@ const StroopConfig = ({ prueba }) => {
         </div>
         <div className="col-6">{numeroEstimulos}</div>
       </div>
-      <div className="row">
+      <div className="row mt-3">
         <div className="col-6">
           <label>Duración</label>
         </div>

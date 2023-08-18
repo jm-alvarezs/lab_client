@@ -1,8 +1,42 @@
 import React, { useState } from "react";
 
-const ParametrosHanoi = ({ idTest, settings, putResultados }) => {
+const ParametrosHanoi = ({
+  idTest,
+  resultado,
+  settings,
+  putResultados,
+  handleCallback,
+}) => {
   const [showMovimientos, setShowMovimientos] = useState(true);
   const [rule, setRule] = useState("Si");
+
+  const renderInput = () => {
+    if (!resultado.rule) {
+      return (
+        <>
+          <div className="col-3">
+            <select
+              className="form-control"
+              value={rule}
+              onChange={(e) => setRule(e.target.value)}
+            >
+              <option value="Si">Si</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div className="col-3">
+            <button
+              className="btn btn-outline-dark"
+              onClick={() => putResultados(idTest, rule, handleCallback)}
+            >
+              <i className="fa fa-save"></i>
+            </button>
+          </div>
+        </>
+      );
+    }
+    return <div className="col-6">{resultado.rule}</div>;
+  };
 
   const renderSeccion = () => {
     if (showMovimientos) {
@@ -38,24 +72,7 @@ const ParametrosHanoi = ({ idTest, settings, putResultados }) => {
           </div>
           <div className="row py-2">
             <div className="col-6">¿Descubrió la regla?</div>
-            <div className="col-3">
-              <select
-                className="form-control"
-                value={rule}
-                onChange={(e) => setRule(e.target.value)}
-              >
-                <option value="Si">Si</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-            <div className="col-3">
-              <button
-                className="btn btn-outline-dark"
-                onClick={() => putResultados(idTest, rule)}
-              >
-                <i className="fa fa-save"></i>
-              </button>
-            </div>
+            {renderInput()}
           </div>
         </>
       );

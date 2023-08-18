@@ -6,6 +6,7 @@ import { calculateAverage } from "../../../utils";
 import StroopConfig from "./StroopConfig";
 import ReactToPdf from "react-to-pdf";
 import moment from "moment";
+import StroopSummary from "./StroopSummary";
 
 const StroopResults = ({ id }) => {
   const { resultado, getSingleTest, clearSingleResultado } =
@@ -19,10 +20,10 @@ const StroopResults = ({ id }) => {
 
   const renderConfig = () => {
     if (resultado && resultado !== null) {
-      if (resultado.results.settings && resultado.results.settings !== null) {
+      if (resultado.settings && resultado.settings !== null) {
         return (
           <StroopConfig
-            prueba={resultado.results}
+            prueba={resultado}
             idTestType={resultado.test.testType.id}
           />
         );
@@ -38,9 +39,9 @@ const StroopResults = ({ id }) => {
             key={target.timestamp}
             target={target}
             type={resultado.test.testType.id}
-            objective={resultado.results.settings.target}
+            objective={resultado.settings.target}
             index={index}
-            clave={resultado.results.settings.clave}
+            clave={resultado.settings.clave}
           />
         ));
       }
@@ -62,20 +63,8 @@ const StroopResults = ({ id }) => {
 
   const renderResults = () => {
     if (resultado && resultado !== null) {
-      if (resultado.results.estimulos) {
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col col-md-6">
-                <div className="row">
-                  <div className="col-12 col-md-6"></div>
-                  <div className="col-12 col-md-6"></div>
-                </div>
-              </div>
-              <div className="col col-md-6"></div>
-            </div>
-          </div>
-        );
+      if (resultado.results && resultado.results !== null) {
+        return <StroopSummary test={resultado.results} />;
       }
       return <p className="text-danger">Esta prueba no ha sido completada.</p>;
     }

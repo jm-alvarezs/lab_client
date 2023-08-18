@@ -109,9 +109,12 @@ export const PruebasProvider = ({ children }) => {
     dispatch({ type: POP_ESTIMULO });
   };
 
-  const putResultados = (idTest, rule) => {
+  const putResultados = (idTest, rule, callback) => {
     PruebasService.putResultados(idTest, rule).then(() => {
       success("¡Resultados actualizados!");
+      if (typeof callback === "function") {
+        callback();
+      }
     });
   };
 

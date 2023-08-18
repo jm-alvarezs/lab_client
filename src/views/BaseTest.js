@@ -85,7 +85,7 @@ const BaseTest = ({
   }, [prueba]);
 
   const handleStart = () => {
-    setStartTime(moment().format("YYYY-MM-DD HH:mm:ss:SSS"));
+    setStartTime(moment().local().format("YYYY-MM-DD HH:mm:ss:SSS"));
     if (typeof startCallback === "function") {
       startCallback(config);
     }
