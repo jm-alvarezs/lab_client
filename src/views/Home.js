@@ -37,7 +37,7 @@ const Home = ({ user }) => {
         <div className="content overflow-x-hidden">
           <Router>
             {/*Pruebas */}
-            <Pruebas path="/pruebas" />
+            <Pruebas path="/tests" />
             <ConfigAtencion path="/config/atencion/:idPaciente" />
             <ConfigCondicional path="/config/condicional/:idPaciente" />
             <ConfigHemiAtencion path="/config/hemi/:idPaciente" />
@@ -46,10 +46,10 @@ const Home = ({ user }) => {
             <ConfigStroop path="/config/stroop/:idPaciente" />
             <MultiConfig path="/config/multi/:idPaciente/*" />
             {/* MultiTest Standalone */}
-            <MultiTestList path="/tests" />
-            <MultiTestConfig path="/tests/:idMultiTest/edit" />
+            <MultiTestList path="/studies" />
+            <MultiTestConfig path="/studies/:idMultiTest/edit" />
             {/* Resultados */}
-            <Results path="/resultados" />
+            <Results path="/results/*" />
             <SingleResults path="/resultados/atencion/:id" />
             <SingleResults path="/resultados/condicional/:id" />
             <SingleResults path="/resultados/hemi/:id" />
@@ -57,9 +57,9 @@ const Home = ({ user }) => {
             <ResultadosFlanker path="/resultados/flanker/:idTest" />
             <StroopResults path="/resultados/stroop/:id" />
             {/* Pacientes */}
-            <Pacientes path="/pacientes" default />
-            <SinglePaciente path="/pacientes/:id" />
-            <PacienteForm path="/pacientes/:id/edit" />
+            <Pacientes path="/patients" default />
+            <SinglePaciente path="/patients/:id" />
+            <PacienteForm path="/patients/:id/edit" />
             {/* Cuenta */}
             <Cuenta path="/cuenta" />
             {/* Cuestionarios */}
@@ -68,7 +68,7 @@ const Home = ({ user }) => {
             {/* Payments */}
             <Payments path="/payments" />
             {/* Admin */}
-            {user.isAdmin && <Pacientes path="/admin/pacientes" admin={true} />}
+            {user.isAdmin && <Pacientes path="/admin/patients" admin={true} />}
             {user.isAdmin && <Results path="/admin/resultados" admin={true} />}
             {user.isAdmin && <Usuarios path="/admin/usuarios" admin={true} />}
           </Router>

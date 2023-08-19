@@ -18,18 +18,20 @@ const SingleResults = ({ id }) => {
 
   const renderEstimulos = () => {
     if (resultado && resultado !== null && showEstimulos) {
-      if (resultado.results.targets) {
-        return resultado.results.targets.map((target, index) => (
-          <EstimuloRow
-            index={index}
-            estimulo={target}
-            key={target.timestamp}
-            clave={resultado.settings.clave}
-            type={resultado.test.testType.id}
-            objective={resultado.settings.target}
-            prevItem={index > 0 ? resultado.results.targets[index - 1] : {}}
-          />
-        ));
+      if (resultado.results && resultado.results !== null) {
+        if (resultado.results.targets) {
+          return resultado.results.targets.map((target, index) => (
+            <EstimuloRow
+              index={index}
+              estimulo={target}
+              key={target.timestamp}
+              clave={resultado.settings.clave}
+              type={resultado.test.testType.id}
+              objective={resultado.settings.target}
+              prevItem={index > 0 ? resultado.results.targets[index - 1] : {}}
+            />
+          ));
+        }
       }
     }
   };

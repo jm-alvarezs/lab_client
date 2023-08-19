@@ -9,37 +9,39 @@ const PanelNavbar = () => {
           <ul className="side-menu-list">
             <li
               className={`nav-item my-4 ${
-                window.location.href.includes("tests") ? "bg-primary" : ""
+                window.location.href.includes("studies") ? "bg-primary" : ""
               }`}
             >
-              <Link className="nav-link" to="/tests">
+              <Link className="nav-link" to="/studies">
                 <i className="fa fa-folder" />
               </Link>
             </li>
             <li
               className={`nav-item my-4 ${
-                window.location.pathname.includes("pruebas") ? "bg-primary" : ""
+                window.location.pathname.includes("tests") ? "bg-primary" : ""
               }`}
             >
-              <Link className="nav-link" to="/pruebas">
+              <Link className="nav-link" to="/tests">
                 <i className="fa fa-vial" />
               </Link>
             </li>
             <li
               className={`nav-item my-4 ${
-                window.location.pathname.includes("pac") ? "bg-primary" : ""
+                window.location.pathname.includes("patients")
+                  ? "bg-primary"
+                  : ""
               }`}
             >
-              <Link className="nav-link" to="/pacientes">
+              <Link className="nav-link" to="/patients">
                 <i className="fa fa-users" />
               </Link>
             </li>
             <li
               className={`nav-item my-4 ${
-                window.location.pathname.includes("result") ? "bg-primary" : ""
+                window.location.pathname.includes("results") ? "bg-primary" : ""
               }`}
             >
-              <Link className="nav-link" to="/resultados">
+              <Link className="nav-link" to="/results">
                 <i className="fa fa-poll" />
               </Link>
             </li>

@@ -184,7 +184,7 @@ const UsuarioForm = ({ id }) => {
             </div>
             <div className="col-12 col-md-6 text-end">
               {!spinner && (
-                <Link className="btn btn-link text-danger" to="/pacientes">
+                <Link className="btn btn-link text-danger" to="/patients">
                   Cancelar
                 </Link>
               )}

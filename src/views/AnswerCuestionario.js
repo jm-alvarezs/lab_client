@@ -1,58 +1,49 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ModalContext } from "../context/ModalContext";
-import { SurveyContext } from "../context/SurveyContext";
-import { preguntasCUPOM, preguntasNechapi } from "../utils";
-import PreguntasCUPOM from "../components/cuestionario/PreguntasCUPOM";
 import PreguntasNechapi from "../components/cuestionario/PreguntasNechapi";
+import PreguntasCUPOM from "../components/cuestionario/PreguntasCUPOM";
+import { preguntasCUPOM, preguntasNechapi } from "../utils";
+import { SurveyContext } from "../context/SurveyContext";
+import { ModalContext } from "../context/ModalContext";
+import UserService from "../services/UserService";
 
 const AnswerCuestionario = ({ endCallback }) => {
-  const [tipo, setTipo] = useState("");
-  const [idPatient, setIdPatient] = useState("");
   const [observaciones, setObservaciones] = useState("");
   const [questions, setQuestions] = useState([]);
-  const [token, setToken] = useState("");
-  const [idSurvey, setIdSurvey] = useState("");
-  const [idSurveyType, setidSurveyType] = useState("");
   const [finished, setFinished] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [token, setToken] = useState("");
 
-  const { survey, postAnswer } = useContext(SurveyContext);
+  const { survey, getSurvey, postAnswer } = useContext(SurveyContext);
 
   const { alert } = useContext(ModalContext);
 
   useEffect(() => {
-    let currentToken = window.location.href.split("token=")[1];
-    if (survey !== null) {
-      if (survey.results && survey.results !== null) {
-        if (survey.results.config) {
-          if (typeof endCallback === "function") {
-            endCallback();
-          }
-          return alert("Este cuestionario ya ha sido contestado.");
-        }
-      }
+    if (survey === null) {
     }
+    let currentToken = window.location.href.split("token=")[1];
     if (!currentToken && survey === null) {
-      return alert("No se puede iniciar la prueba");
-    } else if (survey !== null) {
-      setIdSurvey(survey.survey.id);
-      setToken(survey.survey.accessUrl.token);
-      setIdPatient(survey.survey.idPatient);
-      setidSurveyType(survey.survey.type);
+      alert("No se puede iniciar la prueba");
     } else {
       currentToken = currentToken.split("&")[0];
       setToken(currentToken);
-      let idSurveyType = window.location.href
-        .split("idSurveyType=")[1]
-        .split("&")[0];
-      let idPatient = window.location.href.split("idPatient=")[1].split("&")[0];
-      let idSurvey = window.location.href.split("idSurvey=")[1].split("&")[0];
-      setidSurveyType(parseInt(idSurveyType));
-      setIdPatient(idPatient);
-      setIdSurvey(idSurvey);
-      if (parseInt(idSurveyType) === 1) setTipo("nechapi");
-      else setTipo("cupom");
+      UserService.setToken(currentToken);
+      const idSurvey = window.location.href.split("idSurvey=")[1].split("&")[0];
+      getSurvey(idSurvey, currentToken);
     }
   }, []);
+
+  useEffect(() => {
+    if (survey !== null) {
+      if (survey.results && survey.results !== null) {
+        setDisabled(true);
+        setTimeout(() => {
+          if (typeof endCallback === "function") {
+            endCallback(true);
+          }
+        }, 1500);
+      }
+    }
+  }, [survey]);
 
   const renderForm = () => {
     if (finished) {
@@ -60,6 +51,13 @@ const AnswerCuestionario = ({ endCallback }) => {
         <div>
           <p>Gracias. Ya terminaste, puedes cerrar esta ventana.</p>
         </div>
+      );
+    }
+    if (disabled) {
+      return (
+        <p className="mb-0 text-danger">
+          Lo sentimos, este ejercicio ya fue realizado.
+        </p>
       );
     }
     return (
@@ -76,7 +74,7 @@ const AnswerCuestionario = ({ endCallback }) => {
     e.preventDefault();
     let answered = true;
     let targetAnswers;
-    if (idSurveyType === 2) {
+    if (survey.type === 2) {
       answered = questions.filter((question) => question !== "").length;
       targetAnswers = preguntasCUPOM.length;
     } else {
@@ -86,8 +84,8 @@ const AnswerCuestionario = ({ endCallback }) => {
     if (answered < targetAnswers) {
       return alert("Aun no has terminado de contestar el cuestionario");
     }
+    const idSurvey = survey.id;
     const data = {
-      idPatient,
       idSurvey,
       observaciones,
       questions,
@@ -99,19 +97,27 @@ const AnswerCuestionario = ({ endCallback }) => {
     }
   };
 
+  const renderType = () => {
+    if (survey && survey !== null) {
+      if (survey.survey && survey.survey !== null) {
+        if (survey.survey.surveyType && survey.survey.surveyType !== null) {
+          return survey.survey.surveyType.name;
+        }
+      }
+    }
+  };
+
   const renderPreguntas = () => {
-    if (idSurveyType === 2) return <PreguntasCUPOM modifier={setQuestions} />;
+    if (!survey || survey === null) {
+      return <div className="spinner-border"></div>;
+    }
+
+    if (survey.type === 2) return <PreguntasCUPOM modifier={setQuestions} />;
     return <PreguntasNechapi modifier={setQuestions} />;
   };
   return (
     <div className="container py-4">
-      <h1 className="h2 mb-3">
-        Cuestionario -{" "}
-        {tipo !== ""
-          ? String(tipo)[0].toUpperCase() + String(tipo).substring(1)
-          : ""}
-      </h1>
-
+      <h1 className="h2 mb-3">Cuestionario - {renderType()}</h1>
       <div className="card p-3">{renderForm()}</div>
     </div>
   );

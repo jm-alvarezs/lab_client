@@ -11,7 +11,7 @@ const columns = [
     label: "Name",
     minWidth: 150,
     component: (props) => (
-      <Link to={`/pacientes/${props.id}`}>{props.name}</Link>
+      <Link to={`/patients/${props.id}`}>{props.name}</Link>
     ),
   },
   { id: "email", label: "Email", minWidth: 250 },
@@ -46,7 +46,7 @@ const Pacientes = () => {
           <h1>Pacientes</h1>
         </div>
         <div className="col-6 text-end px-0">
-          <Link to="/pacientes/nuevo/edit" className="btn btn-primary">
+          <Link to="/patients/nuevo/edit" className="btn btn-primary">
             + Agregar
           </Link>
         </div>

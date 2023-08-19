@@ -22,7 +22,7 @@ const MultiTestList = () => {
         return (
           <tr>
             <td colSpan="4">
-              <p>No hay pruebas registrados</p>
+              <p>No hay estudios registrados</p>
             </td>
           </tr>
         );

@@ -38,10 +38,10 @@ const Cuestionario = ({ tipo, idPaciente }) => {
     <div className="container pb-4">
       <Breadcrumbs
         elements={[
-          { name: "Pacientes", href: "/pacientes" },
+          { name: "Pacientes", href: "/patients" },
           {
             name: paciente && paciente !== null ? paciente.name : "Paciente",
-            href: `/pacientes/${idPaciente}`,
+            href: `/patients/${idPaciente}`,
           },
         ]}
       />
@@ -51,7 +51,7 @@ const Cuestionario = ({ tipo, idPaciente }) => {
       </h1>
       <div className="card p-3">
         <form onSubmit={handleSubmit}>
-          <div className="row mx-0 mb-3">
+          <div className="row mb-3">
             <div className="col-12 col-md-6">
               <p className="mb-0 bold">Evaluador</p>
             </div>
@@ -59,7 +59,7 @@ const Cuestionario = ({ tipo, idPaciente }) => {
               <p className="mb-0">{renderEvaluador()}</p>
             </div>
           </div>
-          <div className="row mx-0 mb-3">
+          <div className="row mb-3">
             <div className="col-12 col-md-6">
               <p className="mb-0 bold">Paciente</p>
             </div>
@@ -67,7 +67,7 @@ const Cuestionario = ({ tipo, idPaciente }) => {
               <p className="mb-0">{renderPaciente()}</p>
             </div>
           </div>
-          <button className="btn btn-primary ml-3">Crear Cuestionario</button>
+          <button className="btn btn-primary">Crear Cuestionario</button>
         </form>
       </div>
     </div>

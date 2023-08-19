@@ -559,6 +559,21 @@ export const getTestToken = (test) => {
   return token;
 };
 
+export const getSurveyToken = (survey) => {
+  let token;
+  let tokenSplit = window.location.href.split("token=");
+  if (tokenSplit.length > 1) {
+    token = tokenSplit[1];
+    token = token.split("&")[0];
+  } else if (survey && survey !== null && survey) {
+    let { accessUrl } = survey;
+    if (typeof accessUrl === "object" && accessUrl !== null) {
+      token = accessUrl.token;
+    }
+  }
+  return token;
+};
+
 export const renderBirthdate = (birthDate) => {
   let birthdate = moment(birthDate).utc();
   if (birthdate.isValid()) {

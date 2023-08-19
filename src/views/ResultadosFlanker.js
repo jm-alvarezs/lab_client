@@ -19,21 +19,23 @@ const ResultadosFlanker = ({ idTest }) => {
     if (resultado && resultado !== null) {
       const { patient } = resultado.test;
       return (
-        <div className="card shadow-sm p-3 mb-4">
-          <div className="row pb-3 mb-3 border-bottom">
-            <div className="col-8">
-              <h3 className="bold">Sujeto</h3>
+        <div className="col-12 col-md-6">
+          <div className="card shadow-sm p-3 mb-4">
+            <div className="row pb-3 mb-3 border-bottom">
+              <div className="col-8">
+                <h3 className="bold">Sujeto</h3>
+              </div>
+              <div className="col-4 text-end">
+                <button
+                  className="btn btn-outline-dark"
+                  onClick={() => setShowSujeto(!showSujeto)}
+                >
+                  <i className={`fa fa-eye${showSujeto ? "-slash" : ""}`}></i>
+                </button>
+              </div>
             </div>
-            <div className="col-4 text-end">
-              <button
-                className="btn btn-outline-dark"
-                onClick={() => setShowSujeto(!showSujeto)}
-              >
-                <i className={`fa fa-eye${showSujeto ? "-slash" : ""}`}></i>
-              </button>
-            </div>
+            {showSujeto && <TestPatient patient={patient} />}
           </div>
-          {showSujeto && <TestPatient patient={patient} />}
         </div>
       );
     }
@@ -41,15 +43,21 @@ const ResultadosFlanker = ({ idTest }) => {
 
   const renderConfig = (toPdf) => {
     if (resultado && resultado !== null) {
-      if (resultado.results.settings && resultado.results.settings !== null) {
+      if (
+        resultado.settings &&
+        resultado.settings !== null &&
+        resultado.results &&
+        resultado.results !== null
+      ) {
         return (
           <ResumenFlanker
             resultado={resultado}
+            {...resultado.results.results}
             estimulos={resultado.results.estimulos}
             finishTime={resultado.results.endTime}
             startTime={resultado.results.startTime}
-            right={resultado.results.settings.rightKey}
-            left={resultado.results.settings.leftKey}
+            right={resultado.settings.rightKey}
+            left={resultado.settings.leftKey}
             toPdf={toPdf}
           />
         );
@@ -62,7 +70,11 @@ const ResultadosFlanker = ({ idTest }) => {
   const renderParametros = () => {
     if (resultado && resultado !== null) {
       if (resultado.settings) {
-        return <ParametrosFlanker settings={resultado.settings} />;
+        return (
+          <div className="col-12 col-md-6">
+            <ParametrosFlanker settings={resultado.settings} />
+          </div>
+        );
       }
     }
   };
@@ -73,8 +85,8 @@ const ResultadosFlanker = ({ idTest }) => {
         return (
           <FlankerEstimulos
             estimulos={resultado.results.estimulos}
-            right={resultado.results.settings.rightKey}
-            left={resultado.results.settings.leftKey}
+            right={resultado.settings.rightKey}
+            left={resultado.settings.leftKey}
           />
         );
       }
@@ -89,8 +101,10 @@ const ResultadosFlanker = ({ idTest }) => {
       {({ toPdf, targetRef }) => (
         <div className="container mt-4" ref={targetRef}>
           {renderConfig(toPdf)}
-          {renderParametros()}
-          {renderSujeto()}
+          <div className="row">
+            {renderParametros()}
+            {renderSujeto()}
+          </div>
           {renderEstimulos()}
         </div>
       )}

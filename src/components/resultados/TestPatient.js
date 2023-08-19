@@ -13,20 +13,14 @@ const TestPatient = ({ patient }) => {
     }
   };
 
-  const {
-    name,
-    email,
-    birthDate,
-    gender,
-    antecedent,
-    dominantHand,
-    whichDrugs,
-  } = patient;
+  const { id, name, birthDate, gender, antecedent, dominantHand, whichDrugs } =
+    patient;
   return (
     <div className="row">
       <div className="col-12">
-        <h4>{name}</h4>
-        <p>{email}</p>
+        <h4>
+          #{id} - {name}
+        </h4>
         <p>Género: {gender}</p>
         <p>
           Fecha de Nacimiento: {moment(birthDate).utc().format("DD MMM YYYY")}

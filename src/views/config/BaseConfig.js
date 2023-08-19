@@ -89,11 +89,11 @@ const BaseConfig = ({
         <div className="container mt-2">
           <Breadcrumbs
             elements={[
-              { name: "Pacientes", href: "/pacientes" },
+              { name: "Pacientes", href: "/patients" },
               {
                 name:
                   paciente && paciente !== null ? paciente.name : "Paciente",
-                href: `/pacientes/${idPatient}`,
+                href: `/patients/${idPatient}`,
               },
             ]}
           />

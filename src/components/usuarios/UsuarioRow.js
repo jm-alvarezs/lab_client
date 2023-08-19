@@ -5,7 +5,7 @@ const UsuarioRow = ({ usuario, confirmDelete }) => {
   const { id, name, profession, email } = usuario;
 
   return (
-    <tr className="usuario-row" onClick={() => navigate(`/pacientes/${id}`)}>
+    <tr className="usuario-row" onClick={() => navigate(`/patients/${id}`)}>
       <td>
         {"#"}
         {id}
@@ -14,7 +14,7 @@ const UsuarioRow = ({ usuario, confirmDelete }) => {
       <td>{email}</td>
       <td>
         <Link
-          to={`/pacientes/${id}/edit`}
+          to={`/patients/${id}/edit`}
           className="btn btn-outline-dark"
           onClick={(e) => e.stopPropagation()}
         >

@@ -75,7 +75,7 @@ export const PacientesProvider = ({ children }) => {
       .then((res) => {
         dispatch({ type: HIDE_SPINNER });
         const id = res.data.data.id;
-        navigate(`/pacientes/${id}`);
+        navigate(`/patients/${id}`);
         success("¡Paciente guardado!");
       })
       .catch((error) => {

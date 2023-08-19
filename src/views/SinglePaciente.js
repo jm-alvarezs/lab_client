@@ -197,7 +197,7 @@ const SinglePaciente = ({ id }) => {
     <>
       <div className="container pb-5">
         <Breadcrumbs
-          elements={[{ name: "Regresar a Pacientes", href: "/pacientes" }]}
+          elements={[{ name: "Regresar a Pacientes", href: "/patients" }]}
         />
         <div className="row align-items-center mb-3">
           <div className="col-12 col-md-6">

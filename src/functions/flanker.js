@@ -54,7 +54,7 @@ export const getEstimulosFlanker = (estimulos) => {
   let position = "top";
   let direction = "left";
   let type = "Congruente";
-  for (let i = 0; i < estimulos; i++) {
+  for (let i = 0; i <= estimulos; i++) {
     if (i > 0 && i % division === 0) {
       position = "bottom";
     }
